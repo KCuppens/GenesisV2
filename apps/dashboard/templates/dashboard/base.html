@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    {% include 'dashboard/layout/head.html' %}
+</head>
+<body class="alt-menu sidebar-noneoverflow">
+    {% include 'dashboard/layout/__partials/loader.html' %}
+
+    {% include 'dashboard/layout/header.html' %}
+
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container" id="container">
+
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
+
+        {% include 'dashboard/layout/__partials/topnav.html' %}
+        <!--  BEGIN CONTENT PART  -->
+        <div id="content" class="main-content">
+            <div class="layout-px-spacing">
+
+                {% block content %}
+
+                {% endblock %}
+
+                {% include 'dashboard/layout/__partials/footer.html' %}
+
+            </div>
+        </div>
+        <!--  END CONTENT PART  -->
+
+    </div>
+    <!-- END MAIN CONTAINER -->
+
+    {% include 'dashboard/layout/__partials/js.html' %}
+</body>
+</html>

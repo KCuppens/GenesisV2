@@ -1,0 +1,145 @@
+[
+    {
+        "model": "conf.configuration",
+        "pk": 1,
+        "fields": {
+        "key_name": "EMAIL_CONFIRMATION_TIMEOUT_DAYS",
+        "title": "Deactivatie email confirmatie email",
+        "value": "3",
+        "description": "De geldigheid in dagen van de mail die verstuurd word bij registratie. Zodat een gebruiker zijn/haar account kan activeren.",
+        "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 2,
+        "fields": {
+            "key_name": "SPAM_PROTECTION",
+            "title": "Bescherming tegen spam",
+            "value": "1",
+            "description": "Bescherming tegen spam activeren of deactiveren.",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 3,
+        "fields": {
+            "key_name": "REGISTRATION_OPEN",
+            "title": "Registratie mogelijk?",
+            "value": "1",
+            "description": "Een mogelijkheid om registratie te activeren of deactiveren.",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 4,
+        "fields": {
+            "key_name": "AUTO_LOGIN_ON_ACTIVATION",
+            "title": "Na confirmatie van het account, automatisch inloggen",
+            "value": "1",
+            "description": "Na confirmatie van het account, automatisch inloggen",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 5,
+        "fields": {
+            "key_name": "AUTO_LOGIN_AFTER_REGISTRATION",
+            "title": "Na registreren automatisch inloggen",
+            "value": "0",
+            "description": "Na registreren automatisch inloggen",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 6,
+        "fields": {
+            "key_name": "PASSWORD_MIN_LENGTH",
+            "title": "Minimum lengte van het wachtwoord",
+            "value": "1",
+            "description": "Minimum lengte van het wachtwoord",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 7,
+        "fields": {
+            "key_name": "PASSWORD_MAX_LENGTH",
+            "title": "Minimum lengte van het wachtwoord",
+            "value": "5",
+            "description": "Minimum lengte van het wachtwoord",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 8,
+        "fields": {
+            "key_name": "PASSWORD_MAX_LENGTH",
+            "title": "Maximum lengte van het wachtwoord",
+            "value": "None",
+            "description": "Maximum lengte van het wachtwoord",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 9,
+        "fields": {
+            "key_name": "VALIDATE_EMAIL_DOMAIN",
+            "title": "Email domein valideren",
+            "value": "1",
+            "description": "Email domein valideren",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 10,
+        "fields": {
+            "key_name": "EMAIL_DOMAINS_BLACKLIST",
+            "title": "Email domein blacklijst",
+            "value": "[]",
+            "description": "Email domein zwartelijst",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 11,
+        "fields": {
+            "key_name": "EMAIL_DOMAINS_WHITELIST",
+            "title": "Email domein wittelijst",
+            "value": "[]",
+            "description": "Email domein wittelijst",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 12,
+        "fields": {
+            "key_name": "USERS_VERIFY_EMAIL",
+            "title": "Gebruikers moeten hun email verifiëren na registratie",
+            "value": "1",
+            "description": "Gebruikers moeten hun email verifiëren na registratie",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 12,
+        "fields": {
+            "key_name": "USERS_VERIFY_EMAIL",
+            "title": "Gebruikers moeten hun email verifiëren na registratie",
+            "value": "1",
+            "description": "Gebruikers moeten hun email verifiëren na registratie",
+            "conf_type": "user"
+        }
+    },
+  ]
