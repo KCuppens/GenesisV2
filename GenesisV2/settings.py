@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+from django.contrib import messages
 from pathlib import Path
 import os 
 from decouple import config
@@ -132,6 +132,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+# customising 'include/messages' tags
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
