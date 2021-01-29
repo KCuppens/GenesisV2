@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
-from .views import LoginView
+from .views import LoginView,dashboardtable
 
 urlpatterns = [
     url(r'^login/$',LoginView.as_view(),
@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name='reset/password_reset_done.html'),name='password_reset_done'),
     url(r'^reset/complete/$', auth_views.PasswordResetCompleteView.as_view(template_name='reset/password_reset_complete.html'),name='password_reset_complete'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',auth_views.PasswordResetConfirmView.as_view(template_name='reset/password_reset_confirm.html'),name='password_reset_confirm'),
+    url(r'^dashobard/usertable/$',dashboardtable,name="usermanagement"),
 ]

@@ -59,3 +59,6 @@ class LoginView(View):
             return JsonResponse({"blankf":"Username and Password Cant be blank"})
             return render(request,'users/login2.html')
 
+def dashboardtable(request):
+    userr=User.objects.all()
+    return render(request,'users/usermanagement.html',{"users":userr})
