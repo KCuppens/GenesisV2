@@ -1,7 +1,16 @@
 from django.db import models
 import datetime 
 from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
 User = get_user_model()
+
+from django.dispatch import receiver
+try:
+    from apps.history.models import History
+except ImportError:  # pragma: no cover
+    from apps.history.models import History
+
+
 # Create your models here.
 class SeoModel(models.Model):
     meta_title = models.CharField(null=True, max_length=55, blank=True, db_index=True)
@@ -23,3 +32,20 @@ class AdminModel(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_author', null=True,blank=True)
     edited_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_edited_by',null=True, blank=True)
     deletable = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        super(AdminModel, self).save(*args, **kwargs)
+
+    @receiver(post_save)
+    def create_history_record(sender, instance, **kwargs):
+        if kwargs.get('created'):
+            message = _('Er is een %s toegevoegd!').format(s=instance._meta.verbose_name.title())
+            History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
+        elif instance.date_deleted:
+            message = _('Er is een %s verwijderd').format(s=instance._meta.verbose_name.title())
+            History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
+        else:
+            message = _('Er is een %s geüpdate!').format(s=instance._meta.verbose_name.title())
+            History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
+
+
