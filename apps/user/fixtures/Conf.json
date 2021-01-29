@@ -133,13 +133,13 @@
     },
     {
         "model": "conf.configuration",
-        "pk": 12,
+        "pk": 13,
         "fields": {
-            "key_name": "USERS_VERIFY_EMAIL",
-            "title": "Gebruikers moeten hun email verifiëren na registratie",
-            "value": "1",
-            "description": "Gebruikers moeten hun email verifiëren na registratie",
+            "key_name": "USER_LOGIN_TYPE",
+            "title": "Login methode",
+            "value": "email",
+            "description": "De login methode",
             "conf_type": "user"
         }
-    },
+    }
   ]
