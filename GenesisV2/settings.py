@@ -151,7 +151,8 @@ STATICFILES_FINDERS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 IMAGES_DIR = os.path.join(MEDIA_ROOT, 'images')
-
+# for exact login view
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend',]
 
 # EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'

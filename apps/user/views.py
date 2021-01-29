@@ -174,24 +174,32 @@ def activation_complete(request,
 class LoginView(View):
       def get(self,request):
             return render(request,'users/login2.html')
-            
-            
       def post(self,request):
             username=request.POST['username']
             password=request.POST['password']
             
             if username and password:
-                  if User.objects.filter(username=username).exists():
-                        user=authenticate(username=username,password=password)
-                         
-                        if user:
-                              if user.is_superuser or user.is_staff:      
-                                    login(request,user)
-                                    return JsonResponse({"url":reverse('dashboard')})
-                              return JsonResponse({"not_suser":"Sorry You're Not eligible for login"})
-                        return JsonResponse({"errorpass":"Incorrect Password"})
-                  return JsonResponse({"invalup":"Sorry Username and Password is invalid"})
+                  if '@' in username:
+                        if User.objects.filter(email=username).exists():
+                              uname=User.objects.get(email=username).username
+                              user=authenticate(username=uname,password=password)
+                              if user:
+                                    if user.is_superuser or user.is_staff:      
+                                          login(request,user)
+                                          return JsonResponse({"url":reverse('dashboard')})
+                                    return JsonResponse({"not_suser":"Sorry You're Not eligible for login"})
+                              return JsonResponse({"errorpass":"Incorrect Password"})
+                        return JsonResponse({"invalup":"Sorry Email and Password is invalid"})
+                  else:
+                        if User.objects.filter(username=username).exists():
+                              user=authenticate(username=username,password=password)
+                              if user:
+                                    if user.is_superuser or user.is_staff:      
+                                          login(request,user)
+                                          return JsonResponse({"url":reverse('dashboard')})
+                                    return JsonResponse({"not_suser":"Sorry You're Not eligible for login"})
+                              return JsonResponse({"errorpass":"Incorrect Password"})
+                        return JsonResponse({"invalup":"Sorry Username and Password is invalid"})
             return JsonResponse({"blankf":"Username and Password Cant be blank"})
             return render(request,'users/login2.html')
-
 
