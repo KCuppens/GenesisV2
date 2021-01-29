@@ -9,7 +9,7 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
-
+from django.http import JsonResponse
 from .compat import urlsafe_base64_decode
 from apps.conf.utils import get_config
 from .signals import user_activated, user_registered
@@ -170,3 +170,28 @@ def activation_complete(request,
     if extra_context is not None:  # pragma: no cover
         context.update(extra_context)
     return TemplateResponse(request, template_name, context)
+
+class LoginView(View):
+      def get(self,request):
+            return render(request,'users/login2.html')
+            
+            
+      def post(self,request):
+            username=request.POST['username']
+            password=request.POST['password']
+            
+            if username and password:
+                  if User.objects.filter(username=username).exists():
+                        user=authenticate(username=username,password=password)
+                         
+                        if user:
+                              if user.is_superuser or user.is_staff:      
+                                    login(request,user)
+                                    return JsonResponse({"url":reverse('dashboard')})
+                              return JsonResponse({"not_suser":"Sorry You're Not eligible for login"})
+                        return JsonResponse({"errorpass":"Incorrect Password"})
+                  return JsonResponse({"invalup":"Sorry Username and Password is invalid"})
+            return JsonResponse({"blankf":"Username and Password Cant be blank"})
+            return render(request,'users/login2.html')
+
+
