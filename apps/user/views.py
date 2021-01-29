@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.contrib import messages
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, authenticate
 from django.urls import reverse
 from django.shortcuts import redirect, resolve_url
 from django.template.response import TemplateResponse
@@ -15,7 +15,7 @@ from apps.conf.utils import get_config
 from .signals import user_activated, user_registered
 from .utils import EmailActivationTokenGenerator, send_activation_email
 from django.views.generic import View
-
+User = get_user_model()
 try:
     from django.contrib.sites.shortcuts import get_current_site
 except ImportError:  # pragma: no cover

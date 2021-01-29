@@ -13,7 +13,6 @@ Login
                     {% include 'include/messages.html' %}
 
                         <h1 class="">Log In to <a href="index.html"><span class="brand-name">Kobe</span></a></h1>
-                        <p class="signup-link">New Here? <a href="{% url 'register' %}">Create an account</a></p>
                         <form action={% url 'login' %} class="text-left" id="loginform" method="POST" accept-charset="utf-8">
                         
                         {% csrf_token %}

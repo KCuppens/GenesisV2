@@ -3,6 +3,7 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 User = get_user_model()
+from django.utils.translation import ugettext as _
 
 from django.dispatch import receiver
 try:
@@ -38,14 +39,16 @@ class AdminModel(models.Model):
 
     @receiver(post_save)
     def create_history_record(sender, instance, **kwargs):
-        if kwargs.get('created'):
-            message = _('Er is een %s toegevoegd!').format(s=instance._meta.verbose_name.title())
-            History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
-        elif instance.date_deleted:
-            message = _('Er is een %s verwijderd').format(s=instance._meta.verbose_name.title())
-            History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
-        else:
-            message = _('Er is een %s geüpdate!').format(s=instance._meta.verbose_name.title())
-            History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
+        apps = ['User','DashboardConfiguration']
+        if instance.__class__.__name__ in apps:
+            if kwargs.get('created'):
+                message = _('Er is een %s toegevoegd!').format(s=instance._meta.verbose_name.title())
+                History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
+            elif instance.date_deleted:
+                message = _('Er is een %s verwijderd').format(s=instance._meta.verbose_name.title())
+                History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
+            else:
+                message = _('Er is een %s geüpdate!').format(s=instance._meta.verbose_name.title())
+                History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
 
 

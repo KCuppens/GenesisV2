@@ -29,6 +29,9 @@ class User(AbstractUser):
     phone = models.CharField(max_length=255, null=True, blank=True)
     delivery_address = models.ForeignKey(DeliveryAddress, on_delete=models.CASCADE, null=True, blank=True)
     invoice_address = models.ForeignKey(InvoiceAddress, on_delete=models.CASCADE, null=True, blank=True)
+
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_deleted = models.DateTimeField(null=True, blank=True)
     #permissions
     #country
     #address
