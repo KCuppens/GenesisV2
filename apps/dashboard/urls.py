@@ -1,12 +1,10 @@
 from django.conf.urls import url
 from django.urls import path, include
-from .views import test
+from apps.dashboard.views import DashboardView
 app_name = 'dashboard'
 urlpatterns = [
-    #priority
-    url(r'^configuration/$', test, name='test'),
     #dashboard urls
-
+    url(r'^$', DashboardView.as_view(), name='dashboard'),
     #apps urls
 
 ]
