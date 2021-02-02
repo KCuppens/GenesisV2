@@ -1,0 +1,68 @@
+{% extends 'dashboardbase.html' %}
+{% block breadcumb %}
+<li class="menu single-menu">
+                        <a href="#starter-kit" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle autodroprown">
+                            <div class="">
+                                <i class="fas fa-users fa-lg" ></i>
+                                <span>Groups</span>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </a>
+                        
+                    </li>
+                    <li class="menu single-menu active">
+                        <a href="#starter-kit" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle autodroprown">
+                            <div class="">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                <span>Add Group</span>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </a>
+                        
+                    </li>
+{% endblock breadcumb %}
+{% block content %}
+
+<div class="row mt-5">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mt-0 header-title">Add New Group</h4>
+                <form class="form" action="" name="form" method="post" enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <div class="col-sm-3 ml-2">
+                            {{ form.name}}
+                            {% if form.name.errors %}
+                                <div class="invalid-feedback">
+                                    {{form.name.errors}}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                     
+                        {{ form.permissions }}
+                        {% if form.permissions.errors %}
+                            <div class="invalid-feedback">
+                                {{form.permissions.errors}}
+                            </div>
+                        {% endif %}
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-10 ml-right">
+                            <button type="submit"
+                                    class="btn btn-success">Save</button>
+                            <a href="{% url 'group' %}"
+                               class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div><!--end col-->
+</div><!--end row-->
+
+{% endblock content %}

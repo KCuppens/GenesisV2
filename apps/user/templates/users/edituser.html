@@ -1,0 +1,126 @@
+{% extends 'dashboardbase.html' %}
+{% block title %}
+Edit User
+{% endblock title %}
+{% block breadcumb %}
+
+<li class="menu single-menu active">
+                        <a href="#starter-kit" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle autodroprown">
+                            <div class="">
+                                <i class="fas fa-user-edit fa-lg" style="color:cyan"></i>
+                                <span>Edit {% if Profile.username %}{{Profile.username}} {% else %} {% endif %}</span>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </a>
+                        
+                    </li>
+{% endblock breadcumb %}
+{% block content %}
+<label  for='picture' class="mt-2 ml-4">
+    {% if Profile.avatar %}
+    <img style="height:100px;width:100px;border-radius:5px" id="avatar" src="{{Profile.avatar.url}}">
+    {% else %}
+    <img style="height:100px;width:100px;border-radius:5px" id="avatar" src="https://i.stack.imgur.com/YQu5k.png">
+    {% endif %}
+</label>
+<form class="form" action="{% url 'edituser' Profile.pk %}" name="form" method="post" enctype='multipart/form-data'>
+{% csrf_token %}
+    
+    
+    <div class="mt-2 ml-2">
+        <div class="form-row ml-2">
+        <div class="form-group mb-4 col-md-2">
+            <label for="validationCustom01">First name</label>
+            {{form.first_name}}
+            <div class="invalid-feedback">
+                {{form.first_name.errors}}
+            </div>
+        </div>
+        <div class="col-md-2 mb-4">
+            <label for="validationCustom02">Last name</label>
+            {{form.last_name}}
+            <div class="invalid-feedback">
+                {{form.last_name.errors}}
+            </div>
+        </div>
+        <div class="col-md-2 mb-4">
+            <label for="validationCustom02">Username</label>
+            {{form.username}}
+            <div class="invalid-feedback">
+                {{form.username.errors}}
+            </div>
+        </div>
+        
+        <div class="col-md-2 mb-6">
+            <label for="validationCustomUsername">Email</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                </div>
+                {{form.email}}
+                <div class="invalid-feedback">
+                    {{form.email.error}}
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="form-row ml-2">
+        <div class="col-sm-2">
+        <label for="validationCustom02">User Type</label>
+        {{form.user_type}}
+        </div>
+        <div class="col-xl-2 mb-xl-0 mb-2">
+        <label for="validationCustom02">Company Vat</label>
+        {{form.company_vat}}
+        </div>
+        <div class="col-md-2 mb-4">
+            <label for="validationCustom02">Profession</label>
+            {{form.profession}}
+        </div>
+        <div class="col-md-2 mb-4">
+            <label for="validationCustom02">Birthdate</label>
+            {{form.birthdate}}
+        </div>
+        <div class="col-md-2 mb-4">
+            <label for="validationCustom02">Phone</label>
+            {{form.phone}}
+        </div>
+        </div>
+        <div class="col-sm-10">
+            <label for="validationCustom02" class="col-sm-2 col-form-label col-form-label-sm"></label>
+        </div>
+        <div class="ml-2">
+        <div class="col-sm-10">
+        {{form.is_active}}
+            <label for="validationCustom02" class="col-sm-2 col-form-label col-form-label-sm">is_Active</label>
+        </div>
+        <div class="col-sm-10">
+        {{form.is_staff}}
+            <label for="validationCustom03" class="col-sm-2 col-form-label col-form-label-sm">is_Staff</label>
+        </div>
+        <div class="col-sm-10">
+        {{form.front_client}}
+            <label for="validationCustom04" class="col-sm-2 col-form-label col-form-label-sm">Front Client</label>
+        </div>
+        
+        </div>
+        <div class="col-md-2 mb-4 mt-2">
+            <h4>Groups</h4>
+            
+            {{form.groups}}
+        </div>
+
+        
+    </div>
+
+    <input type="file" style="visibility:hidden" onchange="document.getElementById('avatar').src = window.URL.createObjectURL(this.files[0])" name="pic" accept=".gif,.jpg,.png,.tif|image/*" id='picture'><br/>
+    
+    <div class="col-sm-10 ml-right">
+                            <button type="submit"
+                                    class="btn btn-success">Save</button>
+                            <a href="{% url 'usermanagement' %}"
+                               class="btn btn-danger">Cancel</a>
+                        </div>
+</form>
+{% endblock content%}
+

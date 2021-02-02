@@ -15,6 +15,7 @@
     <link href="{% static 'admin/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'admin/css/plugins.css' %}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" >
     <link rel="stylesheet" type="text/css" href="{% static 'admin/plugins/table/datatable/datatables.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms/theme-checkbox-radio.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'admin/plugins/table/datatable/dt-global_style.css' %}">
@@ -286,8 +287,10 @@
 
     </div>
     <!-- END MAIN CONTAINER -->
-
+    {% block js %}
+    {% endblock js %}
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/fontawesome.min.js" integrity="sha512-pafh0hrrT9ZPZl/jx0cwyp7N2+ozgQf+YK94jSupHHLD2lcEYTLxEju4mW/2sbn4qFEfxJGZyIX/yJiQvgglpw==" crossorigin="anonymous"></script>
     <script src="{% static 'admin/js/libs/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'admin/bootstrap/js/popper.min.js' %}"></script>
     <script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>

@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-
-from .views import LoginView,dashboardtable
+from django.urls import path
+from .views import LoginView,dashboardtable,edit_user,delete_user,my_profile
 
 urlpatterns = [
     url(r'^login/$',LoginView.as_view(),
@@ -27,4 +27,11 @@ urlpatterns = [
     url(r'^reset/complete/$', auth_views.PasswordResetCompleteView.as_view(template_name='reset/password_reset_complete.html'),name='password_reset_complete'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',auth_views.PasswordResetConfirmView.as_view(template_name='reset/password_reset_confirm.html'),name='password_reset_confirm'),
     url(r'^dashobard/usertable/$',dashboardtable,name="usermanagement"),
+    path('user/edit/<int:pk>/',edit_user,name="edituser"),
+    path('user/delete/<int:pk>/',delete_user,name="deleteuser"),
+    path('my-profile/',my_profile,name="my-profile"),
+    path('group/',group_view,name="group"),
+    path('group/add/',add_group_view,name="addgroup"),
+    path('group/<pk>/',edit_group_view,name="editgroup"),
+    path('group/<pk>/',delete_group_view,name="deletegroup"),
 ]

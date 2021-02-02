@@ -102,3 +102,67 @@ class RegistrationFormHoneypot(RegistrationForm):
     for Spam Prevention
     """
     accept_terms = HoneyPotField()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from django.contrib.auth.models import Group, Permission
+from .models import User,USER_TYPES
+
+
+
+class UserEditForm(forms.ModelForm):
+    
+    profession = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Your First Name',"class":"form-control"}))
+    last_name=forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter Your Last Name',"class":"form-control"}))
+    username = forms.CharField(label="Username",widget=forms.TextInput(attrs={'placeholder': 'Username',"class":"form-control"}))
+    email = forms.EmailField(required=False,widget=forms.TextInput(attrs={"class":"form-control"}))
+
+    is_active = forms.BooleanField(initial=True,widget=forms.CheckboxInput())
+    front_client = forms.BooleanField(initial=True,widget=forms.CheckboxInput())
+    groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(),widget=forms.CheckboxSelectMultiple())
+    is_staff = forms.BooleanField(initial=True, required=False,widget=forms.CheckboxInput())
+    user_type=forms.ChoiceField(choices=USER_TYPES,widget=forms.Select(attrs={"class":"form-control form-control-lg"}))
+    company_vat=forms.ChoiceField(choices=["NL","BE"],widget=forms.Select(attrs={"class":"form-control form-control-lg"}))
+    birthdate=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
+    phone=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
+    
+    
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.Meta.fields:
+            self.fields[field].required = False
+
+
+    class Meta:
+        model = User
+        fields = ('username','first_name', 'last_name','email','phone','birthdate','profession',
+        'groups','is_active','is_staff','user_type','company_name','company_vat','front_client')
+
+    
+        
+class GroupForm(forms.ModelForm):
+    name = forms.CharField(required=True,widget=forms.TextInput(
+                                   attrs={'placeholder': 'Enter Group Name','class':'form-control'}))
+    permissions = forms.ModelMultipleChoiceField(
+        queryset=Permission.objects.all(), required=False,
+        widget=forms.CheckboxSelectMultiple()
+        
+    )
+
+    class Meta:
+        model = Group
+        fields = ('name', 'permissions')

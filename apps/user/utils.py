@@ -135,3 +135,17 @@ def send_activation_email(
             email_message.attach_alternative(html_email, 'text/html')
 
         email_message.send()
+
+
+
+
+
+
+
+
+from django.contrib.auth.models import Group,Permission
+
+
+def has_perms(user,permission=None):
+      permissions=Permission.objects.get(name=permission)
+      return user.has_perm(permissions)

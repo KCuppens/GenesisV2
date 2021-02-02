@@ -1,0 +1,104 @@
+{% extends 'dashboardadmin/base.html' %}
+{% load i18n django_bootstrap_breadcrumbs %}
+{% block admin %}
+{% block breadcrumbs %}
+    {{block.super}}
+    {% breadcrumb "Profiel" "user:profile"%}
+{% endblock %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body  met-pro-bg">
+                <div class="met-profile">
+                    <div class="row">
+                        <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                            <div class="met-profile-main">
+                                <div class="met-profile-main-pic">
+                                    <img src="../assets/images/users/user-4.jpg" alt="" class="rounded-circle">
+                                    <span class="fro-profile_main-pic-change">
+                                        <i class="fas fa-camera"></i>
+                                    </span>
+                                </div>
+                                <div class="met-profile_user-detail">
+                                    <h5 class="met-user-name">{{request.user}}</h5>
+                                    <p class="mb-0 met-user-name-post">{{profile.profession}}</p>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4 ml-auto">
+                            <ul class="list-unstyled personal-detail">
+                                {% if profile.phone %} <li class=""><i class="dripicons-phone mr-2 text-info font-18"></i> <b>{% trans 'Telefoon' %}</b> {{profile.phone}}</li> {% endif %}
+                                <li class="mt-2"><i class="dripicons-mail text-info font-18 mt-2 mr-2"></i> <b> {% trans 'Email' %} </b>{{user.email}}</li>
+                            </ul>
+                            <div class="button-list btn-social-icon">
+                                {% if profile.facebook %}
+                                    <a href="{{profile.facebook}}" class="btn btn-blue btn-circle">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                {% endif %}
+                                {% if profile.twitter %}
+                                    <a href="{{profile.twitter}}" class="btn btn-secondary btn-circle ml-2">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                {% endif %}
+                                {% if profile.instagram %}
+                                    <a href="{{profile.instagram}}" class="btn btn-pink btn-circle  ml-2">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div><!--end col-->
+                    </div><!--end row-->
+                </div><!--end f_profile-->
+            </div><!--end card-body-->
+            <div class="card-body">
+                <ul class="nav nav-pills mb-0" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="activity_detail_tab" data-toggle="pill" href="#activity_detail">{% trans 'Activiteit' %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="settings_detail_tab" data-toggle="pill" href="#settings_detail">{% trans 'Instellingen' %}</a>
+                    </li>
+                </ul>
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div><!--end col-->
+    </div><!--end row-->
+    <div class="row">
+        <div class="col-12">
+            <div class="tab-pane fade show active" id="activity_detail">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title mt-0 mb-4">{% trans 'Activiteit' %}</h4>
+                                <div class="slimscroll profile-activity-height">
+                                    <div class="activity">
+                                        {% for activity in history_by_user %}
+                                            <div class="activity-info">
+                                                <div class="icon-info-activity">
+                                                    <i class="{{activity.icon}} bg-soft-{{activity.bootstrap_color}}"></i>
+                                                </div>
+                                                <div class="activity-info-text mb-2">
+                                                    <div class="mb-1">
+                                                        <small class="text-muted d-block mb-1">{{activity.date_created|date:'Y-m-d H:i'}}</small>
+                                                        <a href="#" class="m-0 w-75">{{activity.description}}</a>
+                                                    </div>
+                                                    <p class="text-muted mb-2 text-truncate">{{activity.user}}</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div><!--end activity-->
+                                </div><!--crypot dash activity-->
+                            </div><!--end card-body-->
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end education detail-->
+        </div><!--end tab-content-->
+
+    </div><!--end col-->
+    </div><!--end row-->
+
+</div><!-- container -->
+{% endblock admin %}
