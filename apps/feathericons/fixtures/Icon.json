@@ -1,0 +1,2291 @@
+[
+    {
+        "model": "conf.icon",
+        "pk": 1,
+        "fields": {
+            "name": "Activiteit",
+            "icon": "activity"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 2,
+        "fields": {
+            "name": "Airplay",
+            "icon": "airplay"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 3,
+        "fields": {
+            "name": "Notificatie cirkel",
+            "icon": "alert-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 4,
+        "fields": {
+            "name": "Notificatie achthoek",
+            "icon": "alert-octagon"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 5,
+        "fields": {
+            "name": "Notificatie driehoek",
+            "icon": "alert-triangle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 6,
+        "fields": {
+            "name": "Centreer",
+            "icon": "align-center"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 7,
+        "fields": {
+            "name": "Align justify",
+            "icon": "align-justify"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 8,
+        "fields": {
+            "name": "Align left",
+            "icon": "align-left"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 9,
+        "fields": {
+            "name": "Align right",
+            "icon": "align-right"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 10,
+        "fields": {
+            "name": "Anker",
+            "icon": "anchor"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 11,
+        "fields": {
+            "name": "Aperture",
+            "icon": "aperture"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 12,
+        "fields": {
+            "name": "Archief",
+            "icon": "archive"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 13,
+        "fields": {
+            "name": "Arrow down circle",
+            "icon": "arrow-down-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 14,
+        "fields": {
+            "name": "Arrow down left",
+            "icon": "arrow-down-left"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 15,
+        "fields": {
+            "name": "Arrow down right",
+            "icon": "arrow-down-right"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 16,
+        "fields": {
+            "name": "Arrow down",
+            "icon": "arrow-down"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 17,
+        "fields": {
+            "name": "Arrow left circle",
+            "icon": "arrow-left-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 18,
+        "fields": {
+            "name": "Arrow left",
+            "icon": "arrow-left"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 19,
+        "fields": {
+            "name": "Arrow right circle",
+            "icon": "arrow-right-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 20,
+        "fields": {
+            "name": "Arrow right",
+            "icon": "arrow-right"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 21,
+        "fields": {
+            "name": "Arrow up circle",
+            "icon": "arrow-up-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 22,
+        "fields": {
+            "name": "Arrow up left",
+            "icon": "arrow-up-left"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 23,
+        "fields": {
+            "name": "Arrow up right",
+            "icon": "arrow-up-right"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 24,
+        "fields": {
+            "name": "Arrow up",
+            "icon": "arrow-up"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 25,
+        "fields": {
+            "name": "At sign",
+            "icon": "at-sign"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 26,
+        "fields": {
+            "name": "Award",
+            "icon": "award"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 27,
+        "fields": {
+            "name": "Bar chart 2",
+            "icon": "bar-chart-2"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 28,
+        "fields": {
+            "name": "Bar chart",
+            "icon": "bar-chart"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 29,
+        "fields": {
+            "name": "Battery charging",
+            "icon": "battery-charging"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 30,
+        "fields": {
+            "name": "Battery",
+            "icon": "battery"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 31,
+        "fields": {
+            "name": "Bell off",
+            "icon": "bell-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 32,
+        "fields": {
+            "name": "Bell",
+            "icon": "bell"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 33,
+        "fields": {
+            "name": "Bluetooth",
+            "icon": "bluetooth"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 34,
+        "fields": {
+            "name": "Bold",
+            "icon": "bold"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 35,
+        "fields": {
+            "name": "Book open",
+            "icon": "book-open"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 36,
+        "fields": {
+            "name": "Book",
+            "icon": "book"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 37,
+        "fields": {
+            "name": "Bookmark",
+            "icon": "bookmark"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 38,
+        "fields": {
+            "name": "Box",
+            "icon": "box"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 39,
+        "fields": {
+            "name": "Briefcase",
+            "icon": "briefcase"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 40,
+        "fields": {
+            "name": "Calendar",
+            "icon": "calendar"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 41,
+        "fields": {
+            "name": "Camera off",
+            "icon": "camera-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 42,
+        "fields": {
+            "name": "Camera",
+            "icon": "camera"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 43,
+        "fields": {
+            "name": "Cast",
+            "icon": "cast"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 44,
+        "fields": {
+            "name": "Check cirkel",
+            "icon": "check-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 45,
+        "fields": {
+            "name": "Check vierkant",
+            "icon": "check-square"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 46,
+        "fields": {
+            "name": "Check",
+            "icon": "check"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 47,
+        "fields": {
+            "name": "Chevron down",
+            "icon": "chevron-down"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 48,
+        "fields": {
+            "name": "Chevron left",
+            "icon": "chevron-left"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 49,
+        "fields": {
+            "name": "Chevron right",
+            "icon": "chevron-right"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 50,
+        "fields": {
+            "name": "Chrevron up",
+            "icon": "chevron-up"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 51,
+        "fields": {
+            "name": "Chevrons down",
+            "icon": "chevrons-down"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 52,
+        "fields": {
+            "name": "Chevrons left",
+            "icon": "chevrons-left"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 53,
+        "fields": {
+            "name": "Chevrons right",
+            "icon": "chevrons-right"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 54,
+        "fields": {
+            "name": "Chrevrons up",
+            "icon": "chevrons-up"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 55,
+        "fields": {
+            "name": "Chrome",
+            "icon": "chrome"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 56,
+        "fields": {
+            "name": "Cirkel",
+            "icon": "circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 57,
+        "fields": {
+            "name": "Clipboard",
+            "icon": "clipboard"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 58,
+        "fields": {
+            "name": "Klok",
+            "icon": "clock"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 59,
+        "fields": {
+            "name": "Cloud drizzle",
+            "icon": "cloud-drizzle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 60,
+        "fields": {
+            "name": "Cloud lightning",
+            "icon": "cloud-lightning"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 61,
+        "fields": {
+            "name": "Cloud off",
+            "icon": "cloud-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 62,
+        "fields": {
+            "name": "Cloud rain",
+            "icon": "cloud-rain"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 63,
+        "fields": {
+            "name": "Cloud snow",
+            "icon": "cloud-snow"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 64,
+        "fields": {
+            "name": "Cloud",
+            "icon": "cloud"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 65,
+        "fields": {
+            "name": "Code",
+            "icon": "code"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 66,
+        "fields": {
+            "name": "Codepen",
+            "icon": "codepen"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 67,
+        "fields": {
+            "name": "Codesandbox",
+            "icon": "codesandbox"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 68,
+        "fields": {
+            "name": "Koffie",
+            "icon": "coffee"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 69,
+        "fields": {
+            "name": "Kolommen",
+            "icon": "columns"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 70,
+        "fields": {
+            "name": "Command",
+            "icon": "command"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 71,
+        "fields": {
+            "name": "Compass",
+            "icon": "compass"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 72,
+        "fields": {
+            "name": "Copy",
+            "icon": "copy"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 73,
+        "fields": {
+            "name": "Corner down left",
+            "icon": "corner-down-left"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 74,
+        "fields": {
+            "name": "Corner down right",
+            "icon": "corner-down-right"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 75,
+        "fields": {
+            "name": "Corner left down",
+            "icon": "corner-left-down"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 76,
+        "fields": {
+            "name": "Corner left up",
+            "icon": "corner-left-up"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 77,
+        "fields": {
+            "name": "Corner right down",
+            "icon": "corner-right-down"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 78,
+        "fields": {
+            "name": "Corner right up",
+            "icon": "corner-right-up"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 79,
+        "fields": {
+            "name": "Corner up left",
+            "icon": "corner-up-left"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 80,
+        "fields": {
+            "name": "Corner up right",
+            "icon": "corner-up-right"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 81,
+        "fields": {
+            "name": "CPU",
+            "icon": "cpu"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 82,
+        "fields": {
+            "name": "Kredietkaart",
+            "icon": "credit-card"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 83,
+        "fields": {
+            "name": "Crop",
+            "icon": "crop"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 84,
+        "fields": {
+            "name": "Crosshair",
+            "icon": "crosshair"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 85,
+        "fields": {
+            "name": "Database",
+            "icon": "database"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 86,
+        "fields": {
+            "name": "Delete",
+            "icon": "delete"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 87,
+        "fields": {
+            "name": "Disc",
+            "icon": "disc"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 88,
+        "fields": {
+            "name": "Divide cirkel",
+            "icon": "divide-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 89,
+        "fields": {
+            "name": "Divide vierkant",
+            "icon": "divide-square"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 90,
+        "fields": {
+            "name": "Divide",
+            "icon": "divide"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 91,
+        "fields": {
+            "name": "Dollar sign",
+            "icon": "dollar-sign"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 92,
+        "fields": {
+            "name": "Download cloud",
+            "icon": "download-cloud"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 93,
+        "fields": {
+            "name": "Download",
+            "icon": "download"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 94,
+        "fields": {
+            "name": "Dribble",
+            "icon": "dribble"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 95,
+        "fields": {
+            "name": "Droplet",
+            "icon": "droplet"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 96,
+        "fields": {
+            "name": "Aanpassen 2",
+            "icon": "edit-2"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 97,
+        "fields": {
+            "name": "Aanpassen 3",
+            "icon": "edit-3"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 98,
+        "fields": {
+            "name": "Aanpassen",
+            "icon": "edit"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 99,
+        "fields": {
+            "name": "Externe link",
+            "icon": "external-link"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 100,
+        "fields": {
+            "name": "Oog uit",
+            "icon": "eye-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 101,
+        "fields": {
+            "name": "Oog",
+            "icon": "eye"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 102,
+        "fields": {
+            "name": "Facebook",
+            "icon": "facebook"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 103,
+        "fields": {
+            "name": "Fast forward",
+            "icon": "fast-forward"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 104,
+        "fields": {
+            "name": "Veer",
+            "icon": "feather"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 105,
+        "fields": {
+            "name": "Figma",
+            "icon": "figma"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 106,
+        "fields": {
+            "name": "Bestand minus",
+            "icon": "file-minus"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 107,
+        "fields": {
+            "name": "Bestand plus",
+            "icon": "file-plus"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 108,
+        "fields": {
+            "name": "Bestandtekst",
+            "icon": "file-text"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 109,
+        "fields": {
+            "name": "Bestand",
+            "icon": "file"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 110,
+        "fields": {
+            "name": "Film",
+            "icon": "film"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 111,
+        "fields": {
+            "name": "Filter",
+            "icon": "filter"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 112,
+        "fields": {
+            "name": "Vlag",
+            "icon": "flag"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 113,
+        "fields": {
+            "name": "Folder minus",
+            "icon": "folder-minus"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 114,
+        "fields": {
+            "name": "Folder plus",
+            "icon": "folder-plus"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 115,
+        "fields": {
+            "name": "Folder",
+            "icon": "folder"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 116,
+        "fields": {
+            "name": "Framer",
+            "icon": "framer"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 117,
+        "fields": {
+            "name": "Frown",
+            "icon": "frown"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 118,
+        "fields": {
+            "name": "Gift",
+            "icon": "gift"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 119,
+        "fields": {
+            "name": "Git branch",
+            "icon": "git-branch"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 120,
+        "fields": {
+            "name": "Git commit",
+            "icon": "git-commit"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 121,
+        "fields": {
+            "name": "Git merge",
+            "icon": "git-merge"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 122,
+        "fields": {
+            "name": "Git pull request",
+            "icon": "git-pull-request"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 123,
+        "fields": {
+            "name": "Github",
+            "icon": "github"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 124,
+        "fields": {
+            "name": "Gitlab",
+            "icon": "gitlab"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 125,
+        "fields": {
+            "name": "Globe",
+            "icon": "globe"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 126,
+        "fields": {
+            "name": "Grid",
+            "icon": "grid"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 127,
+        "fields": {
+            "name": "Harddisk",
+            "icon": "hard-drive"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 128,
+        "fields": {
+            "name": "Hash",
+            "icon": "hash"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 129,
+        "fields": {
+            "name": "Headphone",
+            "icon": "headphones"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 130,
+        "fields": {
+            "name": "Hart",
+            "icon": "heart"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 131,
+        "fields": {
+            "name": "Help cirkel",
+            "icon": "help-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 132,
+        "fields": {
+            "name": "Zeshoek",
+            "icon": "hexagon"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 133,
+        "fields": {
+            "name": "Home",
+            "icon": "home"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 134,
+        "fields": {
+            "name": "Image",
+            "icon": "image"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 135,
+        "fields": {
+            "name": "Inbox",
+            "icon": "inbox"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 136,
+        "fields": {
+            "name": "Info",
+            "icon": "info"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 137,
+        "fields": {
+            "name": "Instagram",
+            "icon": "instagram"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 138,
+        "fields": {
+            "name": "Italic",
+            "icon": "italic"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 139,
+        "fields": {
+            "name": "Sleutel",
+            "icon": "key"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 140,
+        "fields": {
+            "name": "Layers",
+            "icon": "layers"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 141,
+        "fields": {
+            "name": "Layout",
+            "icon": "layout"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 142,
+        "fields": {
+            "name": "Life buoy",
+            "icon": "life-buoy"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 143,
+        "fields": {
+            "name": "Link 2",
+            "icon": "link-2"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 144,
+        "fields": {
+            "name": "Link",
+            "icon": "link"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 145,
+        "fields": {
+            "name": "Linkedin",
+            "icon": "linkedin"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 146,
+        "fields": {
+            "name": "List",
+            "icon": "list"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 147,
+        "fields": {
+            "name": "Loader",
+            "icon": "loader"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 148,
+        "fields": {
+            "name": "Vergrendelt",
+            "icon": "lock"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 149,
+        "fields": {
+            "name": "Inloggen",
+            "icon": "log-in"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 150,
+        "fields": {
+            "name": "Uitloggen",
+            "icon": "log-out"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 151,
+        "fields": {
+            "name": "Mail",
+            "icon": "mail"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 152,
+        "fields": {
+            "name": "Map in",
+            "icon": "map-in"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 153,
+        "fields": {
+            "name": "Map",
+            "icon": "map"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 154,
+        "fields": {
+            "name": "Maximize 2",
+            "icon": "maximize-2"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 155,
+        "fields": {
+            "name": "Maximize",
+            "icon": "maximize"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 156,
+        "fields": {
+            "name": "Meh",
+            "icon": "meh"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 157,
+        "fields": {
+            "name": "Menu",
+            "icon": "menu"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 158,
+        "fields": {
+            "name": "Cirkel bericht",
+            "icon": "message-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 159,
+        "fields": {
+            "name": "Vierkant bericht",
+            "icon": "message-square"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 160,
+        "fields": {
+            "name": "Mic off",
+            "icon": "mic-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 161,
+        "fields": {
+            "name": "Mic",
+            "icon": "mic"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 162,
+        "fields": {
+            "name": "Minimize 2",
+            "icon": "minimize-2"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 163,
+        "fields": {
+            "name": "Minimize",
+            "icon": "minimize"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 164,
+        "fields": {
+            "name": "Minus cirkel",
+            "icon": "minus-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 165,
+        "fields": {
+            "name": "Minus vierkant",
+            "icon": "minus-square"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 166,
+        "fields": {
+            "name": "Minus",
+            "icon": "minus"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 167,
+        "fields": {
+            "name": "Monitor",
+            "icon": "monitor"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 168,
+        "fields": {
+            "name": "Maan",
+            "icon": "moon"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 169,
+        "fields": {
+            "name": "More horizontal",
+            "icon": "more-horizontal"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 170,
+        "fields": {
+            "name": "More vertical",
+            "icon": "more-vertical"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 171,
+        "fields": {
+            "name": "Mouse pointer",
+            "icon": "mouse-pointer"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 172,
+        "fields": {
+            "name": "Move",
+            "icon": "move"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 173,
+        "fields": {
+            "name": "Muziek",
+            "icon": "music"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 174,
+        "fields": {
+            "name": "Navigatie 2",
+            "icon": "navigation-2"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 175,
+        "fields": {
+            "name": "Navigatie",
+            "icon": "navigation"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 176,
+        "fields": {
+            "name": "Achthoek",
+            "icon": "octagon"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 177,
+        "fields": {
+            "name": "Package",
+            "icon": "package"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 178,
+        "fields": {
+            "name": "Paperclip",
+            "icon": "paperclip"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 179,
+        "fields": {
+            "name": "Pause cirkel",
+            "icon": "pause-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 180,
+        "fields": {
+            "name": "Pause",
+            "icon": "pause"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 181,
+        "fields": {
+            "name": "Pen tool",
+            "icon": "pen-tool"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 182,
+        "fields": {
+            "name": "Percent",
+            "icon": "percent"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 183,
+        "fields": {
+            "name": "Telefoongesprek",
+            "icon": "phone-call"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 184,
+        "fields": {
+            "name": "Telefoon doorverbonden",
+            "icon": "phone-forwarded"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 185,
+        "fields": {
+            "name": "Inkomende telefoon",
+            "icon": "phone-incoming"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 186,
+        "fields": {
+            "name": "Gemiste telefoon",
+            "icon": "phone-missed"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 187,
+        "fields": {
+            "name": "Telefoon uit",
+            "icon": "phone-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 188,
+        "fields": {
+            "name": "Uitgaande telefoon",
+            "icon": "phone-outgoing"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 189,
+        "fields": {
+            "name": "Telefoon",
+            "icon": "phone"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 190,
+        "fields": {
+            "name": "Pie chart",
+            "icon": "pie-chart"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 191,
+        "fields": {
+            "name": "Play cirkel",
+            "icon": "play-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 192,
+        "fields": {
+            "name": "Play",
+            "icon": "play"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 193,
+        "fields": {
+            "name": "Plus cirkel",
+            "icon": "plus-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 194,
+        "fields": {
+            "name": "Plus vierkant",
+            "icon": "plus-square"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 195,
+        "fields": {
+            "name": "Plus",
+            "icon": "plus"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 196,
+        "fields": {
+            "name": "Pocket",
+            "icon": "pocket"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 197,
+        "fields": {
+            "name": "Power",
+            "icon": "power"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 198,
+        "fields": {
+            "name": "Printer",
+            "icon": "printer"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 199,
+        "fields": {
+            "name": "Radio",
+            "icon": "radio"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 200,
+        "fields": {
+            "name": "Refresh counter clockwise",
+            "icon": "refresh-ccw"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 201,
+        "fields": {
+            "name": "Refresh clockwise",
+            "icon": "refresh-cw"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 202,
+        "fields": {
+            "name": "Repeat",
+            "icon": "repeat"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 203,
+        "fields": {
+            "name": "Rewind",
+            "icon": "rewind"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 204,
+        "fields": {
+            "name": "Rotate counterclockwise",
+            "icon": "rotate-ccw"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 205,
+        "fields": {
+            "name": "Rotate clockwise",
+            "icon": "rotate-cw"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 206,
+        "fields": {
+            "name": "RSS",
+            "icon": "rss"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 207,
+        "fields": {
+            "name": "Opslaan",
+            "icon": "save"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 208,
+        "fields": {
+            "name": "Schaar",
+            "icon": "scissors"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 209,
+        "fields": {
+            "name": "Search",
+            "icon": "search"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 210,
+        "fields": {
+            "name": "Versturen",
+            "icon": "send"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 211,
+        "fields": {
+            "name": "Server",
+            "icon": "server"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 212,
+        "fields": {
+            "name": "Instellingen",
+            "icon": "settings"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 213,
+        "fields": {
+            "name": "Share 2",
+            "icon": "share-2"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 214,
+        "fields": {
+            "name": "Share",
+            "icon": "share"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 215,
+        "fields": {
+            "name": "Schild uit",
+            "icon": "shield-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 216,
+        "fields": {
+            "name": "Schild",
+            "icon": "shield"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 217,
+        "fields": {
+            "name": "Shopping bag",
+            "icon": "shopping-bag"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 218,
+        "fields": {
+            "name": "Winkelwagen",
+            "icon": "shopping-cart"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 219,
+        "fields": {
+            "name": "Shuffle",
+            "icon": "shuffle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 220,
+        "fields": {
+            "name": "Sidebar",
+            "icon": "sidebar"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 221,
+        "fields": {
+            "name": "Skip back",
+            "icon": "skip-back"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 222,
+        "fields": {
+            "name": "Skip forward",
+            "icon": "skip-forward"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 223,
+        "fields": {
+            "name": "Slack",
+            "icon": "slack"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 224,
+        "fields": {
+            "name": "Slash",
+            "icon": "slash"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 225,
+        "fields": {
+            "name": "Sliders",
+            "icon": "sliders"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 226,
+        "fields": {
+            "name": "Smartphone",
+            "icon": "smartphone"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 227,
+        "fields": {
+            "name": "Smile",
+            "icon": "smile"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 228,
+        "fields": {
+            "name": "Speaker",
+            "icon": "speaker"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 229,
+        "fields": {
+            "name": "Vierkant",
+            "icon": "square"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 230,
+        "fields": {
+            "name": "Star",
+            "icon": "star"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 231,
+        "fields": {
+            "name": "Stop cirkel",
+            "icon": "stop-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 232,
+        "fields": {
+            "name": "Sun",
+            "icon": "sun"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 233,
+        "fields": {
+            "name": "Sunrise",
+            "icon": "sunrise"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 234,
+        "fields": {
+            "name": "Sunset",
+            "icon": "sunset"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 235,
+        "fields": {
+            "name": "Tablet",
+            "icon": "tablet"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 236,
+        "fields": {
+            "name": "Tag",
+            "icon": "tag"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 237,
+        "fields": {
+            "name": "Target",
+            "icon": "target"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 238,
+        "fields": {
+            "name": "Terminal",
+            "icon": "terminal"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 239,
+        "fields": {
+            "name": "Thermometer",
+            "icon": "thermometer"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 240,
+        "fields": {
+            "name": "Duim omlaag",
+            "icon": "thumbs-down"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 241,
+        "fields": {
+            "name": "Duim omhoog",
+            "icon": "thumbs-up"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 242,
+        "fields": {
+            "name": "Toggle left",
+            "icon": "toggle-left"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 243,
+        "fields": {
+            "name": "Toggle right",
+            "icon": "toggle-right"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 244,
+        "fields": {
+            "name": "Tool",
+            "icon": "tool"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 245,
+        "fields": {
+            "name": "Trash 2",
+            "icon": "trash-2"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 246,
+        "fields": {
+            "name": "Trash",
+            "icon": "trash"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 247,
+        "fields": {
+            "name": "Trello",
+            "icon": "trello"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 248,
+        "fields": {
+            "name": "Trending down",
+            "icon": "trending-down"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 249,
+        "fields": {
+            "name": "Trending up",
+            "icon": "trending-up"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 250,
+        "fields": {
+            "name": "Driehoek",
+            "icon": "triangle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 251,
+        "fields": {
+            "name": "Vrachtwagen",
+            "icon": "truck"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 252,
+        "fields": {
+            "name": "TV",
+            "icon": "tv"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 253,
+        "fields": {
+            "name": "Twitch",
+            "icon": "twitch"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 254,
+        "fields": {
+            "name": "Twitter",
+            "icon": "twitter"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 255,
+        "fields": {
+            "name": "Type",
+            "icon": "type"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 256,
+        "fields": {
+            "name": "Paraplu",
+            "icon": "umbrella"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 257,
+        "fields": {
+            "name": "Onderstreept",
+            "icon": "underline"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 258,
+        "fields": {
+            "name": "Ontgrendelen",
+            "icon": "unlock"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 259,
+        "fields": {
+            "name": "Upload cloud",
+            "icon": "upload-cloud"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 260,
+        "fields": {
+            "name": "Upload",
+            "icon": "upload"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 261,
+        "fields": {
+            "name": "Gebruiker check",
+            "icon": "user-check"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 262,
+        "fields": {
+            "name": "Gebruiker minus",
+            "icon": "user-minus"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 263,
+        "fields": {
+            "name": "Gebruiker plus",
+            "icon": "user-plus"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 264,
+        "fields": {
+            "name": "Gebruiker X",
+            "icon": "user-x"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 265,
+        "fields": {
+            "name": "Gebruiker",
+            "icon": "user"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 267,
+        "fields": {
+            "name": "Gebruikers",
+            "icon": "users"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 268,
+        "fields": {
+            "name": "Video off",
+            "icon": "video-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 269,
+        "fields": {
+            "name": "Video",
+            "icon": "video"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 270,
+        "fields": {
+            "name": "Voicemail",
+            "icon": "voicemail"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 271,
+        "fields": {
+            "name": "Volume 1",
+            "icon": "volume-1"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 272,
+        "fields": {
+            "name": "Volume 2",
+            "icon": "volume-2"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 273,
+        "fields": {
+            "name": "Volume x",
+            "icon": "volume-x"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 274,
+        "fields": {
+            "name": "Volume",
+            "icon": "volume"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 275,
+        "fields": {
+            "name": "Horloge",
+            "icon": "watch"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 276,
+        "fields": {
+            "name": "WiFi off",
+            "icon": "wifi-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 277,
+        "fields": {
+            "name": "WiFi",
+            "icon": "wifi"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 278,
+        "fields": {
+            "name": "Wind",
+            "icon": "wind"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 279,
+        "fields": {
+            "name": "X cirkel",
+            "icon": "x-circle"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 280,
+        "fields": {
+            "name": "X achthoek",
+            "icon": "x-octagon"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 281,
+        "fields": {
+            "name": "X vierkant",
+            "icon": "x-square"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 282,
+        "fields": {
+            "name": "X",
+            "icon": "x"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 283,
+        "fields": {
+            "name": "Youtube",
+            "icon": "youtube"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 284,
+        "fields": {
+            "name": "Zap off",
+            "icon": "zap-off"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 285,
+        "fields": {
+            "name": "Zap",
+            "icon": "zap"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 286,
+        "fields": {
+            "name": "Inzoomen",
+            "icon": "zoom-in"
+        }
+    },
+    {
+        "model": "conf.icon",
+        "pk": 287,
+        "fields": {
+            "name": "Uitzoomen",
+            "icon": "zoom-out"
+        }
+    }
+
+]
