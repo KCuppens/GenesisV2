@@ -2,11 +2,11 @@ from django.shortcuts import render,get_object_or_404,redirect
 
 # Create your views here.
 from . forms import GroupForm
-from . models import User
 from django.utils import timezone
 from django.contrib.auth.models import Group,Permission
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, authenticate
+User = get_user_model()
 from django.urls import reverse
 from django.shortcuts import redirect, resolve_url
 from django.template.response import TemplateResponse
@@ -47,10 +47,10 @@ class LoginView(View):
                               if user:
                                     if user.is_superuser or user.is_staff:      
                                           login(request,user)
-                                          return JsonResponse({"url":reverse('usermanagement')})
-                                    return JsonResponse({"not_suser":"Sorry You're Not eligible for login"})
-                              return JsonResponse({"errorpass":"Incorrect Password"})
-                        return JsonResponse({"invalup":"Sorry Email and Password is invalid"})
+                                          return JsonResponse({"url":reverse('overviewuser')})
+                                    return JsonResponse({"not_suser":_("Sorry You're Not eligible for login")})
+                              return JsonResponse({"errorpass":_("Incorrect Password")})
+                        return JsonResponse({"invalup":_("Sorry Email and Password is invalid")})
                   else:
                         if User.objects.filter(username=username).exists():
                               user=authenticate(username=username,password=password)
@@ -58,14 +58,14 @@ class LoginView(View):
                                     if user.is_superuser or user.is_staff:      
                                           login(request,user)
                                           return JsonResponse({"url":reverse('dashboard')})
-                                    return JsonResponse({"not_suser":"Sorry You're Not eligible for login"})
-                              return JsonResponse({"errorpass":"Incorrect Password"})
-                        return JsonResponse({"invalup":"Sorry Username and Password is invalid"})
-            return JsonResponse({"blankf":"Username and Password Cant be blank"})
+                                    return JsonResponse({"not_suser":_("Sorry You're Not eligible for login")})
+                              return JsonResponse({"errorpass":_("Incorrect Password")})
+                        return JsonResponse({"invalup":_("Sorry Username and Password is invalid")})
+            return JsonResponse({"blankf":_("Username and Password Cant be blank")})
             return render(request,'users/login2.html')
 
 # @staff_member_required(login_url='/account/login')
-def dashboardtable(request):
+def overview_user(request):
     userr=User.objects.all()
     groups=Group.objects.all()
     if not has_perms(user=request.user, permission="Can add Gebruiker"):
@@ -110,7 +110,7 @@ def edit_user(request, pk):
         for id_ in list(groups.values_list('id', flat=True)):
             instance.groups.add(int(id_))
 
-        return redirect('usermanagement')
+        return redirect('useroverview')
     else:
         form = UserEditForm(
             initial={
@@ -139,20 +139,16 @@ def edit_user(request, pk):
     })
 
 def delete_user(request,pk):
-    instance=User.objects.filter(pk=pk)
-    instance.date_deleted=timezone.now()
-    instance.is_active=False
-    instance.is_staff=False
-    return redirect('usermanagement')
+    instance = User.objects.filter(pk=pk)
+    instance.date_deleted = timezone.now()
+    return redirect('useroverview')
 
 def my_profile(request):
-    userm=User.objects.get(username=request.user.username)
-    return render(request,'users/myprofile.html',{"user":userm})
-
+    user = User.objects.get(id=request.user.id)
+    return render(request,'users/myprofile.html',{"user":user})
 
 
 def add_group_view(request):
-    permissions=Permission.objects.get(name="Can add group")
     if not has_perms(user=request.user,permission="Can add group"):
         return render(request, 'users/group.html', {
             'permission_denied': True,
