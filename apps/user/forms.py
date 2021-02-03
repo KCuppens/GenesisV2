@@ -112,8 +112,8 @@ class UserEditForm(forms.ModelForm):
     username = forms.CharField(label="Username",widget=forms.TextInput(attrs={'placeholder': _('Username'),"class":"form-control"}))
     email = forms.EmailField(required=False,widget=forms.TextInput(attrs={"class":"form-control"}))
 
-    is_active = forms.BooleanField(initial=True,widget=forms.CheckboxInput())
-    front_client = forms.BooleanField(initial=True,widget=forms.CheckboxInput())
+    is_active = forms.BooleanField(initial=True,widget=forms.CheckboxInput(attrs={"class":"custom-control-input","id":"is_active"}))
+    front_client = forms.BooleanField(initial=True,widget=forms.CheckboxInput(attrs={"class":"custom-control-input","id":"front_client"}))
     groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(),widget=forms.CheckboxSelectMultiple())
     is_staff = forms.BooleanField(initial=True, required=False,widget=forms.CheckboxInput())
     user_type=forms.ChoiceField(choices=User.USER_TYPES,widget=forms.Select(attrs={"class":"form-control form-control-lg"}))
