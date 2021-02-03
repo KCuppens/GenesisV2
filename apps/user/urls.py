@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.urls import path
-from .views import LoginView, overview_user, edit_user, delete_user, my_profile
+from .views import LoginView, overview_user, edit_user, delete_user, my_profile, group_view, add_group_view, edit_group_view, delete_group_view
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
@@ -28,11 +28,11 @@ urlpatterns = [
     url(_('^reset/complete$'), auth_views.PasswordResetCompleteView.as_view(template_name='reset/password_reset_complete.html'),name='password_reset_complete'),
     url(_('^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$'),auth_views.PasswordResetConfirmView.as_view(template_name='reset/password_reset_confirm.html'),name='password_reset_confirm'),
     url(_('^user/overview$'),overview_user,name="overviewuser"),
-    path(_('^user/edit/<int:pk>'),edit_user,name="edituser"),
-    path(_('^user/delete/<int:pk>'),delete_user,name="deleteuser"),
-    path(_('^my-profile$'),my_profile,name="my-profile"),
-    path(_('^group'),group_view,name="group"),
-    path(_('^group/add'),add_group_view,name="addgroup"),
-    path(_('^group/edit/<pk>'),edit_group_view,name="editgroup"),
-    path(_('^group/delete/<pk>'),delete_group_view,name="deletegroup"),
+    url(_('^user/edit/<int:pk>'),edit_user,name="edituser"),
+    url(_('^user/delete/<int:pk>'),delete_user,name="deleteuser"),
+    url(_('^my-profile$'),my_profile,name="my-profile"),
+    url(_('^group'),group_view,name="group"),
+    url(_('^group/add'),add_group_view,name="addgroup"),
+    url(_('^group/edit/<pk>'),edit_group_view,name="editgroup"),
+    url(_('^group/delete/<pk>'),delete_group_view,name="deletegroup"),
 ]

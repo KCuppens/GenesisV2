@@ -147,6 +147,15 @@ def my_profile(request):
     user = User.objects.get(id=request.user.id)
     return render(request,'users/myprofile.html',{"user":user})
 
+def group_view(request):
+    if not has_perms(user=request.user, permission="Can add Gebruiker"):
+        return render(request, 'users/group.html', {
+            'permission_denied': True,
+        })
+    return render(request, 'users/group.html', {
+        'users': User.objects.all(),
+        'groups': Group.objects.all()
+    })
 
 def add_group_view(request):
     if not has_perms(user=request.user,permission="Can add group"):
@@ -238,14 +247,4 @@ def delete_group_view(request, pk):
         'users': User.objects.order_by('is_active', '-date_joined'),
         'groups': Group.objects.all(),
         'form_name': 'groups'
-    })
-
-def group_view(request):
-    if not has_perms(user=request.user, permission="Can add Gebruiker"):
-        return render(request, 'users/group.html', {
-            'permission_denied': True,
-        })
-    return render(request, 'users/group.html', {
-        'users': User.objects.all(),
-        'groups': Group.objects.all()
     })
