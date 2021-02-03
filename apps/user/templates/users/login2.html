@@ -1,4 +1,4 @@
-{% extends 'loginbase.html' %}
+{% extends 'login/base.html' %}
 {% load static %}
 {% block title %}
 Login
@@ -14,7 +14,6 @@ Login
 
                         <h1 class="">Log In to <a href="index.html"><span class="brand-name">Kobe</span></a></h1>
                         <form action={% url 'login' %} class="text-left" id="loginform" method="POST" accept-charset="utf-8">
-                        
                         {% csrf_token %}
                             <div class="form">
 

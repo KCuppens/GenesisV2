@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'admin/img/favicon.ico' %}"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="{% static 'admin/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'admin/css/plugins.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'admin/css/authentication/form-1.css' %}" rel="stylesheet" type="text/css">
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms/theme-checkbox-radio.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms/switches.css' %}">
+</head>
+<body class="form">
+    {% block content %}
+    {% endblock content %}
+
+    
+
+    
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="{% static 'admin/js/libs/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'admin/bootstrap/js/popper.min.js' %}"></script>
+    <script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <script src="{% static 'admin/js/authentication/form-1.js"' %}"></script>
+    {% block js %}
+
+    {% endblock js %}
+</body>
+</html>
