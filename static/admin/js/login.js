@@ -1,3 +1,4 @@
+var token = document.getElementsByName("csrfToken").value;
 function checkbtn() {
       var x = document.getElementById("password");
       if (x.type === "password") {
@@ -10,6 +11,7 @@ $("#loginform").submit(function(e){
       e.preventDefault()
       var serveurl=$("#loginform").attr('action')
       $.ajax({
+            headers: {'X-CSRF-Token': cookie.load("csrftoken")},
             url:serveurl,
             type:"POST",
             datatype:"json",
