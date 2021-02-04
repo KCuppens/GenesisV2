@@ -5,8 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 from apps.conf.utils import get_config
 from .fields import HoneyPotField, PasswordField, UsersEmailField
 from django.contrib.auth.models import Group, Permission
+<<<<<<< HEAD
 from .models import User
 from django.utils.translation import gettext_lazy as _
+=======
+from django.contrib.auth import get_user_model
+User = get_user_model()
+>>>>>>> d6e40f30d852cc6cb88acc6dde182295b4ac036c
 class UserCreationForm(forms.ModelForm):
 
     error_messages = {
@@ -104,6 +109,7 @@ class RegistrationFormHoneypot(RegistrationForm):
     """
     accept_terms = HoneyPotField()
 
+<<<<<<< HEAD
 
 
 
@@ -120,12 +126,24 @@ class UserEditForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder':_('Enter Your First Name'),"class":"form-control"}))
     last_name=forms.CharField(widget=forms.TextInput(attrs={'placeholder':_('Enter Your Last Name'),"class":"form-control"}))
     username = forms.CharField(label="Username",widget=forms.TextInput(attrs={'placeholder': 'Username',"class":"form-control"}))
+=======
+class UserEditForm(forms.ModelForm):
+    
+    profession = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Enter Your First Name'),"class":"form-control"}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Enter Your Last Name'),"class":"form-control"}))
+    username = forms.CharField(label="Username",widget=forms.TextInput(attrs={'placeholder': _('Username'),"class":"form-control"}))
+>>>>>>> d6e40f30d852cc6cb88acc6dde182295b4ac036c
     email = forms.EmailField(required=False,widget=forms.TextInput(attrs={"class":"form-control"}))
 
     is_active = forms.BooleanField(initial=True,widget=forms.CheckboxInput(attrs={"class":"custom-control-input","id":"is_active"}))
     front_client = forms.BooleanField(initial=True,widget=forms.CheckboxInput(attrs={"class":"custom-control-input","id":"front_client"}))
-    groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(),widget=forms.CheckboxSelectMultiple())
+    groups = forms.ModelMultipleChoiceField(queryset=Group.objects.filter(date_deleted=None),widget=forms.CheckboxSelectMultiple())
+<<<<<<< HEAD
     is_staff = forms.BooleanField(initial=True, required=False,widget=forms.CheckboxInput(attrs={"class":"custom-control-input","id":"is_staff"}))
+=======
+    is_staff = forms.BooleanField(initial=True, required=False,widget=forms.CheckboxInput())
+>>>>>>> d6e40f30d852cc6cb88acc6dde182295b4ac036c
     user_type=forms.ChoiceField(choices=User.USER_TYPES,widget=forms.Select(attrs={"class":"form-control form-control-lg"}))
     company_vat=forms.ChoiceField(choices=["NL","BE"],widget=forms.Select(attrs={"class":"form-control form-control-lg"}))
     birthdate=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -149,7 +167,11 @@ class UserEditForm(forms.ModelForm):
         
 class GroupForm(forms.ModelForm):
     name = forms.CharField(required=True,widget=forms.TextInput(
+<<<<<<< HEAD
                                    attrs={'placeholder':_('Enter Group Name'),'class':'form-control'}))
+=======
+                                   attrs={'placeholder': _('Enter Group Name'),'class':'form-control'}))
+>>>>>>> d6e40f30d852cc6cb88acc6dde182295b4ac036c
     permissions = forms.ModelMultipleChoiceField(
         queryset=Permission.objects.all(), required=False,
         widget=forms.CheckboxSelectMultiple()

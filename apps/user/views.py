@@ -2,7 +2,6 @@ from django.shortcuts import render,get_object_or_404,redirect
 
 # Create your views here.
 from . forms import GroupForm
-from . models import User
 from django.utils import timezone
 from django.contrib.auth.models import Group,Permission
 from django.contrib import messages
@@ -19,7 +18,7 @@ from apps.conf.utils import get_config
 from .signals import user_activated, user_registered
 from .utils import EmailActivationTokenGenerator, send_activation_email,has_perms
 from django.views.generic import View
-
+User = get_user_model()
 
 try:
     from django.contrib.sites.shortcuts import get_current_site
@@ -47,10 +46,10 @@ class LoginView(View):
                               if user:
                                     if user.is_superuser or user.is_staff:      
                                           login(request,user)
-                                          return JsonResponse({"url":reverse('usermanagement')})
-                                    return JsonResponse({"not_suser":"Sorry You're Not eligible for login"})
-                              return JsonResponse({"errorpass":"Incorrect Password"})
-                        return JsonResponse({"invalup":"Sorry Email and Password is invalid"})
+                                          return JsonResponse({"url":reverse('overviewuser')})
+                                    return JsonResponse({"not_suser":_("Sorry You're Not eligible for login")})
+                              return JsonResponse({"errorpass":_("Incorrect Password")})
+                        return JsonResponse({"invalup":_("Sorry Email and Password is invalid")})
                   else:
                         if User.objects.filter(username=username).exists():
                               user=authenticate(username=username,password=password)
@@ -58,15 +57,15 @@ class LoginView(View):
                                     if user.is_superuser or user.is_staff:      
                                           login(request,user)
                                           return JsonResponse({"url":reverse('dashboard')})
-                                    return JsonResponse({"not_suser":"Sorry You're Not eligible for login"})
-                              return JsonResponse({"errorpass":"Incorrect Password"})
-                        return JsonResponse({"invalup":"Sorry Username and Password is invalid"})
-            return JsonResponse({"blankf":"Username and Password Cant be blank"})
+                                    return JsonResponse({"not_suser":_("Sorry You're Not eligible for login")})
+                              return JsonResponse({"errorpass":_("Incorrect Password")})
+                        return JsonResponse({"invalup":_("Sorry Username and Password is invalid")})
+            return JsonResponse({"blankf":_("Username and Password Cant be blank")})
             return render(request,'users/login2.html')
 
 # @staff_member_required(login_url='/account/login')
-def dashboardtable(request):
-    userr=User.objects.all()
+def overview_user(request):
+    userr=User.objects.filter(date_deleted=None)
     groups=Group.objects.all()
     if not has_perms(user=request.user, permission="Can add Gebruiker"):
         return render(request,'users/usermanagement.html',{
@@ -78,7 +77,7 @@ def dashboardtable(request):
 # @staff_member_required(login_url='/account/login')
 def edit_user(request, pk):
     if not has_perms(user=request.user, permission="Can change Gebruiker"):
-        return redirect('usermanagement')
+        return redirect('overviewuser')
     instance = get_object_or_404(User, pk=pk)
 
     if request.method == 'POST':
@@ -110,7 +109,7 @@ def edit_user(request, pk):
         for id_ in list(groups.values_list('id', flat=True)):
             instance.groups.add(int(id_))
 
-        return redirect('usermanagement')
+        return redirect('useroverview')
     else:
         form = UserEditForm(
             initial={
@@ -139,26 +138,27 @@ def edit_user(request, pk):
     })
 
 def delete_user(request,pk):
-    instance=User.objects.filter(pk=pk)
-    instance.date_deleted=timezone.now()
-    instance.is_active=False
-    instance.is_staff=False
-    return redirect('usermanagement')
+    instance = User.objects.filter(pk=pk)
+    instance.date_deleted = timezone.now()
+    return redirect('overviewuser')
 
 def my_profile(request):
-    userm=User.objects.get(username=request.user.username)
-    return render(request,'users/myprofile.html',{"user":userm})
+    user = User.objects.get(id=request.user.id)
+    return render(request,'users/myprofile.html',{"user":user})
 
-
-
-def add_group_view(request):
-    permissions=Permission.objects.get(name="Can add group")
-    if not has_perms(user=request.user,permission="Can add group"):
+def group_view(request):
+    if not has_perms(user=request.user, permission="Can add Gebruiker"):
         return render(request, 'users/group.html', {
             'permission_denied': True,
-            'users': User.objects.order_by('is_active', '-date_joined'),
-            'groups': Group.objects.all()
         })
+    return render(request, 'users/group.html', {
+        'users': User.objects.filter(date_deleted=None),
+        'groups': Group.objects.filter(date_deleted=None)
+    })
+
+def add_group_view(request):
+    if not has_perms(user=request.user,permission="Can add group"):
+        return redirect('group')
     if request.method == 'POST':
         form = GroupForm(request.POST)
         if form.is_valid():
@@ -180,11 +180,7 @@ def add_group_view(request):
 # @staff_member_required(login_url='/account/login')
 def edit_group_view(request, pk):
     if not has_perms(user=request.user, permission="Can change group"):
-        return render(request, 'users/group.html', {
-            'permission_denied': True,
-            'users': User.objects.order_by('is_active', '-date_joined'),
-            'groups': Group.objects.all()
-        })
+        return redirect('group')
 
     try:
         instance = Group.objects.filter(pk=pk).first()
@@ -228,11 +224,7 @@ def edit_group_view(request, pk):
 # @staff_member_required(login_url='/account/login')
 def delete_group_view(request, pk):
     if not has_perms(user=request.user, permission="Can delete group"):
-        return render(request, 'users/group.html', {
-            'permission_denied': True,
-            'users': User.objects.order_by('is_active', '-date_joined'),
-            'groups': Group.objects.all()
-        })
+        return redirect('group')
 
     item = Group.objects.filter(pk=pk).first()
     item.edited_by = request.user
@@ -242,14 +234,4 @@ def delete_group_view(request, pk):
         'users': User.objects.order_by('is_active', '-date_joined'),
         'groups': Group.objects.all(),
         'form_name': 'groups'
-    })
-
-def group_view(request):
-    if not has_perms(user=request.user, permission="Can add Gebruiker"):
-        return render(request, 'users/group.html', {
-            'permission_denied': True,
-        })
-    return render(request, 'users/group.html', {
-        'users': User.objects.all(),
-        'groups': Group.objects.all()
     })

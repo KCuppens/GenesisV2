@@ -5,7 +5,10 @@ from django.utils.translation import gettext_lazy as _
 from internationalflavor.vat_number import VATNumberField
 from django_countries.fields import CountryField
 # Create your models here.
+<<<<<<< HEAD
     
+=======
+>>>>>>> d6e40f30d852cc6cb88acc6dde182295b4ac036c
 class User(AbstractUser):
     USER_TYPE_PERSONAL = 'personal'
     USER_TYPE_PRIVATE = 'private'
@@ -13,7 +16,11 @@ class User(AbstractUser):
     USER_TYPES = (
         (USER_TYPE_PERSONAL, _('Particulier')),
         (USER_TYPE_PRIVATE, _('Handelaar'))
+<<<<<<< HEAD
     )    
+=======
+    )
+>>>>>>> d6e40f30d852cc6cb88acc6dde182295b4ac036c
 
     user_type = models.CharField(choices=USER_TYPES, default=USER_TYPE_PERSONAL, max_length=100)
     company_name = models.CharField(max_length=255, null=True, blank=True)
