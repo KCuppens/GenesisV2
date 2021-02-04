@@ -1,3 +1,11 @@
+function checkbtn() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
 $("#loginform").submit(function(e){
       e.preventDefault()
       var serveurl=$("#loginform").attr('action')

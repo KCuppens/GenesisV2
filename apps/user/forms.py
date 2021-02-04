@@ -176,6 +176,7 @@ class GroupForm(forms.ModelForm):
         queryset=Permission.objects.all(), required=False,
         widget=forms.CheckboxSelectMultiple()
         
+        
     )
 
     class Meta:
