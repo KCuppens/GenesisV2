@@ -66,7 +66,7 @@ class LoginView(View):
 # @staff_member_required(login_url='/account/login')
 def overview_user(request):
     userr=User.objects.filter(date_deleted=None)
-    groups=Group.objects.all()
+    groups=Group.objects.filter(date_deleted=None)
     if not has_perms(user=request.user, permission="Can add Gebruiker"):
         return render(request,'users/usermanagement.html',{
             'permission_denied':True
