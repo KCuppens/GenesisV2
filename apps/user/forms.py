@@ -5,13 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 from apps.conf.utils import get_config
 from .fields import HoneyPotField, PasswordField, UsersEmailField
 from django.contrib.auth.models import Group, Permission
-<<<<<<< HEAD
+
 from .models import User
 from django.utils.translation import gettext_lazy as _
-=======
+
 from django.contrib.auth import get_user_model
 User = get_user_model()
->>>>>>> d6e40f30d852cc6cb88acc6dde182295b4ac036c
+
 class UserCreationForm(forms.ModelForm):
 
     error_messages = {
