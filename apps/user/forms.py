@@ -5,13 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 from apps.conf.utils import get_config
 from .fields import HoneyPotField, PasswordField, UsersEmailField
 from django.contrib.auth.models import Group, Permission
-
-from .models import User
-from django.utils.translation import gettext_lazy as _
-
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
 class UserCreationForm(forms.ModelForm):
 
     error_messages = {
@@ -110,14 +105,6 @@ class RegistrationFormHoneypot(RegistrationForm):
     accept_terms = HoneyPotField()
 
 
-
-
-
-
-
-
-
-
 class UserEditForm(forms.ModelForm):
     
     profession = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -163,9 +150,7 @@ class UserEditForm(forms.ModelForm):
     
         
 class GroupForm(forms.ModelForm):
-    name = forms.CharField(required=True,widget=forms.TextInput(
-                                   attrs={'placeholder':_('Enter Group Name'),'class':'form-control'}))
-                                   attrs={'placeholder': _('Enter Group Name'),'class':'form-control'}))
+    name = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder':_('Enter Group Name'),'class':'form-control'}))
     permissions = forms.ModelMultipleChoiceField(
         queryset=Permission.objects.all(), required=False,
         widget=forms.CheckboxSelectMultiple() 

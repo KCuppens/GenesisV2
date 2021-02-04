@@ -14,6 +14,7 @@ $("#loginform").submit(function(e){
             type:"POST",
             datatype:"json",
             data:$("#loginform").serialize(),
+            csrfmiddlewaretoken: '{{ csrf_token }}'
             success:function(data){
                if(data.url){
                      window.location.href=data.url

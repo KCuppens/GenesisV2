@@ -46,7 +46,7 @@ class LoginView(View):
                               if user:
                                     if user.is_superuser or user.is_staff:      
                                           login(request,user)
-                                          return JsonResponse({"url":reverse('overviewuser')})
+                                          return redirect('dashboard:dashboard')
                                     return JsonResponse({"not_suser":_("Sorry You're Not eligible for login")})
                               return JsonResponse({"errorpass":_("Incorrect Password")})
                         return JsonResponse({"invalup":_("Sorry Email and Password is invalid")})
@@ -56,7 +56,7 @@ class LoginView(View):
                               if user:
                                     if user.is_superuser or user.is_staff:      
                                           login(request,user)
-                                          return JsonResponse({"url":reverse('dashboard')})
+                                          return redirect('dashboard:dashboard')
                                     return JsonResponse({"not_suser":_("Sorry You're Not eligible for login")})
                               return JsonResponse({"errorpass":_("Incorrect Password")})
                         return JsonResponse({"invalup":_("Sorry Username and Password is invalid")})
@@ -134,7 +134,6 @@ def edit_user(request, pk):
     return render(request, 'users/edituser.html', {
         'form': form,
         'Profile':instance
-        
     })
 
 def delete_user(request,pk):
