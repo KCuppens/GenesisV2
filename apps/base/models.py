@@ -39,7 +39,7 @@ class AdminModel(models.Model):
 
     @receiver(post_save)
     def create_history_record(sender, instance, **kwargs):
-        apps = ['User','DashboardConfiguration','Session','Migration']
+        apps = ['User','DashboardConfiguration','Session','Migration','History']
         if not instance.__class__.__name__ in apps:
             if kwargs.get('created'):
                 message = _('Er is een %s toegevoegd!').format(s=instance._meta.verbose_name.title())

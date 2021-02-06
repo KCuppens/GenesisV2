@@ -1,0 +1,33 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% block content %}
+<!--  BEGIN CONTENT AREA  -->
+<div id="content" class="main-content">
+    <div class="row layout-top-spacing">
+        <div id="tabsWithIcons" class="col-lg-12 col-12 layout-spacing">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                            <h4>{% trans 'Edit user' %}</h4>
+                        </div>
+                    </div>
+                </div>
+                <form class="form" action="{% url 'edituser' user.pk %}" name="form" method="post" enctype='multipart/form-data'>
+                    {% include 'user/__form.html' %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script type="text/javascript">
+    $('.tab-pane').each(function () {
+        var tab = $(this);
+        if (tab.find('.form-control.is-invalid').length > 0) {
+            $('[data-toggle="pill"][href="#' + tab.attr('id') + '"]').find('.tab-error-indicator').html(tab.find('.form-control.is-invalid').length);
+        }
+    });
+</script>
+{% endblock %}

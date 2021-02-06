@@ -4,9 +4,11 @@ from apps.account.models import DeliveryAddress, InvoiceAddress
 from django.utils.translation import gettext_lazy as _
 from internationalflavor.vat_number import VATNumberField
 from django_countries.fields import CountryField
+from django.conf import settings
 # Create your models here.
 from django.contrib.auth.models import Group
 Group.add_to_class('date_deleted', models.DateTimeField(null=True, blank=True))
+Group.add_to_class('edited_by', models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_edited_by',null=True, blank=True))
     
 class User(AbstractUser):
     USER_TYPE_PERSONAL = 'personal'

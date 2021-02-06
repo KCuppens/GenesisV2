@@ -272,7 +272,7 @@ h4 {
 
 .rounded-pills-icon .nav-pills .nav-link.active, .rounded-pills-icon .nav-pills .show > .nav-link {
   box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.3);
-  background-color: #009688; }
+  background-color: #007bff; } 
 
 .rounded-pills-icon .tab-content > .tab-pane {
   padding: 20px 0 0 0; }

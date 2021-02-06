@@ -18,7 +18,7 @@
         <!--  BEGIN CONTENT PART  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
-
+                {% include 'dashboard/layout/__partials/notification.html' %}
                 {% block content %}
 
                 {% endblock %}
@@ -31,7 +31,8 @@
 
     </div>
     <!-- END MAIN CONTAINER -->
-
     {% include 'dashboard/layout/__partials/js.html' %}
+    {% block js %}
+    {% endblock %}
 </body>
 </html>

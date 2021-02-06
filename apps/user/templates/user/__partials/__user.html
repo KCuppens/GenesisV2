@@ -1,0 +1,44 @@
+{% load i18n widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'User' %}</h4>
+    </div>
+</div>
+<div class="form-group mb-4">
+    {{ form.email|add_label_class:'' }}
+    {{form.email|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.email.errors %}
+        <div class="invalid-feedback">
+            {{form.email.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.first_name|add_label_class:'' }}
+    {{form.first_name|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+    {% if form.first_name.errors %}
+        <div class="invalid-feedback">
+            {{form.first_name.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.last_name|add_label_class:'' }}
+    {{form.last_name|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+    {% if form.last_name.errors %}
+        <div class="invalid-feedback">
+            {{form.last_name.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.username|add_label_class:'' }}
+    {{form.username|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+    {% if form.username.errors %}
+        <div class="invalid-feedback">
+            {{form.username.errors}}
+        </div>
+    {% endif %}   
+</div>
+
+

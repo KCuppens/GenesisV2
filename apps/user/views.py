@@ -1,6 +1,8 @@
 from django.shortcuts import render,get_object_or_404,redirect
-
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 # Create your views here.
+from django.contrib import messages
 from . forms import GroupForm
 from django.utils import timezone
 from django.contrib.auth.models import Group,Permission
@@ -19,21 +21,17 @@ from .signals import user_activated, user_registered
 from .utils import EmailActivationTokenGenerator, send_activation_email,has_perms
 from django.views.generic import View
 User = get_user_model()
-
+from django.contrib.admin.views.decorators import staff_member_required
+from apps.base.utils import has_perms
+from apps.user.forms import UserForm, UserChangePasswordForm
 try:
     from django.contrib.sites.shortcuts import get_current_site
 except ImportError:  # pragma: no cover
     from django.contrib.sites.models import get_current_site
 
-
-if get_config('USERS_SPAM_PROTECTION'):  # pragma: no cover
-    from .forms import RegistrationFormHoneypot as RegistrationForm
-else:
-    from .forms import RegistrationForm
-
 class LoginView(View):
       def get(self,request):
-            return render(request,'users/login2.html')
+            return render(request,'users/login.html')
       def post(self,request):
             username=request.POST['username']
             password=request.POST['password']
@@ -61,125 +59,159 @@ class LoginView(View):
                               return JsonResponse({"errorpass":_("Incorrect Password")})
                         return JsonResponse({"invalup":_("Sorry Username and Password is invalid")})
             return JsonResponse({"blankf":_("Username and Password Cant be blank")})
-            return render(request,'users/login2.html')
+            return render(request,'users/login.html')
 
-# @staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/account/login')
 def overview_user(request):
-    userr=User.objects.filter(date_deleted=None)
-    groups=Group.objects.filter(date_deleted=None)
-    if not has_perms(user=request.user, permission="Can add Gebruiker"):
-        return render(request,'users/usermanagement.html',{
-            'permission_denied':True
-        })
+    user=User.objects.filter(date_deleted=None)
+    has_perms(request, ["user.add_user"], 'users/overview.html')
     
-    return render(request,'users/usermanagement.html',{"users":userr,'groups':groups})
+    return render(request,'user/index.html', {"users":user})
 
-# @staff_member_required(login_url='/account/login')
-def edit_user(request, pk):
-    if not has_perms(user=request.user, permission="Can change Gebruiker"):
-        return redirect('overviewuser')
+@staff_member_required(login_url='/account/login')
+def add_user(request):
+    has_perms(request, ["user.add_user"], None, 'overviewuser')
+    if request.method == 'POST':
+        form = UserForm(request.POST or request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.edited_by = request.user
+            instance.save()
+            group_ids = dict(request.POST).get('groups', [])
+            groups = Group.objects.filter(pk__in=group_ids)
+
+            for id_ in list(Group.objects.values_list('id', flat=True)):
+                instance.groups.remove(int(id_))
+            for id_ in list(groups.values_list('id', flat=True)):
+                instance.groups.add(int(id_))
+            messages.add_message(request, messages.SUCCESS, _('The user has been succesfully added!'))
+
+            return redirect('overviewuser')
+    else:
+        form = UserForm()
+
+    return render(request, 'user/add.html', {
+        'form': form,
+    })
+
+def change_user_password(request, pk):
+    has_perms(request, ["user.change_user"], None, 'overviewuser')
+
     instance = get_object_or_404(User, pk=pk)
 
     if request.method == 'POST':
-        form = UserEditForm(request.POST,instance=instance)
-        form.is_valid()
-        instance.edited_by = request.user
-        instance.first_name = form.cleaned_data.get('first_name')
-        instance.last_name = form.cleaned_data.get('last_name')
-        instance.email = form.cleaned_data.get('email')
-        instance.is_active = form.cleaned_data.get('is_active')
-        instance.is_staff = form.cleaned_data.get('is_staff')
-        instance.birthdate=form.cleaned_data.get('birthdate')
-        instance.avatar=request.FILES.get("pic",instance.avatar)
-        instance.phone=form.cleaned_data.get("phone")
-        instance.profession=form.cleaned_data.get('profession')
-        instance.user_type=form.cleaned_data.get('user_type')
-        instance.company_name=form.cleaned_data.get('company_name')
-        instance.company_vat=form.cleaned_data.get('company_vat')
-        instance.front_client=form.cleaned_data.get('front_client')
-        
+        form = UserChangePasswordForm(instance=instance, data=request.POST)
+        if form.is_valid():
+            instance.edited_by = request.user
+            instance.password = make_password(form.cleaned_data.get('password'))
+            instance.save()
+            messages.add_message(request, messages.SUCCESS, _('The password has been successfully changed!'))
 
-        
-        instance.save()
-        group_ids = dict(request.POST).get('groups', [])
-        groups = Group.objects.filter(pk__in=group_ids)
-
-        for id_ in list(Group.objects.values_list('id', flat=True)):
-            instance.groups.remove(int(id_))
-        for id_ in list(groups.values_list('id', flat=True)):
-            instance.groups.add(int(id_))
-
-        return redirect('useroverview')
+            return redirect('overviewuser')
     else:
-        form = UserEditForm(
-            initial={
-                'username': instance.username,
-                'first_name': instance.first_name,
-                'last_name': instance.last_name,
-                'email': instance.email,
-                'avatar':instance.avatar,
-                'is_active': instance.is_active,
-                'birthdate':instance.birthdate,
-                'profession':instance.profession,
-                'is_staff': instance.is_staff,
-                'phone':instance.phone,
-                'user_type':instance.user_type,
-                'front_client':instance.front_client,
-                'company_name':instance.company_name,
-                'is_superuser': instance.is_superuser,
-                'groups': User.objects.filter(pk=pk).first().groups.values_list('id', flat=True)
-            }
-        )
+        form = UserChangePasswordForm()
 
-    return render(request, 'users/edituser.html', {
+    return render(request, 'user/changepassword.html', {
         'form': form,
-        'Profile':instance
+        'user': instance
     })
 
+def set_user_password(request, pk):
+    pass
+
+@staff_member_required(login_url='/account/login')
+def edit_user(request, pk):
+    has_perms(request, ["user.change_user"], None, 'overviewuser')
+    instance = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = UserForm(request.POST or request.FILES,instance=instance)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.edited_by = request.user
+            instance.save()
+            group_ids = dict(request.POST).get('groups', [])
+            groups = Group.objects.filter(pk__in=group_ids)
+
+            for id_ in list(Group.objects.values_list('id', flat=True)):
+                instance.groups.remove(int(id_))
+            for id_ in list(groups.values_list('id', flat=True)):
+                instance.groups.add(int(id_))
+
+            messages.add_message(request, messages.SUCCESS, _('The user has been succesfully changed!'))
+
+            return redirect('overviewuser')
+    else:
+        form = UserForm(instance=instance)
+
+    return render(request, 'user/edit.html', {
+        'form': form,
+        'user':instance
+    })
+
+@staff_member_required(login_url='/account/login')
+def delete_ajax_user_modal(request):
+    if request.is_ajax():
+        data = {}
+        id = request.POST.get('id', False)
+        user = User.objects.get(id=id)
+        if user:
+            context = {
+                'user': user
+            }
+            data = {
+                'template': render_to_string('user/__partials/modal.html', context=context, request=request)
+            }
+        return JsonResponse(data)
+    return False
+
+        
+@staff_member_required(login_url='/account/login')
 def delete_user(request,pk):
-    instance = User.objects.filter(pk=pk)
+    has_perms(request, ["user.delete_user"], None, 'overviewuser')
+    instance = User.objects.get(pk=pk)
+    instance.edited_by = request.user
     instance.date_deleted = timezone.now()
+    instance.save()
+    messages.add_message(request, messages.SUCCESS, _('The user has been succesfully deleted!'))
     return redirect('overviewuser')
 
+@staff_member_required(login_url='/account/login')
 def my_profile(request):
+    has_perms(request, ["user.view_user"], None, 'overviewuser')
     user = User.objects.get(id=request.user.id)
     return render(request,'users/myprofile.html',{"user":user})
 
+@staff_member_required(login_url='/account/login')
 def group_view(request):
-    if not has_perms(user=request.user, permission="Can add Gebruiker"):
-        return render(request, 'users/group.html', {
-            'permission_denied': True,
-        })
-    return render(request, 'users/group.html', {
-        'users': User.objects.filter(date_deleted=None),
+    has_perms(request, ["user.view_group"], "group/index.html")
+
+    return render(request, 'group/index.html', {
         'groups': Group.objects.filter(date_deleted=None)
     })
 
+@staff_member_required(login_url='/account/login')
 def add_group_view(request):
-    if not has_perms(user=request.user,permission="Can add group"):
-        return redirect('group')
+    has_perms(request, ["user.view_group"], None, 'overviewgroup')
+
     if request.method == 'POST':
         form = GroupForm(request.POST)
         if form.is_valid():
-            form.author = request.user
-            form.save()
-            return render(request, 'users/group.html', {
-                'users': User.objects.order_by('is_active', '-date_joined'),
-                'groups': Group.objects.all(),
-                'form_name': 'groups'
-            })
+            form.save(commit=False)
+            instance.edited_by = request.user
+            instance.save()
+            messages.add_message(request, messages.SUCCESS, _('The group has been succesfully added!'))
+            return redirect('overviewgroup')
+
     else:
         form = GroupForm()
 
-    return render(request, 'users/groupadd.html', {
+    return render(request, 'group/add.html', {
         'form': form,
-        'form_name': 'groups'
     })
 
-# @staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/account/login')
 def edit_group_view(request, pk):
-    if not has_perms(user=request.user, permission="Can change group"):
-        return redirect('group')
+    has_perms(request, ["user.change_group"], None, 'overviewgroup')
 
     try:
         instance = Group.objects.filter(pk=pk).first()
@@ -187,50 +219,54 @@ def edit_group_view(request, pk):
         raise Http404
 
     if request.method == 'POST':
-        instance.edited_by = request.user
-        instance.name = request.POST.get('name')
-        permission_ids = dict(request.POST).get('permissions', [])
-        permissions = Permission.objects.filter(pk__in=permission_ids)
+        form = GroupForm(request.POST, request.FILES or None, instance=instance)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.edited_by = request.user
+            instance.name = request.POST.get('name')
+            permission_ids = dict(request.POST).get('permissions', [])
+            permissions = Permission.objects.filter(pk__in=permission_ids)
 
-        for id_ in list(Permission.objects.values_list('id', flat=True)):
-            instance.permissions.remove(int(id_))
-        for id_ in list(permissions.values_list('id', flat=True)):
-            instance.permissions.add(int(id_))
+            for id_ in list(Permission.objects.values_list('id', flat=True)):
+                instance.permissions.remove(int(id_))
+            for id_ in list(permissions.values_list('id', flat=True)):
+                instance.permissions.add(int(id_))
+            instance.save()
 
-        instance.save()
-
-        return render(request, 'users/group.html', {
-            'grouppermissions': instance.permissions.all(),
-            'users': User.objects.order_by('is_active', '-date_joined'),
-            'groups': Group.objects.all(),
-            'form_name': 'groups'
-        })
+            messages.add_message(request, messages.SUCCESS, _('The group has been succesfully edited!'))
+            return redirect('overviewgroup')
     else:
-        form = GroupForm(
-            initial={
-                'permissions': Permission.objects.filter(group__id=pk),
-                'name': Group.objects.filter(pk=pk).first().name,
-                'form_name': 'groups'
-            }
-        )
+        form = GroupForm(instance=instance)
 
-    return render(request, 'users/groupedit.html', {
+    return render(request, 'group/edit.html', {
         'form': form,
-        'grouppermissions': Permission.objects.filter(group__id=pk),
-        'form_name': 'groups'
+        'group': instance
     })
 
-# @staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/account/login')
 def delete_group_view(request, pk):
-    if not has_perms(user=request.user, permission="Can delete group"):
-        return redirect('group')
+    has_perms(request, ["user.delete_group"], None, 'overviewgroup')
 
-    item = Group.objects.filter(pk=pk).first()
+    item = Group.objects.get(pk=pk)
+    item.date_deleted = timezone.now()
     item.edited_by = request.user
     item.save()
 
-    return render(request, 'users/group.html', {
-        'users': User.objects.order_by('is_active', '-date_joined'),
-        'groups': Group.objects.all(),
-        'form_name': 'groups'
-    })
+    messages.add_message(request, messages.SUCCESS, _('The group has been succesfully deleted!'))
+    return redirect('overviewgroup')
+
+@staff_member_required(login_url='/account/login')
+def delete_ajax_group_modal(request):
+    if request.is_ajax():
+        data = {}
+        id = request.POST.get('id', False)
+        group = Group.objects.get(id=id)
+        if group:
+            context = {
+                'group': group
+            }
+            data = {
+                'template': render_to_string('group/__partials/modal.html', context=context, request=request)
+            }
+        return JsonResponse(data)
+    return False
