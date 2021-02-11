@@ -1,4 +1,3 @@
-var token = document.getElementsByName("csrfToken").value;
 function checkbtn() {
       var x = document.getElementById("password");
       if (x.type === "password") {
