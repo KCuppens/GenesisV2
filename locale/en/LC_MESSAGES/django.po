@@ -1,0 +1,32 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: webmaster@localhost\n"
+"POT-Creation-Date: 2021-02-10 20:05:36\n"
+"PO-Revision-Date: 2021-02-10 20:05:36\n"
+"Last-Translator: Server <root@localhost>\n"
+"Language-Team: English <webmaster@localhost>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\apps\modules\templates\modules\__form.html:31
+#: .\apps\modules\templates\tabs\__form.html:22
+#: .\apps\user\templates\group\__form.html:20
+#: .\apps\user\templates\user\__form.html:43
+#: .\apps\user\templates\user\changepassword.html:23
+msgid "Cancel"
+msgstr "Cancel"
+
+#: .\environment\Lib\site-packages\django\forms\widgets.py:400
+msgid "Change"
+msgstr "Change"
+
+#: .\apps\translation\templates\translations\index.html:16
+msgid "Sleutel"
+msgstr "Key"
+
+#: .\apps\user\templates\users\profile.html:30
+msgid "Telefoon"
+msgstr "Phone"

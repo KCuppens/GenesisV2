@@ -1,0 +1,36 @@
+{% load i18n widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'Tab' %}</h4>
+    </div>
+</div>
+<div class="form-group mb-4">
+    {{ form.name|add_label_class:'' }}
+    {{form.name|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.name.errors %}
+        <div class="invalid-feedback">
+            {{form.name.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.icon|add_label_class:'' }}
+    {{form.icon|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
+    {% if form.icon.errors %}
+        <div class="invalid-feedback">
+            {{form.icon.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.modules|add_label_class:'' }}
+    {{form.modules|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
+    {% if form.modules.errors %}
+        <div class="invalid-feedback">
+            {{form.modules.errors}}
+        </div>
+    {% endif %}   
+</div>
+
+
+

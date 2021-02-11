@@ -1,0 +1,75 @@
+{% load i18n widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'Pages' %}</h4>
+    </div>
+    {% if modulesPages.exists %}
+        <div class="table-responsive">
+            <div id="style-2_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                <table id="style-2" class="table style-2 table-hover dataTable no-footer">
+                    <thead>
+                        <tr>
+                            <th>{% trans 'Name' %}</th>
+                            <th>{% trans 'Route' %}</th>
+                            <th>{% trans 'Show in navigation' %}</th>
+                            <th>{% trans 'Actions' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in modulesPages %}
+                            <tr>
+                                <td>{% if item.name %}{{item.name}}{% endif %}</td>
+                                <td>{% if item.route %}{{item.route}}{% endif %}</td>
+                                <td>{% if item.show_nav %}{{item.show_nav}}{% endif %}</td>
+                                <td>
+                                    <a href="{% url 'deletepagemodules' pk=item.pk %}" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle table-cancel"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table><!--end /table-->
+            </div>
+        </div><!--end /tableresponsive-->
+    {% endif %}
+    {{ formset.management_form }}
+    
+    <div class="table-responsive mb-4">
+        <input type="button" class="btn btn-gradient-info" value="{% trans 'Voeg meer afbeeldingen toe' %}" id="add_more">
+        <div id="style-2_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12"><table id="style-2" class="table style-2 table-hover dataTable no-footer" role="grid" aria-describedby="style-2_info" style="width: 1464px;">
+            <thead>
+                <tr>
+                    <th>
+                        {% trans 'Name' %}
+                    </th>
+                    <th>
+                        {% trans 'Route' %}
+                    </th>
+                    <th>
+                        {% trans 'Toon navigatie' %}
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="form_set">
+                {% for form in formset.forms %}
+                    <tr>
+                        <td class='no_error'>{{form.name|append_attr:"class:form-control"}}{{form.name.errors}}</td>
+                        <td class='no_error'>{{form.route|append_attr:"class:form-control"}}{{form.route.errors}}</td>
+                        <td class='no_error'>{{form.show_nav|append_attr:"class:form-control"}}{{form.show_nav.errors}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tbody id="empty_form" style="display: none;">
+                <tr colspan="3">
+                    {% for form in formset.empty_form %}
+                        <td class='no_error'>{{form|append_attr:"class:form-control"}}{{form.errors}}</td>
+                    {% endfor %}
+                </tr>                    
+            </tbody>
+        </table>
+        </div></div>
+    </div>
+</div>
+
+
+
+

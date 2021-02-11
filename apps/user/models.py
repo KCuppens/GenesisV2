@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from internationalflavor.vat_number import VATNumberField
 from django_countries.fields import CountryField
 from django.conf import settings
+
 # Create your models here.
 from django.contrib.auth.models import Group
 Group.add_to_class('date_deleted', models.DateTimeField(null=True, blank=True))

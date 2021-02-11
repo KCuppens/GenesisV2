@@ -1,0 +1,67 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n svg %}
+{% block content %}
+<div class="row layout-top-spacing layout-spacing">
+    <div class="col-lg-12">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>{% trans 'Tabs overview' %}</h4>
+                        <a href="{% url 'addtab' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> {% trans 'Add tab' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area">
+                <div class="table-responsive mb-4">
+                    <table id="style-3" class="table style-3  table-hover">
+                        <thead>
+                            <tr>
+                                <th class="checkbox-column text-center"> {% trans '#' %}</th>
+                                <th>{% trans 'Icon' %}</th>
+                                <th>{% trans 'Name' %}</th>
+                                <th class="text-center">{% trans 'Action' %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tab in tabs %}
+                                <tr>
+                                    <td class="checkbox-column text-center">{{tab.id}}</td>
+                                    <td>{% if tab.icon %}{% svg tab.icon.icon %}&nbsp;{{tab.icon.name}}{% else %}{% endif %}</td>
+                                    <td>{% if tab.name %}{{tab.name}}{% else %}{% endif %}</td>
+                                    <td class="text-center">
+                                        {% include 'tabs/__partials/actions.html' with item=item %}
+                                    </td>
+                                </tr>
+                            {% endfor %}  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-placeholder">
+
+    </div>
+</div>
+{% block js %}
+<script>
+$('.open-delete-modal').on('click', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'deletemodaltab'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $('.modal-placeholder').html(data.template);
+            $('.modal').modal();
+        }
+    });
+})
+</script>
+{% endblock %}
+{% endblock content %}

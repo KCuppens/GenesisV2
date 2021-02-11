@@ -18,8 +18,14 @@ class SeoModel(models.Model):
     meta_keywords = models.TextField(null=True, max_length=255, blank=True)
     meta_description = models.TextField(null=True, blank=True)
 
+    class Meta:
+        abstract = True
+
 class SortableModel(models.Model):
     position = models.IntegerField(blank=False, default=999999, db_index=True)
+
+    class Meta:
+        abstract = True
 
 class BaseModel(models.Model):  
     date_created = models.DateTimeField(auto_now_add=True)
@@ -29,17 +35,23 @@ class BaseModel(models.Model):
     date_deleted = models.DateTimeField(null=True, blank=True)
     active = models.BooleanField(default=False)
 
+    class Meta:
+        abstract = True
+
 class AdminModel(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_author', null=True,blank=True)
     edited_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_edited_by',null=True, blank=True)
     deletable = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
 
     def save(self, *args, **kwargs):
         super(AdminModel, self).save(*args, **kwargs)
 
     @receiver(post_save)
     def create_history_record(sender, instance, **kwargs):
-        apps = ['User','DashboardConfiguration','Session','Migration','History']
+        apps = ['User','DashboardConfiguration','Session','Migration','History','Icon','Configuration','TranslationEntry']
         if not instance.__class__.__name__ in apps:
             if kwargs.get('created'):
                 message = _('Er is een %s toegevoegd!').format(s=instance._meta.verbose_name.title())

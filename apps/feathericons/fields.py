@@ -1,5 +1,9 @@
 from django.forms import ModelChoiceField
+from apps.feathericons.models import Icon
+from django.utils.html import mark_safe
 
 class IconField(ModelChoiceField):
-    def label_from_instance(self, obj):
-        return '<span class="{icon}"></span> - {name}'.format(icon=obj.icon, name=obj.name)
+    def __init__(self, *args, **kwargs):
+        super(IconField, self).__init__(queryset=Icon.objects.all(),*args, **kwargs)
+
+    

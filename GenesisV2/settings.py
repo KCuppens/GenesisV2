@@ -13,6 +13,7 @@ from django.contrib import messages
 from pathlib import Path
 import os 
 from decouple import config
+from django.utils.translation import ugettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
 
     #third-party apps
     'widget_tweaks',
+    'translation_manager',
 
     #apps
     'apps.conf',
@@ -50,6 +52,9 @@ INSTALLED_APPS = [
     'apps.user',
     'apps.account',
     'apps.history',
+    'apps.modules',
+    'apps.feathericons',
+    'apps.translation',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +80,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #topnav
+                'apps.dashboard.context_processors.topnav.get_topnav',
             ],
         },
     },
@@ -124,6 +131,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = "nl"
+LANGUAGES = [
+    ('nl', _('Nederlands')),
+    ('en', _('Engels'))
+    #('fr', _('Frans'))
+]
+TRANSLATIONS_BASE_DIR = BASE_DIR
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 TIME_ZONE = "Europe/Brussels"
 

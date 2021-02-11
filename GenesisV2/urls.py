@@ -25,6 +25,8 @@ urlpatterns = i18n_patterns(
     path(_('dashboard/overzicht/'), include('apps.dashboard.urls'), name='dashboard'),
     path(_('dashboard/configuratie/'), include('apps.conf.urls'), name='configuration'),
     path(_('dashboard/gebruiker/'), include('apps.user.urls'), name='user'),
+    path(_('dashboard/modules/'), include('apps.modules.urls'), name='modules'),
+    path(_('dashboard/translations/'), include('apps.translation.urls'), name='translation'),
     path(_('account/'), include('apps.user.account_urls'), name='user_dashboard'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,48 @@
+{% load i18n %}
+<div class="row">
+    <div class="col-sm-12 col-md-5">
+        <div class="dataTables_info" id="column-filter_info" role="status" aria-live="polite">Showing page 1 of 1</div>
+    </div>
+    <div class="col-sm-12 col-md-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="column-filter_paginate">
+            <ul class="pagination">
+                {% if items.has_previous %}
+                    <li class="paginate_button page-item previous disabled" id="column-filter_previous">
+                        <a href="#" aria-controls="column-filter" data-dt-idx="0" tabindex="0" class="page-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for i in items.paginator.page_range %}
+                    {% if items.number == i %}
+                        <li class="paginate_button page-item active">
+                            <a href="?page={{ i }}" aria-controls="column-filter" data-dt-idx="1" tabindex="0" class="page-link">{{ i }}</a>
+                        </li>
+                    {% elif i > items.number|add:'-5' and i < items.number|add:'5' %}
+                        <li class="paginate_button page-item active">
+                            <a href="?page={{ i }}" aria-controls="column-filter" data-dt-idx="1" tabindex="0" class="page-link">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if items.paginator.num_pages > items.number|add:'4' %}
+                    <li class="paginate_button page-item active">
+                        <a href="?page={{ page_obj.number|add:'5' }}" aria-controls="column-filter" data-dt-idx="1" tabindex="0" class="page-link">&hellip;</a>
+                    </li>
+                {% endif %}
+                {% if items.has_next %}
+                    <li class="paginate_button page-item next disabled" id="column-filter_next">
+                        <a href="#" aria-controls="column-filter" data-dt-idx="2" tabindex="0" class="page-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>

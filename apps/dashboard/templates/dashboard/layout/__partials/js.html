@@ -5,9 +5,11 @@
 <script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'admin/plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
 <script src="{% static 'admin/js/app.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script>
     $(document).ready(function() {
         App.init();
+        feather.replace();
     });
 </script>
 <script src="{% static 'admin/js/custom.js' %}"></script>
@@ -21,5 +23,7 @@
 <script src="{% static 'admin/js/scrollspyNav.js' %}"></script>
 <script src="{% static 'admin/plugins/bootstrap-select/bootstrap-select.min.js' %}"></script>
 <script src="{% static 'admin/js/forms/bootstrap_validation/bs_validation_script.js' %}"></script>
+<script src="{% static 'admin/plugins/select2/select2.min.js' %}"></script>
+<script src="{% static 'admin/plugins/select2/custom-select2.js' %}"></script>
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->

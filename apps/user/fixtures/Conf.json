@@ -70,17 +70,6 @@
         "pk": 7,
         "fields": {
             "key_name": "PASSWORD_MAX_LENGTH",
-            "title": "Minimum lengte van het wachtwoord",
-            "value": "5",
-            "description": "Minimum lengte van het wachtwoord",
-            "conf_type": "user"
-        }
-    },
-    {
-        "model": "conf.configuration",
-        "pk": 8,
-        "fields": {
-            "key_name": "PASSWORD_MAX_LENGTH",
             "title": "Maximum lengte van het wachtwoord",
             "value": "None",
             "description": "Maximum lengte van het wachtwoord",
@@ -89,7 +78,7 @@
     },
     {
         "model": "conf.configuration",
-        "pk": 9,
+        "pk": 8,
         "fields": {
             "key_name": "VALIDATE_EMAIL_DOMAIN",
             "title": "Email domein valideren",
@@ -100,7 +89,7 @@
     },
     {
         "model": "conf.configuration",
-        "pk": 10,
+        "pk": 9,
         "fields": {
             "key_name": "EMAIL_DOMAINS_BLACKLIST",
             "title": "Email domein blacklijst",
@@ -111,7 +100,7 @@
     },
     {
         "model": "conf.configuration",
-        "pk": 11,
+        "pk": 10,
         "fields": {
             "key_name": "EMAIL_DOMAINS_WHITELIST",
             "title": "Email domein wittelijst",
@@ -122,7 +111,7 @@
     },
     {
         "model": "conf.configuration",
-        "pk": 12,
+        "pk": 11,
         "fields": {
             "key_name": "USERS_VERIFY_EMAIL",
             "title": "Gebruikers moeten hun email verifiëren na registratie",
@@ -133,7 +122,7 @@
     },
     {
         "model": "conf.configuration",
-        "pk": 13,
+        "pk": 12,
         "fields": {
             "key_name": "USER_LOGIN_TYPE",
             "title": "Login methode",

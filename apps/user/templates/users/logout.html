@@ -1,6 +1,23 @@
 {% extends "base.html" %}
 {% load i18n %}
-
 {% block content %}
-<p>{% trans "Logged out" %}</p>
+<div class="form-container">
+	<div class="form-form">
+		<div class="form-form-wrap">
+			<div class="form-container">
+				<div class="form-content">
+                    <h4>{% trans "You are successfully logged out" %}</h4>
+                    <a class="btn btn-primary" href="{% url 'login' %}">{% trans 'Log in' %}</a>
+				</div>                    
+			</div>
+		</div>
+	</div>
+	<div class="form-image">
+		<div class="l-image">
+		</div>
+	</div>
+</div>
 {% endblock %}
+
+
+
