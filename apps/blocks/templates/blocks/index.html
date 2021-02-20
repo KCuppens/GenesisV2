@@ -1,0 +1,60 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n svg %}
+{% block content %}
+<div class="row layout-top-spacing layout-spacing">
+    <div class="col-lg-12">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>{% trans 'Blocks overview' %}</h4>
+                        <a href="{% url 'addblock' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> {% trans 'Add block' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area">
+                <div class="row">
+                    {% for block in blocks %}
+                        <div class="card component-card_9">
+                            <img src="{{block.image.url}}" class="card-img-top" alt="widget-card-2">
+                            <div class="card-body">
+                                <p class="meta-date">{{block.date_created|date:"d/m/Y"}}</p>
+                                <h5 class="card-title">{{block.name}}</h5>
+                            </div>
+                            <div class="meta-info">
+                                <div class="meta-action">
+                                    {% include 'blocks/__partials/actions.html' with block=block %}
+                                </div>
+
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-placeholder">
+
+    </div>
+</div>
+{% block js %}
+<script>
+$('.open-delete-modal').on('click', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'deletemodalblock'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $('.modal-placeholder').html(data.template);
+            $('.modal').modal();
+        }
+    });
+})
+</script>
+{% endblock %}
+{% endblock content %}

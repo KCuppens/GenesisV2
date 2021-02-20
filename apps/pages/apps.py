@@ -1,5 +1,7 @@
 from django.apps import AppConfig
 
-
 class PagesConfig(AppConfig):
-    name = 'pages'
+    name = 'apps.pages'
+
+    def ready(self):
+        import apps.pages.signals #noqa

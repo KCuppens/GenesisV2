@@ -1,0 +1,84 @@
+{% load i18n widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'Page' %}</h4>
+    </div>
+</div>
+<div class="form-group mb-4">
+    <div class="n-chk">
+        <label class="new-control new-checkbox checkbox-primary new-checkbox-text">
+            {{form.in_main_menu|append_attr:"class:form-control"|append_attr:"style:display:none;"|add_error_attr:"class:is-invalid"}}
+            <span class="new-control-indicator"></span>
+            <span class="new-chk-content">{{ form.in_main_menu|add_label_class:'' }}</span>
+            {% if form.in_main_menu.errors %}
+                <div class="invalid-feedback">
+                    {{form.in_main_menu.errors}}
+                </div>
+            {% endif %}  
+        </label>
+    </div>
+</div>
+<div class="form-group mb-4">
+    <div class="n-chk">
+        <label class="new-control new-checkbox checkbox-primary new-checkbox-text">
+            {{form.is_homepage|append_attr:"class:form-control"|append_attr:"style:display:none;"|add_error_attr:"class:is-invalid"}}
+            <span class="new-control-indicator"></span>
+            <span class="new-chk-content">{{ form.is_homepage|add_label_class:'' }}</span>
+            {% if form.is_homepage.errors %}
+                <div class="invalid-feedback">
+                    {{form.is_homepage.errors}}
+                </div>
+            {% endif %}  
+        </label>
+    </div>
+</div>
+<div class="form-group mb-4">
+    {{ form.parent|add_label_class:'' }}
+    {{form.parent|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
+    {% if form.parent.errors %}
+        <div class="invalid-feedback">
+            {{form.parent.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.page_title|add_label_class:'' }}
+    {{form.page_title|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.page_title.errors %}
+        <div class="invalid-feedback">
+            {{form.page_title.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.menu_title|add_label_class:'' }}
+    {{form.menu_title|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.menu_title.errors %}
+        <div class="invalid-feedback">
+            {{form.menu_title.errors}}
+        </div>
+    {% endif %}   
+</div>
+
+<div class="form-group mb-4">
+    {{ form.url_type|add_label_class:'' }}
+    {{form.url_type|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.url_type.errors %}
+        <div class="invalid-feedback">
+            {{form.url_type.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.slug|add_label_class:'' }}
+    {{form.slug|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.slug.errors %}
+        <div class="invalid-feedback">
+            {{form.slug.errors}}
+        </div>
+    {% endif %}   
+</div>
+
+
+
+

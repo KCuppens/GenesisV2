@@ -54,7 +54,6 @@ class UserForm(forms.ModelForm):
             if cleaned_data.get('lastname') == "" or cleaned_data.get('last_name') == None:
                 errors['last_name'] = _('Please enter a lastname.')
             if errors:
-                print(errors)
                 raise forms.ValidationError(errors)
 
     class Meta:

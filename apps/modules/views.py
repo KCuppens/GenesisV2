@@ -114,12 +114,15 @@ def add_modules(request):
             instance.save()
             form.save_m2m()
             messages.add_message(request, messages.SUCCESS, _('The module has been succesfully added!'))
-            form = formset.cleaned_data[0]
-            route = form['route']
-            show_nav = form['show_nav']
-            name = form['name']
-            page = ModulePage(module=instance, route=route, show_nav=show_nav, name=name)
-            page.save()
+            for form in formset.cleaned_data:
+                try:
+                    route = form['route']
+                    show_nav = form['show_nav']
+                    name = form['name']
+                    page = ModulePage(module=instance, route=route, show_nav=show_nav, name=name)
+                    page.save()
+                except Exception as e:
+                    break
             return redirect('overviewmodules')
     else:
         form = ModuleForm()

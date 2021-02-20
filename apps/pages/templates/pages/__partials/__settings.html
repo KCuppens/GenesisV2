@@ -1,0 +1,42 @@
+{% load i18n widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'Settings' %}</h4>
+    </div>
+</div>
+<div class="form-group mb-4">
+    <div class="n-chk">
+        <label class="new-control new-checkbox checkbox-danger new-checkbox-text">
+            {{form.active|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+            <span class="new-control-indicator"></span><span class="new-chk-content">
+            </span>{{ form.active|add_label_class:'' }}
+        </label>
+    </div>
+</div>
+<div class="form-group mb-4">
+    {{ form.date_published|add_label_class:'' }}
+    {{form.date_published|append_attr:"class:form-control dateTimeFlatpickr"|add_error_attr:"class:is-invalid"}}     
+    {% if form.date_published.errors %}
+        <div class="invalid-feedback">
+            {{form.date_published.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.date_expired|add_label_class:'' }}
+    {{form.date_expired|append_attr:"class:form-control dateTimeFlatpickr expired"|add_error_attr:"class:is-invalid"}}     
+    <div class="input-group-append">
+        <button class="btn btn-primary" id="clear-date" type="button">{% trans 'Clear expiration date' %}</button>
+    </div>
+    {% if form.date_expired.errors %}
+        <div class="invalid-feedback">
+            {{form.date_expired.errors}}
+        </div>
+    {% endif %}   
+</div>
+
+
+
+
+
+

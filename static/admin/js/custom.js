@@ -1,3 +1,17 @@
+tinymce.init({
+    selector: 'textarea.form-control.tinymce-editor',
+    plugins: [
+        'advlist autolink autoresize link image imagetools lists charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+        'table emoticons template paste help hr template'
+    ],
+    image_uploadtab: true,
+    images_upload_base_path: '/media/tinymce',
+    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+        'forecolor backcolor emoticons | help template',
+    menubar: 'favs file edit view insert format tools table help',
+});
 /*
 =========================================
 |                                       |
@@ -13,6 +27,11 @@ $('.scrollTop').click(function() {
 $('.navbar .dropdown.notification-dropdown > .dropdown-menu, .navbar .dropdown.message-dropdown > .dropdown-menu ').click(function(e) {
     e.stopPropagation();
 });
+
+
+//First upload
+var firstUpload = new FileUploadWithPreview('image')
+    
 
 /*
 =========================================

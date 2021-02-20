@@ -1,0 +1,88 @@
+{% load i18n static %}
+<div class="row">
+    <input type="text" name="search" class="form-control" value="{{search|default_if_none:""}}" id="block-search-value" placeholder="{% trans 'Search blocks' %}">
+    <button type="button" class="btn btn-success block-search">{% trans 'Search' %}</button>
+</div>
+<div class="btn-group layout-top-spacing" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-{% if not current_category or current_category == 'alle' %}primary{% else %}default{% endif %} set-category" data-slug="alle">{% trans 'Alle' %}</button>
+    {% for category in categories %}
+        <button type="button" class="btn btn-{% if current_category == category.slug %}primary{% else %}default{% endif %} set-category" data-slug="{{category.slug}}">{{category.name}}</button>
+    {% endfor %}
+    <span class="canvas-id" data-canvas="{{canvas}}" data-colsize={{colsize}} data-col="{{col}}"></span>
+</div>
+<div class="row layout-top-spacing d-flex justify-content-center align-items-center">
+    {% for block in blocks %}
+        {% include 'canvas/__partials/__block_card.html' with item=block %}
+    {% endfor %}
+</div>
+<div class="row layout-top-spacing d-flex justify-content-center align-items-center">
+    {% include 'dashboard/snippets/pagination.html' with items=blocks %}
+</div>
+<script>
+    $(document).ready(function () {
+        $('.select-page-block').on('click', function(e){
+            var col = $(this).data('col');
+            var canvas = $('.canvas-id').data('canvas');
+            var csrf = $('.canvas-builder').data('csrf');
+            var item = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: 'canvas-row',
+                data: {
+                    'csrfmiddlewaretoken': csrf,
+                    'item': item,
+                    'col': col,
+                    'action': 'addblock',
+                    'canvas': canvas
+                },
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        });
+        $('.set-category').on('click', function(e){
+            var col = $('.canvas-id').data('col');
+            var canvas = $('.canvas-id').data('canvas');
+            var csrf = $('.canvas-builder').data('csrf');
+            var category = $(this).data('slug');
+            var colsize = $('.canvas-id').data('colsize');
+            $.ajax({
+                type: 'POST',
+                url: 'canvas-row',
+                data: {
+                    'csrfmiddlewaretoken': csrf,
+                    'col': col,
+                    'category': category,
+                    'canvas': canvas,
+                    'colsize': colsize,
+                    'action': 'openmodal'
+                },
+                success: function (data) {
+                    $('.overview-blocks').html(data.template);
+                }
+            });
+        });   
+        $('.block-search').on('click', function(e){
+            var col = $('.canvas-id').data('col');
+            var canvas = $('.canvas-id').data('canvas');
+            var csrf = $('.canvas-builder').data('csrf');
+            var search = $('#block-search-value').val();
+            var colsize = $('.canvas-id').data('colsize');
+            $.ajax({
+                type: 'POST',
+                url: 'canvas-row',
+                data: {
+                    'csrfmiddlewaretoken': csrf,
+                    'col': col,
+                    'search': search,
+                    'canvas': canvas,
+                    'colsize': colsize,
+                    'action': 'openmodal'
+                },
+                success: function (data) {
+                    $('.overview-blocks').html(data.template);
+                }
+            });
+        });   
+    });
+</script>

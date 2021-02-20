@@ -1,0 +1,69 @@
+{% load i18n widget_tweaks %}
+<form class="form" id="content-form" name="form" method="post" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {% if errors %}
+        {{errors}}
+    {% elif message %}
+        {{message}}
+    {% endif %}
+    <div class="form-group row">
+        <div class="col-sm-12 ml-2">
+            {{ form.title|add_label_class:''}}
+            {{ form.title|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+            {% if form.title.errors %}
+                <div class="invalid-feedback">
+                    {{form.title.errors}}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-12 ml-2">
+            {{ form.subtitle|add_label_class:''}}
+            {{ form.subtitle|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+            {% if form.subtitle.errors %}
+                <div class="invalid-feedback">
+                    {{form.subtitle.errors}}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-12 ml-2">
+            {{ form.content|add_label_class:''}}
+            {{ form.content|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+            {% if form.content.errors %}
+                <div class="invalid-feedback">
+                    {{form.content.errors}}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="custom-file-container" data-upload-id="image">
+        <label>{{ form.image|add_label_class:'' }}<a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+        <label class="custom-file-container__custom-file" >
+            {{form.image|append_attr:"class:custom-file-container__custom-file__custom-file-input"|add_error_attr:"class:is-invalid"}}     
+            <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+            <span class="custom-file-container__custom-file__custom-file-control"></span>
+        </label>
+        <div class="custom-file-container__image-preview"></div>
+    </div>
+    <span class="block-data" data-block="{{block}}"></span>
+    <button class="btn btn-success submit-content-form"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> {% trans 'Opslaan' %}</button>
+</form>
+<script>
+    $('.submit-content-form').on('click', function(e){
+        e.preventDefault();
+        var serializedData = $('#content-form').serialize();
+        var csrf = $('.canvas-builder').data('csrf');
+        var block = $('.block-data').data('block');
+        $.ajax({
+            type: 'POST',
+            url: 'canvas-content',
+            data: serializedData + '&block=' + block,
+            success: function(data){
+                //location.reload();
+            },
+        })
+    });
+</script>

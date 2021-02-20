@@ -1,0 +1,121 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n children_page_count %}
+{% block content %}
+<div class="row layout-spacing layout-top-spacing" id="cancel-row">
+    <div class="col-lg-12">
+        <div class="widget-content searchable-container list">
+
+            <div class="row">
+                <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search layout-spacing align-self-center">
+                    <form class="form-inline my-2 my-lg-0">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" name="search" class="form-control product-search" value="{{search|default_if_none:""}}" id="input-search" placeholder="{% trans 'Search pages' %}">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-xl-8 col-lg-7 col-md-7 col-sm-5 text-sm-right text-center layout-spacing align-self-center">
+                    <div class="d-flex justify-content-sm-end justify-content-center">
+                        <a href="{% url 'addpage' %}" class="btn btn-info ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> {% trans 'Add page' %}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="searchable-items list" id="sortable">
+                <div class="items items-header-section">
+                    <div class="item-content">
+                        <div class="">
+                            <h4>{% trans 'Pages overview' %}</h4>
+                        </div>
+                    </div>
+                </div>
+                {% for page in pages %}
+                    <div class="items" id="page_{{page.id}}">
+                        <div class="item-content">
+                            <div class="user-profile">
+                                <div class="n-chk align-self-center text-center">
+                                    <div class="dd-handle">
+                                        <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
+                                    </div>
+                                </div>
+                                <div class="user-meta-info">
+                                    <p class="page-title" title="{% trans 'Page title' %}" data-placement="top" data-name="{{page.title}}">{{page.page_title}}</p>
+                                    <p class="user-work" title="{% trans 'Menu title' %}" data-placement="top" data-name="{{page.menu_title}}"><span class="shadow-none badge badge-primary">{{page.menu_title}}</span></p>
+                                </div>
+                            </div>
+                            <div class="user-email">
+                                <p class="usr-email-addr" title="{% trans 'Page route' %}" data-placement="top" data-email="{% if page.full_slug %}{{page.full_slug}}{% else %}{{page.slug}}{% endif %}"><span class="shadow-none badge badge-info">{% if page.full_slug %}{{page.full_slug}}{% else %}{{page.slug}}{% endif %}</span></p>
+                            </div>
+                            <div class="user-location">
+                                {% if page.children.exists %}
+                                    <a class="btn btn-info position-relative mt-3 mb-3 ml-2" title="{% trans 'Children pages' %}" data-placement="top" href="{% url 'overviewchildrenpage' pk=page.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>({% children_page_count page %})</a>
+                                {% endif %}
+                                <a title="{% if page.in_main_menu %}{% trans 'Shown in main menu' %}{% else %}{% trans 'Not shown in main menu' %}{% endif %}" data-placement="top" class="btn btn-{% if page.in_main_menu %}success{% else %}danger{% endif %} position-relative mt-3 mb-3 ml-2" href="javascript::void()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+                                {% if page.is_homepage %}<a title="{% trans 'Is een homepagina' %}" data-placement="top" class="btn btn-secondary position-relative mt-3 mb-3 ml-2" href="javascript::void()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>{% endif %}
+                            </div>
+                            <div class="user-phone">
+                                {% if page.canvas and not page.is_link_through %}
+                                    <a href="{% url 'canvaspage' pk=page.pk %}" class="btn btn-dark mt-3 mb-3 ml-2">
+                                        {% trans 'Page Building' %}
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="action-btn">
+                                {% include 'pages/__partials/actions.html' %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="modal-placeholder">
+
+    </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+$('.open-delete-modal').on('click', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'deletemodalpage'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $('.modal-placeholder').html(data.template);
+            $('.modal').modal();
+        }
+    });
+})
+
+$(function () {
+
+    $('#sortable').sortable({
+        handle: '.dd-handle',
+        update: function () {
+            move($('#sortable').sortable('serialize', 'id'));
+        }
+    });
+    function move(order) {
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'page-reorder' %}',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'item': order
+            },
+            success: function () {
+                //OK
+            }
+        });
+    }
+
+});
+</script>
+{% endblock %}

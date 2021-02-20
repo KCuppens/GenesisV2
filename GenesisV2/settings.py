@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'apps.modules',
     'apps.feathericons',
     'apps.translation',
+    'apps.pages',
+    'apps.blocks',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,23 @@
+{% load i18n %}
+    {% csrf_token %}
+    <div class="widget-content widget-content-area rounded-pills-icon">
+        
+        <ul class="nav nav-pills mb-4 mt-3  justify-content-center" id="rounded-pills-icon-tab" role="tablist">
+            <li class="nav-item ml-2 mr-2">
+                <a class="nav-link mb-2 text-center active" id="rounded-pills-icon-profile-tab" data-toggle="pill" href="#rounded-pills-icon-profile" role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    {% trans 'Block category' %}
+                    <span class="tab-error-indicator badge btn-danger"></span>
+                </a>
+            </li>
+        </ul>
+        {{ form.non_field_errors }}
+        <div class="tab-content" id="rounded-pills-icon-tabContent">
+            <div class="tab-pane fade active show" id="rounded-pills-icon-profile" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
+                {% include 'blockcategory/__partials/__content.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 text-right mb-5">
+        <button class="btn btn-success mb-2 mr-2" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> {% trans 'Save' %}</button>
+        <a href="{% url 'overviewblock-categories' %}" class="btn btn-danger mb-2 mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg> {% trans 'Cancel' %}</a>
+    </div>

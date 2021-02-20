@@ -23,7 +23,7 @@ class ModuleForm(forms.ModelForm):
 
 
 class TabForm(forms.ModelForm):
-    modules = forms.ModelMultipleChoiceField(queryset=Module.objects.filter(date_deleted=None))
+    modules = forms.ModelMultipleChoiceField(queryset=Module.objects.filter(date_deleted=None), required=False)
     class Meta:
         model = Tab
         fields = ('name', 'icon','modules')
