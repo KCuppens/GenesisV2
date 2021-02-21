@@ -11,7 +11,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from apps.translation.utils import search_function_dict
 @csrf_exempt
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url='/nl/nl/account/login')
 def index_view(request):
     has_perms(request, ["translation.change_translationentry"], None, 'overviewtranslation')
     page = request.GET.get('page', 1)
@@ -48,7 +48,7 @@ def index_view(request):
     })
 
 @csrf_exempt
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url='/nl/nl/account/login')
 def update_translation(request):
     if request.method == "POST":
         TranslationEntry.objects.update_or_create(

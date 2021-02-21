@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.db.models import Q
 # Create your views here.
 from django.contrib import messages
 from . forms import GroupForm
@@ -61,14 +62,27 @@ class LoginView(View):
             return JsonResponse({"blankf":_("Username and Password Cant be blank")})
             return render(request,'users/login.html')
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def overview_user(request):
-    user=User.objects.filter(date_deleted=None)
+    search = request.GET.get('search', None)
+    group = request.GET.get('group', None)
+    if group:
+        user = User.objects.filter(groups__id=group)
+    elif search:
+        user = User.objects.filter(Q(first_name__contains=search) | Q(last_name__contains=search) | Q(email__contains=search))
+    else:
+        user=User.objects.filter(date_deleted=None)
+    groups=Group.objects.filter(date_deleted=None)
     has_perms(request, ["user.add_user"], 'users/overview.html')
     
-    return render(request,'user/index.html', {"users":user})
+    return render(request,'user/index.html', {
+        "users":user,
+        "groups": groups,
+        'search': search,
+        "group_select": group,
+    })
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def add_user(request):
     has_perms(request, ["user.add_user"], None, 'overviewuser')
     if request.method == 'POST':
@@ -119,7 +133,7 @@ def change_user_password(request, pk):
 def set_user_password(request, pk):
     pass
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def edit_user(request, pk):
     has_perms(request, ["user.change_user"], None, 'overviewuser')
     instance = get_object_or_404(User, pk=pk)
@@ -148,7 +162,7 @@ def edit_user(request, pk):
         'user':instance
     })
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def delete_ajax_user_modal(request):
     if request.is_ajax():
         data = {}
@@ -165,7 +179,7 @@ def delete_ajax_user_modal(request):
     return False
 
         
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def delete_user(request,pk):
     has_perms(request, ["user.delete_user"], None, 'overviewuser')
     instance = User.objects.get(pk=pk)
@@ -175,13 +189,24 @@ def delete_user(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The user has been succesfully deleted!'))
     return redirect('overviewuser')
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
+def toggle_activation_view(request, pk):
+    has_perms(request, ["user.change_user"], None, 'overviewuser')
+
+    item = User.objects.get(pk=pk)
+    item.is_active = not item.is_active
+    messages.add_message(request, messages.SUCCESS, _('De status van de gebruiker is succesvol aangepast!'))
+    item.save()
+    
+    return redirect('overviewuser')
+
+@staff_member_required(login_url='/nl/account/login')
 def my_profile(request):
     has_perms(request, ["user.view_user"], None, 'overviewuser')
     user = User.objects.get(id=request.user.id)
     return render(request,'users/myprofile.html',{"user":user})
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def group_view(request):
     has_perms(request, ["user.view_group"], "group/index.html")
 
@@ -189,7 +214,7 @@ def group_view(request):
         'groups': Group.objects.filter(date_deleted=None)
     })
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def add_group_view(request):
     has_perms(request, ["user.view_group"], None, 'overviewgroup')
 
@@ -209,7 +234,7 @@ def add_group_view(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def edit_group_view(request, pk):
     has_perms(request, ["user.change_group"], None, 'overviewgroup')
 
@@ -243,7 +268,7 @@ def edit_group_view(request, pk):
         'group': instance
     })
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def delete_group_view(request, pk):
     has_perms(request, ["user.delete_group"], None, 'overviewgroup')
 
@@ -255,7 +280,7 @@ def delete_group_view(request, pk):
     messages.add_message(request, messages.SUCCESS, _('The group has been succesfully deleted!'))
     return redirect('overviewgroup')
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def delete_ajax_group_modal(request):
     if request.is_ajax():
         data = {}

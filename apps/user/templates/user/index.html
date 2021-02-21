@@ -14,41 +14,73 @@
             </div>
             <div class="widget-content widget-content-area">
                 <div class="table-responsive mb-4">
-                    <table id="style-3" class="table style-3  table-hover">
-                        <thead>
-                            <tr>
-                                <th class="checkbox-column text-center"> {% trans '#' %}</th>
-                                <th>{% trans 'First name' %}</th>
-                                <th>{% trans 'Last Name' %}</th>
-                                <th>{% trans 'Email' %}</th>
-                                <th class="text-center">{% trans 'Group' %}</th>
-                                <th class="text-center">{% trans 'Action' %}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for user in users %}
-                            <tr>
-                                <td class="checkbox-column text-center">{{user.id}}</td>
-                                <td>{% if user.first_name %}{{user.first_name}}{% else %}{% endif %}</td>
-                                <td class="ml-1">{% if user.last_name %}{{user.last_name}}{% else %}{% endif %}</td>                                   
-                                <td>{% if user.email %}{{user.email}}{% else %}{% endif %}</td>
-                                <td class="text-center">
-                                    {% if user.groups.exists %}
-                                        {% for group in user.groups.all %}
-                                            <span class="shadow-none badge badge-primary">
-                                                {{group.name|truncatechars:5}}
-                                            </span>
-                                        {% endfor %}
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    {% include 'user/__partials/actions.html' with item=item %}
-                                </td>
-                            </tr>
-                            
-                            {% endfor %}  
-                        </tbody>
-                    </table>
+                    <div id="zero-config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                {% if groups.exists %}
+                                    <div class="dataTables_length" id="zero-config_length">
+                                        <form action="{% url 'overviewuser' %}">
+                                            <select class="form-control" name="group" id="groups-select">
+                                                <option value="" {% if not group_select %}selected="selected"{% endif %}></option>
+                                                {% for group in groups %}
+                                                    
+                                                    <option value="{{group.id}}" {% if group.id == group_select|add:"0" %}selected="selected"{% endif %}>{{group.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div id="zero-config_filter" class="dataTables_filter">
+                                    <form action="{% url 'overviewuser' %}">
+                                        <label>
+                                            <input type="search" class="form-control" id="search-user" value="{{search|default_if_none:""}}" name="search" placeholder="Search..." aria-controls="zero-config">
+                                        </label>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="style-3" class="table style-3  table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="checkbox-column text-center"> {% trans '#' %}</th>
+                                            <th>{% trans 'First name' %}</th>
+                                            <th>{% trans 'Last Name' %}</th>
+                                            <th>{% trans 'Email' %}</th>
+                                            <th class="text-center">{% trans 'Group' %}</th>
+                                            <th class="text-center">{% trans 'Action' %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <td class="checkbox-column text-center">{{user.id}}</td>
+                                            <td>{% if user.first_name %}{{user.first_name}}{% else %}{% endif %}</td>
+                                            <td class="ml-1">{% if user.last_name %}{{user.last_name}}{% else %}{% endif %}</td>                                   
+                                            <td>{% if user.email %}{{user.email}}{% else %}{% endif %}</td>
+                                            <td class="text-center">
+                                                {% if user.groups.exists %}
+                                                    {% for group in user.groups.all %}
+                                                        <span class="shadow-none badge badge-primary">
+                                                            {{group.name|truncatechars:5}}
+                                                        </span>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">
+                                                {% include 'user/__partials/actions.html' with item=item %}
+                                            </td>
+                                        </tr>
+                                        
+                                        {% endfor %}  
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>          
                 </div>
             </div>
         </div>
@@ -57,24 +89,28 @@
 
     </div>
 </div>
-{% block js %}
-<script>
-$('.open-delete-modal').on('click', function() {
-    var id = $(this).data('id');
-    $.ajax({
-        url: '{% url 'deletemodaluser'  %}',
-        type:"POST",
-        data: {
-            'id': id,
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-        },
-        success:function(data){
-            console.log(data);
-            $('.modal-placeholder').html(data.template);
-            $('.modal').modal();
-        }
-    });
-})
-</script>
-{% endblock %}
 {% endblock content %}
+{% block js %}
+    <script>
+        $('.open-delete-modal').on('click', function() {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '{% url 'deletemodaluser'  %}',
+                type:"POST",
+                data: {
+                    'id': id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success:function(data){
+                    console.log(data);
+                    $('.modal-placeholder').html(data.template);
+                    $('.modal').modal();
+                }
+            });
+        })
+        $('#groups-select').on('change', function() {
+            $(this).closest('form').submit();
+        })
+
+    </script>
+{% endblock %}

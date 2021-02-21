@@ -15,7 +15,7 @@ from django.db.models import Q
 from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def overview_page(request):
     has_perms(request, ["pages.view_page"], 'pages/index.html')
 
@@ -28,7 +28,7 @@ def overview_page(request):
     
     return render(request,'pages/index.html', {"pages":pages, "search": None})
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def overview_children_page(request, pk):
     has_perms(request, ["pages.view_page"], 'pages/index.html')
     page = Page.objects.get(pk=pk)
@@ -38,7 +38,7 @@ def overview_children_page(request, pk):
 
     return render(request,'pages/children-index.html', {"pages":pages, "page": page})
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def add_page(request):
     has_perms(request, ["pages.add_page"], None, 'overviewpage')
     if request.method == 'POST':
@@ -60,7 +60,7 @@ def add_page(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def add_children_page(request, pk):
     has_perms(request, ["pages.add_page"], None, 'overviewpage')
     if request.method == 'POST':
@@ -85,7 +85,7 @@ def add_children_page(request, pk):
         'form': form,
     })
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def edit_page(request, pk):
     has_perms(request, ["pages.change_page"], None, 'overviewpage')
     instance = get_object_or_404(Page, pk=pk)
@@ -107,7 +107,7 @@ def edit_page(request, pk):
         'page':instance
     })
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def delete_ajax_page_modal(request):
     if request.is_ajax():
         data = {}
@@ -124,7 +124,7 @@ def delete_ajax_page_modal(request):
     return False
 
         
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def delete_page(request,pk):
     has_perms(request, ["pages.delete_page"], None, 'overviewpage')
     instance = Page.objects.get(pk=pk)
@@ -133,7 +133,7 @@ def delete_page(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The page has been succesfully deleted!'))
     return redirect('overviewpage')
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def page_reorder(request):
     items = request.POST.get('item', 'None')
     array = items.split('page[]=')
@@ -152,14 +152,14 @@ def page_reorder(request):
 
     return JsonResponse({}, status=200)
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def canvas_page(request, pk):
     has_perms(request, ["pages.view_canvas"], 'overviewpage')
     page = Page.objects.get(pk=pk)
 
     return render(request,'canvas/index.html', {'page': page})
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def canvas_row(request):
     if request.is_ajax():
         canvas = request.POST.get('canvas', None)
@@ -290,7 +290,7 @@ def canvas_row(request):
         }
         return JsonResponse(data)
 
-@staff_member_required(login_url='/account/login')
+@staff_member_required(login_url='/nl/account/login')
 def content_block_view(request):
     block = request.POST.get('block', None)
     instance = PageBlock.objects.filter(id=block).first()

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import change_user_password, delete_ajax_group_modal, delete_ajax_user_modal, overview_user, add_user, edit_user, delete_user, my_profile, group_view, add_group_view, edit_group_view, delete_group_view
+from .views import toggle_activation_view, change_user_password, delete_ajax_group_modal, delete_ajax_user_modal, overview_user, add_user, edit_user, delete_user, my_profile, group_view, add_group_view, edit_group_view, delete_group_view
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     url(_('^change-password/(?P<pk>\d+)$'),change_user_password,name="changepassworduser"),
     url(_('^delete/(?P<pk>\d+)$'),delete_user,name="deleteuser"),
     url(_('^delete/modal$'),delete_ajax_user_modal,name="deletemodaluser"),
+    url(_('^delete/toggle-activation/(?P<pk>\d+)$'), toggle_activation_view, name="activate-user"),
     url(_('^my-profile$'),my_profile,name="my-profile"),
     url(_('^group$'),group_view,name="overviewgroup"),
     url(_('^group/add$'),add_group_view,name="addgroup"),
