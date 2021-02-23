@@ -1,6 +1,8 @@
 from django.db import models
 from apps.base.models import BaseModel, AdminModel
 from django_extensions.db.fields import AutoSlugField
+from django.utils.translation import gettext_lazy as _
+
 # Create your models here.
 class Block(BaseModel, AdminModel):
     TYPE_COL_1 = 1
@@ -35,6 +37,8 @@ class Block(BaseModel, AdminModel):
     category = models.ManyToManyField('blockcategory', blank=True)
     col_size = models.IntegerField(choices=COL_TYPES, default=TYPE_COL_4)
 
+    class Meta:
+        verbose_name = _('Block')
     
     def __str__(self):
         return self.name
@@ -43,6 +47,9 @@ class Block(BaseModel, AdminModel):
 class BlockCategory(BaseModel, AdminModel):
     name = models.CharField(max_length=55, db_index=True, blank=True)
     slug = AutoSlugField(populate_from='name')
+
+    class Meta:
+        verbose_name = _('Blockcategory')
 
     def __str__(self):
         return self.name

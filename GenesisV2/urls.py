@@ -29,6 +29,9 @@ urlpatterns = i18n_patterns(
     path(_('dashboard/translations/'), include('apps.translation.urls'), name='translation'),
     path(_('dashboard/pages/'), include('apps.pages.urls'), name='pages'),
     path(_('dashboard/blocks/'), include('apps.blocks.urls'), name='blocks'),
+    path(_('dashboard/history/'), include('apps.history.urls'), name='history'),
+    path(_('dashboard/base/'), include('apps.base.urls'), name='base'),
+    path(_('dashboard/media/'), include('apps.filemanager.urls'), name='filemanager'),
     path(_('account/'), include('apps.user.account_urls'), name='user_dashboard'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

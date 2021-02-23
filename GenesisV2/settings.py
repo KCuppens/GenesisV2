@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'apps.translation',
     'apps.pages',
     'apps.blocks',
+    'apps.filemanager',
 ]
 
 MIDDLEWARE = [

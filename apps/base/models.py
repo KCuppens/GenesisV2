@@ -35,6 +35,9 @@ class BaseModel(models.Model):
     date_deleted = models.DateTimeField(null=True, blank=True)
     active = models.BooleanField(default=False)
 
+    def get_status(self):
+        return self.active and (self.date_published <= now) and (self.date_expired == None or self.date_expired > now)
+
     class Meta:
         abstract = True
 
@@ -53,14 +56,19 @@ class AdminModel(models.Model):
     def create_history_record(sender, instance, **kwargs):
         apps = ['User','DashboardConfiguration','Session','Migration','History','Icon','Configuration','TranslationEntry']
         if not instance.__class__.__name__ in apps:
-            if kwargs.get('created'):
-                message = _('Er is een %s toegevoegd!').format(s=instance._meta.verbose_name.title())
-                History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
-            elif instance.date_deleted:
-                message = _('Er is een %s verwijderd').format(s=instance._meta.verbose_name.title())
-                History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
+            if instance.edited_by:
+                user = instance.edited_by 
             else:
-                message = _('Er is een %s geüpdate!').format(s=instance._meta.verbose_name.title())
-                History.objects.create(action=message, module=instance.__class__.__name__, user=instance.edited_by)
+                user = instance.author
+
+            if kwargs.get('created'):
+                message = _('Er is een {model} toegevoegd!').format(model=instance._meta.verbose_name.title())
+                History.objects.create(action=message, module=instance.__class__.__name__, user=user)
+            elif instance.date_deleted:
+                message = _('Er is een {model} verwijderd').format(model=instance._meta.verbose_name.title())
+                History.objects.create(action=message, module=instance.__class__.__name__, user=user)
+            else:
+                message = _('Er is een {model} geüpdate!').format(model=instance._meta.verbose_name.title())
+                History.objects.create(action=message, module=instance.__class__.__name__, user=user)
 
 

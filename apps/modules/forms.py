@@ -13,12 +13,14 @@ class ModulePageForm(forms.ModelForm):
 class ModuleForm(forms.ModelForm):
     class Meta:
         model = Module
-        fields = ('name', 'route', 'models', 'appname')
+        fields = ('active','name', 'route', 'models', 'appname','urlpicker')
         labels = {
+            'active': _('Active'), 
             'name': _('Name'),
             'route': _('Route'),
             'models': _('Model'),
             'app_name': _('Appname'),
+            'urlpicker': _('URLPicker')
         }
 
 

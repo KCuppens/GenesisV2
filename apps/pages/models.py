@@ -34,9 +34,15 @@ class Page(BaseModel, AdminModel, SeoModel, SortableModel):
         if self.url_type == self.URL_TYPE_LINK_THROUGH:
             return True
         return False
+    
+    class Meta:
+        verbose_name = _('Page')
 
 class Canvas(BaseModel, AdminModel):
     rows = models.ManyToManyField('canvasrow', blank=True)
+
+    class Meta:
+        verbose_name = _('Canvas')
 
 class CanvasRow(SortableModel, BaseModel, AdminModel):
     DEFAULT_CONTAINER = 'default'
@@ -45,6 +51,9 @@ class CanvasRow(SortableModel, BaseModel, AdminModel):
     ]
     colblock = models.ForeignKey('canvascolblock', on_delete=models.CASCADE, null=True, blank=True)
     container_class = models.CharField(default=DEFAULT_CONTAINER, choices=CONTAINER_TYPES, max_length=55)
+
+    class Meta:
+        verbose_name = _('Canvas row')
 
 class CanvasCol(SortableModel, BaseModel, AdminModel):
     TYPE_COL_1 = 1
@@ -76,6 +85,9 @@ class CanvasCol(SortableModel, BaseModel, AdminModel):
     block = models.ForeignKey('pageblock', on_delete=models.CASCADE, null=True, blank=True)
     col_size = models.CharField(max_length=2, choices=COL_TYPES, default=TYPE_COL_4)
 
+    class Meta:
+        verbose_name = _('Canvas column')
+
 class CanvasColBlock(SortableModel, BaseModel, AdminModel):
     COLBLOCK_4_4_4 = '4-4-4'
     COLBLOCK_6_6 = '6-6'
@@ -106,6 +118,9 @@ class CanvasColBlock(SortableModel, BaseModel, AdminModel):
     ]
 
     cols = models.ManyToManyField(CanvasCol, blank=True)
+
+    class Meta:
+        verbose_name = _('Canvas column block')
 
 class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
     TYPE_COL_1 = 1
@@ -146,4 +161,7 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
     subtitle = models.CharField(max_length=255, null=True, blank=True)
     content = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to="blocks/", null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('Page block')
   

@@ -1,8 +1,10 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from apps.blocks.models import Block, BlockCategory
+from apps.base.widgets import URLPickerWidget
 
 class BlockForm(forms.ModelForm):
+    name = forms.CharField(widget=URLPickerWidget)
     class Meta:
         model = Block
         fields = ('name', 'image', 'category', 'active', 'date_published', 'date_expired','col_size')

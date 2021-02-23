@@ -84,6 +84,17 @@ def delete_ajax_tab_modal(request):
         return JsonResponse(data)
     return False
 
+@staff_member_required(login_url='/nl/account/login')
+def toggle_tab_activation_view(request, pk):
+    has_perms(request, ["modules.change_tab"], None, 'overviewtab')
+
+    item = Tab.objects.get(pk=pk)
+    item.active = not item.active
+    messages.add_message(request, messages.SUCCESS, _('De status van de tab is succesvol aangepast!'))
+    item.save()
+    
+    return redirect('overviewtab')
+
         
 @staff_member_required(login_url='/nl/account/login')
 def delete_tab(request,pk):
@@ -201,4 +212,15 @@ def delete_modules_page(request,pk):
     instance.date_deleted = timezone.now()
     instance.save()
     messages.add_message(request, messages.SUCCESS, _('The modulepage has been succesfully deleted!'))
+    return redirect('overviewmodules')
+
+@staff_member_required(login_url='/nl/account/login')
+def toggle_activation_view(request, pk):
+    has_perms(request, ["modules.change_module"], None, 'overviewmodules')
+
+    item = Module.objects.get(pk=pk)
+    item.active = not item.active
+    messages.add_message(request, messages.SUCCESS, _('De status van de gebruiker is succesvol aangepast!'))
+    item.save()
+    
     return redirect('overviewmodules')

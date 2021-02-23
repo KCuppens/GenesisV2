@@ -26,3 +26,6 @@ def has_perms(request, permissions, template, redirect = None, raise_exception=F
             })
     elif redirect:
         return redirect(redirect)
+
+def generate_perma_url(locale, model, id):
+    return '/' + locale + '/' + 'perma/url/' + model.lower()  + '/' + str(id)

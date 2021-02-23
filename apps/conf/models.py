@@ -16,3 +16,6 @@ class Configuration(models.Model):
     description = models.TextField(null=True, blank=True)
     conf_type = models.CharField(choices=AVAILABLE_MODELS, default=USER_MODEL, max_length=100)
 
+    class Meta:
+        verbose_name = _('Configuration')
+

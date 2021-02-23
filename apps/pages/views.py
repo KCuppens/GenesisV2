@@ -299,15 +299,12 @@ def content_block_view(request):
         if request.method == "POST":
             form = BlockForm(request.POST, request.FILES, instance=instance)
             if form.is_valid():
-                print(form.cleaned_data)
                 instance = form.save(commit=False)
                 instance.title = form.cleaned_data.get('title')
                 instance.subtitle = form.cleaned_data.get('subtitle')
                 instance.content = form.cleaned_data.get('content')
                 instance.image = form.cleaned_data.get('image')
                 instance.save()
-                print(instance)
-                print(instance.title)
                 context = {
                     'message': _('Content succesfully changed'),
                     'form': form,

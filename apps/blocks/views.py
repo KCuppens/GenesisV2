@@ -65,6 +65,17 @@ def edit_block(request, pk):
     })
 
 @staff_member_required(login_url='/nl/account/login')
+def toggle_activation_view(request, pk):
+    has_perms(request, ["blocks.change_block"], None, 'overviewblocks')
+
+    item = Block.objects.get(pk=pk)
+    item.active = not item.active
+    messages.add_message(request, messages.SUCCESS, _('De status van de tab is succesvol aangepast!'))
+    item.save()
+    
+    return redirect('overviewblocks')
+
+@staff_member_required(login_url='/nl/account/login')
 def delete_ajax_block_modal(request):
     if request.is_ajax():
         data = {}
@@ -133,6 +144,17 @@ def edit_block_category(request, pk):
         'form': form,
         'item': instance,
     })
+
+@staff_member_required(login_url='/nl/account/login')
+def toggle_category_activation_view(request, pk):
+    has_perms(request, ["blocks.change_blockcategory"], None, 'overviewblock-categories')
+
+    item = BlockCategory.objects.get(pk=pk)
+    item.active = not item.active
+    messages.add_message(request, messages.SUCCESS, _('De status van de categorie is succesvol aangepast!'))
+    item.save()
+    
+    return redirect('overviewblock-categories')
 
 @staff_member_required(login_url='/nl/account/login')
 def delete_ajax_block_category_modal(request):
