@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    $('.canvas-builder').sortable()
     function getOverview() {
         var canvas = $('.canvas-builder').data('id');
         var csrf = $('.canvas-builder').data('csrf');
@@ -120,7 +119,7 @@ $(document).ready(function () {
     $(".form_builder_area").disableSelection();
 
     function getCanvasRowHTML() {
-        return $('<div>').addClass('row-canvas layout-top-spacing col-md-12');
+        return $('<div>').addClass('d-block layout-top-spacing col-md-12');
     }
 
     function getCol6HTML() {
@@ -326,7 +325,7 @@ $(document).ready(function () {
         },
     });
     $(".row-canvas-draggable").draggable({
-        connectToSortable: "#sortable",
+        connectToSortable: ".canvas-builder",
         helper: function () {
             return getCanvasRowHTML();
         },
@@ -349,7 +348,7 @@ $(document).ready(function () {
         },
 
     });
-    $('#sortable').sortable({
+    $('.canvas-builder').sortable({
         axis: 'y',
         placeholder: 'py-5',
         scrollSpeed: 20,
