@@ -119,7 +119,7 @@ $(document).ready(function () {
     $(".form_builder_area").disableSelection();
 
     function getCanvasRowHTML() {
-        return $('<div>').addClass('d-block layout-top-spacing col-md-12');
+        return '<p class="d-block col-md-12 shadow-lg h1 text-center py-4 rounded">Add Row</p>';
     }
 
     function getCol6HTML() {
