@@ -26,8 +26,7 @@
 }
 
 .modal-dialog {
-    width: 100vh;
-    max-width: 100vh
+    max-width: 80%;
 }
 
 .row-canvas.is-selected {

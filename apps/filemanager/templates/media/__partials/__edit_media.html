@@ -1,0 +1,82 @@
+{% load i18n widget_tweaks %}
+<form action="{% url 'edit-media' %}" class="edit-media-form" method="POST">
+    {% csrf_token %}
+    <div class="form-group mb-4">
+        {{ form.name|add_label_class:'' }}
+        {{form.name|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
+        {% if form.name.errors %}
+            <div class="invalid-feedback">
+                {{form.name.errors}}
+            </div>
+        {% endif %}   
+    </div>
+    <div class="form-group mb-4">
+        {{ form.summary|add_label_class:'' }}
+        {{form.summary|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+        {% if form.summary.errors %}
+            <div class="invalid-feedback">
+                {{form.summary.errors}}
+            </div>
+        {% endif %}   
+    </div>
+    <div class="form-group mb-4">
+        {{ form.copyright|add_label_class:'' }}
+        {{form.copyright|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+        {% if form.copyright.errors %}
+            <div class="invalid-feedback">
+                {{form.copyright.errors}}
+            </div>
+        {% endif %}   
+    </div>
+    <div class="form-group mb-4">
+        {{ form.keywords|add_label_class:'' }}
+        {{form.keywords|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+        {% if form.keywords.errors %}
+            <div class="invalid-feedback">
+                {{form.keywords.errors}}
+            </div>
+        {% endif %}   
+    </div>
+    <div class="form-group mb-4">
+        {{ form.alt|add_label_class:'' }}
+        {{form.alt|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+        {% if form.alt.errors %}
+            <div class="invalid-feedback">
+                {{form.alt.errors}}
+            </div>
+        {% endif %}   
+    </div>
+    <div class="form-group mb-4">
+        {{ form.metadata|add_label_class:'' }}
+        {{form.metadata|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+        {% if form.metadata.errors %}
+            <div class="invalid-feedback">
+                {{form.metadata.errors}}
+            </div>
+        {% endif %}   
+    </div>
+    <button class="btn btn-success submit-edit-media" data-media="{{media}}" type="submit">{% trans 'Save' %}</button>
+</form>
+<script>
+    $('.submit-edit-media').on('click', function(e){
+        e.preventDefault();
+        var serializedData = $('.edit-media-form').serialize();
+        var csrf = "{{csrf_token}}";
+        var media = $(this).data('media');
+        console.log(serializedData);
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'edit-media' %}",
+            data: serializedData + '&media=' + media,
+            success: function(data){
+                location.reload();
+            },
+        })
+    });
+</script>
+
+
+
+
+
+

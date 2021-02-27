@@ -19,7 +19,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def overview_page(request):
     has_perms(request, ["pages.view_page"], 'pages/index.html')
 
-    search = request.GET.get('search',)
+    search = request.GET.get('search')
     if search:
         pages = Page.objects.filter(Q(page_title__contains=search)| Q(menu_title__contains=search), date_deleted=None, parent__isnull=True)
     else:
@@ -294,7 +294,6 @@ def canvas_row(request):
 def content_block_view(request):
     block = request.POST.get('block', None)
     instance = PageBlock.objects.filter(id=block).first()
-    print(instance)
     if instance:
         if request.method == "POST":
             form = BlockForm(request.POST, request.FILES, instance=instance)

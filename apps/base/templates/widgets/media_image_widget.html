@@ -1,0 +1,41 @@
+{% load i18n static %}
+<input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} class="filemanager-widget form-control" value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+<br>
+<div class="input-group-append">
+    <button class="btn btn-block btn-dark browse-filemanager" type="button">{% trans 'Browse' %}</button>
+</div>
+{% include 'filemanager/filemanager-modal.html' %}
+<script src="{% static 'admin/js/libs/jquery-3.1.1.min.js' %}"></script>
+<script>
+    $('.browse-filemanager').on('click', function() {
+        function getCookie(name) {
+            var cookieValue = null; 
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'get_filemanager' %}',
+            data: {
+                'csrfmiddlewaretoken': csrftoken,
+                'type': 'image'
+            },
+            success: function(data){
+                $('#filemanagerModal').modal();
+                $('.get-filemanager').html(data.template);
+            },
+        })
+        
+    });
+</script>

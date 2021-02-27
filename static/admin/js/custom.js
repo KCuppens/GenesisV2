@@ -24,6 +24,7 @@ $('.scrollTop').click(function() {
 });
 
 
+
 $('.navbar .dropdown.notification-dropdown > .dropdown-menu, .navbar .dropdown.message-dropdown > .dropdown-menu ').click(function(e) {
     e.stopPropagation();
 });
@@ -31,7 +32,8 @@ $('.navbar .dropdown.notification-dropdown > .dropdown-menu, .navbar .dropdown.m
 
 //First upload
 var firstUpload = new FileUploadWithPreview('image')
-    
+var secondUpload = new FileUploadWithPreview('mySecondImage')
+
 
 /*
 =========================================

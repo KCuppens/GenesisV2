@@ -40,14 +40,14 @@
         </div>
     {% endif %}   
 </div>
-<div class="custom-file-container" data-upload-id="image">
-    <label>{{ form.image|add_label_class:'' }}<a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
-    <label class="custom-file-container__custom-file" >
-        {{form.image|append_attr:"class:custom-file-container__custom-file__custom-file-input"|add_error_attr:"class:is-invalid"}}     
-        <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-        <span class="custom-file-container__custom-file__custom-file-control"></span>
-    </label>
-    <div class="custom-file-container__image-preview"></div>
+<div class="form-group mb-4">
+    {{ form.image|add_label_class:'' }}
+    {{form.image|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.image.errors %}
+        <div class="invalid-feedback">
+            {{form.image.errors}}
+        </div>
+    {% endif %}   
 </div>
 <div class="form-group mb-4">
     {{ form.date_published|add_label_class:'' }}
