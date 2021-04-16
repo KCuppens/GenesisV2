@@ -1,0 +1,93 @@
+{% load static i18n get_element_render %} 
+<div class="row">
+    {% if count_pages > 1 %}
+        <div class="form-pages">
+            <ul>
+                {% for page in item.pages.all %}
+                    <li>{{page.name}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <form method="post" id="form_{{item.id}}">
+        {% for field in page.elements.all %}
+            {% get_element_render request field %}
+            {% if field.type == "submit_button" %} 
+                <script>
+                    function validateForm() {
+                        validated = true;
+                        $('#form_{{item.id}}').find('input').each(function() {
+                            if($(this).attr('type') == 'radio') {
+                                name = $(this).attr('name');
+                                validated = false;
+                                $('[name="' + name + '"]').each(function() {
+                                    if($(this).prop('checked')){
+                                        validated = true;
+                                    }
+                                });
+                                if(validated == false){
+                                    $('div.multi-radio div.form-error').html('{% trans 'Please select atleast one option' %}');
+                                }
+                            } else {
+                                if($(this).prop('required')){
+                                    if($(this).val() == ''){
+                                        $(this).siblings('div.form-error').html('{% trans 'This field is required' %}');
+                                        validated = false;
+                                    } 
+                                }
+                            }
+                        });
+                        $('#form_{{item.id}}').find('select').each(function() {
+                            if($(this).prop('required')){
+                                if($(this).val() == ''){
+                                    $(this).siblings('div.form-error').html('This field is required');
+                                    validated = false;
+                                } 
+                            }
+                        });
+                        return validated;
+                    }
+                    $('.confirm-form-{{field.id}}').on('click', function(e) {
+                        e.preventDefault();
+                        if(validateForm()){
+                            $.ajax({
+                                type: 'POST',
+                                url: '{% url 'handleform' %}', 
+                                data: {
+                                    {% for field in page.elements.all %}
+                                        {% if field.type == 'security_honeypot' %}
+                                            '{{field.type}}-{{field.id}}': $('[name="{{field.type}}-{{field.id}}"]').val(),
+                                            '{{field.type}}-hidden-{{field.id}}': $('[name="{{field.type}}-hidden-{{field.id}}"]').val(),
+                                        {% else %}
+                                            '{{field.type}}-{{field.id}}': $('[name="{{field.type}}-{{field.id}}"]').val(),
+                                        {% endif %}
+                                    {% endfor %}
+                                    'form': '{{item.id}}',
+                                    'csrfmiddlewaretoken': '{{csrf_token}}'
+                                },
+                                success: function (data) {
+                                    if(data.action == 'message'){
+                                        $('.formbuilder-overview').append(
+                                            data.value
+                                        );
+                                    } else {
+                                        if(data.action == 'redirect'){
+                                            window.location.href(data.value);
+                                        } else {
+                                            if(data.action == 'action') {
+                                                window.location.href(data.value);
+                                            } else {
+                                                $('.formbuilder-overview').html(data.template);
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                            });
+                        }
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    </form>
+</div>

@@ -1,0 +1,80 @@
+{% load i18n widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'Dashboard' %}</h4>
+    </div>
+</div>
+<div class="form-group mb-4">
+    {{form.active|add_error_attr:"class:is-invalid"}}
+    {{ form.active|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.default|add_error_attr:"class:is-invalid"}}
+    {{ form.default|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{ form.title|add_label_class:'' }}
+    {{form.title|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.title.errors %}
+        <div class="invalid-feedback">
+            {{form.title.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.icon|add_label_class:'' }}
+    {{form.icon|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
+    {% if form.icon.errors %}
+        <div class="invalid-feedback">
+            {{form.icon.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.method|add_label_class:'' }}
+    {{form.method|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
+    {% if form.method.errors %}
+        <div class="invalid-feedback">
+            {{form.method.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.param1|add_label_class:'' }}
+    {{form.param1|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.param1.errors %}
+        <div class="invalid-feedback">
+            {{form.param1.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.sort|add_label_class:'' }}
+    {{form.sort|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
+    {% if form.sort.errors %}
+        <div class="invalid-feedback">
+            {{form.sort.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.order|add_label_class:'' }}
+    {{form.order|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
+    {% if form.order.errors %}
+        <div class="invalid-feedback">
+            {{form.order.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.template|add_label_class:'' }}
+    {{form.template|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.template.errors %}
+        <div class="invalid-feedback">
+            {{form.template.errors}}
+        </div>
+    {% endif %}   
+</div>
+
+
+

@@ -1,0 +1,109 @@
+{% load i18n %}
+<div class="form-border-row row" id="item_{{field.id}}">
+    <div class="form-left-action">
+        <span class="form-sort-handle badge badge-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
+        </span>
+    </div>
+    <div class="form-right-action">
+        <span class="change-form-element-colsize-{{field.id}} badge badge-secondary" data-field="{{field.id}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        </span>
+        <span class="save-form-element-{{field.id}} badge badge-success" data-field="{{field.id}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+        </span>
+        <span class="delete-form-element-{{field.id}} badge badge-danger" data-field="{{field.id}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+        </span>
+    </div>
+    <div class="col-md-12">
+        <h5>{{field.get_type_display}}</h5>
+    </div>
+    <div class="col-md-6">
+        <div class="form-label">
+            <label for="{{field.id}}">
+                {% trans 'Label' %}
+                <input class="form-control" type="text" name="label-{{field.id}}" value="{{field.label|default_if_none:""}}" id="{{field.id}}">
+            </label>
+        </div>
+        <div class="form-required">
+            <label for="{{field.id}}">
+                {% trans 'Required?' %}
+                <input type="checkbox" name="required-{{field.id}}" {% if field.required %}checked="checked"{% endif %} id="{{field.id}}">
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-placeholder">
+            <label for="{{field.id}}">
+                {% trans 'Minimum' %}
+                <input class="form-control dateTimeFlatpickr" type="datetime-local" name="minimum-{{field.id}}" value="{{field.min_date|default_if_none:""}}" id="{{field.id}}">
+            </label>
+        </div>
+        <div class="form-placeholder">
+            <label for="{{field.id}}">
+                {% trans 'Maximum' %}
+                <input class="form-control dateTimeFlatpickr" type="datetime-local" name="maximum-{{field.id}}" value="{{field.max_date|default_if_none:""}}" id="{{field.id}}">
+            </label>
+        </div>
+    </div>
+</div>
+{% block js %}
+<script>
+    $('.change-form-element-colsize-{{field.id}}').on('click', function(){
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'getformbuilder' %}',
+            data: {
+                'field': '{{field.id}}',
+                'action': 'savecolsizefield',
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function (data) {
+                $('.modal').modal();
+                $('.modal-title').html(data.title);
+                $('.form-modal').html(data.template);
+            }
+        });
+    });
+    $('.save-form-element-{{field.id}}').on('click', function() {
+        label = $('[name="label-{{field.id}}"]').val()
+        if(!$('[name="required-{{field.id}}"]:checked').length==0){
+            required = '1';
+        }
+        minimum = $('[name="minimum-{{field.id}}"]').val();
+        maximum = $('[name="minimum-{{field.id}}"]').val();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'getformbuilder' %}',
+            data: {
+                'action': 'savefield',
+                'label': label,
+                'minimum': minimum,
+                'maximum': maximum,
+                'required': required,
+                'field': '{{field.id}}',
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function (data) {
+                $('.formbuilder-overview').html(data.template);
+            }
+        });
+    });
+    $('.delete-form-element-{{field.id}}').on('click', function() {
+        field = $(this).data('field');
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'getformbuilder' %}',
+            data: {
+                'action': 'deletefield',
+                'field': '{{field.id}}',
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function (data) {
+                $('.formbuilder-overview').html(data.template);
+            }
+        });
+    });
+</script>
+{% endblock %}

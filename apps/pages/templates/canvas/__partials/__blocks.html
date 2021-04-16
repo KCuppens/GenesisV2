@@ -1,8 +1,11 @@
 {% load i18n static %}
 <div class="row">
-    <input type="text" name="search" class="form-control" value="{{search|default_if_none:""}}" id="block-search-value" placeholder="{% trans 'Search blocks' %}">
+    <div class="col-md-6">
+        <input type="text" name="search" class="form-control" value="{{search|default_if_none:""}}" id="block-search-value" placeholder="{% trans 'Search blocks' %}">
+    </div>
     <button type="button" class="btn btn-success block-search">{% trans 'Search' %}</button>
 </div>
+
 <div class="btn-group layout-top-spacing" role="group" aria-label="Basic example">
     <button type="button" class="btn btn-{% if not current_category or current_category == 'alle' %}primary{% else %}default{% endif %} set-category" data-slug="alle">{% trans 'Alle' %}</button>
     {% for category in categories %}
@@ -10,24 +13,43 @@
     {% endfor %}
     <span class="canvas-id" data-canvas="{{canvas}}" data-colsize={{colsize}} data-col="{{col}}"></span>
 </div>
-<div class="row layout-top-spacing d-flex justify-content-center align-items-center">
-    {% for block in blocks %}
-        {% include 'canvas/__partials/__block_card.html' with item=block %}
-    {% endfor %}
-</div>
-<div class="row layout-top-spacing d-flex justify-content-center align-items-center">
-    {% include 'dashboard/snippets/pagination.html' with items=blocks %}
-</div>
+{% if blocks.object_list.count > 0 %}
+    <div class="row layout-top-spacing d-flex justify-content-center align-items-center">
+            {% for block in blocks.object_list %}
+                {% include 'canvas/__partials/__block_card.html' with item=block %}
+            {% endfor %}
+    </div>
+    {% if has_next_page %}
+        <div class="row layout-top-spacing d-flex justify-content-center align-items-center">
+            {% include 'dashboard/snippets/pagination-ajax.html' with items=blocks canvas=canvas colsize=colsize %}
+        </div>
+    {% endif %}
+{% else %}
+    <div class="row layout-top-spacing d-flex justify-content-center align-items-center">
+        <div class="alert alert-outline-primary mb-4 layout-top-spacing" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="feather feather-x text-black close" data-dismiss="alert">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
+            {% trans 'There are no blocks available for this col size' %}
+        </div>
+    </div>
+{% endif %}
 <script>
     $(document).ready(function () {
         $('.select-page-block').on('click', function(e){
-            var col = $(this).data('col');
+            var col = $('.canvas-id').data('col');
             var canvas = $('.canvas-id').data('canvas');
             var csrf = $('.canvas-builder').data('csrf');
             var item = $(this).data('id');
             $.ajax({
                 type: 'POST',
-                url: 'canvas-row',
+                url: '{% url 'canvasrow' %}',
                 data: {
                     'csrfmiddlewaretoken': csrf,
                     'item': item,
@@ -48,7 +70,7 @@
             var colsize = $('.canvas-id').data('colsize');
             $.ajax({
                 type: 'POST',
-                url: 'canvas-row',
+                url: '{% url 'canvasrow' %}',
                 data: {
                     'csrfmiddlewaretoken': csrf,
                     'col': col,
@@ -70,7 +92,7 @@
             var colsize = $('.canvas-id').data('colsize');
             $.ajax({
                 type: 'POST',
-                url: 'canvas-row',
+                url: '{% url 'canvasrow' %}',
                 data: {
                     'csrfmiddlewaretoken': csrf,
                     'col': col,

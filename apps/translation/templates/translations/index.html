@@ -9,6 +9,8 @@
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                         <h4>{% trans 'Translation overview' %}</h4>
+                        <a href="{% url 'export-translation' %}" class="btn btn-default mb-2 ml-2"> {% trans 'Export translation' %}</a>
+                        <a href="{% url 'import-translation' %}" class="btn btn-default mb-2 ml-2"> {% trans 'Import translation' %}</a>
                     </div>
                 </div>
             </div>
@@ -22,6 +24,7 @@
                                             <th>{% trans 'Search for key' %}</th>
                                             <th>{% trans 'Search for english' %}</th>
                                             <th>{% trans 'Search for dutch' %}</th>
+                                            <th>{% trans 'Search for french' %}</th>
                                         </tr>
                                         <tr>
                                             <th class="text-center" rowspan="1" colspan="1">
@@ -33,11 +36,15 @@
                                             <th rowspan="1" colspan="1">
                                                 <input type="text" class="form-control searchfunction-nl" value="{{searchnl|default_if_none:"" }}" placeholder="{% trans 'Search for dutch' %}">
                                             </th>
+                                            <th rowspan="1" colspan="1">
+                                                <input type="text" class="form-control searchfunction-fr" value="{{searchfr|default_if_none:"" }}" placeholder="{% trans 'Search for french' %}">
+                                            </th>
                                         </tr>
                                         <tr>
                                             <th>{% trans 'Key' %}</th>
                                             <th>{% trans 'English' %}</th>
                                             <th>{% trans 'Dutch' %}</th>
+                                            <th>{% trans 'French' %}</th>
                                         </tr>
                                     </thead>
                                     {% if entries %}
@@ -47,6 +54,7 @@
                                                 <td class="key">{{ key }}</td>
                                                 <td><input id="{{ v.en.pk }}"  class="lng form-control en" text="en" value="{{ v.en.translation }}"></td>
                                                 <td><input id="{{ v.nl.pk }}" class="lng form-control nl" text="nl" value="{{ v.nl.translation }}"></td>
+                                                <td><input id="{{ v.fr.pk }}" class="lng form-control nl" text="nl" value="{{ v.fr.translation }}"></td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>

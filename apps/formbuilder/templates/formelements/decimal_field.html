@@ -1,0 +1,11 @@
+<div class="form-group row">
+    <div class="col-md-{% if field.col_size == 'full' %}12{% elif field.col_size == 'half' %}6{% elif field.col_size == 'quarter' %}3{% endif %} ml-2">
+        <label for="{{field.id}}">
+            {{field.label}}
+            <input class="form-control" type="number" {% if field.required %}required{% endif %} name="{{field.type}}-{{field.id}}" min="{{field.min}}" max="{{field.max}}" step="any">
+            <div class="form-error" style="color: red;">
+            
+            </div>
+        </label>
+    </div>
+</div>

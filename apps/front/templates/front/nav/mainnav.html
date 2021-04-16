@@ -1,0 +1,9 @@
+<div class="mainnav">
+    <ul class="mainnav-list">
+        {% for page in pages %}
+            {% if page.parent == None %}
+                {% include 'front/nav/mainnav-item.html' with page=page %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

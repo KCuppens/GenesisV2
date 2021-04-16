@@ -32,12 +32,34 @@
     $( document ).ready(function() {
         if($('#id_url_type').val() == 'generated'){
             $('#id_slug').closest('.form-group').css('display', 'none');
+            $('#id_linkthrough').closest('.form-group').css('display', 'none');
+        } else {
+            if($('#id_url_type').val() == 'link-through'){
+                console.log('xx');
+                $('#id_slug').closest('.form-group').css('display', 'none');
+                $('#id_linkthrough').closest('.form-group').css('display', 'block');
+            } else {
+                console.log('xxx');
+                $('#id_slug').closest('.form-group').css('display', 'block');
+                $('#id_linkthrough').closest('.form-group').css('display', 'none');
+            }    
         } 
         $('#id_url_type').on('change', function(){
             if($('#id_url_type').val() == 'generated'){
+                console.log('x');
                 $('#id_slug').closest('.form-group').css('display', 'none');
+                $('#id_linkthrough').closest('.form-group').css('display', 'none');
             } else {
-                $('#id_slug').closest('.form-group').css('display', 'block');
+                if($('#id_url_type').val() == 'link-through'){
+                    console.log('xx');
+                    $('#id_slug').closest('.form-group').css('display', 'none');
+                    $('#id_linkthrough').closest('.form-group').css('display', 'block');
+                } else {
+                    console.log('xxx');
+                    $('#id_slug').closest('.form-group').css('display', 'block');
+                    $('#id_linkthrough').closest('.form-group').css('display', 'none');
+                }
+                
             }
         })
     });

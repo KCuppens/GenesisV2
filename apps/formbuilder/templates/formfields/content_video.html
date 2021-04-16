@@ -1,0 +1,8 @@
+<div class="form-group row">
+    <div class="col-md-{% if field.col_size == 'full' %}12{% elif field.col_size == 'half' %}6{% elif field.col_size == 'quarter' %}3{% endif %} ml-2">
+        <video width="320" height="240" controls>
+            <source src="{{field.video}}" type="video/mp4">
+          Your browser does not support the video tag.
+          </video>
+    </div>
+</div>

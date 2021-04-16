@@ -1,11 +1,15 @@
 {% load i18n static %}
-<input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} class="urlpicker-widget form-control" value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
-<br>
-<div class="input-group-append">
-    <button class="btn btn-block btn-dark select-url" type="button">{% trans 'Select internal link' %}</button>
+<div class="row">
+    <div class="col-md-8">
+        <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} class="urlpicker-widget form-control" value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+    </div>
+    <div class="input-group-append">
+        <button class="btn btn-block btn-dark select-url" type="button">{% trans 'Select internal link' %}</button>
+    </div>
 </div>
+<br>
 {% include 'urlpicker/internal-link-modal.html' %}
-<script src="{% static 'admin/js/libs/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'admin/js/libs/jquery-3.6.0.min.js' %}"></script>
 <script>
     $('.select-url').on('click', function() {
         function getCookie(name) {

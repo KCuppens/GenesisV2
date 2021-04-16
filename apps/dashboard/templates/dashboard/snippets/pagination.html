@@ -18,17 +18,17 @@
                 {% endif %}
                 {% for i in items.paginator.page_range %}
                     {% if items.number == i %}
-                        <li class="paginate_button page-item active">
+                        <li class="paginate_button page-item {% if i == items.number %}active{% endif %}">
                             <a href="?page={{ i }}" aria-controls="column-filter" data-dt-idx="1" tabindex="0" class="page-link">{{ i }}</a>
                         </li>
                     {% elif i > items.number|add:'-5' and i < items.number|add:'5' %}
-                        <li class="paginate_button page-item active">
+                        <li class="paginate_button page-item {% if i == items.number %}active{% endif %}">
                             <a href="?page={{ i }}" aria-controls="column-filter" data-dt-idx="1" tabindex="0" class="page-link">{{ i }}</a>
                         </li>
                     {% endif %}
                 {% endfor %}
                 {% if items.paginator.num_pages > items.number|add:'4' %}
-                    <li class="paginate_button page-item active">
+                    <li class="paginate_button page-item {% if i == items.number %}active{% endif %}">
                         <a href="?page={{ page_obj.number|add:'5' }}" aria-controls="column-filter" data-dt-idx="1" tabindex="0" class="page-link">&hellip;</a>
                     </li>
                 {% endif %}

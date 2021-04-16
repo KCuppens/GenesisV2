@@ -1,11 +1,14 @@
 {% load i18n static %}
-<input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} class="filemanager-widget form-control" value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
-<br>
-<div class="input-group-append">
-    <button class="btn btn-block btn-dark browse-filemanager" type="button">{% trans 'Browse' %}</button>
-</div>
+<div class="row">
+    <div class="col-md-8">
+        <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} class="filemanager-widget form-control" value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+    </div>
+    <div class="input-group-append col-md-4">
+        <button class="btn btn-block btn-dark browse-filemanager" type="button">{% trans 'Browse' %}</button>
+    </div>
+</div> 
 {% include 'filemanager/filemanager-modal.html' %}
-<script src="{% static 'admin/js/libs/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'admin/js/libs/jquery-3.6.0.min.js' %}"></script>
 <script>
     $('.browse-filemanager').on('click', function() {
         function getCookie(name) {

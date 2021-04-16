@@ -48,7 +48,10 @@
         <div class="invalid-feedback">
             {{form.page_title.errors}}
         </div>
-    {% endif %}   
+    {% endif %} 
+    {% if form.page_title.help_text %}
+        <small id="emailHelp1" class="form-text text-muted">{{form.page_title.help_text}}</small>
+    {% endif %}
 </div>
 <div class="form-group mb-4">
     {{ form.menu_title|add_label_class:'' }}
@@ -57,7 +60,10 @@
         <div class="invalid-feedback">
             {{form.menu_title.errors}}
         </div>
-    {% endif %}   
+    {% endif %} 
+    {% if form.menu_title.help_text %}
+        <small id="emailHelp1" class="form-text text-muted">{{form.menu_title.help_text}}</small>
+    {% endif %}  
 </div>
 
 <div class="form-group mb-4">
@@ -75,6 +81,15 @@
     {% if form.slug.errors %}
         <div class="invalid-feedback">
             {{form.slug.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.linkthrough|add_label_class:'' }}
+    {{form.linkthrough|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.linkthrough.errors %}
+        <div class="invalid-feedback">
+            {{form.linkthrough.errors}}
         </div>
     {% endif %}   
 </div>

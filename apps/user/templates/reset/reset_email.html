@@ -1,6 +1,7 @@
 {% extends 'login/base.html' %}
+{% load i18n %}
 {% block title %}
-Password Recovery
+{% trans 'Password Recovery' %}
 {% endblock title %}
 {% block content %}
 
@@ -10,8 +11,8 @@ Password Recovery
                 <div class="form-container">
                     <div class="form-content">
 
-                        <h1 class="">Password Recovery</h1>
-                        <p class="signup-link">Enter your email and instructions will sent to you!</p>
+                        <h1 class="">{% trans 'Password Recovery' %}</h1>
+                        <p class="signup-link">{% trans 'Please enter your email and we will send you the instructions via email!' %}</p>
                         <form class="text-left" method="POST">
                         {% csrf_token %}
                             <div class="form">
@@ -21,7 +22,7 @@ Password Recovery
                                 </div>
                                 <div class="d-sm-flex justify-content-between">
                                     <div class="field-wrapper">
-                                        <button type="submit" class="btn btn-primary" value="">Reset</button>
+                                        <button type="submit" class="btn btn-primary" value="">{% trans 'Reset password' %}</button>
                                     </div>                                    
                                 </div>
 

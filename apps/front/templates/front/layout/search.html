@@ -1,0 +1,32 @@
+
+{% load i18n %}
+<div class="sitesearch-container">
+    <div class="sitesearch">
+        <form class="form" method="get" action="{% url 'search-front' %}">
+            <div class="sitesearch-form">
+                <div class="form-row form-row-grow">
+                    <label class="form-label visually-hidden">
+                        {% trans 'Zoeken' %}
+                    </label>
+                    <div class="form-control">
+                        <input name="search" placeholder="{% trans 'Je zoekopdracht (minstens 3 karakters)' %}" type="text" value="{{search}}" />
+                    </div>
+                </div>
+                <div class="form-row form-row-fixed">
+                    <div class="form-control">
+                        <button class="button" type="submit">
+                            <span class="button-icon mdi mdi-magnify" aria-hidden></span>
+                            <span class="visually-hidden">{% trans 'Zoeken' %}</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-row form-row-fixed">
+                    <button class="button button-link button-link-light sitesearch-toggle" type="button">
+                        <span class="button-icon mdi mdi-close" aria-hidden></span>
+                        <span class="visually-hidden">{% trans 'Sluiten' %}</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

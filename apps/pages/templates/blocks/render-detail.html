@@ -1,0 +1,12 @@
+{% load render_block_page %}
+{% for row in detailpage.canvas.rows.all %}
+    <div class="row">
+        {% for col in row.colblock.cols.all %}
+            <div class="col-md-{{col.col_size}}">
+                {% if col.block %}
+                    {% render_block_page request col.block object %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}

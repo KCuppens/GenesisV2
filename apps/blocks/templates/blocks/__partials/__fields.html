@@ -1,0 +1,77 @@
+{% load i18n widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'Block' %}</h4>
+    </div>
+</div>
+<h3>{% trans 'Content' %}</h3>
+<div class="form-group mb-4">
+    {{form.has_title|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_title|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_subtitle|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_subtitle|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_content|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_content|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_image|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_image|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_image_second|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_image_second|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_url|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_url|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_url_text|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_url_text|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_video|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_video|add_label_class:'' }}   
+</div>
+<div class="form-group mb-4">
+    {{form.has_embed|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_embed|add_label_class:'' }}
+</div>
+<h3>{% trans 'Module' %}</h3>
+<div class="form-group mb-4">
+    {{form.has_form|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_form|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_module|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_module|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_sort_method|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_sort_method|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_limit|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_limit|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_sort_order|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_sort_order|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_pagination|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_pagination|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_module|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_module|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_detailpage|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_detailpage|add_label_class:'' }}
+</div>
+

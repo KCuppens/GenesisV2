@@ -1,0 +1,69 @@
+{% load i18n static %}
+<div class="table-responsive mt-4 mb-4">
+    <form class="file-form">
+        {% csrf_token %}
+        <input type="hidden" name="model" value="{{model}}">
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text" class="filemanager-widget form-control" name="importfile" id="importfile">
+            </div>
+            <div class="input-group-append col-md-4">
+                <button class="btn btn-block btn-dark browse-filemanager" type="button">{% trans 'Browse' %}</button>
+            </div>
+        </div> 
+        <br>
+        <button class="btn btn-success submit-file">{% trans 'Upload file' %}</button>
+    </form> 
+</div>
+
+{% load i18n  %}
+
+<br>
+
+
+<script>
+    $('.browse-filemanager').on('click', function() {
+        function getCookie(name) {
+            var cookieValue = null; 
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'get_filemanager' %}',
+            data: {
+                'csrfmiddlewaretoken': csrftoken,
+                'type': 'file'
+            },
+            success: function(data){
+                $('#filemanagerModal').modal();
+                $('.get-filemanager').html(data.template);
+            },
+        })
+        
+    });
+    $('.submit-file').on('click', function(e) {
+        e.preventDefault();
+        var serializedData = $('.file-form').serialize();
+        console.log(serializedData);
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'file-upload-import-overview' %}',
+            data: serializedData,
+            success: function(data){
+                $('.field-overview').html(data.template);
+            },
+        })
+    });
+</script>

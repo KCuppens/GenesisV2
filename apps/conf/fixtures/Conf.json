@@ -1,0 +1,442 @@
+[
+    {
+        "model": "conf.configuration",
+        "pk": 1,
+        "fields": {
+            "key_name": "web_url",
+            "title": "Web url",
+            "value": "www.example.com",
+            "description": "The domain of the website.",
+            "conf_type": "general"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 2,
+        "fields": {
+            "key_name": "client_name",
+            "title": "Client name",
+            "value": "Client",
+            "description": "The name of the client",
+            "conf_type": "general"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 3,
+        "fields": {
+            "key_name": "client_description",
+            "title": "Client description",
+            "value": "Client description",
+            "description": "The description of the clients bussiness",
+            "conf_type": "general"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 4,
+        "fields": {
+            "key_name": "client_phone",
+            "title": "Client phone",
+            "value": "Client phone",
+            "description": "The phone number of the client",
+            "conf_type": "general"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 5,
+        "fields": {
+            "key_name": "client_vat",
+            "title": "Client vat",
+            "value": "Client vat",
+            "description": "The vat of the client",
+            "conf_type": "general"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 6,
+        "fields": {
+            "key_name": "client_email",
+            "title": "Client email",
+            "value": "Client email",
+            "description": "The email of the client",
+            "conf_type": "general"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 7,
+        "fields": {
+            "key_name": "client_address",
+            "title": "Address of the client",
+            "value": "Street number, city postal, country",
+            "description": "The email of the client",
+            "conf_type": "general"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 8,
+        "fields": {
+            "key_name": "schema_location_latitude",
+            "title": "Schema location latitude",
+            "value": "51.0684581",
+            "description": "The latitude coordinates of the founding place of the bussiness",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 9,
+        "fields": {
+            "key_name": "schema_location_longitude",
+            "title": "Schema location longitude",
+            "value": "5.3004415",
+            "description": "The longitude coordinates of the founding place of the bussiness",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 10,
+        "fields": {
+            "key_name": "schema_founding_date",
+            "title": "Schema location longitude",
+            "value": "5.3004415",
+            "description": "The longitude coordinates of the founding place of the bussiness",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 11,
+        "fields": {
+            "key_name": "schema_brands",
+            "title": "Schema brands",
+            "value": "brand1,brand2,brand3",
+            "description": "Comma separated list of brands on the website",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 12,
+        "fields": {
+            "key_name": "schema_person",
+            "title": "Schema person name",
+            "value": "Firstname lastname",
+            "description": "The name of the bussiness manager.",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 13,
+        "fields": {
+            "key_name": "schema_knowhow",
+            "title": "Schema knowhow",
+            "value": "know1, know2, know3",
+            "description": "A comma separated list of knowhow. (knows about terms)",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 14,
+        "fields": {
+            "key_name": "schema_street",
+            "title": "Schema street",
+            "value": "street 10",
+            "description": "Street listed on schema",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 15,
+        "fields": {
+            "key_name": "schema_city",
+            "title": "Schema city",
+            "value": "city",
+            "description": "City listed on schema",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 16,
+        "fields": {
+            "key_name": "schema_province",
+            "title": "Schema province",
+            "value": "province",
+            "description": "Province listed on schema",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 17,
+        "fields": {
+            "key_name": "schema_postal",
+            "title": "Schema postal",
+            "value": "postal",
+            "description": "Postal listed on schema",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 18,
+        "fields": {
+            "key_name": "schema_country",
+            "title": "Schema country",
+            "value": "country",
+            "description": "Country listed on schema",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 19,
+        "fields": {
+            "key_name": "schema_areas",
+            "title": "Schema served areas",
+            "value": "area1, area2",
+            "description": "Comma separated list of areas served listed on schema",
+            "conf_type": "schema"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 20,
+        "fields": {
+        "key_name": "EMAIL_CONFIRMATION_TIMEOUT_DAYS",
+        "title": "Deactivatie email confirmatie email",
+        "value": "3",
+        "description": "De geldigheid in dagen van de mail die verstuurd word bij registratie. Zodat een gebruiker zijn/haar account kan activeren.",
+        "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 21,
+        "fields": {
+            "key_name": "SPAM_PROTECTION",
+            "title": "Bescherming tegen spam",
+            "value": "1",
+            "description": "Bescherming tegen spam activeren of deactiveren.",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 22,
+        "fields": {
+            "key_name": "REGISTRATION_OPEN",
+            "title": "Registratie mogelijk?",
+            "value": "1",
+            "description": "Een mogelijkheid om registratie te activeren of deactiveren.",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 23,
+        "fields": {
+            "key_name": "AUTO_LOGIN_ON_ACTIVATION",
+            "title": "Na confirmatie van het account, automatisch inloggen",
+            "value": "1",
+            "description": "Na confirmatie van het account, automatisch inloggen",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 24,
+        "fields": {
+            "key_name": "AUTO_LOGIN_AFTER_REGISTRATION",
+            "title": "Na registreren automatisch inloggen",
+            "value": "0",
+            "description": "Na registreren automatisch inloggen",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 25,
+        "fields": {
+            "key_name": "PASSWORD_MIN_LENGTH",
+            "title": "Minimum lengte van het wachtwoord",
+            "value": "1",
+            "description": "Minimum lengte van het wachtwoord",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 26,
+        "fields": {
+            "key_name": "PASSWORD_MAX_LENGTH",
+            "title": "Maximum lengte van het wachtwoord",
+            "value": "None",
+            "description": "Maximum lengte van het wachtwoord",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 27,
+        "fields": {
+            "key_name": "VALIDATE_EMAIL_DOMAIN",
+            "title": "Email domein valideren",
+            "value": "1",
+            "description": "Email domein valideren",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 28,
+        "fields": {
+            "key_name": "EMAIL_DOMAINS_BLACKLIST",
+            "title": "Email domein blacklijst",
+            "value": "[]",
+            "description": "Email domein zwartelijst",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 29,
+        "fields": {
+            "key_name": "EMAIL_DOMAINS_WHITELIST",
+            "title": "Email domein wittelijst",
+            "value": "[]",
+            "description": "Email domein wittelijst",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 30,
+        "fields": {
+            "key_name": "USERS_VERIFY_EMAIL",
+            "title": "Gebruikers moeten hun email verifiëren na registratie",
+            "value": "1",
+            "description": "Gebruikers moeten hun email verifiëren na registratie",
+            "conf_type": "user"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 31,
+        "fields": {
+            "key_name": "seo_author",
+            "title": "Algemene Meta author",
+            "value": "1",
+            "description": "Page author filled in meta tags",
+            "conf_type": "general"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 32,
+        "fields": {
+            "key_name": "seo_title",
+            "title": "Algemene Meta title",
+            "value": "Meta title",
+            "description": "Page title filled in meta tags",
+            "conf_type": "general"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 33,
+        "fields": {
+            "key_name": "seo_description",
+            "title": "Algemene Meta description",
+            "value": "Meta description",
+            "description": "Page description filled in meta tags",
+            "conf_type": "general"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 34,
+        "fields": {
+            "key_name": "seo_keywords",
+            "title": "Algemene Meta keywords",
+            "value": "Meta keywords",
+            "description": "Page keywords filled in meta tags",
+            "conf_type": "general"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 35,
+        "fields": {
+            "key_name": "default_sender_email",
+            "title": "Default sender email",
+            "value": "info@example.com",
+            "description": "The default from email that sends an email",
+            "conf_type": "mail"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 36,
+        "fields": {
+            "key_name": "RETRY_INTERVAL",
+            "title": "Email retry interval in minutes",
+            "value": "15",
+            "description": "The amount of time between retries when a email fails",
+            "conf_type": "mail"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 36,
+        "fields": {
+            "key_name": "MAX_RETRIES",
+            "title": "Max amount of retries for resending an email",
+            "value": "0",
+            "description": "Max amount of retries for resending an email",
+            "conf_type": "mail"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 37,
+        "fields": {
+            "key_name": "BATCH_SIZE",
+            "title": "Batch amount of email sent",
+            "value": "100",
+            "description": "Batch amount of email sent",
+            "conf_type": "mail"
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 38,
+        "fields": {
+            "key_name": "admin_email",
+            "title": "Admin email",
+            "value": "email",
+            "description": "Fallback email for admin emails",
+            "conf_type": "mail"  
+        }
+    },
+    {
+        "model": "conf.configuration",
+        "pk": 39,
+        "fields": {
+            "key_name": "noreply_email",
+            "title": "Noreply email",
+            "value": "email",
+            "description": "Fallback email for default sender emails",
+            "conf_type": "mail"  
+        }
+    }
+]

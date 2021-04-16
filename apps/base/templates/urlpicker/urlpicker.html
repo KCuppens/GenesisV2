@@ -9,26 +9,42 @@
                     <div class="item-content">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             {% for module in modules %}
-                                <button type="button" class="btn btn-{% if module.models == 'Page' and page_active %}primary{% else %}secondary{% endif %}">{{module.name}}</button>
+                                <a href="javascript:void(0)" data-module="{{module.models}}" class="btn btn-{% if current_module == module.models %}primary{% else %}secondary{% endif %} set-module">{{module.name}}</a>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
-                {% if items.exists %} 
-                    <div class="table-responsive">
-                        <table class="table mb-4">
-                            <tbody>
-                                {% for item in items %}
-                                    <tr>
-                                        <td>{{item.page_title}}</td>
-                                        <td class="text-primary">{% if item.full_slug %}{{item.full_slug}}{% else %}{{item.slug}}{% endif %}</td>
-                                        <td><button class="btn btn-outline-primary select-url" data-url="{% get_perma_url LANGUAGE_CODE current_module item.id %}">{% trans 'Select url' %}</button></td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    
+                {% if current_module == 'Page' %}
+                    {% if items.exists %} 
+                        <div class="table-responsive">
+                            <table class="table mb-4">
+                                <tbody>
+                                    {% for item in items %}
+                                        <tr>
+                                            <td>{{item.page_title}}</td>
+                                            <td class="text-primary">{% if item.full_slug %}{{item.full_slug}}{% else %}{{item.slug}}{% endif %}</td>
+                                            <td><button class="btn btn-outline-primary select-url" data-url="{% get_perma_url LANGUAGE_CODE current_module item.id %}">{% trans 'Select url' %}</button></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% elif current_module == 'Article' %}
+                    {% if items.exists %} 
+                        <div class="table-responsive">
+                            <table class="table mb-4">
+                                <tbody>
+                                    {% for item in items %}
+                                        <tr>
+                                            <td>{{item.title}}</td>
+                                            <td><button class="btn btn-outline-primary select-url" data-url="{% get_perma_url LANGUAGE_CODE current_module item.id %}">{% trans 'Select url' %}</button></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -36,10 +52,24 @@
 </div>
 
 <script>
+    $('.set-module').on('click', function(e){
+        module = $(this).data('module');
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'getURLPicker' %}',
+            data: {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+                'action': module
+            },
+            success: function(data){
+                $('#internalLinkModal').modal();
+                $('.get-urlpicker').html(data.template);
+            },
+        })
+    });
     $('.select-url').on('click', function(e){
         e.preventDefault();
         var url = $(this).data('url');
-        console.log(url);
         $('.urlpicker-widget').val(url);
         $('#internalLinkModal').modal('toggle');
     });

@@ -29,7 +29,6 @@ def add_block(request):
     has_perms(request, ["blocks.add_block"], None, 'overviewblock')
     if request.method == 'POST':
         form = BlockForm(request.POST, request.FILES)
-        print(form)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.save()
@@ -129,7 +128,7 @@ def add_block_category(request):
 @staff_member_required(login_url='/nl/account/login')
 def edit_block_category(request, pk):
     has_perms(request, ["blocks.change_blockcategory"], None, 'overviewblocks')
-    instance = get_object_or_404(Module, pk=pk)
+    instance = get_object_or_404(Block, pk=pk)
     if request.method == 'POST':
         form = BlockCategoryForm(request.POST or request.FILES,instance=instance)
         if form.is_valid():

@@ -23,7 +23,6 @@
                                             <select class="form-control" name="group" id="groups-select">
                                                 <option value="" {% if not group_select %}selected="selected"{% endif %}></option>
                                                 {% for group in groups %}
-                                                    
                                                     <option value="{{group.id}}" {% if group.id == group_select|add:"0" %}selected="selected"{% endif %}>{{group.name}}</option>
                                                 {% endfor %}
                                             </select>
@@ -64,9 +63,10 @@
                                             <td class="text-center">
                                                 {% if user.groups.exists %}
                                                     {% for group in user.groups.all %}
-                                                        <span class="shadow-none badge badge-primary">
-                                                            {{group.name|truncatechars:5}}
-                                                        </span>
+                                                        {{group.name|truncatechars:5}}
+                                                        {% if not forloop.last %}
+                                                            ,
+                                                        {% endif %}
                                                     {% endfor %}
                                                 {% endif %}
                                             </td>

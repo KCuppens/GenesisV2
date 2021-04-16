@@ -1,0 +1,31 @@
+{% load i18n %}
+<header class="site-container">
+    <div class="topnav-container">
+        <div class="topnav">
+            {% include 'front/nav/topnav.html' with topnav=topnav %}
+        </div>
+    </div>
+    <div class="head-container">
+        <div class="head">
+            <a href="/" class="head-logo">
+                GenesisV2
+            </a>
+
+            <div class="mobilenav">
+                <button class="mobilenav-toggle" aria-controls="site-navigation">
+                    <span class="mobilenav-toggle-label">{% trans 'Menu' %}</span>
+                    <span class="mobilenav-toggle-label is-opened" aria-hidden="true">{% trans 'Sluiten' %}</span>
+                    <span class="mobilenav-toggle-hamburger hamburger hamburger-3dxy">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </span>
+                </button>
+            </div>
+            {% include 'front/layout/search.html' %}
+            <nav class="mainnav-container">
+                {% include 'front/nav/mainnav.html' with pages=pages %}
+            </nav>
+        </div>
+    </div>
+</header>

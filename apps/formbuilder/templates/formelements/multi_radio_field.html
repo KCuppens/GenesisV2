@@ -1,0 +1,15 @@
+<div class="form-group row">
+    <div class="col-md-{% if field.col_size == 'full' %}12{% elif field.col_size == 'half' %}6{% elif field.col_size == 'quarter' %}3{% endif %} ml-2">
+        <div class="multi-radio">
+            {% for option in field.options.all %}
+                <label for="{{option.id}}">
+                    {{option.label}}
+                    <input class="form-control" type="radio" name="{{field.type}}-{{field.id}}" id="{{option.id}}" {% if option.is_checked %}checked="checked"{% endif %} {% if field.required %}required{% endif %}>
+                </label>
+            {% endfor %}
+            <div class="form-error" style="color: red;">
+            
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,5 +2,5 @@ from apps.modules.models import Tab
 
 def get_topnav(request):
     return {
-        'tabs': Tab.objects.filter(date_deleted=None, active=True)
+        'tabs': Tab.objects.filter(date_deleted=None, active=True).order_by('position')
     }

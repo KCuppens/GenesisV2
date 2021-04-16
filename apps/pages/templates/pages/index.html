@@ -30,43 +30,65 @@
                         </div>
                     </div>
                 </div>
-                {% for page in pages %}
-                    <div class="items" id="page_{{page.id}}">
-                        <div class="item-content">
-                            <div class="user-profile">
-                                <div class="n-chk align-self-center text-center">
-                                    <div class="dd-handle">
-                                        <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
+                {% if pages.exists %}
+                    {% for page in pages %}
+                        <div class="items" id="page_{{page.id}}">
+                            <div class="item-content">
+                                <div class="user-profile">
+                                    <div class="n-chk align-self-center text-center">
+                                        <div class="dd-handle">
+                                            <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
+                                        </div>
+                                    </div>
+                                    <div class="user-meta-info">
+                                        <p class="page-title" title="{% trans 'Page title' %}" data-placement="top" data-name="{{page.title}}">{{page.page_title}}</p>
+                                        {% if page.menu_title %}<p class="user-work" title="{% trans 'Menu title' %}" data-placement="top" data-name="{{page.menu_title}}"><span class="shadow-none badge badge-primary">{{page.menu_title}}</span></p>{% endif %}
                                     </div>
                                 </div>
-                                <div class="user-meta-info">
-                                    <p class="page-title" title="{% trans 'Page title' %}" data-placement="top" data-name="{{page.title}}">{{page.page_title}}</p>
-                                    <p class="user-work" title="{% trans 'Menu title' %}" data-placement="top" data-name="{{page.menu_title}}"><span class="shadow-none badge badge-primary">{{page.menu_title}}</span></p>
+                                <div class="user-email">
+                                    <p class="usr-email-addr" title="{% trans 'Page route' %}" data-placement="top" data-email="{% if page.full_slug %}{{page.full_slug}}{% elif page.url_type == "link-through" %}{{page.linkthrough}}{% else %}{{page.slug}}{% endif %}"><span class="shadow-none badge badge-info">{% if page.full_slug %}{{page.full_slug}}{% elif page.url_type == "link-through" %}{{page.linkthrough}}{% else %}{{page.slug}}{% endif %}</span></p>
+                                </div>
+                                <div class="user-location">
+                                    {% if page.children.exists %}
+                                        <a class="btn btn-info position-relative mt-3 mb-3 ml-2" title="{% trans 'Children pages' %}" data-placement="top" href="{% url 'overviewchildrenpage' pk=page.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>({% children_page_count page %})</a>
+                                    {% endif %}
+                                    <a title="{% if page.in_main_menu %}{% trans 'Shown in main menu' %}{% else %}{% trans 'Not shown in main menu' %}{% endif %}" data-placement="top" class="btn btn-{% if page.in_main_menu %}success{% else %}danger{% endif %} position-relative mt-3 mb-3 ml-2" href="{% url 'toggle-mainmenu-activation-view' pk=page.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+                                    {% if page.is_homepage %}<a title="{% trans 'Is een homepagina' %}" data-placement="top" class="btn btn-secondary position-relative mt-3 mb-3 ml-2" href="javascript::void()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>{% endif %}
+                                </div>
+                                <div class="user-phone">
+                                    {% if page.canvas and not page.is_link_through %}
+                                        <a href="{% url 'canvaspage' pk=page.pk %}" class="btn btn-dark mt-3 mb-3 ml-2">
+                                            {% trans 'Page Building' %}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                {% if page.has_detailpage %}
+                                    <div class="user-phone">
+                                        <a href="{% url 'detailpages-overview' pk=page.pk %}" class="btn btn-secondary mt-3 mb-3 ml-2">
+                                            {% trans 'Detailpages' %}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                <div class="action-btn">
+                                    {% include 'pages/__partials/actions.html' %}
                                 </div>
                             </div>
-                            <div class="user-email">
-                                <p class="usr-email-addr" title="{% trans 'Page route' %}" data-placement="top" data-email="{% if page.full_slug %}{{page.full_slug}}{% else %}{{page.slug}}{% endif %}"><span class="shadow-none badge badge-info">{% if page.full_slug %}{{page.full_slug}}{% else %}{{page.slug}}{% endif %}</span></p>
-                            </div>
-                            <div class="user-location">
-                                {% if page.children.exists %}
-                                    <a class="btn btn-info position-relative mt-3 mb-3 ml-2" title="{% trans 'Children pages' %}" data-placement="top" href="{% url 'overviewchildrenpage' pk=page.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>({% children_page_count page %})</a>
-                                {% endif %}
-                                <a title="{% if page.in_main_menu %}{% trans 'Shown in main menu' %}{% else %}{% trans 'Not shown in main menu' %}{% endif %}" data-placement="top" class="btn btn-{% if page.in_main_menu %}success{% else %}danger{% endif %} position-relative mt-3 mb-3 ml-2" href="javascript::void()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
-                                {% if page.is_homepage %}<a title="{% trans 'Is een homepagina' %}" data-placement="top" class="btn btn-secondary position-relative mt-3 mb-3 ml-2" href="javascript::void()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>{% endif %}
-                            </div>
-                            <div class="user-phone">
-                                {% if page.canvas and not page.is_link_through %}
-                                    <a href="{% url 'canvaspage' pk=page.pk %}" class="btn btn-dark mt-3 mb-3 ml-2">
-                                        {% trans 'Page Building' %}
-                                    </a>
-                                {% endif %}
-                            </div>
-                            <div class="action-btn">
-                                {% include 'pages/__partials/actions.html' %}
-                            </div>
                         </div>
+                    {% endfor %}
+                {% else %} 
+                    <div class="alert alert-outline-primary mb-2 mt-2 accept-drop" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-x text-black close" data-dismiss="alert">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
+                        {% trans 'There are no pages available.' %}
                     </div>
-                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

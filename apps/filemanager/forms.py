@@ -23,6 +23,7 @@ class DirectoryForm(forms.ModelForm):
         
         if errors:
             raise forms.ValidationError(errors)
+        return self.cleaned_data
 
 class MediaForm(forms.ModelForm):
     class Meta:
@@ -44,3 +45,4 @@ class MediaFileForm(forms.ModelForm):
         
         if errors:
             raise forms.ValidationError(errors)
+        return self.cleaned_data

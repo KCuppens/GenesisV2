@@ -1,0 +1,36 @@
+{% load static get_head %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% get_head request 'author' as meta_author %}
+    {% get_head request 'title' as meta_title %}
+    {% get_head request 'description' as meta_description %}
+    {% get_head request 'keywords' as meta_keywords %}
+    {% get_head request 'image' as head_image %}
+    <meta name="author" content="{{meta_author}}">
+
+    <meta name="keywords" content="{{meta_keywords}}">
+
+    <meta property="og:title" content="{{meta_title}}"/>
+    <meta name="twitter:title" content="{{meta_title}}"/>
+    {% autoescape on %}
+    <meta name="description" content="{{meta_description}}">
+    <meta property="og:description" content="{{meta_description}}"/>
+    <meta name="twitter:description" content="{{meta_description}}"/>
+    {% if head_image %}
+        <meta property="og:image" content="{{head_image}}"/>
+        <meta name="twitter:card" content="{{meta_description}}">
+        <meta name="twitter:image" content="{{head_image}}"/>
+    {% endif %}
+    {% endautoescape %}
+
+    <title>{{meta_title}}</title>
+
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#000000">
+
+    {% include 'front/layout/css.html' %}
+</head>

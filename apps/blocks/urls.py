@@ -6,15 +6,15 @@ from django.utils.translation import ugettext as _
 urlpatterns = [
     url(_('^overview$'),overview_block,name="overviewblocks"),
     url(_('^add$'),add_block,name="addblock"),
-    url(_('^edit/(?P<pk>\d+)$'),edit_block,name="editblock"),
-    url(_('^toggle-activation/(?P<pk>\d+)$'), toggle_activation_view, name="activate-blocks"),
-    url(_('^delete/(?P<pk>\d+)$'),delete_block,name="deleteblock"),
+    url(_('^edit/(?P<pk>[0-9a-f-]+)$'),edit_block,name="editblock"),
+    url(_('^toggle-activation/(?P<pk>[0-9a-f-]+)$'), toggle_activation_view, name="activate-blocks"),
+    url(_('^delete/(?P<pk>[0-9a-f-]+)$'),delete_block,name="deleteblock"),
     url(_('^delete/modal$'),delete_ajax_block_modal,name="deletemodalblock"),
 
     url(_('^category/overview$'),overview_blockcategories,name="overviewblock-categories"),
     url(_('^category/add$'),add_block_category,name="addblock-category"),
-    url(_('^category/edit/(?P<pk>\d+)$'),edit_block_category,name="editblock-category"),
-    url(_('^category/toggle-activation/(?P<pk>\d+)$'), toggle_category_activation_view, name="activate-blockcategories"),
-    url(_('^category/delete/(?P<pk>\d+)$'),delete_blockcategory,name="deleteblock-category"),
+    url(_('^category/edit/(?P<pk>[0-9a-f-]+)$'),edit_block_category,name="editblock-category"),
+    url(_('^category/toggle-activation/(?P<pk>[0-9a-f-]+)$'), toggle_category_activation_view, name="activate-blockcategories"),
+    url(_('^category/delete/(?P<pk>[0-9a-f-]+)$'),delete_blockcategory,name="deleteblock-category"),
     url(_('^category/delete/modal$'),delete_ajax_block_category_modal,name="deletemodalblock-category"),
 ]

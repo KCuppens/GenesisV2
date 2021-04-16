@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n get_image %}
 <div class="mail-overlay"></div>
 <div id="mailbox-inbox" class="accordion mailbox-inbox" data-type="{{current_type}}">
 
@@ -85,13 +85,13 @@
                                                     {% elif document.type == "video" %}
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-film"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>                                                    
                                                     {% endif %}
-                                                    <p class="user-email" data-mailTo="kf@mail.com">{% if document.name %}{{document.name}}{% else %}{{document.file}}{% endif %}</p>
+                                                    <p class="user-email" data-mailTo="kf@mail.com">{% if document.name %}{{document.name}}{% else %}{{document.filename}}{% endif %}</p>
                                                 </div>
                                                 <div class="meta-title-tag">
                                                     <p class="meta-time align-self-center">{{document.date_updated|date:"d/m/Y H:i"}}</p>
                                                 </div>
                                                 <div>
-                                                    <a href="javascript:void(0)" data-file="{{document.file}}" class="select-file btn btn-primary mr-2">{% trans 'Select' %}</a>
+                                                    <a href="javascript:void(0)" data-file="{% get_image document.file %}" class="select-file btn btn-primary mr-2">{% trans 'Select' %}</a>
                                                 </div>
                                                 <a href="{% url 'download-media' pk=document.pk %}" class="action-media-download" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></a>
                                                 <a href="javascript:void(0)" class="action-media-edit" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a>
@@ -149,7 +149,8 @@
             data: {
                 'dir': dir,
                 'csrfmiddlewaretoken': '{{ csrf_token }}',
-                'type': type
+                'type': type,
+                'filemanager': 'True'
             },
             success: function (data) {
                 $('.modal').modal();
@@ -296,7 +297,7 @@
     $('.select-file').on('click', function() {
         var file = $(this).data('file');
         $('.filemanager-widget').val(file);
-        $('.modal').modal('toggle');
+        $('#filemanagerModal').modal('toggle');
     });
 
 </script>

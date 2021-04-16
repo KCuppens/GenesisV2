@@ -25,45 +25,55 @@ User = get_user_model()
 from django.contrib.admin.views.decorators import staff_member_required
 from apps.base.utils import has_perms
 from apps.user.forms import UserForm, UserChangePasswordForm
+import xlsxwriter
+import io
+from django.http import HttpResponse
+import datetime
+now = datetime.datetime.now()
 try:
     from django.contrib.sites.shortcuts import get_current_site
 except ImportError:  # pragma: no cover
     from django.contrib.sites.models import get_current_site
 
 class LoginView(View):
-      def get(self,request):
+    def get(self,request):
+        if request.user.is_authenticated:
+            return redirect('dashboard')
+        else:
             return render(request,'users/login.html')
-      def post(self,request):
-            username=request.POST['username']
-            password=request.POST['password']
-            
-            if username and password:
-                  if '@' in username:
-                        if User.objects.filter(email=username).exists():
-                              uname=User.objects.get(email=username).username
-                              user=authenticate(username=uname,password=password)
-                              if user:
-                                    if user.is_superuser or user.is_staff:      
-                                          login(request,user)
-                                          return redirect('dashboard:dashboard')
-                                    return JsonResponse({"not_suser":_("Sorry You're Not eligible for login")})
-                              return JsonResponse({"errorpass":_("Incorrect Password")})
-                        return JsonResponse({"invalup":_("Sorry Email and Password is invalid")})
-                  else:
-                        if User.objects.filter(username=username).exists():
-                              user=authenticate(username=username,password=password)
-                              if user:
-                                    if user.is_superuser or user.is_staff:      
-                                          login(request,user)
-                                          return redirect('dashboard:dashboard')
-                                    return JsonResponse({"not_suser":_("Sorry You're Not eligible for login")})
-                              return JsonResponse({"errorpass":_("Incorrect Password")})
-                        return JsonResponse({"invalup":_("Sorry Username and Password is invalid")})
-            return JsonResponse({"blankf":_("Username and Password Cant be blank")})
-            return render(request,'users/login.html')
+
+    def post(self,request):
+        username=request.POST['username']
+        password=request.POST['password']
+        
+        if username and password:
+            if '@' in username:
+                if User.objects.filter(email=username).exists():
+                    uname=User.objects.get(email=username).username
+                    user=authenticate(username=uname,password=password)
+                    if user:
+                        if user.is_superuser or user.is_staff:      
+                            login(request,user)
+                            return redirect('dashboard')
+                        return JsonResponse({"not_suser":_("Sorry you do not have the proper access to login")})
+                    return JsonResponse({"errorpass":_("Incorrect password")})
+                return JsonResponse({"invalup":_("Sorry email and password is invalid")})
+            else:
+                if User.objects.filter(username=username).exists():
+                    user=authenticate(username=username,password=password)
+                    if user:
+                        if user.is_superuser or user.is_staff:      
+                            login(request,user)
+                            return redirect('dashboard')
+                        return JsonResponse({"not_suser":_("Sorry you do not have the proper access to login")})
+                    return JsonResponse({"errorpass":_("Incorrect password")})
+                return JsonResponse({"invalup":_("Sorry username and password is invalid")})
+        return JsonResponse({"blankf":_("Username and password cant be blank")})
 
 @staff_member_required(login_url='/nl/account/login')
 def overview_user(request):
+    has_perms(request, ["user.view_user"], 'users/overview.html')
+
     search = request.GET.get('search', None)
     group = request.GET.get('group', None)
     if group:
@@ -73,7 +83,6 @@ def overview_user(request):
     else:
         user=User.objects.filter(date_deleted=None)
     groups=Group.objects.filter(date_deleted=None)
-    has_perms(request, ["user.add_user"], 'users/overview.html')
     
     return render(request,'user/index.html', {
         "users":user,
@@ -129,9 +138,6 @@ def change_user_password(request, pk):
         'form': form,
         'user': instance
     })
-
-def set_user_password(request, pk):
-    pass
 
 @staff_member_required(login_url='/nl/account/login')
 def edit_user(request, pk):
@@ -295,3 +301,48 @@ def delete_ajax_group_modal(request):
             }
         return JsonResponse(data)
     return False
+
+@staff_member_required(login_url='/nl/account/login')
+def export_users(request):
+    has_perms(request, ["user.view_user"], 'users/overview.html')
+    output = io.BytesIO()
+    
+    workbook = xlsxwriter.Workbook(output)
+    worksheet =  workbook.add_worksheet()
+    row = 1
+    first_name_header = 'Voornaam'
+    last_name_header = 'Achternaam'
+    email_header = 'Email'
+    group_header = 'Groepen'
+    username_header = 'Gebruikersnaam'
+    
+
+    worksheet.write('A' + str(row), first_name_header)
+    worksheet.write('B' + str(row), last_name_header)
+    worksheet.write('C' + str(row), email_header)
+    worksheet.write('D' + str(row), group_header)
+    worksheet.write('E' + str(row), username_header)    
+    row += 1
+
+    for user in User.objects.filter(date_deleted=None, is_staff=True):
+        usergroups = ''
+        for group in user.groups.all():
+            usergroups += group.name + ','
+        worksheet.write('A' + str(row), user.first_name)
+        worksheet.write('B' + str(row), user.last_name)
+        worksheet.write('C' + str(row), user.email)
+        worksheet.write('D' + str(row), usergroups)
+        worksheet.write('E' + str(row), user.username)    
+
+        row += 1
+
+    workbook.close()
+    output.seek(0)
+
+    filename = 'export_users_' + now.strftime("%H:%M:%S") + '.xlsx'
+    response = HttpResponse(
+        output,
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    return response

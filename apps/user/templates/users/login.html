@@ -9,7 +9,7 @@
 				<div class="form-content">
 				{% include 'include/messages.html' %}
 
-					<h1 class="">{% trans 'Log in to' %}<a href="index.html"><span class="brand-name">GenesisV2</span></a></h1>
+					<h1 class="">{% trans 'Log in' %}&nbsp;<a href="javascript:void(0)"><span class="brand-name"></span></a></h1>
 					<form action={% url 'login' %} class="text-left" id="loginform" method="POST" accept-charset="utf-8">
 					{% csrf_token %}
 						<div class="form">
@@ -30,25 +30,13 @@
 							</div>
 							</div>
 							<div class="d-sm-flex justify-content-between">
-								<div class="field-wrapper toggle-pass">
-									<p class="d-inline-block">{% trans 'Show Password' %}</p>
-									<label class="switch s-primary">
-										<input type="checkbox" id="toggle-password" class="d-none">
-										<span class="slider round"></span>
-									</label>
-								</div>
 								<div class="field-wrapper">
 									<button type="submit" class="btn btn-primary" value="" >{% trans 'Log In' %}</button>
 								</div>
-								
 							</div>
-
-							
-
 							<div class="field-wrapper">
 								<a href="{% url 'password_reset' %}" class="forgot-pass-link">{% trans 'Forgot Password?' %}</a>
 							</div>
-
 						</div>
 					</form>                        
 

@@ -1,0 +1,49 @@
+{% load i18n widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'Content' %}</h4>
+    </div>
+</div>
+<div class="form-group mb-4">
+    {{form.active|add_error_attr:"class:is-invalid"}}
+    {{ form.active|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{ form.title|add_label_class:'' }}
+    {{form.title|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.title.errors %}
+        <div class="invalid-feedback">
+            {{form.title.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.image|add_label_class:'' }}
+    {{form.image|append_attr:"class:form-control filemanager-widget"|add_error_attr:"class:is-invalid"}}     
+    {% if form.image.errors %}
+        <div class="invalid-feedback">
+            {{form.image.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.summary|add_label_class:'' }}
+    {{form.summary|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.summary.errors %}
+        <div class="invalid-feedback">
+            {{form.summary.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.content|add_label_class:'' }}
+    {{form.content|append_attr:"class:form-control tinymce-editor"|add_error_attr:"class:is-invalid"}}     
+    {% if form.content.errors %}
+        <div class="invalid-feedback">
+            {{form.content.errors}}
+        </div>
+    {% endif %}   
+</div>
+
+
+

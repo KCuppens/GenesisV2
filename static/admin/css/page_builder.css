@@ -72,3 +72,21 @@
     max-width: 100%;
     max-height: 100%;
 }
+
+.form-border-row {
+    position: relative;
+    border: #888ea8 solid 2px;
+    border-radius: 15px;
+    padding: 2rem; 
+    margin-bottom: 1rem;
+}
+.form-left-action {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.form-right-action {
+    position: absolute;
+    right: 0;
+    top: 0;
+}

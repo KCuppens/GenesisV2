@@ -1,0 +1,37 @@
+{% load render_dashboard_method i18n %}
+<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+    <div class="widget widget-table-two">
+
+        <div class="widget-heading">
+            <h5 class="">{{widget.title}}</h5>
+        </div>
+
+        <div class="widget-content">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>{% trans 'Name' %}</th>
+                            <th>{% trans 'Email' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% render_dashboard_method widget.method widget.sort widget.order widget.param1 as items %}
+                        {% if items.exists %}
+                            {% for item in items %}
+                                <tr>
+                                    <td>{{item.first_name}}&nbsp;{{item.last_name}}</td>
+                                    <td>{{item.email}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %} 
+                            <tr>
+                                <td colspan="2">{% trans 'Currently no users available' %}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

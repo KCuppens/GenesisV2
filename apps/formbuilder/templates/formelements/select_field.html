@@ -1,0 +1,12 @@
+<div class="form-group row">
+    <div class="col-md-{% if field.col_size == 'full' %}12{% elif field.col_size == 'half' %}6{% elif field.col_size == 'quarter' %}3{% endif %} ml-2">
+        <select name="{{field.type}}-{{field.id}}" id="{{field.id}}" {% if field.required %}required{% endif %}>
+            {% for option in field.options.all %}
+                <option class="form-control" value="{{option.value}}" {% if option.is_checked %}checked="checked"{% endif %}>{{option.label}}</option>
+            {% endfor %}
+        </select>
+        <div class="form-error" style="color: red;">
+            
+        </div>
+    </div>
+</div>

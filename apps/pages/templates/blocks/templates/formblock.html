@@ -1,0 +1,27 @@
+{% load i18n static %}
+{% if block %} 
+<div class="form-overview" data-form="{{block.form.id}}">
+</div>
+<script src="{% static 'front/js/jquery-3.6.0.min.js' %}"></script>
+<script>
+    $( document ).ready(function() {
+        get_form();
+    });
+    function get_form(){
+        form = '{{block.form.id}}';
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'getform' %}',
+            data: {
+                'form': form,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success: function(data) {
+                if(data.template){
+                    $('.form-overview').html(data.template);
+                }
+            }
+        });
+    }
+</script>
+{% endif %}

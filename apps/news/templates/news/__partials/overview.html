@@ -1,0 +1,22 @@
+{% load show_thumbnail get_url_detail i18n %}
+{% for article in articles %} 
+    <div class="news-item">
+        <div class="news-media">
+            <picture>
+                <source srcset="{% show_thumbnail article '500x500' 'webp' %}" media="(max-width:500px)" type="image/webp"> 
+                <source srcset="{% show_thumbnail article '500x500' 'png' %}" media="(max-width:500px)" type="image/png">
+                <img src="{% show_thumbnail article '500x500' 'png' %}" alt="{{article.title}}">
+            </picture>
+        </div>
+        <div class="news-content">
+            <div class="news-header">
+                <h3>{{article.title}}</h3>
+            </div>
+            <div class="news-date">
+                {{article.date_published}}
+            </div>
+            {{article.summary}}
+            <a href="{% get_url_detail article.id 'Article' %}">{% trans 'Lees meer' %}</a>
+        </div>
+    </div>
+{% endfor %}

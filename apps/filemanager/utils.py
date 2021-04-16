@@ -1,14 +1,37 @@
 import mimetypes
-def base_media_path(instance, filename):
-    if media_type == "image":
-        return "/orig/"
+from django.conf import settings
+
+def get_size(value):
+    if value < 512000:
+        value = value / 1024.0
+        ext = 'kb'
+    elif value < 4194304000:
+        value = value / 1048576.0
+        ext = 'mb'
     else:
-        return "/" + instance.media_type + "/" + filename
+        value = value / 1073741824.0
+        ext = 'gb'
+    return '%s %s' % (str(round(value, 2)), ext)
+
+def base_media_path(instance, filename):
+    if instance.type == "image":
+        return settings.MEDIA_ROOT + "image/orig/" + filename
+    else:
+        return settings.MEDIA_ROOT + instance.type + "/" + filename
 
 
 def guess_mime_type(file):
     return mimetypes.MimeTypes().guess_type(file)
 
+def get_filename(file):
+    path = file.name.split('/')
+    filename = path[-1]
+    return filename
+
+def get_filename_without_extension(filename):
+    path = filename.split('.')
+    filename = path[0]
+    return filename
 
 def get_valid_image_mime_types():
     return {

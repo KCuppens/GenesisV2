@@ -1,0 +1,9 @@
+<div class="form-group row">
+    <div class="col-md-{% if field.col_size == 'full' %}12{% elif field.col_size == 'half' %}6{% elif field.col_size == 'quarter' %}3{% endif %} ml-2">
+        <select name="{{field.name}}" id="{{field.id}}">
+            {% for option in field.options.all %}
+                <option class="form-control" value="{{option.value}}">{{option.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

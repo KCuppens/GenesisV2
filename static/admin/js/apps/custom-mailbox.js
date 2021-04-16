@@ -12,11 +12,6 @@ $(document).ready(function() {
 
 	// Applying Scroll Bar
 
-	const ps = new PerfectScrollbar('.message-box-scroll');
-	const mailScroll = new PerfectScrollbar('.mail-sidebar-scroll', {
-		suppressScrollX : true
-	});
-
 	function mailInboxScroll() {
 		$('.mailbox-inbox .collapse').each(function(){ const mailContainerScroll = new PerfectScrollbar($(this)[0], {
 			suppressScrollX : true
@@ -75,46 +70,6 @@ $(document).ready(function() {
 		$('#btn-save').show();
 		$('#btn-reply-save').hide();
 		$('#btn-fwd-save').hide();
-	})
-
-	/*
-		Init. fn. checkAll ==> Checkbox check all
-	*/
-	document.getElementById('inboxAll').addEventListener('click', function() {
-		var getActiveList = document.querySelectorAll('.tab-title .list-actions.active');
-		var getActiveListID = '.'+getActiveList[0].id;
-
-		var getItemsCheckboxes = '';
-
-		if (getActiveList[0].id === 'personal' || getActiveList[0].id === 'work' || getActiveList[0].id === 'social' || getActiveList[0].id === 'private') {
-
-			getItemsGroupCheckboxes = document.querySelectorAll(getActiveListID);
-			for (var i = 0; i < getItemsGroupCheckboxes.length; i++) {
-				getItemsGroupCheckboxes[i].parentNode.parentNode.parentNode;
-
-				getItemsCheckboxes = document.querySelectorAll('.'+getItemsGroupCheckboxes[i].parentNode.parentNode.parentNode.className.split(' ')[0] + ' ' + getActiveListID + ' .inbox-chkbox');
-				
-				if (getItemsCheckboxes[i].checked) {
-					getItemsCheckboxes[i].checked = false;
-				} else {
-					if (this.checked) {
-						getItemsCheckboxes[i].checked = true;
-					}
-				}
-			}
-
-		} else {
-			getItemsCheckboxes = document.querySelectorAll('.mail-item'+getActiveListID + ' .inbox-chkbox');
-			for (var i = 0; i < getItemsCheckboxes.length; i++ ) {
-				if (getItemsCheckboxes[i].checked) {
-					getItemsCheckboxes[i].checked = false;
-				} else {
-					if (this.checked) {
-						getItemsCheckboxes[i].checked = true;
-					}
-				}
-			}
-		}
 	})
 
 	/*
@@ -218,94 +173,6 @@ $(document).ready(function() {
 		    e.stopPropagation();
 		})
 	}
-
-	/*
-		====================
-			Quill Editor
-		====================
-	*/
-
-	var quill = new Quill('#editor-container', {
-	  modules: {
-	    toolbar: [
-	      [{ header: [1, 2, false] }],
-	      ['bold', 'italic', 'underline'],
-	      ['image', 'code-block']
-	    ]
-	  },
-	  placeholder: 'Compose an epic...',
-	  theme: 'snow'  // or 'bubble'
-	});
-
-	// Validating input fields
-
-	var $_getValidationField = document.getElementsByClassName('validation-text');
-	var emailReg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-	getEmailToInput = document.getElementById('m-to');
-
-	getEmailToInput.addEventListener('input', function() {
-
-	  	getEmailToInputValue = this.value;
-
-	    if (getEmailToInputValue == "") {
-	      $_getValidationField[0].innerHTML = 'Email Required';
-	      $_getValidationField[0].style.display = 'block';
-	    } else if((emailReg.test(getEmailToInputValue) == false)) {
-	      $_getValidationField[0].innerHTML = 'Invalid Email';
-	      $_getValidationField[0].style.display = 'block';
-	    } else {
-	      $_getValidationField[0].style.display = 'none';
-	    }
-	})
-
-	getCCEmailInput = document.getElementById('m-cc');
-	getCCEmailInput.addEventListener('input', function() {
-
-	    getCCEmailInputValue = this.value;
-
-	    if (!getCCEmailInputValue == "") {
-	       if((emailReg.test(getCCEmailInputValue) == false)) {
-		      $_getValidationField[1].innerHTML = 'Invalid Email';
-		      $_getValidationField[1].style.display = 'block';
-		    } else {
-		      	$_getValidationField[1].style.display = 'none';
-		    }
-	    } else {
-	      $_getValidationField[1].style.display = 'none';
-	    }
-
-	})
-
-	getSubjectInput = document.getElementById('m-subject');
-
-	getSubjectInput.addEventListener('input', function() {
-
-	  getSubjectInput = this.value;
-
-	  if (getSubjectInput == "") {
-	    $_getValidationField[2].innerHTML = 'Subject Required';
-	    $_getValidationField[2].style.display = 'block';
-	  } else {
-	    $_getValidationField[2].style.display = 'none';
-	  }
-
-	})
-
-	$('#composeMailModal').on('hidden.bs.modal', function (e) {
-	    
-	  	$(this)
-	    .find("input,textarea")
-	       .val('')
-	       .end();
-
-	    quill.deleteText(0, 2000);
-
-	    for (var i = 0; i < $_getValidationField.length; i++) {
-	      e.preventDefault();
-	      $_getValidationField[i].style.display = 'none';
-	    }
-	})
 
 	
 	/*

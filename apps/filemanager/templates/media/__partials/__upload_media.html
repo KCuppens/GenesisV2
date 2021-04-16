@@ -1,14 +1,52 @@
-{% load i18n widget_tweaks %}
-<form action="{% url 'add-media' %}" class="dropzone" data-dir="{{dir|default_if_none:""}}" id="dropzoneMultiFile" method="POST">
+{% load i18n widget_tweaks static %}
+<a href="javascript:void(0)" class="btn btn-info" id="back-to-overview" data-dir="{{current_dir|default_if_none:""}}">{% trans 'Back to overview' %}</a>
+<form action="{% url 'add-media' %}" class="dropzone" data-dir="{{dir|default_if_none:""}}" id="dropzoneMultiFile" data-filemanager="{{filemanager}}" method="POST">
     {% csrf_token %}
     <div class="fallback">
         {{form.file|append_attr:"multiple"}}
     </div>
 </form>
+<script src="{% static 'admin/js/libs/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
+<script>
+    $('#back-to-overview').on('click', function() {
+        var method = $('.get-filemanager').data('method');
+        var dir = $(this).data('dir');
+        var type = $('#mailbox-inbox').data('type');
+        if(method == "filepicker"){
+            $.ajax({
+                type: 'GET',
+                url: '{% url 'get_filemanager' %}',
+                data: {
+                    'dir': dir,
+                    'type': type
+                },
+                success: function (data) {
+                    $('.get-filemanager').html(data.template);
+                }
+            });
+        } else { 
+            $.ajax({
+            type: 'GET',
+                url: '{% url 'media-document-index' %}',
+                data: {
+                    'dir': dir,
+                    'type': type
+                },
+                success: function (data) {
+                    $('.modal').css('display','none');
+                    $('.modal-backdrop').css('display','none');
+                }
+            });
+        }
+    });
+</script>
 <script>
     var dir = $('.dropzone').data('dir');
-    var myDropzone = new Dropzone("#dropzoneMultiFile", { url: "{% url 'add-media' %}?dir=" + dir});
+    var filemanager = $('.dropzone').data('filemanager');
+    var myDropzone = new Dropzone("#dropzoneMultiFile", { url: "{% url 'add-media' %}?dir=" + dir + "&filemanager=" + filemanager});
 </script>
+
 
 
 

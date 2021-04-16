@@ -1,0 +1,16 @@
+{% load svg render_dashboard_method %}
+<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
+    <div class="widget widget-one_hybrid widget-followers">
+        <div class="widget-heading">
+            <div class="w-title">
+                <div class="w-icon">
+                    {% svg widget.icon.icon %}
+                </div>
+                <div class="">
+                    <p class="w-value">{% render_dashboard_method widget.method widget.sort widget.order widget.param1 %}</p>
+                    <h5 class="">{{widget.title}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

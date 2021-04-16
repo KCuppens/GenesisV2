@@ -22,9 +22,8 @@ except ImportError:  # pragma: no cover
 
 @staff_member_required(login_url='/nl/account/login')
 def overview_tab(request):
-    tabs = Tab.objects.filter(date_deleted=None)
-    has_perms(request, ["modules.add_tab"], 'tabs/index.html')
-    
+    has_perms(request, ["modules.view_tab"], None, 'overviewtab')
+    tabs = Tab.objects.filter(date_deleted=None).order_by('position')
     return render(request,'tabs/index.html', {"tabs":tabs})
 
 @staff_member_required(login_url='/nl/account/login')
@@ -105,12 +104,30 @@ def delete_tab(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The module has been succesfully deleted!'))
     return redirect('overviewtab')
 
+def reorder_tab(request):
+    has_perms(request, ["modules.change_tab"], None, 'overviewtab')
+
+    items = request.POST.get('item', 'None')
+    array = items.split('[]=')
+    ids = ''.join(array)
+    ids = ids.split('&')
+    position = 0 
+
+    for id in ids:
+        item = Tab.objects.get(id=id)
+        position += 1
+        item.position = position 
+        item.save()
+    data = {
+
+    }
+    return JsonResponse(data)
+
 
 @staff_member_required(login_url='/nl/account/login')
 def overview_modules(request):
-    modules = Module.objects.filter(date_deleted=None)
-    has_perms(request, ["modules.add_module"], 'modules/index.html')
-    
+    has_perms(request, ["modules.view_module"], 'modules/index.html')
+    modules = Module.objects.filter(date_deleted=None).order_by('position')
     return render(request,'modules/index.html', {"modules":modules})
 
 @staff_member_required(login_url='/nl/account/login')
@@ -224,3 +241,21 @@ def toggle_activation_view(request, pk):
     item.save()
     
     return redirect('overviewmodules')
+
+def reorder_module(request):
+    has_perms(request, ["modules.change_module"], None, 'overviewmodules')
+    items = request.POST.get('item', 'None')
+    array = items.split('[]=')
+    ids = ''.join(array)
+    ids = ids.split('&')
+    position = 0 
+
+    for id in ids:
+        item = Module.objects.get(id=id)
+        position += 1
+        item.position = position 
+        item.save()
+    data = {
+
+    }
+    return JsonResponse(data)

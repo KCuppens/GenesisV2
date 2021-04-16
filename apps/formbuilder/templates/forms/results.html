@@ -1,0 +1,104 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n svg generate_headers %}
+{% block content %}
+<div class="row layout-top-spacing layout-spacing">
+    <div class="col-lg-12">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>{% trans 'Form results overview' %}</h4>
+                        <a href="{% url 'overviewform' %}" class="btn btn-info mb-2 mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-left"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg>&nbsp;{% trans 'Go to form overview' %}</a>
+                        <a href="{% url 'export-results-form' pk=form.pk %}" class="btn btn-default mb-2 mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-minus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="9" y1="15" x2="15" y2="15"></line></svg>&nbsp;{% trans 'Export' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area">
+                <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
+                    {% for page in form.pages.all %}  
+                        <li class="nav-item">
+                            <a class="nav-link page-link {% if forloop.first %}active{% endif %}" data-page="{{page}}" id="pills-home-tab" data-toggle="pill" href="#pills-{{page.slug}}" role="tab" aria-controls="pills-home" aria-selected="true">{{page.name}}&nbsp;<svg style="margin:0; padding: 0;display: inline-block;" data-page="{{page}}" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit-page"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    {% for page in form.pages.all %} 
+                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pills-{{page.slug}}" role="tabpanel" aria-labelledby="pills-home-tab">
+                            {% if form_results.exists %} 
+                                <div class="table-responsive mb-4">
+                                    <table id="style-3" class="table style-3  table-hover">
+                                        <thead>
+                                            <tr>
+                                                 {% generate_headers request form_results page as headers %}
+                                                 {% for field in headers %} 
+                                                    <th>{{field}}</th>
+                                                 {% endfor %}
+                                                <th class="text-center">{% trans 'Action' %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for result in form_results %}
+                                                <tr>
+                                                    {% for field in result.entries.all %}
+                                                        {% if field.page|add:"0" == page.id and not field.field.type == 'submit_button' %}
+                                                            <td>{{field.value}}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% if result.entries.exists %}
+                                                        <td>
+                                                            <ul class="table-controls">
+                                                                <li><a href="javascript:void(0)" class="bs-tooltip open-delete-modal" data-id="{{result.pk}}" data-placement="top" title="" data-original-title="{% trans 'Delete' %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
+                                                            </ul>
+                                                        </td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}  
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %} 
+                                <div class="alert alert-outline-primary mb-2 mt-2 accept-drop" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-x text-black close" data-dismiss="alert">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                    <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
+                                    {% trans 'There are no form results available.' %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>                
+            </div>
+        </div>
+    </div>
+    <div class="modal-placeholder">
+
+    </div>
+</div>
+{% block js %}
+<script>
+$('.open-delete-modal').on('click', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'deletemodalformresult'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'pk': '{{form.id}}',
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $('.modal-placeholder').html(data.template);
+            $('.modal').modal();
+        }
+    });
+})
+</script>
+{% endblock %}
+{% endblock content %}

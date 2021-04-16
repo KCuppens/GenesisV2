@@ -1,0 +1,98 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n svg %}
+{% block content %}
+<div class="row layout-top-spacing layout-spacing">
+    <div class="col-lg-12">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>{% trans 'Dashboard overview' %}</h4>
+                        <a href="{% url 'adddashboard' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> {% trans 'Add dashboard' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area">
+                <div class="table-responsive mb-4">
+                    <table id="style-3" class="table style-3  table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="checkbox-column text-center"> {% trans 'Title' %}</th>
+                                <th>{% trans 'Method' %}</th>
+                                <th>{% trans 'Sort' %}</th>
+                                <th>{% trans 'Order' %}</th>
+                                <th>{% trans 'Template' %}</th>
+                                <th>{% trans 'Default' %}</th>
+                                <th class="text-center">{% trans 'Action' %}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sortable">
+                            {% for item in dashboard %}
+                                <tr id="{{item.id}}">
+                                    <td class="sort-handle"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg></td>
+                                    <td class="checkbox-column text-center">{{item.title}}</td>
+                                    <td>{{item.get_method_display}}</td>
+                                    <td>{{item.get_sort_display}}</td>
+                                    <td>{{item.get_order_display}}</td>
+                                    <td>{{item.template}}</td>
+                                    <td>{% if item.default %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>{% else %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>{% endif %}</td>
+                                    <td class="text-center">
+                                        {% include 'dashboard/admin/__partials/actions.html' with item=item %}
+                                    </td>
+                                </tr>
+                            {% endfor %}  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-placeholder">
+
+    </div>
+</div>
+{% block js %}
+<script>
+$('.open-delete-modal').on('click', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'deletemodaldashboard'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $('.modal-placeholder').html(data.template);
+            $('.modal').modal();
+        }
+    });
+})
+$(function () {
+
+    $('#sortable').sortable({
+        handle: '.sort-handle',
+        update: function () {
+            move($('#sortable').sortable('serialize', 'id'));
+        }
+    });
+    function move(order) {
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'dashboard-reorder' %}',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'item': order
+            },
+            success: function () {
+                //OK
+            }
+        });
+    }
+
+});
+</script>
+{% endblock %}
+{% endblock content %}

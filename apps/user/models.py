@@ -20,25 +20,27 @@ class User(AbstractUser):
         (USER_TYPE_PRIVATE, _('Handelaar'))
     )    
 
-    user_type = models.CharField(choices=USER_TYPES, default=USER_TYPE_PERSONAL, max_length=100)
-    company_name = models.CharField(max_length=255, null=True, blank=True)
-    phone = models.CharField(max_length=255, null=True, blank=True)
-    biography = models.TextField(max_length=255, null=True, blank=True)
+    user_type = models.CharField(choices=USER_TYPES, default=USER_TYPE_PERSONAL, max_length=100, verbose_name=_('User type'))
+    
+    company_name = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Company name'))
+    phone = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Phone'))
+    biography = models.TextField(max_length=255, null=True, blank=True, verbose_name=_('Biography'))
 
-    birthdate = models.DateTimeField(null=True, blank=True)
-    profession = models.CharField(max_length=255, null=True, blank=True)
-    avatar = models.ImageField(null=True, blank=True, upload_to="user/images/")
+    birthdate = models.DateTimeField(null=True, blank=True, verbose_name=_('Birthdate'))
+    profession = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Profession'))
+    avatar = models.ImageField(null=True, blank=True, upload_to="user/images/", verbose_name=_('Avatar'))
 
-    front_client = models.BooleanField(default=True, null=True, blank=True)
+    front_client = models.BooleanField(default=True, null=True, blank=True, verbose_name=_('Frontclient'))
 
-    company_name = models.CharField(max_length=255, null=True, blank=True)
-    company_vat = VATNumberField(countries=['NL','BE'], null=True, blank=True)
-    phone = models.CharField(max_length=255, null=True, blank=True)
-    delivery_address = models.ForeignKey(DeliveryAddress, on_delete=models.CASCADE, null=True, blank=True)
-    invoice_address = models.ForeignKey(InvoiceAddress, on_delete=models.CASCADE, null=True, blank=True)
+    company_vat = VATNumberField(countries=['NL','BE'], null=True, blank=True, verbose_name=_('VAT'))
+    delivery_address = models.ForeignKey(DeliveryAddress, on_delete=models.CASCADE, null=True, blank=True, verbose_name=_('Delivery address'))
+    invoice_address = models.ForeignKey(InvoiceAddress, on_delete=models.CASCADE, null=True, blank=True, verbose_name=_('Invoice address'))
 
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_deleted = models.DateTimeField(null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('Date of creation'))
+    date_deleted = models.DateTimeField(null=True, blank=True, verbose_name=_('Delete date'))
+
+    def get_url(self):
+        return 'edituser'
     
     #permissions
     #country

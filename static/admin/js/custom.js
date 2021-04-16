@@ -1,5 +1,5 @@
 tinymce.init({
-    selector: 'textarea.form-control.tinymce-editor',
+    selector: '.form-control.tinymce-editor',
     plugins: [
         'advlist autolink autoresize link image imagetools lists charmap print preview hr anchor pagebreak',
         'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
@@ -28,12 +28,6 @@ $('.scrollTop').click(function() {
 $('.navbar .dropdown.notification-dropdown > .dropdown-menu, .navbar .dropdown.message-dropdown > .dropdown-menu ').click(function(e) {
     e.stopPropagation();
 });
-
-
-//First upload
-var firstUpload = new FileUploadWithPreview('image')
-var secondUpload = new FileUploadWithPreview('mySecondImage')
-
 
 /*
 =========================================

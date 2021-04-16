@@ -5,13 +5,8 @@
     </div>
 </div>
 <div class="form-group mb-4">
-    <div class="n-chk">
-        <label class="new-control new-checkbox checkbox-primary new-checkbox-text">
-            {{form.active|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
-            <span class="new-control-indicator"></span><span class="new-chk-content">    {{ form.active|add_label_class:'' }}
-            </span>
-        </label>
-    </div>
+    {{form.active|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+    {{ form.active|add_label_class:'' }}
 </div>
 <div class="form-group mb-4">
     {{ form.name|add_label_class:'' }}

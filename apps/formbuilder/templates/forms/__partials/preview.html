@@ -1,0 +1,27 @@
+{% load i18n static get_form_page get_element_preview %} 
+<div class="row layout-spacing layout-top-spacing" id="cancel-row">
+    <div class="col-lg-12">
+        <div class="canvas-block">
+            <div class="canvas-builder col-md-9 layout-spacing" id="sortable">  
+                <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
+                    {% for page in pages %} 
+                        <li class="nav-item">
+                            <a class="nav-link page-link {% if forloop.first %}active{% endif %}" data-page="{{page}}" id="pills-home-tab" data-toggle="pill" href="#pills-{% get_form_page "slug" page %}" role="tab" aria-controls="pills-home" aria-selected="true">{% get_form_page "name" page %}&nbsp;<svg style="margin:0; padding: 0;display: inline-block;" data-page="{{page}}" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit-page"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                    {% for page in pages %} 
+                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pills-{% get_form_page "slug" page %}" role="tabpanel" aria-labelledby="pills-home-tab">
+                            {% get_form_page "object" page as page_obj %}
+                            {% for field in page_obj.elements.all %} 
+                                {% get_element_preview request field %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %} 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

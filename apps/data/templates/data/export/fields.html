@@ -1,0 +1,26 @@
+{% load i18n %}
+<div class="table-responsive mt-4 mb-4">
+    <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-success" type="submit">{% trans 'Export' %}</button>
+        <input type="hidden" name="model" value="{{model}}">
+        <table id="example" class="table table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>{% trans 'Field name' %}</th>
+                    <th>{% trans 'Show in export' %}</th>
+                    <th>{% trans 'Overwritten field name' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for field in fields %}   
+                    <tr>
+                        <td>{{field.verbose_name}}</td>
+                        <td><input type="checkbox" name="export-check" id="{{field.name}}" checked></td>
+                        <td><input class="form-control" type="text" name="export" id="{{field.name}}-overwritten"></td>
+                    </tr>
+                {% endfor %}
+            <tbody>
+        </table>
+    </form>
+</div>

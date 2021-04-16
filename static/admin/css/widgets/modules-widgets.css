@@ -113,8 +113,7 @@
         min-width: 10rem;
         border-radius: 6px;
         top: 5px !important; }
-  .widget.widget-chart-three .apexcharts-legend-marker {
-    left: -5px !important; }
+  
 
 .widget.widget-activity-two {
   position: relative;
@@ -949,12 +948,6 @@
   display: flex;
   justify-content: space-between; }
 
-.widget-chart-one .apexcharts-legend-marker {
-  left: -5px !important; }
-
-.widget-chart-one .apexcharts-yaxis-title, .widget-chart-one .apexcharts-xaxis-title {
-  font-weight: 600;
-  fill: #bfc9d4; }
 
 .widget-chart-one .widget-heading .tabs {
   padding: 0;
@@ -985,12 +978,6 @@
 
 .widget.widget-chart-two .widget-content {
   padding: 0 0 20px 0; }
-
-.widget-chart-two .apexcharts-canvas {
-  margin: 0 auto; }
-
-.widget-chart-two .apexcharts-legend-marker {
-  left: -5px !important; }
 
 /*
     ==================

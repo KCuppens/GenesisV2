@@ -22,7 +22,7 @@ except ImportError:  # pragma: no cover
 
 @staff_member_required(login_url='/nl/account/login')
 def overview_history(request):
-    has_perms(request, ["history.add_history"], 'history/index.html')
+    has_perms(request, ["history.view_history"], 'history/index.html')
     page = request.GET.get('page', 1)
 
     history = History.objects.filter().order_by('-id')

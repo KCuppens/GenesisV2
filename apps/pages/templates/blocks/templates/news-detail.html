@@ -1,0 +1,28 @@
+{% load static i18n show_thumbnail %}
+<div class="news-detail" data-article="{{object.id}}">
+    
+</div>
+{% block js %} 
+    <script src="{% static 'front/js/jquery-3.6.0.min.js' %}"></script>
+    <script>
+        $( document ).ready(function() {
+            get_article_detail();
+        });
+        function get_article_detail(){
+            article = $('.news-detail').data('article');
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'get-article-detail' %}',
+                data: {
+                    'article': article,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function(data) {
+                    if(data.template){
+                        $('.news-detail').html(data.template);
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}

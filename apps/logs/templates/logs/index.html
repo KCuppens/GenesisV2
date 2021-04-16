@@ -1,0 +1,67 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n svg %}
+{% block content %}
+<div class="row layout-top-spacing layout-spacing">
+    <div class="col-lg-12">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>{% trans 'Logs overview' %}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area">
+                <div class="table-responsive mb-4">
+                    <table id="style-3" class="table style-3  table-hover">
+                        <thead>
+                            <tr>
+                                <th> {% trans 'Datum' %}</th>
+                                <th>{% trans 'Ontvanger' %}</th>
+                                <th>{% trans 'Onderwerp' %}</th>
+                                <th>{% trans 'Type' %}</th>
+                                <th class="text-center">{% trans 'Action' %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in logs %}
+                                <tr>
+                                    <td>{{log.date}}</td>
+                                    <td>{{log.recipient}}</td>
+                                    <td>{{log.subject}}</td>
+                                    <td class="text-center">
+                                        {% include 'logs/__partials/actions.html' with item=log %}
+                                    </td>
+                                </tr>
+                            {% endfor %}  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-placeholder">
+
+    </div>
+</div>
+{% block js %}
+<script>
+$('.open-delete-modal').on('click', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'deletemodallogs'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $('.modal-placeholder').html(data.template);
+            $('.modal').modal();
+        }
+    });
+})
+</script>
+{% endblock %}
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n %}
+{% block content %}
+<div class="row layout-spacing layout-top-spacing" id="cancel-row">
+    <div class="col-lg-12">
+        <div class="widget-content searchable-container list">
+            <div class="searchable-items list" id="sortable">
+                <div class="items items-header-section">
+                    <div class="item-content">
+                        <div class="">
+                            <h4>{% trans 'Detailpage overview' %}</h4>
+                        </div>
+                        <a href="{% url 'overviewpage' %}" class="btn btn-info mb-2 mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-left"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg>&nbsp;{% trans 'Go to pages overview' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="searchable-items list detailpages-overview" id="sortable">
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block js %}
+    <script>
+        $( document ).ready(function() {
+            get_detailpages();
+        });
+        function get_detailpages() {
+            $.ajax({
+                url: '{% url 'get-detailpages'  %}',
+                type:"POST",
+                data: {
+                    'pk': '{{pk}}',
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success:function(data){
+                    $('.detailpages-overview').html(data.template);
+                }
+            });
+        }
+    </script>
+{% endblock %}

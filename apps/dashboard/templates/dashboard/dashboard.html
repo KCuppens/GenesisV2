@@ -1,1 +1,9 @@
 {% extends 'dashboard/base.html' %}
+{% load render_dashboard_widget %}
+{% block content %}
+<div class="row layout-top-spacing sales">
+    {% for widget in dashboard %} 
+        {% render_dashboard_widget request widget %}
+    {% endfor %}
+</div>
+{% endblock %}

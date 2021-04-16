@@ -1,0 +1,70 @@
+{% load get_object_by_id i18n %}
+<div class="items items-header-section">
+    <div class="item-content">
+        <div class="">
+            {% for category in categories %}
+                <a href="javascript:void(0)" data-category="{{category}}" class="btn btn-{% if category == current_category %}primary{% else %}secondary set-category{% endif %} mt-3 mb-3 ml-2">
+                    {{category}}
+                </a>
+            {% endfor %} 
+        </div>
+    </div>
+</div>
+<div class="items">
+    <div class="item-content" {% if default.default %}style="background-color:blueviolet; color: white;"{% endif %}>
+        <div class="user-profile">
+            <div class="user-meta-info">
+                <p class="page-title" {% if default.default %}style="color: white;"{% endif %}>{% trans 'Default object' %}</p>
+            </div>
+        </div>
+        <div class="user-phone">
+            {% if default.canvas %}
+                <a href="{% url 'canvasdetailpage' pk=default.pk %}" class="btn btn-dark mt-3 mb-3 ml-2">
+                    {% trans 'Page Building' %}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% for dp in detailpages %} 
+    <div class="items">
+        <div class="item-content" >
+            <div class="user-profile">
+                <div class="user-meta-info">
+                    <p class="page-title" {% if dp.default %}style="color: white;"{% endif %}>{% if not dp.default %}{% get_object_by_id request dp.object_id dp.model %}{% else %}{% trans 'Default object' %}{% endif %}</p>
+                </div>
+            </div>
+            <div class="user-phone">
+                {% if dp.canvas %}
+                    <a href="{% url 'canvasdetailpage' pk=dp.pk %}" class="btn btn-dark mt-3 mb-3 ml-2">
+                        {% trans 'Page Building' %} 
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% if has_next_page %}
+    <div class="row layout-top-spacing d-flex justify-content-center align-items-center">
+        {% include 'detailpages/__partials/pagination-ajax.html' with items=blocks canvas=canvas colsize=colsize %}
+    </div>
+{% endif %}
+{% block js %}
+    <script>
+        $('.set-category').on('click', function() {
+            category = $(this).data('category');
+            $.ajax({
+                url: '{% url 'get-detailpages'  %}',
+                type:"POST",
+                data: {
+                    'pk': '{{pk}}',
+                    'category': category,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success:function(data){
+                    $('.detailpages-overview').html(data.template);
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% load i18n %}
+<p>{% trans 'Are you sure you want to delete?' %}</p>
+<a href="javascript:void(0)" data-page="{{page.id}}" class="btn btn-danger delete-page">{% trans 'Delete' %}</a>         
+<script>
+    $('.delete-page').on('click', function(e){
+        e.preventDefault();
+        var page = $(this).data('page');
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'getformbuilder' %}',
+            data: {
+                'page': page,
+                'action': 'deletepage',
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function(data){
+                location.reload();       
+            },
+        })
+    });
+</script>

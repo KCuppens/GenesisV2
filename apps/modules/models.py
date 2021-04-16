@@ -1,12 +1,13 @@
 from django.db import models
-from apps.base.models import BaseModel, AdminModel
+from apps.base.models import BaseModel, AdminModel, SortableModel
 from django_extensions.db.fields import AutoSlugField
 from apps.feathericons.models import Icon
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
-class Module(BaseModel, AdminModel):
+class Module(BaseModel, AdminModel, SortableModel):
     urlpicker = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     appname = models.CharField(max_length=255, null=True, blank=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     route = models.CharField(max_length=255, null=True, blank=True)
@@ -20,6 +21,7 @@ class Module(BaseModel, AdminModel):
 
     class Meta:
         verbose_name = _('Module')
+        ordering = ['position']
 
 class ModulePage(BaseModel, AdminModel):
     module = models.ForeignKey(Module, on_delete=models.CASCADE, blank=True, null=True)
@@ -31,7 +33,7 @@ class ModulePage(BaseModel, AdminModel):
         verbose_name = _('Modulepage')
 
 
-class Tab(BaseModel, AdminModel):
+class Tab(BaseModel, AdminModel, SortableModel):
     name = models.CharField(max_length=255, null=True, blank=True)
     slug = AutoSlugField(populate_from='name')
     icon = models.ForeignKey(Icon, on_delete=models.CASCADE, blank=True, null=True)

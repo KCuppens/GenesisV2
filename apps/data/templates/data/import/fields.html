@@ -1,0 +1,62 @@
+{% load i18n %}
+<div class="table-responsive mt-4 mb-4">
+    <form method="POST" class="import-form">
+        {% csrf_token %}
+        <button class="btn btn-success import-click" type="submit">{% trans 'Import' %}</button>
+        <input type="hidden" name="model" value="{{model}}">
+        <input type="hidden" name="file" value="{{file}}">
+        {% if message %} 
+            <div class="alert alert-outline-primary mb-2 mt-2 accept-drop" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-x text-black close" data-dismiss="alert">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
+                {{message}}
+            </div>
+        {% endif %}
+        <table id="example" class="table table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>{% trans 'Data' %}</th>
+                    <th>{% trans 'Select' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for value in data %}
+                    <tr>
+                        <td><input type="hidden" name="value" value="{{forloop.counter}}">{{value}}</td>
+                        <td>
+                            <select class="select-field form-control basic" name="links" id="select-field">
+                                <option value=""></option>
+                                {% for field in fields %}   
+                                    <option class="form-control basic" value="{{field.name}}">{{field.verbose_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                {% endfor %}
+            <tbody>
+        </table>
+    </form>
+</div>
+{% block js %}
+<script>
+    $('.import-click').on('click', function(e) {
+        e.preventDefault();
+        var serializedData = $('.import-form').serialize();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'import-into-model' %}',
+            data: serializedData,
+            success: function(data){
+                $('.field-overview').html(data.template);
+            },
+        })
+    });
+</script>
+{% endblock %}

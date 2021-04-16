@@ -1,0 +1,170 @@
+{% load static i18n get_form_page get_element_template %}
+{% block content %}
+<div class="row layout-spacing layout-top-spacing" id="cancel-row">
+    <div class="col-lg-12">
+        <div class="canvas-block">
+            <div class="canvas-builder col-md-9 layout-spacing" id="sortable">  
+                <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
+                    {% for page in pages %} 
+                        <li class="nav-item">
+                            <a class="nav-link page-link {% if forloop.first %}active{% endif %}" data-page="{{page}}" id="pills-home-tab" data-toggle="pill" href="#pills-{% get_form_page "slug" page %}" role="tab" aria-controls="pills-home" aria-selected="true">{% get_form_page "name" page %}&nbsp;<svg style="margin:0; padding: 0;display: inline-block;" data-page="{{page}}" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit-page"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                        </li>
+                    {% endfor %}
+                    <li class="nav-item">
+                        <a class="nav-link create-page" style="width: auto;" href="javascript:void(0)">
+                            <svg style="margin:0; padding: 0;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link toggle-preview" style="width: auto;" href="javascript:void(0)">
+                            <svg style="margin:0; padding: 0;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                    {% for page in pages %} 
+                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pills-{% get_form_page "slug" page %}" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <div id="sortable_{{page}}">
+                                {% get_form_page "object" page as page_obj %}
+                                {% for field in page_obj.elements.all %} 
+                                    {% get_element_template request field %}
+                                {% endfor %} 
+                                <script src="{% static 'admin/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+                                <script src="{% static 'admin/js/Sortable.min.js' %}"></script>                                 
+                                <script>
+                                    $(function () {
+                                        $('#sortable_{{page}}').sortable({
+                                            handle: '.form-sort-handle',
+                                            update: function () {
+                                                move($('#sortable_{{page}}').sortable('serialize', 'id'));
+                                            }
+                                        });
+                                        function move(order) {
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '{% url 'getformbuilder' %}',
+                                                data: {
+                                                    'action': 'sortfields',
+                                                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                                    'page': '{{page}}',
+                                                    'item': order
+                                                },
+                                                success: function () {
+                                                    //OK
+                                                }
+                                            });
+                                        }
+
+                                        });
+                                </script>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="canvas-nav col-md-3">
+                <div class="widget-content widget-content-area animated-underline-content">
+                                    
+                    <ul class="nav nav-tabs  mb-3" id="animateLine" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="animated-underline-home-tab" data-toggle="tab" href="#animated-underline-home" role="tab" aria-controls="animated-underline-home" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>&nbsp;{% trans 'Fields' %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="animated-underline-profile-tab" data-toggle="tab" href="#animated-underline-profile" role="tab" aria-controls="animated-underline-profile" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns"><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path></svg>&nbsp;{% trans 'Content' %}</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="animateLineContent-4">
+                        <div class="tab-pane fade show active" id="animated-underline-home" role="tabpanel" aria-labelledby="animated-underline-home-tab">
+                            <div class="list-group ">
+                                {% for field in fields %}
+                                    <a href="javascript:void(0);" data-field="{{field.0}}" class="list-group-item list-group-item-action select-field"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mouse-pointer"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="M13 13l6 6"></path></svg>&nbsp;{{field.1}}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="animated-underline-profile" role="tabpanel" aria-labelledby="animated-underline-profile-tab">
+                            <div class="list-group ">
+                                {% for field in content_fields %}
+                                    <a href="javascript:void(0);" data-field="{{field.0}}" class="list-group-item list-group-item-action select-field"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mouse-pointer"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="M13 13l6 6"></path></svg>&nbsp;{{field.1}}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'forms/__partials/form-modal.html' %}
+{% block js %}
+<script>
+    $('.create-page').on('click', function(){
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'getformbuilder' %}',
+            data: {
+                'action': 'createpage',
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function (data) {
+                $('.modal').modal();
+                $('.modal-title').html(data.title);
+                $('.form-modal').html(data.template);
+            }
+        });
+    });
+    $('.edit-page').on('click', function(){
+        page = $(this).data('page');
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'getformbuilder' %}',
+            data: {
+                'action': 'editpage',
+                'page': page,
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function (data) {
+                $('.modal').modal();
+                $('.modal-title').html(data.title);
+                $('.form-modal').html(data.template);
+            }
+        });
+    });
+    $('.toggle-preview').on('click', function(){
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'previewform' %}',
+            data: {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function (data) {
+                $('.modal').modal();
+                $('.modal-title').html(data.title);
+                $('.form-modal').html(data.template);
+            }
+        });
+    });
+    $('.select-field').on('click', function() {
+        field = $(this).data('field');
+        page = $('.page-link.active').data('page');
+        console.log(field);
+        console.log(page);
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'getformbuilder' %}',
+            data: {
+                'action': 'addfield',
+                'page': page,
+                'field': field,
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function (data) {
+                $('.formbuilder-overview').html(data.template);
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}
+

@@ -10,6 +10,7 @@
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                             <h4>{% trans 'Edit page' %}</h4>
+                            <a href="{% url 'canvaspage' pk=page.pk %}" class="btn btn-info mb-2 mr-2">{% trans 'Go to canvas' %}</a>
                         </div>
                     </div>
                 </div>
@@ -32,12 +33,35 @@
     $( document ).ready(function() {
         if($('#id_url_type').val() == 'generated'){
             $('#id_slug').closest('.form-group').css('display', 'none');
-        } 
+            $('#id_linkthrough').closest('.form-group').css('display', 'none');
+        } else {
+            if($('#id_url_type').val() == 'link-through'){
+                console.log('xx');
+                $('#id_slug').closest('.form-group').css('display', 'none');
+                $('#id_linkthrough').closest('.form-group').css('display', 'block');
+            } else {
+                console.log('xxx');
+                $('#id_slug').closest('.form-group').css('display', 'block');
+                $('#id_linkthrough').closest('.form-group').css('display', 'none');
+            }
+            
+        }
         $('#id_url_type').on('change', function(){
             if($('#id_url_type').val() == 'generated'){
+                console.log('x');
                 $('#id_slug').closest('.form-group').css('display', 'none');
+                $('#id_linkthrough').closest('.form-group').css('display', 'none');
             } else {
-                $('#id_slug').closest('.form-group').css('display', 'block');
+                if($('#id_url_type').val() == 'link-through'){
+                    console.log('xx');
+                    $('#id_slug').closest('.form-group').css('display', 'none');
+                    $('#id_linkthrough').closest('.form-group').css('display', 'block');
+                } else {
+                    console.log('xxx');
+                    $('#id_slug').closest('.form-group').css('display', 'block');
+                    $('#id_linkthrough').closest('.form-group').css('display', 'none');
+                }
+                
             }
         })
     });

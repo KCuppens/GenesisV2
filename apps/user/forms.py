@@ -55,6 +55,7 @@ class UserForm(forms.ModelForm):
                 errors['last_name'] = _('Please enter a lastname.')
             if errors:
                 raise forms.ValidationError(errors)
+            return self.cleaned_data
 
     class Meta:
         model = User

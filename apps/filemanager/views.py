@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from apps.filemanager.models import Directory, Media
+from apps.filemanager.models import Directory, Media, Thumbnail
 from apps.filemanager.forms import DirectoryForm, MediaForm, MediaFileForm
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from apps.filemanager.utils import guess_mime_type, guess_media_type
+from apps.filemanager.utils import guess_mime_type, guess_media_type, get_filename
 # Create your views here.
 @staff_member_required(login_url='/nl/account/login')
 def media_document_index_view(request):
@@ -80,16 +80,21 @@ def get_media_overview(request):
 def create_directory(request):
     if request.method == "POST":
         dir = request.POST.get('dir')
-        if dir:
+        if not str(dir) == "None":
             dir = Directory.objects.get(id=dir)
-        form = DirectoryForm(request.POST, initial={'parent': dir})
+            form = DirectoryForm(request.POST, initial={'parent': dir})
+        else:
+            form = DirectoryForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.save()
             
             return redirect('media-document-index')
         else:
-            form = DirectoryForm(request.POST, initial={'parent': dir})
+            if dir:
+                form = DirectoryForm(request.POST, initial={'parent': dir})
+            else:
+                form = DirectoryForm(request.POST)
             context = {
                 'form': form,
             }
@@ -100,7 +105,7 @@ def create_directory(request):
             return JsonResponse(data)
     else:
         dir = request.GET.get('dir')
-        if dir:
+        if not dir == "None":
             dir = Directory.objects.get(id=dir)
         
         form = DirectoryForm(request.POST, initial={'parent': dir})
@@ -169,7 +174,7 @@ def delete_modal_directory(request):
 
 @staff_member_required(login_url='/nl/account/login')
 def delete_directory(request,pk):
-    has_perms(request, ["pages.delete_page"], None, 'overviewpage')
+    has_perms(request, ["filemanager.delete_directory"], None, 'overviewpage')
     instance = Directory.objects.get(pk=pk)
     instance.date_deleted = timezone.now()
     instance.save()
@@ -180,6 +185,7 @@ def delete_directory(request,pk):
 def create_media_type(request):
     if request.method == "GET":
         dir = request.GET.get('dir')
+        filemanager = request.GET.get('filemanager')
         context = {
             'dir': dir,
         }
@@ -190,11 +196,14 @@ def create_media_type(request):
         return JsonResponse(data)
     if request.method == "POST":
         dir = request.GET.get('dir', False)
+        filemanager = request.GET.get('filemanager', False)
         form = MediaFileForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save(commit=False)
             mimetype = guess_mime_type(instance.file.name)
-            mediatype = guess_media_type(mimetype)
+            mediatype = guess_media_type(mimetype[0])
+            instance.filename = get_filename(instance.file)
+            instance.filesize = instance.file.size
             instance.type = mediatype
             if dir and not dir == "None":
                 directory = Directory.objects.get(id=dir)
@@ -290,9 +299,13 @@ def delete_modal_media(request):
 
 @staff_member_required(login_url='/nl/account/login')
 def delete_media(request,pk):
-    has_perms(request, ["pages.delete_page"], None, 'overviewpage')
+    has_perms(request, ["filemanager.delete_media"], None, 'overviewmedia')
     instance = Media.objects.get(pk=pk)
     instance.date_deleted = timezone.now()
+    if instance.thumbnails.exists():
+        for thumbnail in instance.thumbnails.all():
+            thumbnail.date_deleted = timezone.now()
+            thumbnail.save()
     instance.save()
     messages.add_message(request, messages.SUCCESS, _('The media has been succesfully deleted!'))
     return redirect('media-document-index')       
@@ -306,3 +319,42 @@ def download_media(request, pk):
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
     return response
+
+@staff_member_required(login_url='/nl/account/login')
+def show_thumbnails(request):
+    pk = request.GET.get('pk', False)
+    media = Media.objects.get(id=pk)
+    context = {
+        'thumbnails': media.thumbnails.filter(date_deleted=None)
+    }
+    data = {
+        'template': render_to_string('media/__partials/__thumbnails_overview.html', context=context, request=request),
+        'title': _('Thumbnail overview')
+    }
+    return JsonResponse(data)
+
+@staff_member_required(login_url='/nl/account/login')
+def delete_modal_thumbnail(request):
+    if request.is_ajax():
+        data = {}
+        id = request.POST.get('thumbnail', False)
+        thumbnail = Thumbnail.objects.get(id=id)
+        if thumbnail:
+            context = {
+                'thumbnail': thumbnail
+            }
+            data = {
+                'template': render_to_string('media/__partials/__delete_thumbnail_modal.html', context=context, request=request),
+                'title': _('Delete thumbnail')
+            }
+        return JsonResponse(data)
+    return False
+
+@staff_member_required(login_url='/nl/account/login')
+def delete_thumbnail(request,pk):
+    has_perms(request, ["filemanager.delete_thumbnail"], None, 'media-document-index')
+    instance = Thumbnail.objects.get(pk=pk)
+    instance.date_deleted = timezone.now()
+    instance.save()
+    messages.add_message(request, messages.SUCCESS, _('The thumbnail has been succesfully deleted!'))
+    return redirect('media-document-index')   

@@ -1,0 +1,16 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+    {% include 'front/layout/head.html' %}
+    <body>
+        {% include 'front/layout/schema.html' %}
+        {% include 'front/layout/header.html' with pages=pages %}
+        {% block content %}
+        {% endblock content %}
+        {% include 'front/layout/footer.html' %}
+        {% include 'front/layout/js.html' %}
+        {% block js %} 
+        {% endblock %}
+    </body>
+</html>

@@ -2,16 +2,6 @@
 <!--  BEGIN TOPBAR  -->
 <div class="topbar-nav header navbar" role="banner">
     <nav id="topbar">
-        <ul class="navbar-nav theme-brand flex-row  text-center">
-            <li class="nav-item theme-logo">
-                <a href="index.html">
-                    {% comment %}<img src="assets/img/90x90.jpg" class="navbar-logo" alt="logo">{% endcomment %}
-                </a>
-            </li>
-            <li class="nav-item theme-text">
-                <a href="index.html" class="nav-link"> CORK </a>
-            </li>
-        </ul>
         <ul class="list-unstyled menu-categories" id="topAccordion">
             {% for tab in tabs %}
                 <li class="menu single-menu">
@@ -24,21 +14,39 @@
                     {% if tab.modules.exists %}
                         <ul class="collapse submenu list-unstyled" id="{{tab.name}}" data-parent="#topAccordion">
                             {% for module in tab.get_active_modules %}
-                                <li class="sub-sub-submenu-list">
-                                    <a href="{% url module.route %}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> {{module.name}}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
-                                    {% get_active_module_pages module as modulepages %}
-                                    {% if modulepages.exists %}
-                                        <ul class="collapse list-unstyled sub-submenu eq-animated eq-fadeInUp" id="starter-kit" data-parent="#more">
-                                            {% for page in modulepages %}
-                                                {% if page.show_nav and page.date_deleted == None %}
-                                                    <li>
-                                                        <a href="{% url page.route %}">{{page.name}}</a>
-                                                    </li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </li>
+                                {% if module.is_superuser and request.user.is_superuser %}
+                                    <li class="sub-sub-submenu-list">
+                                        <a href="{% url module.route %}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> {{module.name}}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
+                                        {% get_active_module_pages module as modulepages %}
+                                        {% if modulepages.exists %}
+                                            <ul class="collapse list-unstyled sub-submenu eq-animated eq-fadeInUp" id="starter-kit" data-parent="#more">
+                                                {% for page in modulepages %}
+                                                    {% if page.show_nav and page.date_deleted == None %}
+                                                        <li>
+                                                            <a href="{% url page.route %}">{{page.name}}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% else %} 
+                                    <li class="sub-sub-submenu-list">
+                                        <a href="{% url module.route %}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> {{module.name}}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
+                                        {% get_active_module_pages module as modulepages %}
+                                        {% if modulepages.exists %}
+                                            <ul class="collapse list-unstyled sub-submenu eq-animated eq-fadeInUp" id="starter-kit" data-parent="#more">
+                                                {% for page in modulepages %}
+                                                    {% if page.show_nav and page.date_deleted == None %}
+                                                        <li>
+                                                            <a href="{% url page.route %}">{{page.name}}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
                             {% endfor %}
                         </ul>
                     {% endif %}

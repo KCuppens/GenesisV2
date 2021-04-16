@@ -3,8 +3,15 @@
 {% block content %}
 <div class="row layout-spacing layout-top-spacing" id="cancel-row">
     <div class="col-lg-12">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{% url 'overviewpage' %}" class="btn btn-info mb-2 mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-left"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg>&nbsp;{% trans 'Go to pages overview' %}</a>
+                <a href="{% url 'open-preview' canvas=page.canvas.pk %}" class="btn btn-default mb-2 mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>&nbsp;{% trans 'Preview mode' %}</a>
+                {% comment %}<a href="{% url 'overviewpage' %}" class="btn btn-primary mb-2 mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>&nbsp;{% trans 'Block library' %}</a>{% endcomment %}
+            </div>
+        </div>
         <div class="canvas-block">
-            <div class="canvas-builder col-md-9 layout-spacing" data-id="{{page.canvas.id}}" data-csrf="{{csrf_token}}">
+            <div class="canvas-builder col-md-9 layout-spacing" id="sortable" data-page="{{page.id}}" data-id="{{page.canvas.id}}" data-csrf="{{csrf_token}}">
                 
             </div>
             <div class="canvas-nav col-md-3">
@@ -24,15 +31,19 @@
                             <h4>{% trans 'Add a row below' %}</h4>
                             <div class="row-canvas row-canvas-draggable">
                                 <div class="col-md-6 d-flex justify-content-center align-items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
-                                </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>                                </div>
                                 <div class="col-md-6 d-flex justify-content-center align-items-center">
-                                    {% trans 'Drag row' %}
+                                    {% trans 'Add row' %}
                                 </div>
                             </div>     
                         </div>
                         <div class="tab-pane fade" id="animated-underline-profile" role="tabpanel" aria-labelledby="animated-underline-profile-tab">
                             <h4>{% trans 'Choose and add a column below' %}</h4>
+                            <div class="row-canvas-droppable-12 row-canvas layout-top-spacing">
+                                <div class="col-canvas is-selected col-md-12 d-flex justify-content-center align-items-center">
+                                    {% trans 'Column 1' %}
+                                </div>
+                            </div>
                             <div class="row-canvas-droppable-6 row-canvas layout-top-spacing">
                                 <div class="col-canvas is-selected col-md-6 d-flex justify-content-center align-items-center">
                                     {% trans 'Column 1' %}
@@ -91,6 +102,48 @@
 </div>
 {% include 'canvas/__partials/__block_modal.html' %}
 {% include 'canvas/__partials/__content_modal.html' %}
-<script src="{% static 'admin/js/libs/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'admin/js/libs/jquery-3.6.0.min.js' %}"></script>
 <script src="{% static 'admin/js/page_builder.js' %}"></script>
+<script>
+    // $('.open-delete-modal').on('click', function() {
+    //     var id = $(this).data('id');
+    //     $.ajax({
+    //         url: '{% url 'deletemodalpage'  %}',
+    //         type:"POST",
+    //         data: {
+    //             'id': id,
+    //             'csrfmiddlewaretoken': '{{ csrf_token }}',
+    //         },
+    //         success:function(data){
+    //             console.log(data);
+    //             $('.modal-placeholder').html(data.template);
+    //             $('.modal').modal();
+    //         }
+    //     });
+    // })
+    
+    $(function () {
+    
+        $('#sortable').sortable({
+            update: function () {
+                move($('#sortable').sortable('serialize', 'id'));
+            }
+        });
+        function move(order) {
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'canvas-row-reorder' %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'item': order
+                },
+                success: function () {
+                    //OK
+                }
+            });
+        }
+    
+    });
+</script>
 {% endblock %}
+

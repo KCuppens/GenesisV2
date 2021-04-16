@@ -13,14 +13,15 @@ class ModulePageForm(forms.ModelForm):
 class ModuleForm(forms.ModelForm):
     class Meta:
         model = Module
-        fields = ('active','name', 'route', 'models', 'appname','urlpicker')
+        fields = ('active','name', 'route', 'models', 'appname','urlpicker','is_superuser')
         labels = {
             'active': _('Active'), 
             'name': _('Name'),
             'route': _('Route'),
             'models': _('Model'),
             'app_name': _('Appname'),
-            'urlpicker': _('URLPicker')
+            'urlpicker': _('URLPicker'),
+            'is_superuser': _('Is superuser'), 
         }
 
 
@@ -28,8 +29,9 @@ class TabForm(forms.ModelForm):
     modules = forms.ModelMultipleChoiceField(queryset=Module.objects.filter(date_deleted=None), required=False)
     class Meta:
         model = Tab
-        fields = ('name', 'icon','modules')
+        fields = ('active', 'name', 'icon','modules')
         labels = {
+            'active': _('Actief'),
             'name': _('Name'),
             'icon': _('Icoon'),
             'modules': _('Modules')

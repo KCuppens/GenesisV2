@@ -1,9 +1,10 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 from .views import LoginView
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
+    url(r'^', include('django.contrib.auth.urls')),
     url(_('^login$'),LoginView.as_view(),
         name='login'),
     url(_('^logout$'), auth_views.LogoutView.as_view(
@@ -25,5 +26,5 @@ urlpatterns = [
                                                       ),name="password_reset"),
     url(_('^reset/done$'), auth_views.PasswordResetDoneView.as_view(template_name='reset/password_reset_done.html'),name='password_reset_done'),
     url(_('^reset/complete$'), auth_views.PasswordResetCompleteView.as_view(template_name='reset/password_reset_complete.html'),name='password_reset_complete'),
-    url(_('^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$'),auth_views.PasswordResetConfirmView.as_view(template_name='reset/password_reset_confirm.html'),name='password_reset_confirm'),
+    url(_('^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$'),auth_views.PasswordResetConfirmView.as_view(template_name='reset/password_reset_confirm.html'),name='password_reset_confirm'),
 ]

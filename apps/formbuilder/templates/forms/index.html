@@ -1,0 +1,110 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n svg get_form_entry_count %}
+{% block content %}
+<div class="row layout-top-spacing layout-spacing">
+    <div class="col-lg-12">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>{% trans 'Form overview' %}</h4>
+                        <a href="{% url 'addform' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> {% trans 'Add Form' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area">
+                {% if forms.exists %} 
+                    <div class="table-responsive mb-4">
+                        <table id="style-3" class="table style-3  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{% trans 'Name' %}</th>
+                                    <th>{% trans 'Results' %}</th>
+                                    <th class="text-center">{% trans 'Action' %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for form in forms %}
+                                    <tr>
+                                        <td>{% if form.name %}{{form.name}}{% else %}{% endif %}</td>
+                                        <td>
+                                            <a href="{% url 'results-form' pk=form.pk %}">
+                                                <span class="shadow-none badge badge-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>                                            
+                                                    ({% get_form_entry_count form %})
+                                                </span>
+                                            </a>
+                                        </td>  
+                                        <td class="text-center">
+                                            {% include 'forms/__partials/actions.html' with item=form %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}  
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-outline-primary mb-2 mt-2 accept-drop" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-x text-black close" data-dismiss="alert">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
+                        {% trans 'There are no forms available.' %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="modal-placeholder">
+
+    </div>
+</div>
+{% block js %}
+<script>
+$('.open-delete-modal').on('click', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'deletemodalform'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $('.modal-placeholder').html(data.template);
+            $('.modal').modal();
+        }
+    });
+})
+$(function () {
+
+    $('#sortable').sortable({
+        handle: '.sort-handle',
+        update: function () {
+            move($('#sortable').sortable('serialize', 'id'));
+        }
+    });
+    function move(order) {
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'tab-reorder' %}',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'item': order
+            },
+            success: function () {
+                //OK
+            }
+        });
+    }
+
+});
+</script>
+{% endblock %}
+{% endblock content %}

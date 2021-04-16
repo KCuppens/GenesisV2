@@ -4,7 +4,6 @@ var f2 = flatpickr($('.dateTimeFlatpickr'), {
     enableTime: true,
     dateFormat: "Y-m-d H:i",
     time_24hr: true,
-
 });
 var f3 = flatpickr($('.rangeCalendarFlatpickr'), {
     mode: "range",

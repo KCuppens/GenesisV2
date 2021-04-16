@@ -1,0 +1,3459 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-05 22:45+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\GenesisV2\settings.py:149
+msgid "Nederlands"
+msgstr ""
+
+#: .\GenesisV2\settings.py:150
+msgid "Engels"
+msgstr ""
+
+#: .\GenesisV2\settings.py:151
+msgid "Frans"
+msgstr ""
+
+#: .\GenesisV2\urls.py:29
+msgid "dashboard/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:30
+msgid "dashboard/configuratie/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:31
+msgid "dashboard/gebruiker/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:32
+msgid "dashboard/modules/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:33
+msgid "dashboard/translations/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:34
+msgid "dashboard/pages/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:35
+msgid "dashboard/blocks/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:36
+msgid "dashboard/history/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:37
+msgid "dashboard/news/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:38
+msgid "dashboard/base/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:39
+msgid "dashboard/media/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:40
+msgid "dashboard/data/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:41
+msgid "dashboard/search/"
+msgstr ""
+
+#: .\GenesisV2\urls.py:42
+msgid "account/"
+msgstr ""
+
+#: .\apps\base\models.py:17 .\apps\pages\forms.py:22
+msgid "Meta title"
+msgstr ""
+
+#: .\apps\base\models.py:18 .\apps\pages\forms.py:23
+msgid "Meta keywords"
+msgstr ""
+
+#: .\apps\base\models.py:19 .\apps\pages\forms.py:24
+msgid "Meta description"
+msgstr ""
+
+#: .\apps\base\models.py:25
+msgid "Position"
+msgstr ""
+
+#: .\apps\base\models.py:32 .\apps\user\models.py:39
+msgid "Date of creation"
+msgstr ""
+
+#: .\apps\base\models.py:33
+msgid "Publishingdate"
+msgstr ""
+
+#: .\apps\base\models.py:34 .\apps\blocks\forms.py:38 .\apps\pages\forms.py:26
+msgid "Expiring date"
+msgstr ""
+
+#: .\apps\base\models.py:35
+msgid "Date of last update"
+msgstr ""
+
+#: .\apps\base\models.py:36 .\apps\user\models.py:40
+msgid "Delete date"
+msgstr ""
+
+#: .\apps\base\models.py:37 .\apps\blocks\forms.py:39
+#: .\apps\dashboard\forms.py:10 .\apps\modules\forms.py:18
+#: .\apps\pages\forms.py:27
+msgid "Active"
+msgstr ""
+
+#: .\apps\base\models.py:46
+msgid "Author"
+msgstr ""
+
+#: .\apps\base\models.py:47
+msgid "Edited by"
+msgstr ""
+
+#: .\apps\base\models.py:48
+msgid "Deletable"
+msgstr ""
+
+#: .\apps\base\models.py:66
+#, python-brace-format
+msgid "Er is een {model} toegevoegd!"
+msgstr ""
+
+#: .\apps\base\models.py:69
+#, python-brace-format
+msgid "Er is een {model} verwijderd"
+msgstr ""
+
+#: .\apps\base\models.py:72
+#, python-brace-format
+msgid "Er is een {model} geüpdate!"
+msgstr ""
+
+#: .\apps\base\templates\filemanager\filemanager-modal.html:7
+msgid "Filemanager"
+msgstr ""
+
+#: .\apps\base\templates\filemanager\filemanager-modal.html:16
+#: .\apps\base\templates\urlpicker\internal-link-modal.html:16
+#: .\apps\blocks\templates\blockcategory\__form.html:22
+#: .\apps\blocks\templates\blocks\__form.html:31
+#: .\apps\conf\templates\conf\__form.html:22
+#: .\apps\dashboard\templates\dashboard\admin\__form.html:22
+#: .\apps\filemanager\templates\media\__partials\modal.html:16
+#: .\apps\modules\templates\modules\__form.html:31
+#: .\apps\modules\templates\tabs\__form.html:22
+#: .\apps\news\templates\news\__form.html:40
+#: .\apps\pages\templates\canvas\__partials\__block_modal.html:16
+#: .\apps\pages\templates\canvas\__partials\__content_modal.html:16
+#: .\apps\pages\templates\pages\__form.html:40
+#: .\apps\user\templates\group\__form.html:20
+#: .\apps\user\templates\user\__form.html:43
+#: .\apps\user\templates\user\changepassword.html:23
+msgid "Cancel"
+msgstr ""
+
+#: .\apps\base\templates\filemanager\filemanager.html:9
+#: .\apps\filemanager\templates\media\__partials\__overview.html:61
+msgid "Search Here..."
+msgstr ""
+
+#: .\apps\base\templates\filemanager\filemanager.html:11
+#: .\apps\filemanager\templates\media\__partials\__overview.html:63
+#: .\apps\pages\templates\canvas\__partials\__blocks.html:6
+msgid "Search"
+msgstr ""
+
+#: .\apps\base\templates\filemanager\filemanager.html:30
+#: .\apps\filemanager\templates\media\__partials\__overview.html:11
+msgid "Create a directory"
+msgstr ""
+
+#: .\apps\base\templates\filemanager\filemanager.html:33
+#: .\apps\filemanager\templates\media\__partials\__overview.html:14
+#: .\apps\filemanager\views.py:194 .\apps\filemanager\views.py:219
+#: .\apps\filemanager\views.py:230 .\apps\filemanager\views.py:242
+msgid "Upload media"
+msgstr ""
+
+#: .\apps\base\templates\filemanager\filemanager.html:94
+#: .\apps\data\templates\data\import\fields.html:26
+msgid "Select"
+msgstr ""
+
+#: .\apps\base\templates\filemanager\filemanager.html:118
+#: .\apps\filemanager\templates\media\__partials\__overview.html:158
+msgid "There are no documents and directories found."
+msgstr ""
+
+#: .\apps\base\templates\urlpicker\internal-link-modal.html:7
+msgid "Internal link picker"
+msgstr ""
+
+#: .\apps\base\templates\urlpicker\urlpicker.html:25
+msgid "Select url"
+msgstr ""
+
+#: .\apps\base\templates\widgets\media_audio_widget.html:5
+#: .\apps\base\templates\widgets\media_file_widget.html:5
+#: .\apps\base\templates\widgets\media_image_widget.html:7
+#: .\apps\base\templates\widgets\media_video_widget.html:5
+#: .\apps\data\templates\data\import\file-upload.html:8
+msgid "Browse"
+msgstr ""
+
+#: .\apps\base\templates\widgets\url_picker.html:5
+msgid "Select internal link"
+msgstr ""
+
+#: .\apps\base\urls.py:6
+msgid "^urlpicker$"
+msgstr ""
+
+#: .\apps\base\urls.py:7
+msgid "^filemanager$"
+msgstr ""
+
+#: .\apps\base\urls.py:8
+msgid "^perma/url/(?P<module>[-\\w]+)/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\blocks\forms.py:12 .\apps\blocks\forms.py:36
+#: .\apps\blocks\templates\blockcategory\index.html:21
+#: .\apps\dashboard\templates\dashboard\dashboardtemplates\latest_users.html:14
+#: .\apps\modules\forms.py:19 .\apps\modules\forms.py:34
+#: .\apps\modules\templates\modules\__partials\__pages.html:12
+#: .\apps\modules\templates\modules\__partials\__pages.html:42
+#: .\apps\modules\templates\modules\index.html:22
+#: .\apps\modules\templates\tabs\index.html:23 .\apps\user\forms.py:100
+#: .\apps\user\templates\group\index.html:22
+msgid "Name"
+msgstr ""
+
+#: .\apps\blocks\forms.py:13
+msgid "Block image"
+msgstr ""
+
+#: .\apps\blocks\forms.py:14
+msgid "Category"
+msgstr ""
+
+#: .\apps\blocks\forms.py:15
+msgid "Active?"
+msgstr ""
+
+#: .\apps\blocks\forms.py:16 .\apps\news\forms.py:20
+#: .\apps\news\templates\news\index.html:22
+msgid "Publicatiedatum"
+msgstr ""
+
+#: .\apps\blocks\forms.py:17 .\apps\news\forms.py:19
+msgid "Vervaldatum"
+msgstr ""
+
+#: .\apps\blocks\forms.py:18
+msgid "Kolom grootte"
+msgstr ""
+
+#: .\apps\blocks\forms.py:19
+msgid "Bevat een titel"
+msgstr ""
+
+#: .\apps\blocks\forms.py:20
+msgid "Bevat een subtitel"
+msgstr ""
+
+#: .\apps\blocks\forms.py:21
+msgid "Bevat een inhoud"
+msgstr ""
+
+#: .\apps\blocks\forms.py:22
+msgid "Bevat een afbeelding"
+msgstr ""
+
+#: .\apps\blocks\forms.py:23
+msgid "Bevat een tweede afbeelding"
+msgstr ""
+
+#: .\apps\blocks\forms.py:24
+msgid "Bevat een url"
+msgstr ""
+
+#: .\apps\blocks\forms.py:25
+msgid "Bevat een tekst url"
+msgstr ""
+
+#: .\apps\blocks\forms.py:26
+msgid "Bevat een video"
+msgstr ""
+
+#: .\apps\blocks\forms.py:27
+msgid "Bevat een embed"
+msgstr ""
+
+#: .\apps\blocks\forms.py:28
+msgid "Template name"
+msgstr ""
+
+#: .\apps\blocks\forms.py:37 .\apps\pages\forms.py:25
+msgid "Publishing date"
+msgstr ""
+
+#: .\apps\blocks\models.py:52
+#: .\apps\blocks\templates\blockcategory\__partials\__content.html:4
+#: .\apps\blocks\templates\blocks\__partials\__content.html:4
+#: .\apps\blocks\templates\blocks\__partials\__fields.html:4
+msgid "Block"
+msgstr ""
+
+#: .\apps\blocks\models.py:63
+msgid "Blockcategory"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\__form.html:8
+msgid "Block category"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\__form.html:21
+#: .\apps\blocks\templates\blocks\__form.html:30
+#: .\apps\conf\templates\conf\__form.html:21
+#: .\apps\conf\templates\conf\index.html:16
+#: .\apps\dashboard\templates\dashboard\admin\__form.html:21
+#: .\apps\filemanager\templates\media\__partials\__edit_directory.html:31
+#: .\apps\filemanager\templates\media\__partials\__edit_media.html:58
+#: .\apps\modules\templates\modules\__form.html:30
+#: .\apps\modules\templates\tabs\__form.html:21
+#: .\apps\news\templates\news\__form.html:39
+#: .\apps\pages\templates\pages\__form.html:39
+#: .\apps\user\templates\group\__form.html:19
+#: .\apps\user\templates\user\__form.html:42
+#: .\apps\user\templates\user\changepassword.html:22
+msgid "Save"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\__partials\__content.html:38
+#: .\apps\blocks\templates\blocks\__partials\__content.html:74
+#: .\apps\news\templates\news\__partials\__settings.html:24
+#: .\apps\pages\templates\pages\__partials\__settings.html:29
+msgid "Clear expiration date"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\__partials\actions.html:4
+#: .\apps\blocks\templates\blocks\__partials\actions.html:3
+#: .\apps\conf\templates\conf\__partials\actions.html:3
+#: .\apps\dashboard\templates\dashboard\admin\__partials\actions.html:4
+#: .\apps\modules\templates\modules\__partials\actions.html:4
+#: .\apps\modules\templates\tabs\__partials\actions.html:4
+#: .\apps\news\templates\news\__partials\actions.html:4
+#: .\apps\pages\templates\pages\__partials\actions.html:3
+#: .\apps\user\templates\group\__partials\actions.html:3
+#: .\apps\user\templates\user\__partials\actions.html:4
+msgid "Edit"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\__partials\actions.html:5
+#: .\apps\blocks\templates\blockcategory\__partials\modal.html:15
+#: .\apps\blocks\templates\blocks\__partials\actions.html:4
+#: .\apps\blocks\templates\blocks\__partials\modal.html:15
+#: .\apps\conf\templates\conf\__partials\actions.html:4
+#: .\apps\conf\templates\conf\__partials\modal.html:15
+#: .\apps\dashboard\templates\dashboard\admin\__partials\actions.html:5
+#: .\apps\dashboard\templates\dashboard\admin\__partials\modal.html:15
+#: .\apps\filemanager\templates\media\__partials\__delete_directory_modal.html:5
+#: .\apps\filemanager\templates\media\__partials\__delete_media_modal.html:5
+#: .\apps\modules\templates\modules\__partials\actions.html:5
+#: .\apps\modules\templates\modules\__partials\modal.html:15
+#: .\apps\modules\templates\tabs\__partials\actions.html:5
+#: .\apps\modules\templates\tabs\__partials\modal.html:15
+#: .\apps\news\templates\news\__partials\actions.html:5
+#: .\apps\news\templates\news\__partials\modal.html:15
+#: .\apps\pages\templates\pages\__partials\actions.html:4
+#: .\apps\pages\templates\pages\__partials\modal.html:15
+#: .\apps\user\templates\group\__partials\actions.html:4
+#: .\apps\user\templates\group\__partials\modal.html:15
+#: .\apps\user\templates\user\__partials\actions.html:5
+#: .\apps\user\templates\user\__partials\modal.html:15
+#: .\environment\Lib\site-packages\django\forms\formsets.py:391
+msgid "Delete"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\__partials\modal.html:6
+#: .\apps\blocks\templates\blocks\__partials\modal.html:6
+#: .\apps\conf\templates\conf\__partials\modal.html:6
+#: .\apps\dashboard\templates\dashboard\admin\__partials\modal.html:6
+#: .\apps\modules\templates\modules\__partials\modal.html:6
+#: .\apps\modules\templates\tabs\__partials\modal.html:6
+#: .\apps\news\templates\news\__partials\modal.html:6
+#: .\apps\pages\templates\pages\__partials\modal.html:6
+#: .\apps\user\templates\group\__partials\modal.html:6
+#: .\apps\user\templates\user\__partials\modal.html:6
+msgid "The decision is yours"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\__partials\modal.html:12
+#: .\apps\blocks\templates\blocks\__partials\modal.html:12
+#: .\apps\conf\templates\conf\__partials\modal.html:12
+#: .\apps\dashboard\templates\dashboard\admin\__partials\modal.html:12
+#: .\apps\filemanager\templates\media\__partials\__delete_directory_modal.html:2
+#: .\apps\filemanager\templates\media\__partials\__delete_media_modal.html:2
+#: .\apps\modules\templates\modules\__partials\modal.html:12
+#: .\apps\modules\templates\tabs\__partials\modal.html:12
+#: .\apps\news\templates\news\__partials\modal.html:12
+#: .\apps\pages\templates\pages\__partials\modal.html:12
+#: .\apps\user\templates\group\__partials\modal.html:12
+#: .\apps\user\templates\user\__partials\modal.html:12
+msgid "Are you sure you want to delete?"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\__partials\modal.html:16
+#: .\apps\blocks\templates\blocks\__partials\modal.html:16
+#: .\apps\conf\templates\conf\__partials\modal.html:16
+#: .\apps\dashboard\templates\dashboard\admin\__partials\modal.html:16
+#: .\apps\modules\templates\modules\__partials\modal.html:16
+#: .\apps\modules\templates\tabs\__partials\modal.html:16
+#: .\apps\news\templates\news\__partials\modal.html:16
+#: .\apps\pages\templates\pages\__partials\modal.html:16
+#: .\apps\user\templates\group\__partials\modal.html:16
+#: .\apps\user\templates\user\__partials\modal.html:16
+msgid "Close"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\add.html:12
+#: .\apps\blocks\templates\blockcategory\index.html:11
+msgid "Add block category"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\edit.html:12
+msgid "Edit block category"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\index.html:10
+msgid "Block categories overview"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\index.html:20
+#: .\apps\modules\templates\modules\index.html:21
+#: .\apps\modules\templates\tabs\index.html:21
+#: .\apps\user\templates\user\index.html:48
+msgid "#"
+msgstr ""
+
+#: .\apps\blocks\templates\blockcategory\index.html:22
+#: .\apps\conf\templates\conf\index.html:30
+#: .\apps\dashboard\templates\dashboard\admin\index.html:27
+#: .\apps\history\templates\history\index.html:19
+#: .\apps\modules\templates\modules\index.html:23
+#: .\apps\modules\templates\tabs\index.html:24
+#: .\apps\news\templates\news\index.html:23
+#: .\apps\user\templates\group\index.html:23
+#: .\apps\user\templates\user\index.html:53
+msgid "Action"
+msgstr ""
+
+#: .\apps\blocks\templates\blocks\__form.html:8
+#: .\apps\news\templates\news\__partials\__content.html:4
+#: .\apps\pages\templates\pages\__form.html:8
+msgid "Content"
+msgstr ""
+
+#: .\apps\blocks\templates\blocks\__form.html:14
+msgid "Fields"
+msgstr ""
+
+#: .\apps\blocks\templates\blocks\add.html:12
+#: .\apps\blocks\templates\blocks\index.html:11
+msgid "Add block"
+msgstr ""
+
+#: .\apps\blocks\templates\blocks\edit.html:12
+msgid "Edit block"
+msgstr ""
+
+#: .\apps\blocks\templates\blocks\index.html:10
+msgid "Blocks overview"
+msgstr ""
+
+#: .\apps\blocks\urls.py:7 .\apps\conf\urls.py:7 .\apps\dashboard\urls.py:9
+#: .\apps\history\urls.py:6 .\apps\modules\urls.py:15 .\apps\news\urls.py:6
+#: .\apps\pages\urls.py:6 .\apps\user\urls.py:6
+msgid "^overview$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:8 .\apps\conf\urls.py:8 .\apps\dashboard\urls.py:10
+#: .\apps\modules\urls.py:16 .\apps\news\urls.py:7 .\apps\pages\urls.py:8
+#: .\apps\user\urls.py:7
+msgid "^add$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:9 .\apps\conf\urls.py:10 .\apps\dashboard\urls.py:11
+#: .\apps\modules\urls.py:17 .\apps\news\urls.py:8 .\apps\pages\urls.py:10
+msgid "^edit/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:10 .\apps\dashboard\urls.py:12
+#: .\apps\modules\urls.py:18 .\apps\news\urls.py:9 .\apps\pages\urls.py:12
+msgid "^toggle-activation/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:11 .\apps\conf\urls.py:11 .\apps\dashboard\urls.py:13
+#: .\apps\modules\urls.py:19 .\apps\news\urls.py:10 .\apps\pages\urls.py:13
+msgid "^delete/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:12 .\apps\conf\urls.py:12 .\apps\dashboard\urls.py:14
+#: .\apps\modules\urls.py:22 .\apps\news\urls.py:11 .\apps\pages\urls.py:14
+#: .\apps\user\urls.py:11
+msgid "^delete/modal$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:14
+msgid "^category/overview$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:15
+msgid "^category/add$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:16
+msgid "^category/edit/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:17
+msgid "^category/toggle-activation/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:18
+msgid "^category/delete/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\blocks\urls.py:19
+msgid "^category/delete/modal$"
+msgstr ""
+
+#: .\apps\blocks\views.py:37
+msgid "The block has been succesfully added!"
+msgstr ""
+
+#: .\apps\blocks\views.py:56
+msgid "The block has been succesfully changed!"
+msgstr ""
+
+#: .\apps\blocks\views.py:73 .\apps\modules\views.py:93
+msgid "De status van de tab is succesvol aangepast!"
+msgstr ""
+
+#: .\apps\blocks\views.py:101
+msgid "The block has been succesfully deleted!"
+msgstr ""
+
+#: .\apps\blocks\views.py:120
+msgid "The block category has been succesfully added!"
+msgstr ""
+
+#: .\apps\blocks\views.py:138
+msgid "The blockcategory has been succesfully changed!"
+msgstr ""
+
+#: .\apps\blocks\views.py:154
+msgid "De status van de categorie is succesvol aangepast!"
+msgstr ""
+
+#: .\apps\blocks\views.py:182
+msgid "The block category has been succesfully deleted!"
+msgstr ""
+
+#: .\apps\conf\models.py:13 .\apps\data\export.py:15 .\apps\data\imp_ort.py:15
+#: .\apps\user\models.py:56
+msgid "Gebruiker"
+msgstr ""
+
+#: .\apps\conf\models.py:14
+msgid "Klant"
+msgstr ""
+
+#: .\apps\conf\models.py:15
+msgid "Algemeen"
+msgstr ""
+
+#: .\apps\conf\models.py:16
+msgid "Schema Markup"
+msgstr ""
+
+#: .\apps\conf\models.py:26 .\apps\conf\templates\conf\__form.html:8
+#: .\apps\conf\templates\conf\__partials\__conf.html:4
+msgid "Configuration"
+msgstr ""
+
+#: .\apps\conf\templates\conf\add.html:12
+#: .\apps\conf\templates\conf\index.html:14
+msgid "Add configuration"
+msgstr ""
+
+#: .\apps\conf\templates\conf\edit.html:12
+msgid "Edit configuration"
+msgstr ""
+
+#: .\apps\conf\templates\conf\index.html:12
+msgid "Configuration overview"
+msgstr ""
+
+#: .\apps\conf\templates\conf\index.html:25 .\apps\dashboard\forms.py:11
+#: .\apps\dashboard\templates\dashboard\admin\index.html:21
+msgid "Title"
+msgstr ""
+
+#: .\apps\conf\templates\conf\index.html:26
+msgid "Type"
+msgstr ""
+
+#: .\apps\conf\templates\conf\index.html:27
+msgid "Description"
+msgstr ""
+
+#: .\apps\conf\templates\conf\index.html:28
+msgid "Value"
+msgstr ""
+
+#: .\apps\conf\urls.py:9
+msgid "^save$"
+msgstr ""
+
+#: .\apps\conf\views.py:31
+msgid "The configuration has been succesfully added!"
+msgstr ""
+
+#: .\apps\conf\views.py:51
+msgid "The configuration has been succesfully changed!"
+msgstr ""
+
+#: .\apps\conf\views.py:95
+msgid "The configuration has been succesfully deleted!"
+msgstr ""
+
+#: .\apps\dashboard\forms.py:12
+#: .\apps\dashboard\templates\dashboard\admin\index.html:22
+msgid "Method"
+msgstr ""
+
+#: .\apps\dashboard\forms.py:13
+msgid "Param 1"
+msgstr ""
+
+#: .\apps\dashboard\forms.py:14
+msgid "Sorting method"
+msgstr ""
+
+#: .\apps\dashboard\forms.py:15
+msgid "Order method"
+msgstr ""
+
+#: .\apps\dashboard\forms.py:16
+#: .\apps\dashboard\templates\dashboard\admin\index.html:25
+msgid "Template"
+msgstr ""
+
+#: .\apps\dashboard\forms.py:17
+msgid "Default?"
+msgstr ""
+
+#: .\apps\dashboard\forms.py:18 .\apps\modules\forms.py:35
+msgid "Icoon"
+msgstr ""
+
+#: .\apps\dashboard\models.py:13
+msgid "Oplopend"
+msgstr ""
+
+#: .\apps\dashboard\models.py:14
+msgid "Aflopend"
+msgstr ""
+
+#: .\apps\dashboard\models.py:22
+msgid "Sorteren op positie"
+msgstr ""
+
+#: .\apps\dashboard\models.py:23
+msgid "Sorteren op naam"
+msgstr ""
+
+#: .\apps\dashboard\models.py:24
+msgid "Sorteren op datum"
+msgstr ""
+
+#: .\apps\dashboard\models.py:38
+msgid "Count files by media type"
+msgstr ""
+
+#: .\apps\dashboard\models.py:39
+msgid "Count files"
+msgstr ""
+
+#: .\apps\dashboard\models.py:40
+msgid "Count directories"
+msgstr ""
+
+#: .\apps\dashboard\models.py:41
+msgid "Count filemanager size"
+msgstr ""
+
+#: .\apps\dashboard\models.py:42
+msgid "Latest history"
+msgstr ""
+
+#: .\apps\dashboard\models.py:43
+msgid "Latest pages"
+msgstr ""
+
+#: .\apps\dashboard\models.py:44
+msgid "Count pages"
+msgstr ""
+
+#: .\apps\dashboard\models.py:45
+msgid "Latest users"
+msgstr ""
+
+#: .\apps\dashboard\models.py:46
+msgid "Count users"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\admin\__form.html:8
+#: .\apps\dashboard\templates\dashboard\admin\__partials\__dashboard.html:4
+msgid "Dashboard"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\admin\add.html:12
+#: .\apps\dashboard\templates\dashboard\admin\index.html:11
+msgid "Add dashboard"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\admin\edit.html:12
+msgid "Edit dashboard"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\admin\index.html:10
+msgid "Dashboard overview"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\admin\index.html:23
+msgid "Sort"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\admin\index.html:24
+#: .\environment\Lib\site-packages\django\forms\formsets.py:379
+#: .\environment\Lib\site-packages\django\forms\formsets.py:386
+msgid "Order"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\admin\index.html:26
+msgid "Default"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\dashboardtemplates\latest_pages.html:14
+#: .\apps\pages\forms.py:16 .\apps\pages\models.py:23
+#: .\apps\pages\templates\pages\children-index.html:39
+#: .\apps\pages\templates\pages\index.html:44
+msgid "Page title"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\dashboardtemplates\latest_pages.html:15
+#: .\apps\pages\templates\pages\children-index.html:48
+#: .\apps\pages\templates\pages\index.html:53
+msgid "Children pages"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\dashboardtemplates\latest_pages.html:29
+msgid "Currently no pages available"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\dashboardtemplates\latest_users.html:15
+#: .\apps\logs\models.py:10 .\apps\user\forms.py:17 .\apps\user\forms.py:67
+#: .\apps\user\templates\user\index.html:51
+#: .\apps\user\templates\users\profile.html:31
+msgid "Email"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\dashboardtemplates\latest_users.html:29
+msgid "Currently no users available"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\layout\header.html:185
+msgid "Hi"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\layout\header.html:193
+msgid "My Profile"
+msgstr ""
+
+#: .\apps\dashboard\templates\dashboard\layout\header.html:196
+msgid "Sign Out"
+msgstr ""
+
+#: .\apps\dashboard\urls.py:15
+msgid "^dashboard/reorder"
+msgstr ""
+
+#: .\apps\dashboard\views.py:38
+msgid "The dashboard has been succesfully added!"
+msgstr ""
+
+#: .\apps\dashboard\views.py:58
+msgid "The dashboard has been succesfully changed!"
+msgstr ""
+
+#: .\apps\dashboard\views.py:91
+msgid "De status van de dashboard is succesvol aangepast!"
+msgstr ""
+
+#: .\apps\dashboard\views.py:103 .\apps\modules\views.py:105
+#: .\apps\modules\views.py:222 .\apps\news\views.py:105
+msgid "The module has been succesfully deleted!"
+msgstr ""
+
+#: .\apps\data\export.py:14 .\apps\data\imp_ort.py:14
+msgid "Pagina"
+msgstr ""
+
+#: .\apps\data\templates\data\export\fields.html:5
+msgid "Export"
+msgstr ""
+
+#: .\apps\data\templates\data\export\fields.html:10
+msgid "Field name"
+msgstr ""
+
+#: .\apps\data\templates\data\export\fields.html:11
+msgid "Show in export"
+msgstr ""
+
+#: .\apps\data\templates\data\export\fields.html:12
+msgid "Overwritten field name"
+msgstr ""
+
+#: .\apps\data\templates\data\export\index.html:10
+msgid "Export overview"
+msgstr ""
+
+#: .\apps\data\templates\data\export\index.html:15
+msgid "Selecteer het object dat je wilt exporteren"
+msgstr ""
+
+#: .\apps\data\templates\data\import\fields.html:5
+msgid "Import"
+msgstr ""
+
+#: .\apps\data\templates\data\import\fields.html:25
+msgid "Data"
+msgstr ""
+
+#: .\apps\data\templates\data\import\file-upload.html:11
+msgid "Upload file"
+msgstr ""
+
+#: .\apps\data\templates\data\import\index.html:12
+#: .\apps\data\templates\data\import\overview.html:23
+msgid "Import overview"
+msgstr ""
+
+#: .\apps\data\templates\data\import\index.html:17
+msgid "Selecteer het object dat je wilt importeren"
+msgstr ""
+
+#: .\apps\data\urls.py:6
+msgid "^export/overview$"
+msgstr ""
+
+#: .\apps\data\urls.py:7
+msgid "^export/overview/fields/ajax$"
+msgstr ""
+
+#: .\apps\data\urls.py:9
+msgid "^import/overview$"
+msgstr ""
+
+#: .\apps\data\urls.py:10
+msgid "^import/overview/fields/ajax$"
+msgstr ""
+
+#: .\apps\data\urls.py:11
+msgid "^import/overview/file-upload/ajax$"
+msgstr ""
+
+#: .\apps\data\urls.py:12
+msgid "^import/overview/model-handling/ajax$"
+msgstr ""
+
+#: .\apps\data\views.py:112
+msgid "Succesfully imported"
+msgstr ""
+
+#: .\apps\data\views.py:125
+msgid "One of the required fields are missing"
+msgstr ""
+
+#: .\apps\filemanager\forms.py:22
+msgid "Please enter a directory name."
+msgstr ""
+
+#: .\apps\filemanager\models.py:14
+msgid "Images"
+msgstr ""
+
+#: .\apps\filemanager\models.py:15
+msgid "Audio"
+msgstr ""
+
+#: .\apps\filemanager\models.py:16 .\apps\filemanager\models.py:63
+#: .\environment\Lib\site-packages\django\db\models\fields\files.py:231
+msgid "File"
+msgstr ""
+
+#: .\apps\filemanager\models.py:17 .\apps\filemanager\models.py:64
+#: .\apps\pages\forms.py:56
+msgid "Video"
+msgstr ""
+
+#: .\apps\filemanager\models.py:62 .\apps\filemanager\models.py:65
+#: .\environment\Lib\site-packages\django\db\models\fields\files.py:379
+msgid "Image"
+msgstr ""
+
+#: .\apps\filemanager\models.py:146
+msgid "png"
+msgstr ""
+
+#: .\apps\filemanager\models.py:147
+msgid "webp"
+msgstr ""
+
+#: .\apps\filemanager\templates\media\__partials\__create_directory.html:31
+msgid "Create"
+msgstr ""
+
+#: .\apps\filemanager\templates\media\__partials\__overview.html:25
+msgid "All"
+msgstr ""
+
+#: .\apps\filemanager\templates\media\__partials\__overview.html:30
+msgid "Directories"
+msgstr ""
+
+#: .\apps\filemanager\templates\media\__partials\__upload_media.html:2
+msgid "Back to overview"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:6
+msgid "^media/document/index$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:7
+msgid "^media/document/overview$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:8
+msgid "^media/create/directory$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:9
+msgid "^media/add$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:10
+msgid "^media/edit/directory$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:11
+msgid "^media/delete/directory/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:12
+msgid "^media/delete/directory/modal$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:13
+msgid "^media/create/mediatype$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:14
+msgid "^media/edit$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:15
+msgid "^media/download/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:16
+msgid "^media/delete/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\filemanager\urls.py:17
+msgid "^media/delete/modal$"
+msgstr ""
+
+#: .\apps\filemanager\views.py:103 .\apps\filemanager\views.py:117
+msgid "Create directory"
+msgstr ""
+
+#: .\apps\filemanager\views.py:143 .\apps\filemanager\views.py:154
+msgid "Edit directory"
+msgstr ""
+
+#: .\apps\filemanager\views.py:170
+msgid "Delete directory"
+msgstr ""
+
+#: .\apps\filemanager\views.py:181
+msgid "The directory has been succesfully deleted!"
+msgstr ""
+
+#: .\apps\filemanager\views.py:268 .\apps\filemanager\views.py:279
+msgid "Edit media"
+msgstr ""
+
+#: .\apps\filemanager\views.py:295
+msgid "Delete media"
+msgstr ""
+
+#: .\apps\filemanager\views.py:306
+msgid "The media has been succesfully deleted!"
+msgstr ""
+
+#: .\apps\front\templates\front\layout\footer.html:9
+msgid "Go to"
+msgstr ""
+
+#: .\apps\front\templates\front\layout\header.html:16
+msgid "Menu"
+msgstr ""
+
+#: .\apps\front\templates\front\layout\header.html:17
+#: .\apps\front\templates\front\layout\search.html:26
+msgid "Sluiten"
+msgstr ""
+
+#: .\apps\front\templates\front\layout\search.html:9
+#: .\apps\front\templates\front\layout\search.html:19
+msgid "Zoeken"
+msgstr ""
+
+#: .\apps\front\templates\front\layout\search.html:12
+msgid "Je zoekopdracht (minstens 3 karakters)"
+msgstr ""
+
+#: .\apps\front\templates\front\nav\mainnav-item.html:7
+msgid "Open submenu"
+msgstr ""
+
+#: .\apps\front\urls.py:10 .\apps\search\urls.py:6
+msgid "^search$"
+msgstr ""
+
+#: .\apps\front\views.py:26
+msgid "Pagina bestaat niet"
+msgstr ""
+
+#: .\apps\history\templates\history\index.html:10
+msgid "History overview"
+msgstr ""
+
+#: .\apps\history\templates\history\index.html:20 .\apps\modules\models.py:22
+#: .\apps\modules\templates\modules\__form.html:8
+#: .\apps\modules\templates\modules\__partials\__module.html:4
+msgid "Module"
+msgstr ""
+
+#: .\apps\history\templates\history\index.html:21
+#: .\apps\user\templates\user\__form.html:8
+#: .\apps\user\templates\user\__partials\__user.html:4
+msgid "User"
+msgstr ""
+
+#: .\apps\logs\models.py:11
+msgid "SMS"
+msgstr ""
+
+#: .\apps\modules\forms.py:20
+#: .\apps\modules\templates\modules\__partials\__pages.html:13
+#: .\apps\modules\templates\modules\__partials\__pages.html:45
+msgid "Route"
+msgstr ""
+
+#: .\apps\modules\forms.py:21
+msgid "Model"
+msgstr ""
+
+#: .\apps\modules\forms.py:22
+msgid "Appname"
+msgstr ""
+
+#: .\apps\modules\forms.py:23
+msgid "URLPicker"
+msgstr ""
+
+#: .\apps\modules\forms.py:33
+msgid "Actief"
+msgstr ""
+
+#: .\apps\modules\forms.py:36
+msgid "Modules"
+msgstr ""
+
+#: .\apps\modules\models.py:32
+msgid "Modulepage"
+msgstr ""
+
+#: .\apps\modules\models.py:49 .\apps\modules\templates\tabs\__form.html:8
+#: .\apps\modules\templates\tabs\__partials\__tab.html:4
+msgid "Tab"
+msgstr ""
+
+#: .\apps\modules\templates\modules\__form.html:14
+#: .\apps\modules\templates\modules\__partials\__pages.html:4
+msgid "Pages"
+msgstr ""
+
+#: .\apps\modules\templates\modules\__partials\__pages.html:14
+msgid "Show in navigation"
+msgstr ""
+
+#: .\apps\modules\templates\modules\__partials\__pages.html:15
+msgid "Actions"
+msgstr ""
+
+#: .\apps\modules\templates\modules\__partials\__pages.html:37
+msgid "Add more pages"
+msgstr ""
+
+#: .\apps\modules\templates\modules\__partials\__pages.html:48
+msgid "Toon navigatie"
+msgstr ""
+
+#: .\apps\modules\templates\modules\add.html:12
+#: .\apps\modules\templates\modules\index.html:11
+#: .\apps\news\templates\news\index.html:11
+msgid "Add module"
+msgstr ""
+
+#: .\apps\modules\templates\modules\edit.html:12
+#: .\apps\modules\templates\tabs\edit.html:12
+msgid "Edit tab"
+msgstr ""
+
+#: .\apps\modules\templates\modules\index.html:10
+msgid "Module overview"
+msgstr ""
+
+#: .\apps\modules\templates\tabs\add.html:12
+#: .\apps\modules\templates\tabs\index.html:11
+msgid "Add tab"
+msgstr ""
+
+#: .\apps\modules\templates\tabs\index.html:10
+msgid "Tabs overview"
+msgstr ""
+
+#: .\apps\modules\templates\tabs\index.html:22
+msgid "Icon"
+msgstr ""
+
+#: .\apps\modules\urls.py:7
+msgid "^tab/overview$"
+msgstr ""
+
+#: .\apps\modules\urls.py:8
+msgid "^tab/add$"
+msgstr ""
+
+#: .\apps\modules\urls.py:9
+msgid "^tab/toggle-activation/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\modules\urls.py:10
+msgid "^tab/edit/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\modules\urls.py:11
+msgid "^tab/delete/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\modules\urls.py:12
+msgid "^tab/reorder"
+msgstr ""
+
+#: .\apps\modules\urls.py:13
+msgid "^tab/delete/modal$"
+msgstr ""
+
+#: .\apps\modules\urls.py:20
+msgid "^delete/modulepages/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\modules\urls.py:21
+msgid "^reorder"
+msgstr ""
+
+#: .\apps\modules\views.py:40
+msgid "The tab has been succesfully added!"
+msgstr ""
+
+#: .\apps\modules\views.py:60
+msgid "The tab has been succesfully changed!"
+msgstr ""
+
+#: .\apps\modules\views.py:144
+msgid "The module has been succesfully added!"
+msgstr ""
+
+#: .\apps\modules\views.py:177
+msgid "The module has been succesfully changed!"
+msgstr ""
+
+#: .\apps\modules\views.py:231
+msgid "The modulepage has been succesfully deleted!"
+msgstr ""
+
+#: .\apps\modules\views.py:240 .\apps\user\views.py:206
+msgid "De status van de gebruiker is succesvol aangepast!"
+msgstr ""
+
+#: .\apps\news\forms.py:8 .\apps\news\templates\news\index.html:20
+#: .\apps\pages\forms.py:51
+msgid "Afbeelding"
+msgstr ""
+
+#: .\apps\news\forms.py:13
+msgid "Titel*"
+msgstr ""
+
+#: .\apps\news\forms.py:14 .\apps\news\templates\news\__form.html:8
+#: .\apps\pages\forms.py:50
+msgid "Inhoud"
+msgstr ""
+
+#: .\apps\news\forms.py:15
+msgid "Samenvatting"
+msgstr ""
+
+#: .\apps\news\forms.py:16
+msgid "SEO Titel"
+msgstr ""
+
+#: .\apps\news\forms.py:17
+msgid "SEO Beschrijving"
+msgstr ""
+
+#: .\apps\news\forms.py:18
+msgid "SEO keywoorden"
+msgstr ""
+
+#: .\apps\news\forms.py:21
+msgid "Actief?"
+msgstr ""
+
+#: .\apps\news\forms.py:28
+msgid "Er moet altijd een titel zijn."
+msgstr ""
+
+#: .\apps\news\templates\news\__form.html:14
+#: .\apps\news\templates\news\__partials\__settings.html:4
+#: .\apps\pages\templates\pages\__form.html:14
+#: .\apps\pages\templates\pages\__partials\__settings.html:4
+#: .\apps\user\templates\user\__form.html:14
+#: .\apps\user\templates\user\__partials\__settings.html:4
+msgid "Settings"
+msgstr ""
+
+#: .\apps\news\templates\news\__form.html:20
+#: .\apps\news\templates\news\__partials\__seo.html:4
+#: .\apps\pages\templates\pages\__form.html:20
+msgid "SEO"
+msgstr ""
+
+#: .\apps\news\templates\news\add.html:12
+msgid "Add article"
+msgstr ""
+
+#: .\apps\news\templates\news\edit.html:12
+msgid "Edit article"
+msgstr ""
+
+#: .\apps\news\templates\news\index.html:10
+msgid "News overview"
+msgstr ""
+
+#: .\apps\news\templates\news\index.html:21 .\apps\pages\forms.py:49
+msgid "Titel"
+msgstr ""
+
+#: .\apps\news\views.py:40
+msgid "The article has been succesfully added!"
+msgstr ""
+
+#: .\apps\news\views.py:60
+msgid "The article has been succesfully changed!"
+msgstr ""
+
+#: .\apps\news\views.py:93
+msgid "De status van de article is succesvol aangepast!"
+msgstr ""
+
+#: .\apps\pages\forms.py:14
+msgid "Is it the homepage?"
+msgstr ""
+
+#: .\apps\pages\forms.py:15
+msgid "Show in main menu"
+msgstr ""
+
+#: .\apps\pages\forms.py:17 .\apps\pages\models.py:24
+#: .\apps\pages\templates\pages\children-index.html:40
+#: .\apps\pages\templates\pages\index.html:45
+msgid "Menu title"
+msgstr ""
+
+#: .\apps\pages\forms.py:18
+msgid "Type of route/slug"
+msgstr ""
+
+#: .\apps\pages\forms.py:19
+msgid "Route/slug"
+msgstr ""
+
+#: .\apps\pages\forms.py:20
+msgid "Doorlink"
+msgstr ""
+
+#: .\apps\pages\forms.py:21 .\apps\pages\templates\pages\children-index.html:25
+msgid "Parent page"
+msgstr ""
+
+#: .\apps\pages\forms.py:37
+msgid "You already have a homepage."
+msgstr ""
+
+#: .\apps\pages\forms.py:52
+msgid "Subtitel"
+msgstr ""
+
+#: .\apps\pages\forms.py:53
+msgid "Tweede afbeelding"
+msgstr ""
+
+#: .\apps\pages\forms.py:54
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2214
+msgid "URL"
+msgstr ""
+
+#: .\apps\pages\forms.py:55
+msgid "Tekst voor url"
+msgstr ""
+
+#: .\apps\pages\forms.py:57
+msgid "Embed"
+msgstr ""
+
+#: .\apps\pages\models.py:14
+msgid "Gegenereerde slug"
+msgstr ""
+
+#: .\apps\pages\models.py:15
+msgid "Eigen slug"
+msgstr ""
+
+#: .\apps\pages\models.py:16
+msgid "Doorlink pagina"
+msgstr ""
+
+#: .\apps\pages\models.py:18
+msgid "Is a homepage"
+msgstr ""
+
+#: .\apps\pages\models.py:19
+msgid "In main menu"
+msgstr ""
+
+#: .\apps\pages\models.py:20
+msgid "In Top menu"
+msgstr ""
+
+#: .\apps\pages\models.py:21
+msgid "In Quicklink menu"
+msgstr ""
+
+#: .\apps\pages\models.py:27
+msgid "URL Type"
+msgstr ""
+
+#: .\apps\pages\models.py:29
+msgid "Linkthrough"
+msgstr ""
+
+#: .\apps\pages\models.py:30
+msgid "Full route"
+msgstr ""
+
+#: .\apps\pages\models.py:31
+msgid "Bovenstaande pagina"
+msgstr ""
+
+#: .\apps\pages\models.py:58
+#: .\apps\pages\templates\pages\__partials\__content.html:4
+msgid "Page"
+msgstr ""
+
+#: .\apps\pages\models.py:64
+msgid "Canvas"
+msgstr ""
+
+#: .\apps\pages\models.py:69
+msgid "Default container"
+msgstr ""
+
+#: .\apps\pages\models.py:75
+msgid "Canvas row"
+msgstr ""
+
+#: .\apps\pages\models.py:109
+msgid "Canvas column"
+msgstr ""
+
+#: .\apps\pages\models.py:126
+msgid "Row with 3 columns"
+msgstr ""
+
+#: .\apps\pages\models.py:127
+msgid "Row with 2 columns"
+msgstr ""
+
+#: .\apps\pages\models.py:128
+msgid "Row with 4 columns"
+msgstr ""
+
+#: .\apps\pages\models.py:129
+msgid "Row with 1 column"
+msgstr ""
+
+#: .\apps\pages\models.py:130
+msgid "Row with 1 big and 1 small column"
+msgstr ""
+
+#: .\apps\pages\models.py:131
+msgid "Row with 1 small and 1 big columns"
+msgstr ""
+
+#: .\apps\pages\models.py:132
+msgid "Row with 1 very big and 1 small column"
+msgstr ""
+
+#: .\apps\pages\models.py:133
+msgid "Row with 1 small and 1 very big column"
+msgstr ""
+
+#: .\apps\pages\models.py:134
+msgid "Row with 1 medium and 1 very small and 1 medium column"
+msgstr ""
+
+#: .\apps\pages\models.py:135
+msgid "Row with 1 small and 1 big and 1 small column"
+msgstr ""
+
+#: .\apps\pages\models.py:136
+msgid "Row with 1 very large and 1 very small column"
+msgstr ""
+
+#: .\apps\pages\models.py:137
+msgid "Row with 1 very small and 1 very large column"
+msgstr ""
+
+#: .\apps\pages\models.py:143
+msgid "Canvas column block"
+msgstr ""
+
+#: .\apps\pages\models.py:191
+msgid "Ascending"
+msgstr ""
+
+#: .\apps\pages\models.py:192
+msgid "Descending"
+msgstr ""
+
+#: .\apps\pages\models.py:205
+msgid "Gesorteerd op datum"
+msgstr ""
+
+#: .\apps\pages\models.py:206
+msgid "Gesorteerd op naam"
+msgstr ""
+
+#: .\apps\pages\models.py:220
+msgid "Page block"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__block_card.html:6
+msgid "Selecteer block"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__block_modal.html:7
+#: .\apps\pages\templates\canvas\__partials\__canvas_row.html:33
+#: .\apps\pages\templates\canvas\__partials\__canvas_row.html:59
+#: .\apps\pages\templates\canvas\__partials\__canvas_row.html:85
+#: .\apps\pages\templates\canvas\__partials\__canvas_row.html:111
+#: .\apps\pages\templates\canvas\__partials\__canvas_row.html:137
+msgid "Select a block"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__blocks.html:4
+msgid "Search blocks"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__blocks.html:10
+#: .\apps\search\templates\search\admin\index.html:18
+#: .\apps\search\templates\search\front\index.html:18
+msgid "Alle"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__blocks.html:39
+msgid "There are no blocks available for this col size"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__canvas_row.html:154
+msgid "There are no columns available, please add them under column tab."
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__canvas_row.html:155
+msgid "Drop the Selected Column Here"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__canvas_row.html:177
+msgid "There are no rows available, please drag them from the row tab."
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__content_form.html:150
+msgid "Opslaan"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\__partials\__content_modal.html:7
+msgid "Block content"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:8
+msgid "Go to pages overview"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:9
+msgid "Preview mode"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:23
+msgid "Row"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:26
+msgid "Column"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:32
+msgid "Add a row below"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:37
+msgid "Add row"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:42
+msgid "Choose and add a column below"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:45
+#: .\apps\pages\templates\canvas\index.html:50
+#: .\apps\pages\templates\canvas\index.html:58
+#: .\apps\pages\templates\canvas\index.html:69
+#: .\apps\pages\templates\canvas\index.html:83
+#: .\apps\pages\templates\canvas\index.html:91
+msgid "Column 1"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:53
+#: .\apps\pages\templates\canvas\index.html:61
+#: .\apps\pages\templates\canvas\index.html:72
+#: .\apps\pages\templates\canvas\index.html:86
+#: .\apps\pages\templates\canvas\index.html:94
+msgid "Column 2"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:64
+#: .\apps\pages\templates\canvas\index.html:75
+msgid "Column 3"
+msgstr ""
+
+#: .\apps\pages\templates\canvas\index.html:78
+msgid "Column 4"
+msgstr ""
+
+#: .\apps\pages\templates\pages\__partials\__seo.html:4
+msgid "Page SEO"
+msgstr ""
+
+#: .\apps\pages\templates\pages\add.html:12
+#: .\apps\pages\templates\pages\children-index.html:16
+#: .\apps\pages\templates\pages\index.html:20
+msgid "Add page"
+msgstr ""
+
+#: .\apps\pages\templates\pages\children-index.html:11
+msgid "Terug naar overzicht"
+msgstr ""
+
+#: .\apps\pages\templates\pages\children-index.html:44
+#: .\apps\pages\templates\pages\index.html:49
+msgid "Page route"
+msgstr ""
+
+#: .\apps\pages\templates\pages\children-index.html:50
+#: .\apps\pages\templates\pages\index.html:55
+msgid "Shown in main menu"
+msgstr ""
+
+#: .\apps\pages\templates\pages\children-index.html:50
+#: .\apps\pages\templates\pages\index.html:55
+msgid "Not shown in main menu"
+msgstr ""
+
+#: .\apps\pages\templates\pages\children-index.html:51
+#: .\apps\pages\templates\pages\index.html:56
+msgid "Is een homepagina"
+msgstr ""
+
+#: .\apps\pages\templates\pages\children-index.html:55
+#: .\apps\pages\templates\pages\index.html:61
+msgid "Page Building"
+msgstr ""
+
+#: .\apps\pages\templates\pages\edit.html:12
+msgid "Edit page"
+msgstr ""
+
+#: .\apps\pages\templates\pages\edit.html:13
+msgid "Go to canvas"
+msgstr ""
+
+#: .\apps\pages\templates\pages\index.html:13
+msgid "Search pages"
+msgstr ""
+
+#: .\apps\pages\templates\pages\index.html:29
+msgid "Pages overview"
+msgstr ""
+
+#: .\apps\pages\templates\pages\index.html:82
+msgid "There are no pages available."
+msgstr ""
+
+#: .\apps\pages\urls.py:7
+msgid "^overview/children/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\pages\urls.py:9
+msgid "^add/children/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\pages\urls.py:11
+msgid "^toggle-mainmenu-activation/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\pages\urls.py:15
+msgid "verander-pagina-order"
+msgstr ""
+
+#: .\apps\pages\urls.py:16
+msgid "^page-builder/canvas-row"
+msgstr ""
+
+#: .\apps\pages\urls.py:17
+msgid "^page-builder/(?P<pk>[0-9a-f-]+)$"
+msgstr ""
+
+#: .\apps\pages\urls.py:18
+msgid "^page-builder/preview/(?P<canvas>\\d+)$"
+msgstr ""
+
+#: .\apps\pages\urls.py:19
+msgid "^page-builder/canvas-content$"
+msgstr ""
+
+#: .\apps\pages\urls.py:20
+msgid "^page-builder/verander-canvas-row-order"
+msgstr ""
+
+#: .\apps\pages\views.py:39
+msgid "Pagina niet gevonden"
+msgstr ""
+
+#: .\apps\pages\views.py:58 .\apps\pages\views.py:81
+msgid "The page has been succesfully added!"
+msgstr ""
+
+#: .\apps\pages\views.py:106
+msgid "The page has been succesfully changed!"
+msgstr ""
+
+#: .\apps\pages\views.py:124
+msgid "De hoofdmenu status van de pagina is succesvol aangepast!"
+msgstr ""
+
+#: .\apps\pages\views.py:135
+msgid "De status van de pagina is succesvol aangepast!"
+msgstr ""
+
+#: .\apps\pages\views.py:163
+msgid "The page has been succesfully deleted!"
+msgstr ""
+
+#: .\apps\pages\views.py:372
+msgid "Content succesfully changed"
+msgstr ""
+
+#: .\apps\search\templates\search\admin\index.html:10
+#: .\apps\search\templates\search\front\index.html:10
+msgid "Zoekresultaten voor"
+msgstr ""
+
+#: .\apps\search\templates\search\admin\index.html:32
+#: .\apps\search\templates\search\front\index.html:32
+msgid "Geen resultaten gevonden"
+msgstr ""
+
+#: .\apps\search\views.py:13 .\apps\search\views.py:80
+msgid "Pagina's"
+msgstr ""
+
+#: .\apps\search\views.py:18 .\apps\user\models.py:57
+msgid "Gebruikers"
+msgstr ""
+
+#: .\apps\search\views.py:31 .\apps\search\views.py:93
+msgid "Gelieve minstens 3 karakters te gebruiken"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:11
+msgid "Translation overview"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:12
+msgid "Export translation"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:13
+msgid "Import translation"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:24
+#: .\apps\translation\templates\translations\index.html:31
+msgid "Search for key"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:25
+#: .\apps\translation\templates\translations\index.html:34
+msgid "Search for english"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:26
+#: .\apps\translation\templates\translations\index.html:37
+msgid "Search for dutch"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:27
+#: .\apps\translation\templates\translations\index.html:40
+msgid "Search for french"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:44
+#: .\apps\translation\views.py:93
+msgid "Key"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:45
+#: .\apps\translation\views.py:93
+msgid "English"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:46
+#: .\apps\translation\views.py:93
+msgid "Dutch"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:47
+#: .\apps\translation\views.py:93
+msgid "French"
+msgstr ""
+
+#: .\apps\translation\templates\translations\index.html:64
+msgid "Er zijn geen vertalingen gevonden..."
+msgstr ""
+
+#: .\apps\translation\views.py:65
+msgid "De vertaling is succesvol geupdate!"
+msgstr ""
+
+#: .\apps\user\account_urls.py:7
+msgid "^login$"
+msgstr ""
+
+#: .\apps\user\account_urls.py:9
+msgid "^logout$"
+msgstr ""
+
+#: .\apps\user\account_urls.py:13
+msgid "^password_change$"
+msgstr ""
+
+#: .\apps\user\account_urls.py:17
+msgid "^password_change/done$"
+msgstr ""
+
+#: .\apps\user\account_urls.py:21
+msgid "^password_reset$"
+msgstr ""
+
+#: .\apps\user\account_urls.py:26
+msgid "^reset/done$"
+msgstr ""
+
+#: .\apps\user\account_urls.py:27
+msgid "^reset/complete$"
+msgstr ""
+
+#: .\apps\user\account_urls.py:28
+msgid ""
+"^reset/(?P<uidb64>[0-9A-Za-z_\\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]"
+"{1,20})$"
+msgstr ""
+
+#: .\apps\user\fields.py:20
+#, python-format
+msgid "Password too short (must be %s characters or more)"
+msgstr ""
+
+#: .\apps\user\fields.py:24
+#, python-format
+msgid "Password too long (must be %s characters or less)"
+msgstr ""
+
+#: .\apps\user\fields.py:32
+#, python-format
+msgid "Weak password, %s"
+msgstr ""
+
+#: .\apps\user\fields.py:57
+#, python-format
+msgid "must contain %(UPPER)s or more uppercase characters (A-Z)"
+msgstr ""
+
+#: .\apps\user\fields.py:62
+#, python-format
+msgid "Must contain %(LOWER)s or more lowercase characters (a-z)"
+msgstr ""
+
+#: .\apps\user\fields.py:67
+#, python-format
+msgid "must contain %(DIGITS)s or more numbers (0-9)"
+msgstr ""
+
+#: .\apps\user\fields.py:72
+#, python-format
+msgid "must contain %(PUNCTUATION)s or more symbols"
+msgstr ""
+
+#: .\apps\user\fields.py:92
+msgid "Are you human? (Sorry, we have to ask!)"
+msgstr ""
+
+#: .\apps\user\fields.py:94
+msgid "Please don't check this box if you are a human."
+msgstr ""
+
+#: .\apps\user\fields.py:98
+msgid "Doh! You are a robot!"
+msgstr ""
+
+#: .\apps\user\fields.py:102
+#, python-format
+msgid "Sorry, %s emails are not allowed. Please use a different email address."
+msgstr ""
+
+#: .\apps\user\fields.py:114
+#: .\environment\Lib\site-packages\django\core\validators.py:156
+msgid "Enter a valid email address."
+msgstr ""
+
+#: .\apps\user\forms.py:13
+msgid "Enter Your First Name"
+msgstr ""
+
+#: .\apps\user\forms.py:14
+msgid "Enter Your Last Name"
+msgstr ""
+
+#: .\apps\user\forms.py:15 .\apps\user\forms.py:64
+msgid "Username"
+msgstr ""
+
+#: .\apps\user\forms.py:49
+msgid "Please enter a emailaddress."
+msgstr ""
+
+#: .\apps\user\forms.py:51
+msgid "Please enter a username."
+msgstr ""
+
+#: .\apps\user\forms.py:53
+msgid "Please enter a firstname."
+msgstr ""
+
+#: .\apps\user\forms.py:55
+msgid "Please enter a lastname."
+msgstr ""
+
+#: .\apps\user\forms.py:65
+msgid "Firstname"
+msgstr ""
+
+#: .\apps\user\forms.py:66
+msgid "Lastname"
+msgstr ""
+
+#: .\apps\user\forms.py:68 .\apps\user\templates\group\__form.html:7
+#: .\apps\user\templates\user\__form.html:21
+#: .\apps\user\templates\user\__partials\__groups.html:4
+msgid "Groups"
+msgstr ""
+
+#: .\apps\user\forms.py:69
+msgid "Is active"
+msgstr ""
+
+#: .\apps\user\forms.py:70
+msgid "Is staff"
+msgstr ""
+
+#: .\apps\user\forms.py:89
+msgid "Enter Group Name"
+msgstr ""
+
+#: .\apps\user\forms.py:101
+msgid "Permissions"
+msgstr ""
+
+#: .\apps\user\models.py:19
+msgid "Particulier"
+msgstr ""
+
+#: .\apps\user\models.py:20
+msgid "Handelaar"
+msgstr ""
+
+#: .\apps\user\models.py:23
+msgid "User type"
+msgstr ""
+
+#: .\apps\user\models.py:25
+msgid "Company name"
+msgstr ""
+
+#: .\apps\user\models.py:26
+msgid "Phone"
+msgstr ""
+
+#: .\apps\user\models.py:27 .\apps\user\templates\users\myprofile.html:86
+msgid "Biography"
+msgstr ""
+
+#: .\apps\user\models.py:29
+msgid "Birthdate"
+msgstr ""
+
+#: .\apps\user\models.py:30
+msgid "Profession"
+msgstr ""
+
+#: .\apps\user\models.py:31
+msgid "Avatar"
+msgstr ""
+
+#: .\apps\user\models.py:33
+msgid "Frontclient"
+msgstr ""
+
+#: .\apps\user\models.py:35
+msgid "VAT"
+msgstr ""
+
+#: .\apps\user\models.py:36
+msgid "Delivery address"
+msgstr ""
+
+#: .\apps\user\models.py:37
+msgid "Invoice address"
+msgstr ""
+
+#: .\apps\user\templates\group\add.html:12
+msgid "Add new group"
+msgstr ""
+
+#: .\apps\user\templates\group\edit.html:12
+msgid "Edit group"
+msgstr ""
+
+#: .\apps\user\templates\group\index.html:10
+msgid "Group overview"
+msgstr ""
+
+#: .\apps\user\templates\group\index.html:18
+msgid "Add group"
+msgstr ""
+
+#: .\apps\user\templates\user\__partials\actions.html:6
+msgid "Change password"
+msgstr ""
+
+#: .\apps\user\templates\user\add.html:12
+#: .\apps\user\templates\user\index.html:11
+msgid "Add user"
+msgstr ""
+
+#: .\apps\user\templates\user\changepassword.html:12
+msgid "Change user password"
+msgstr ""
+
+#: .\apps\user\templates\user\edit.html:12
+msgid "Edit user"
+msgstr ""
+
+#: .\apps\user\templates\user\index.html:10
+msgid "Users overview"
+msgstr ""
+
+#: .\apps\user\templates\user\index.html:49
+msgid "First name"
+msgstr ""
+
+#: .\apps\user\templates\user\index.html:50
+msgid "Last Name"
+msgstr ""
+
+#: .\apps\user\templates\user\index.html:52
+msgid "Group"
+msgstr ""
+
+#: .\apps\user\templates\users\activate.html:5
+msgid "Account activation failed"
+msgstr ""
+
+#: .\apps\user\templates\users\activation_complete.html:5
+msgid "Your account is now activated."
+msgstr ""
+
+#: .\apps\user\templates\users\activation_email.html:3
+msgid "Thank you for registering an account at"
+msgstr ""
+
+#: .\apps\user\templates\users\activation_email.html:4
+msgid "To activate your registration, please visit the following page:"
+msgstr ""
+
+#: .\apps\user\templates\users\activation_email.html:8
+#, python-format
+msgid "This link will expire in %(expiration_days)s days."
+msgstr ""
+
+#: .\apps\user\templates\users\activation_email.html:10
+msgid ""
+"If you didn't register this account you can simply delete this email and we "
+"won't bother you again."
+msgstr ""
+
+#: .\apps\user\templates\users\activation_email_subject.html:1
+msgid "Account activation on"
+msgstr ""
+
+#: .\apps\user\templates\users\login.html:12
+#: .\apps\user\templates\users\logout.html:10
+#: .\apps\user\templates\users\password_reset_complete.html:6
+msgid "Log in"
+msgstr ""
+
+#: .\apps\user\templates\users\login.html:18
+msgid "Email or username"
+msgstr ""
+
+#: .\apps\user\templates\users\login.html:20
+msgid "Please enter a valid username"
+msgstr ""
+
+#: .\apps\user\templates\users\login.html:26
+msgid "Password"
+msgstr ""
+
+#: .\apps\user\templates\users\login.html:29
+msgid "Please Enter valid Password"
+msgstr ""
+
+#: .\apps\user\templates\users\login.html:34
+msgid "Show Password"
+msgstr ""
+
+#: .\apps\user\templates\users\login.html:41
+msgid "Log In"
+msgstr ""
+
+#: .\apps\user\templates\users\login.html:49
+msgid "Forgot Password?"
+msgstr ""
+
+#: .\apps\user\templates\users\logout.html:9
+msgid "You are successfully logged out"
+msgstr ""
+
+#: .\apps\user\templates\users\myprofile.html:90
+msgid "No biography entered yet."
+msgstr ""
+
+#: .\apps\user\templates\users\password_change_done.html:5
+msgid "Password changed"
+msgstr ""
+
+#: .\apps\user\templates\users\password_change_form.html:15
+msgid "Change Password"
+msgstr ""
+
+#: .\apps\user\templates\users\password_reset_complete.html:5
+msgid "Password reset successfully"
+msgstr ""
+
+#: .\apps\user\templates\users\password_reset_confirm.html:16
+#: .\apps\user\templates\users\password_reset_form.html:15
+msgid "Submit"
+msgstr ""
+
+#: .\apps\user\templates\users\password_reset_confirm.html:21
+msgid "Password reset failed"
+msgstr ""
+
+#: .\apps\user\templates\users\password_reset_done.html:5
+msgid "Email with password reset instructions has been sent."
+msgstr ""
+
+#: .\apps\user\templates\users\password_reset_email.html:2
+#, python-format
+msgid "Reset password at %(site_name)s"
+msgstr ""
+
+#: .\apps\user\templates\users\password_reset_subject.html:2
+#, python-format
+msgid "Password reset on %(site_name)s"
+msgstr ""
+
+#: .\apps\user\templates\users\profile.html:30
+msgid "Telefoon"
+msgstr ""
+
+#: .\apps\user\templates\users\profile.html:57
+#: .\apps\user\templates\users\profile.html:74
+msgid "Activiteit"
+msgstr ""
+
+#: .\apps\user\templates\users\profile.html:60
+msgid "Instellingen"
+msgstr ""
+
+#: .\apps\user\templates\users\registration_closed.html:5
+msgid "Sign Up Closed"
+msgstr ""
+
+#: .\apps\user\templates\users\registration_closed.html:6
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: .\apps\user\templates\users\registration_complete.html:5
+msgid "You are now registered. Activation email sent."
+msgstr ""
+
+#: .\apps\user\templates\users\registration_form.html:15
+msgid "Register"
+msgstr ""
+
+#: .\apps\user\urls.py:8
+msgid "^edit/(?P<pk>\\d+)$"
+msgstr ""
+
+#: .\apps\user\urls.py:9
+msgid "^change-password/(?P<pk>\\d+)$"
+msgstr ""
+
+#: .\apps\user\urls.py:10
+msgid "^delete/(?P<pk>\\d+)$"
+msgstr ""
+
+#: .\apps\user\urls.py:12
+msgid "^delete/toggle-activation/(?P<pk>\\d+)$"
+msgstr ""
+
+#: .\apps\user\urls.py:13
+msgid "^my-profile$"
+msgstr ""
+
+#: .\apps\user\urls.py:14
+msgid "^group$"
+msgstr ""
+
+#: .\apps\user\urls.py:15
+msgid "^group/add$"
+msgstr ""
+
+#: .\apps\user\urls.py:16
+msgid "^group/edit/(?P<pk>\\d+)$"
+msgstr ""
+
+#: .\apps\user\urls.py:17
+msgid "^group/delete/(?P<pk>\\d+)$"
+msgstr ""
+
+#: .\apps\user\urls.py:18
+msgid "^group/delete/modal$"
+msgstr ""
+
+#: .\apps\user\views.py:58 .\apps\user\views.py:68
+msgid "Sorry you do not have the proper access to login"
+msgstr ""
+
+#: .\apps\user\views.py:59 .\apps\user\views.py:69
+msgid "Incorrect password"
+msgstr ""
+
+#: .\apps\user\views.py:60
+msgid "Sorry email and password is invalid"
+msgstr ""
+
+#: .\apps\user\views.py:70
+msgid "Sorry username and password is invalid"
+msgstr ""
+
+#: .\apps\user\views.py:71
+msgid "Username and password cant be blank"
+msgstr ""
+
+#: .\apps\user\views.py:109
+msgid "The user has been succesfully added!"
+msgstr ""
+
+#: .\apps\user\views.py:130
+msgid "The password has been successfully changed!"
+msgstr ""
+
+#: .\apps\user\views.py:162
+msgid "The user has been succesfully changed!"
+msgstr ""
+
+#: .\apps\user\views.py:197
+msgid "The user has been succesfully deleted!"
+msgstr ""
+
+#: .\apps\user\views.py:235
+msgid "The group has been succesfully added!"
+msgstr ""
+
+#: .\apps\user\views.py:269
+msgid "The group has been succesfully edited!"
+msgstr ""
+
+#: .\apps\user\views.py:288
+msgid "The group has been succesfully deleted!"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\contrib\messages\apps.py:7
+msgid "Messages"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\contrib\sitemaps\apps.py:7
+msgid "Site Maps"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\contrib\staticfiles\apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\contrib\syndication\apps.py:7
+msgid "Syndication"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\paginator.py:48
+msgid "That page number is not an integer"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\paginator.py:50
+msgid "That page number is less than 1"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\paginator.py:55
+msgid "That page contains no results"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:20
+msgid "Enter a valid value."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:91
+#: .\environment\Lib\site-packages\django\forms\fields.py:671
+msgid "Enter a valid URL."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:145
+msgid "Enter a valid integer."
+msgstr ""
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: .\environment\Lib\site-packages\django\core\validators.py:230
+msgid ""
+"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:237
+msgid ""
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:246
+#: .\environment\Lib\site-packages\django\core\validators.py:266
+msgid "Enter a valid IPv4 address."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:251
+#: .\environment\Lib\site-packages\django\core\validators.py:267
+msgid "Enter a valid IPv6 address."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:261
+#: .\environment\Lib\site-packages\django\core\validators.py:265
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:295
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:301
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:334
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:343
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:353
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:368
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:387
+#: .\environment\Lib\site-packages\django\forms\fields.py:292
+#: .\environment\Lib\site-packages\django\forms\fields.py:327
+msgid "Enter a number."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:389
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:394
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:399
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:461
+#, python-format
+msgid ""
+"File extension “%(extension)s” is not allowed. Allowed extensions are: "
+"%(allowed_extensions)s."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\core\validators.py:513
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\base.py:1190
+#: .\environment\Lib\site-packages\django\forms\models.py:760
+msgid "and"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\base.py:1192
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:100
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:101
+msgid "This field cannot be null."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:102
+msgid "This field cannot be blank."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:103
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
+#. Eg: "Title must be unique for pub_date year"
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:107
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:126
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:939
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:940
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:942
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:983
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1047
+msgid "Comma-separated integers"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1096
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1098
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1241
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1101
+msgid "Date (without time)"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1239
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
+"uuuuuu]][TZ] format."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1243
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+"[TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1247
+msgid "Date (with time)"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1395
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1397
+msgid "Decimal number"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1536
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
+"uuuuuu] format."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1539
+msgid "Duration"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1589
+msgid "Email address"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1612
+msgid "File path"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1678
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1680
+msgid "Floating point number"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1718
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1720
+msgid "Integer"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1803
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1819
+msgid "IPv4 address"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1850
+msgid "IP address"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1930
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1931
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1933
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1976
+msgid "Positive big integer"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:1989
+msgid "Positive integer"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2002
+msgid "Positive small integer"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2016
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2048
+msgid "Small integer"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2055
+msgid "Text"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2083
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2085
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2088
+msgid "Time"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2236
+msgid "Raw binary data"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2301
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\__init__.py:2303
+msgid "Universally unique identifier"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\json.py:18
+msgid "A JSON object"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\json.py:20
+msgid "Value must be valid JSON."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\related.py:790
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\related.py:792
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\related.py:1045
+msgid "One-to-one relationship"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\related.py:1099
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\related.py:1100
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\db\models\fields\related.py:1142
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: .\environment\Lib\site-packages\django\forms\boundfield.py:150
+msgid ":?.!"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:54
+msgid "This field is required."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:247
+msgid "Enter a whole number."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:398
+#: .\environment\Lib\site-packages\django\forms\fields.py:1139
+msgid "Enter a valid date."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:422
+#: .\environment\Lib\site-packages\django\forms\fields.py:1140
+msgid "Enter a valid time."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:450
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:484
+msgid "Enter a valid duration."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:485
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:545
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:546
+msgid "No file was submitted."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:547
+msgid "The submitted file is empty."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:549
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:552
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:613
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:775
+#: .\environment\Lib\site-packages\django\forms\fields.py:865
+#: .\environment\Lib\site-packages\django\forms\models.py:1296
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:866
+#: .\environment\Lib\site-packages\django\forms\fields.py:981
+#: .\environment\Lib\site-packages\django\forms\models.py:1295
+msgid "Enter a list of values."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:982
+msgid "Enter a complete value."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:1198
+msgid "Enter a valid UUID."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\fields.py:1228
+msgid "Enter a valid JSON."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: .\environment\Lib\site-packages\django\forms\forms.py:78
+msgid ":"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\forms.py:205
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\formsets.py:93
+msgid "ManagementForm data is missing or has been tampered with"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\formsets.py:345
+#, python-format
+msgid "Please submit %d or fewer forms."
+msgid_plural "Please submit %d or fewer forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\forms\formsets.py:352
+#, python-format
+msgid "Please submit %d or more forms."
+msgid_plural "Please submit %d or more forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\forms\models.py:755
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\models.py:759
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\models.py:765
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\models.py:774
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\models.py:1096
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\models.py:1180
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\models.py:1298
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\utils.py:167
+#, python-format
+msgid ""
+"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\widgets.py:398
+msgid "Clear"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\widgets.py:399
+msgid "Currently"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\widgets.py:400
+msgid "Change"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\widgets.py:709
+msgid "Unknown"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\widgets.py:710
+msgid "Yes"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\forms\widgets.py:711
+msgid "No"
+msgstr ""
+
+#. Translators: Please do not add spaces around commas.
+#: .\environment\Lib\site-packages\django\template\defaultfilters.py:790
+msgid "yes,no,maybe"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\template\defaultfilters.py:819
+#: .\environment\Lib\site-packages\django\template\defaultfilters.py:836
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\template\defaultfilters.py:838
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\template\defaultfilters.py:840
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\template\defaultfilters.py:842
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\template\defaultfilters.py:844
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\template\defaultfilters.py:846
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dateformat.py:65
+msgid "p.m."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dateformat.py:66
+msgid "a.m."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dateformat.py:71
+msgid "PM"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dateformat.py:72
+msgid "AM"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dateformat.py:149
+msgid "midnight"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dateformat.py:151
+msgid "noon"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:6
+msgid "Monday"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:6
+msgid "Tuesday"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:6
+msgid "Wednesday"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:6
+msgid "Thursday"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:6
+msgid "Friday"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:7
+msgid "Saturday"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:7
+msgid "Sunday"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:10
+msgid "Mon"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:10
+msgid "Tue"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:10
+msgid "Wed"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:10
+msgid "Thu"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:10
+msgid "Fri"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:11
+msgid "Sat"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:11
+msgid "Sun"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:14
+msgid "January"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:14
+msgid "February"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:14
+msgid "March"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:14
+msgid "April"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:14
+msgid "May"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:14
+msgid "June"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:15
+msgid "July"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:15
+msgid "August"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:15
+msgid "September"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:15
+msgid "October"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:15
+msgid "November"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:16
+msgid "December"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:19
+msgid "jan"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:19
+msgid "feb"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:19
+msgid "mar"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:19
+msgid "apr"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:19
+msgid "may"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:19
+msgid "jun"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:20
+msgid "jul"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:20
+msgid "aug"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:20
+msgid "sep"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:20
+msgid "oct"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:20
+msgid "nov"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:20
+msgid "dec"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:23
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:24
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:25
+msgctxt "abbrev. month"
+msgid "March"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:26
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:27
+msgctxt "abbrev. month"
+msgid "May"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:28
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:29
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:30
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:31
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:32
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:33
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:34
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:37
+msgctxt "alt. month"
+msgid "January"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:38
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:39
+msgctxt "alt. month"
+msgid "March"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:40
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:41
+msgctxt "alt. month"
+msgid "May"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:42
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:43
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:44
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:45
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:46
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:47
+msgctxt "alt. month"
+msgid "November"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\dates.py:48
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\ipv6.py:8
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\text.py:70
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\text.py:236
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: .\environment\Lib\site-packages\django\utils\text.py:255
+#: .\environment\Lib\site-packages\django\utils\timesince.py:83
+msgid ", "
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\utils\timesince.py:9
+#, python-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\utils\timesince.py:10
+#, python-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\utils\timesince.py:11
+#, python-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\utils\timesince.py:12
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\utils\timesince.py:13
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\utils\timesince.py:14
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\environment\Lib\site-packages\django\views\csrf.py:110
+msgid "Forbidden"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\csrf.py:111
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\csrf.py:115
+msgid ""
+"You are seeing this message because this HTTPS site requires a “Referer "
+"header” to be sent by your Web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\csrf.py:120
+msgid ""
+"If you have configured your browser to disable “Referer” headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for “same-"
+"origin” requests."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\csrf.py:124
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
+"including the “Referrer-Policy: no-referrer” header, please remove them. The "
+"CSRF protection requires the “Referer” header to do strict referer checking. "
+"If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer"
+"\" …> for links to third-party sites."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\csrf.py:132
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\csrf.py:137
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for “same-origin” requests."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\csrf.py:142
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:41
+msgid "No year specified"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:61
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:111
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:208
+msgid "Date out of range"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:90
+msgid "No month specified"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:142
+msgid "No day specified"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:188
+msgid "No week specified"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:338
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:367
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:589
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because %(class_name)s."
+"allow_future is False."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\dates.py:623
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\detail.py:54
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\list.py:67
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\list.py:72
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\generic\list.py:154
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\static.py:40
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\static.py:42
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\static.py:80
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:7
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:346
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:368
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:369
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:384
+msgid "Django Documentation"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:385
+msgid "Topics, references, &amp; how-to’s"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:396
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:397
+msgid "Get started with Django"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:408
+msgid "Django Community"
+msgstr ""
+
+#: .\environment\Lib\site-packages\django\views\templates\default_urlconf.html:409
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: .\environment\Lib\site-packages\modeltranslation\widgets.py:25
+msgid "None"
+msgstr ""

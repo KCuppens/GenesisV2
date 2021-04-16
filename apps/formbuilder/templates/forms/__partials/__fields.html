@@ -1,0 +1,27 @@
+{% load i18n widget_tweaks static %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'Formbuilder' %}</h4>
+    </div>
+</div>
+<div class="formbuilder-overview">
+
+</div>
+<script src="{% static 'admin/js/libs/jquery-3.6.0.min.js' %}"></script>
+<script>
+    function get_overview() {
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'getformbuilder' %}',
+            data: {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function (data) {
+                $('.formbuilder-overview').html(data.template);
+            }
+        });
+    }
+    $(document).ready(function () {
+        get_overview();
+    });
+</script>

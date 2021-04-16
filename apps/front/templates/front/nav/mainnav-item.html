@@ -1,0 +1,14 @@
+{% load i18n get_url %}
+<li class="mainnav-item">
+    <a class="mainnav-button" {% if page.has_children %} aria-haspopup {% endif %} href="{% get_url page %}" {% if page.link_target %} target="{{page.link_target}}" {% endif %}>
+        {{page.menu_title}}
+    </a>
+    {% if page.has_children %}
+        <button class="subnav-toggle"><span class="visually-hidden">{% trans 'Open submenu' %}</span></button>
+        <ul class="subnav" aria-label="subnavigation" aria-hidden="true">
+            {% for child_page in childpages %}
+                {% include 'front/front/nav/mainnav-item.html' with page=child_page %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>

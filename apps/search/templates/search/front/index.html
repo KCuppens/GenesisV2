@@ -1,0 +1,55 @@
+{% extends 'front/base.html' %}
+{% load static i18n render_block module_title module_title_without_key module_type %}
+{% block content %}
+<div class="row layout-top-spacing layout-spacing">
+    <div class="col-lg-12">
+        <div class="widget-content searchable-container list statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>{% trans 'Zoekresultaten voor' %}&nbsp;{{search|default_if_none:""}}</h4>
+                        {% for key, count in categories %}
+                            {% if count > 0 %}
+                                {% type_var key count modules type as render_block %}
+                                <a class="badge {% if render_block %}badge-primary{% else %}badge-default{% endif %}" href="{% url 'search-admin' %}?search={{search}}&type={% module_type modules key %}">
+                                    {% if key in modules %}
+                                        {% module_title modules key %}
+                                    {% else %}
+                                        {% trans 'Alle' %}
+                                    {% endif %}
+                                    ({{count}})
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="searchable-items list" id="sortable">
+                
+                {% if error_message %}
+                    <p>{{error_message}}</p>
+                {% elif not results %}
+                    <p>{% trans 'Geen resultaten gevonden' %}</p>
+                {% else %}
+                    {% for item in results %}
+                        <div class="items" id="page_{{page.id}}">
+                            <div class="item-content">
+                                <a href="{% url item.get_url pk=item.pk %}">
+                                    <div class="user-profile">
+                                        <div class="user-meta-info">
+                                            <p class="page-title" title="{% module_title_without_key modules item %}" data-placement="top">{% module_title_without_key modules item %}</p>
+                                        </div>
+                                    </div>
+                                    <div class="user-email">
+                                        <p class="usr-email-addr" title="{{item}}" data-placement="top"><span class="shadow-none badge badge-info">{{item}}</span></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>   
+        </div><!--end card-body-->
+    </div><!--end card-->
+</div> <!-- end col -->
+{% endblock content %}

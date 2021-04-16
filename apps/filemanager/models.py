@@ -113,6 +113,7 @@ class Media(BaseModel, AdminModel):
     
     name = models.CharField(max_length=255, db_index=True, blank=True)
     file = models.FileField(upload_to=base_media_path)
+    filename = models.CharField(max_length=255)
     directory = models.ForeignKey('directory', on_delete=models.CASCADE, blank=True, null=True, related_name="media_directory")
     summary = models.TextField(blank=True, null=True)
     slug = AutoSlugField(populate_from='name')
@@ -123,9 +124,32 @@ class Media(BaseModel, AdminModel):
     searchable = models.BooleanField(default=False)
     file_size = models.IntegerField(default=0)
     metadata = models.TextField(null=True, blank=True)
+    formats = models.BooleanField(default=False)
+
+    thumbnails = models.ManyToManyField('thumbnail', blank=True)
+
+    webp_path = models.CharField(max_length=255, null=True)
+    png_path = models.CharField(max_length=255, null=True)
+
+    def count_thumbnails(self):
+        return self.thumbnails.filter(date_deleted=None).count()
 
     def get_metadata(self):
         return self.metadata
 
     def set_metadata(self, metadata):
         self.metadata = metadata 
+
+
+class Thumbnail(models.Model):
+    FORMAT_WEBP = 'webp'
+    FORMAT_PNG = 'png'
+
+    GET_FORMATS = [
+        (FORMAT_PNG, _('png')),
+        (FORMAT_WEBP, _('webp'))
+    ]
+    format = models.CharField(max_length=255, blank=True, choices=GET_FORMATS, default=FORMAT_WEBP)
+    size = models.CharField(max_length=255, blank=True)
+    path = models.CharField(max_length=255, null=True, blank=True)
+    date_deleted = models.DateTimeField(null=True, blank=True, verbose_name=_('Delete date'))

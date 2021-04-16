@@ -9,11 +9,20 @@
                     <span class="tab-error-indicator badge btn-danger"></span>
                 </a>
             </li>
+            <li class="nav-item ml-2 mr-2">
+                <a class="nav-link text-center" id="rounded-pills-icon-profile-tab" data-toggle="pill" href="#rounded-pills-icon-fields" role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    {% trans 'Fields' %}
+                    <span class="tab-error-indicator badge btn-danger"></span>
+                </a>
+            </li>
         </ul>
         {{ form.non_field_errors }}
         <div class="tab-content" id="rounded-pills-icon-tabContent">
             <div class="tab-pane fade active show" id="rounded-pills-icon-profile" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
                 {% include 'blocks/__partials/__content.html' %}
+            </div>
+            <div class="tab-pane fade active" id="rounded-pills-icon-fields" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
+                {% include 'blocks/__partials/__fields.html' %}
             </div>
         </div>
     </div>

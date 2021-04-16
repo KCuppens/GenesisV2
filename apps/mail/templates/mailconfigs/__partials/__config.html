@@ -1,0 +1,41 @@
+{% load i18n widget_tweaks %}
+<div class="row">
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+        <h4>{% trans 'Mail configuration' %}</h4>
+    </div>
+</div>
+<div class="form-group mb-4">
+    {{form.active|add_error_attr:"class:is-invalid"}}
+    {{ form.active|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{ form.title|add_label_class:'' }}
+    {{form.title|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.title.errors %}
+        <div class="invalid-feedback">
+            {{form.title.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.key_name|add_label_class:'' }}
+    {{form.key_name|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
+    {% if form.key_name.errors %}
+        <div class="invalid-feedback">
+            {{form.key_name.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.mailtemplate|add_label_class:'' }}
+    {{form.mailtemplate|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
+    {% if form.mailtemplate.errors %}
+        <div class="invalid-feedback">
+            {{form.mailtemplate.errors}}
+        </div>
+    {% endif %}   
+</div>
+
+
+
+

@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
 
     #third-party apps
     'widget_tweaks',
     'translation_manager',
+    'modeltranslation',
 
     #apps
     'apps.conf',
@@ -58,8 +60,19 @@ INSTALLED_APPS = [
     'apps.pages',
     'apps.blocks',
     'apps.filemanager',
+    'apps.logs',
+    'apps.front',
+    'apps.search',
+    'apps.data',
+    'apps.news',
+    'apps.mail',
+    'apps.formbuilder',
 ]
-
+TEMPLATE_ENGINE = 'django'
+SENDING_ORDER = ['-priority']
+LOG_LEVEL = '2'
+DEFAULT_PRIORITY = 'medium'
+THREADS_PER_PROCESS = '5'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,6 +81,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'GenesisV2.urls'
@@ -85,6 +99,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 #topnav
                 'apps.dashboard.context_processors.topnav.get_topnav',
+                #front
+                'apps.front.context_processors.pages.get_menu',
             ],
         },
     },
@@ -134,13 +150,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = "nl"
+MODELTRANSLATION_LANGUAGES = ('nl', 'en', 'fr')
 LANGUAGES = [
     ('nl', _('Nederlands')),
-    ('en', _('Engels'))
-    #('fr', _('Frans'))
+    ('en', _('Engels')),
+    ('fr', _('Frans'))
 ]
 TRANSLATIONS_BASE_DIR = BASE_DIR
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'nl'
 
 TIME_ZONE = "Europe/Brussels"
 
@@ -172,7 +190,10 @@ IMAGES_DIR = os.path.join(MEDIA_ROOT, 'images')
 # for exact login view
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
 
-# EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
+MAILJET_API_KEY = 'a8ed2ad7a17b71d57b440c4ddc0022ce'
+MAILJET_API_SECRET = '6868b478558189199dcfdde021236066'
+BACKENDS = ''
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_USER ='Your email name'
 # EMAIL_USE_TLS = True

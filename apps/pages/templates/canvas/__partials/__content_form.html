@@ -2,54 +2,243 @@
 <form class="form" id="content-form" name="form" method="post" enctype='multipart/form-data'>
     {% csrf_token %}
     {% if errors %}
-        {{errors}}
-    {% elif message %}
-        {{message}}
+        <div class="alert alert-outline-primary mb-2 mt-2 accept-drop" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-x text-black close" data-dismiss="alert">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
+            {{errors}}
+        </div>
     {% endif %}
-    <div class="form-group row">
-        <div class="col-sm-12 ml-2">
-            {{ form.title|add_label_class:''}}
-            {{ form.title|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
-            {% if form.title.errors %}
-                <div class="invalid-feedback">
-                    {{form.title.errors}}
-                </div>
-            {% endif %}
+    {% if message %}
+        <div class="alert alert-outline-primary mb-2 mt-2 accept-drop" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-x text-black close" data-dismiss="alert">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
+            {{message}}
         </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-sm-12 ml-2">
-            {{ form.subtitle|add_label_class:''}}
-            {{ form.subtitle|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
-            {% if form.subtitle.errors %}
-                <div class="invalid-feedback">
-                    {{form.subtitle.errors}}
-                </div>
-            {% endif %}
+    {% endif %}
+    {% if instance.block.has_title %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.title|add_label_class:''}}
+                {{ form.title|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.title.errors %}
+                    <div class="invalid-feedback">
+                        {{form.title.errors}}
+                    </div>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-sm-12 ml-2">
-            {{ form.content|add_label_class:''}}
-            {{ form.content|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
-            {% if form.content.errors %}
-                <div class="invalid-feedback">
-                    {{form.content.errors}}
-                </div>
-            {% endif %}
+    {% endif %}
+    {% if instance.block.has_subtitle %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.subtitle|add_label_class:''}}
+                {{ form.subtitle|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.subtitle.errors %}
+                    <div class="invalid-feedback">
+                        {{form.subtitle.errors}}
+                    </div>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <div class="custom-file-container" data-upload-id="image">
-        <label>{{ form.image|add_label_class:'' }}<a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
-        <label class="custom-file-container__custom-file" >
-            {{form.image|append_attr:"class:custom-file-container__custom-file__custom-file-input"|add_error_attr:"class:is-invalid"}}     
-            <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-            <span class="custom-file-container__custom-file__custom-file-control"></span>
-        </label>
-        <div class="custom-file-container__image-preview"></div>
-    </div>
-    <span class="block-data" data-block="{{block}}"></span>
-    <button class="btn btn-success submit-content-form"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> {% trans 'Opslaan' %}</button>
+    {% endif %}
+    {% if instance.block.has_image %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.image|add_label_class:''}}
+                {{ form.image|append_attr:"class:form-control filemanager-widget"|add_error_attr:"class:is-invalid"}}
+                {% if form.image.errors %}
+                    <div class="invalid-feedback">
+                        {{form.image.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_image_second %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.image_second|add_label_class:''}}
+                {{ form.image_second|append_attr:"class:form-control filemanager-widget"|add_error_attr:"class:is-invalid"}}
+                {% if form.image_second.errors %}
+                    <div class="invalid-feedback">
+                        {{form.image_second.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_url %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.url|add_label_class:''}}
+                {{ form.url|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.url.errors %}
+                    <div class="invalid-feedback">
+                        {{form.url.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_url_text %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.url_text|add_label_class:''}}
+                {{ form.url_text|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.url_text.errors %}
+                    <div class="invalid-feedback">
+                        {{form.url_text.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_video %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.video|add_label_class:''}}
+                {{ form.video|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.video.errors %}
+                    <div class="invalid-feedback">
+                        {{form.video.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_embed %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.embed|add_label_class:''}}
+                {{ form.embed|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.embed.errors %}
+                    <div class="invalid-feedback">
+                        {{form.embed.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_content %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.content|add_label_class:''}}
+                {{ form.content|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.content.errors %}
+                    <div class="invalid-feedback">
+                        {{form.content.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_sort_method %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.sort|add_label_class:''}}
+                {{ form.sort|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.sort.errors %}
+                    <div class="invalid-feedback">
+                        {{form.sort.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_limit %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.limit|add_label_class:''}}
+                {{ form.limit|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.limit.errors %}
+                    <div class="invalid-feedback">
+                        {{form.limit.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_sort_order %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.sort_order|add_label_class:''}}
+                {{ form.sort_order|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.sort_order.errors %}
+                    <div class="invalid-feedback">
+                        {{form.sort_order.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_pagination %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.paginated|add_label_class:''}}
+                {{ form.paginated|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.paginated.errors %}
+                    <div class="invalid-feedback">
+                        {{form.paginated.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_module %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.module|add_label_class:''}}
+                {{ form.module|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.module.errors %}
+                    <div class="invalid-feedback">
+                        {{form.module.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_form %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.form|add_label_class:''}}
+                {{ form.form|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}
+                {% if form.form.errors %}
+                    <div class="invalid-feedback">
+                        {{form.form.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if instance.block.has_detailpage %}
+        <div class="form-group row">
+            <div class="col-sm-12 ml-2">
+                {{ form.detailpage|add_label_class:''}}
+                {{ form.detailpage|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+                {% if form.detailpage.errors %}
+                    <div class="invalid-feedback">
+                        {{form.detailpage.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    <span class="block-data" data-block="{{block}}" data-page="{{page}}"></span>
+    <a href="javascript:void(0)" class="btn btn-success submit-content-form"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> {% trans 'Opslaan' %}</a>
 </form>
 <script>
     $('.submit-content-form').on('click', function(e){
@@ -59,10 +248,13 @@
         var block = $('.block-data').data('block');
         $.ajax({
             type: 'POST',
-            url: 'canvas-content',
+            url: '{% url 'canvascontent' %}',
             data: serializedData + '&block=' + block,
             success: function(data){
-                //location.reload();
+                if(data.success) {
+                    location.reload();
+                }
+                $('.block-content').html(data.template);       
             },
         })
     });

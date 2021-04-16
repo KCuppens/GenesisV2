@@ -90,15 +90,18 @@ $(document).ready(function () {
 
     function getAjaxForm(block) {
         var csrf = $('.canvas-builder').data('csrf');
+        var page = $('.canvas-builder').data('page');
         $.ajax({
             type: 'POST',
             url: 'canvas-content',
             data: {
                 'csrfmiddlewaretoken': csrf,
                 'block': block,
+                'ajax': 'get',
+                'page': page
             },
             success: function (data) {
-                $('.block-content').html(data.template);
+                $('.block-content').html(data.template);       
             }
         });
     };
@@ -120,6 +123,11 @@ $(document).ready(function () {
 
     function getCanvasRowHTML() {
         return '<p class="d-block col-md-12 shadow-lg h1 text-center py-4 rounded">Add Row</p>';
+    }
+
+    function getCol12HTML()
+    {
+        return '<p class="d-block col-md-12 shadow-lg text-center py-4 round h1">12</p>';
     }
 
     function getCol6HTML() {
@@ -150,7 +158,40 @@ $(document).ready(function () {
             }
         }
     }
-
+    $(".row-canvas-droppable-12").draggable({
+        cursor: 'move',
+        revert:false,
+        helper: function () {
+            return getCol12HTML()
+        },
+        snapTo: '.empty',
+        delay: 100,
+        scrollSensitivity: 100,
+        scrollSpeed: 20,
+        opacity: 1,
+        zIndex: 100,
+        stop: function (ev, ui) {
+            var row = query_canvas_rows();
+            var canvas = $('.canvas-builder').data('id');
+            var csrf = $('.canvas-builder').data('csrf');
+            if (row && canvas)  {
+                $.ajax({
+                    type: 'POST',
+                    url: 'canvas-row',
+                    data: {
+                        'canvas': canvas,
+                        'row': $(row).data('row'),
+                        'action': 'addcolumn',
+                        'colblock': "12",
+                        'csrfmiddlewaretoken': csrf,
+                    },
+                    success: function (data) {
+                        $('.canvas-builder').html(data.template);
+                    }
+                });
+            }
+        },
+    });
     $(".row-canvas-droppable-6").draggable({
         cursor: 'move',
         revert:false,
@@ -324,29 +365,21 @@ $(document).ready(function () {
             }
         },
     });
-    $(".row-canvas-draggable").draggable({
-        connectToSortable: ".canvas-builder",
-        helper: function () {
-            return getCanvasRowHTML();
-        },
-        revert: false,
-        stop: function (ev, ui) {
-            var canvas = $('.canvas-builder').data('id');
-            var csrf = $('.canvas-builder').data('csrf');
-            $.ajax({
-                type: 'POST',
-                url: 'canvas-row',
-                data: {
-                    'canvas': canvas,
-                    'action': 'add',
-                    'csrfmiddlewaretoken': csrf,
-                },
-                success: function (data) {
-                    $('.canvas-builder').html(data.template);
-                }
-            });
-        },
-
+    $(".row-canvas-draggable").on('click', function(){
+        var canvas = $('.canvas-builder').data('id');
+        var csrf = $('.canvas-builder').data('csrf');
+        $.ajax({
+            type: 'POST',
+            url: 'canvas-row',
+            data: {
+                'canvas': canvas,
+                'action': 'add',
+                'csrfmiddlewaretoken': csrf,
+            },
+            success: function (data) {
+                $('.canvas-builder').html(data.template);
+            }
+        });
     });
     $('.canvas-builder').sortable({
         axis: 'y',

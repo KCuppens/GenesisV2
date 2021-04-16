@@ -1,0 +1,103 @@
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "@id": "https://{{web_url}}/#website",
+        "url": "https://{{web_url}}/nl",
+        "name": "{{client_name.key_value}}",
+        "description": "{{client_description.key_value}}", 
+        "image": "https://{{web_url}}/media/DSC_5209met_kleurcode_252d30-2_1.jpg"
+    }
+</script>
+<script type="application/ld+json">
+    { 
+        "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "{{client_name.key_value}}",
+            "legalName" : "{{client_name.key_value}}",
+            "url": "https://www.{{web_url}}",
+            "logo": "https://{{web_url}}/static/front/images/logo.png",
+            "description": "{{client_description.key_value}}",
+            "foundingDate": "2019",
+            {% if schema_location_latitude and schema_location_longitude %}
+                "foundingLocation": [
+                    {
+                        "@type": "Place",
+                        "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "{{schema_location_latitude}}",
+                    "longitude": "{{schema_location_longitude}}"
+                    },
+                        "name": "{{client_name.key_value}}"
+    
+                    }],
+            {% endif %}
+            "areaServed": [{{schema_areas}}],
+            "brand": [{{schema_brands}}],
+            "knowsAbout": [{{schema_knowhow}}],
+            "founders": [
+                {
+                    "@type": "Person",
+                    "name": "{{schema_person}}"
+                },
+            ],
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "{{schema_street}}",
+                "addressLocality": "{{schema_city}}",
+                "addressRegion": "{{schema_province}}",
+                "postalCode": "{{schema_postal}}",
+                "addressCountry": "{{schema_country}}"
+            },
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "Customer support",
+                "telephone": "[{{client_phone}}]",
+                "availableLanguage": ["Dutch"],
+                "email": "{{client_email}}"
+            },
+    }
+</script>
+<script type="application/ld+json">
+    {
+        "@context":"https://schema.org",
+        "@type":"WebPage",
+        "@id": "http://www.{{web_url}}/#webpage",
+        "headline":"{% if page %}{% if page.seo_title %}{{page.seo_title}}{% else %}{{page.page_title}}{% endif %}{% else %}{{client_name.key_value}}{% endif %}",
+        "url": "http://{{web_url}}",
+        "lastReviewed": "{{page.date_updated}}",
+        "description": "{% if page %}{% if page.seo_description %}{{page.seo_description|safe}}{% else %}{{page.content|safe}}{% endif %}{% else %}{{client_description.key_value}}{% endif %}",
+        "mainEntityOfPage": "http://{{web_url}}"
+    }
+</script>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "AutomotiveBusiness",
+        "name": "Automotics",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{schema_street}}",
+            "addressLocality": "{{schema_city}}",
+            "addressRegion": "{{schema_province}}",
+            "postalCode": "{{schema_postal}}"
+        },
+        "openingHours": "Mo,Tu,We,Th,Fr,Sa,Su 09:00-21:00",
+        "openingHoursSpecification": [ {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "opens": "09:00",
+            "closes": "21:00"
+        } ],
+        "priceRange":"$$$"
+    
+    }
+</script>

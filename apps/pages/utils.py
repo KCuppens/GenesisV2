@@ -2,7 +2,7 @@ from apps.pages.models import Page
 from django.utils.text import slugify
 
 def check_if_homepage_exists(page):
-    if Page.objects.filter(is_homepage=True).exclude(id=page.id).first():
+    if Page.objects.filter(is_homepage=True, date_deleted=None).exclude(id=page.id).first():
         return True
     return False
 
@@ -19,16 +19,13 @@ def generate_slug(page):
 def generate_full_slug(current_page):
     full_slug = ''
     slug = current_page.slug
-    page = current_page
-    while page.parent:
-        page = page.parent
-        print(page.slug)
-        full_slug += page.slug + '/'
-        print(full_slug)
-    full_slug += slug
-    print(full_slug)
-    
-    current_page.full_slug =  full_slug
-    current_page.save()
-
+    if slug:
+        page = current_page
+        while page.parent:
+            page = page.parent
+            full_slug += page.slug + '/'
+        full_slug += slug
+        
+        current_page.full_slug =  full_slug
+        current_page.save()
     

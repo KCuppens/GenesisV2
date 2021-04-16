@@ -1,0 +1,10 @@
+{% load get_url %}
+<ul class="topnav">
+    {% for item in topnav %}
+        <li class="topnav-item">
+            <a href="{% get_url item %}" class="topnav-button">
+                {{item.menu_title}}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

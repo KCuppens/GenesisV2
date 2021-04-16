@@ -4,6 +4,8 @@ from apps.pages.models import Page
 from django.template.loader import render_to_string
 from django.http import JsonResponse, HttpResponsePermanentRedirect, Http404
 from apps.filemanager.models import Directory, Media
+from apps.news.models import Article
+from django.db.models import Q
 
 # Create your views here.
 def getURLPicker(request):
@@ -14,7 +16,6 @@ def getURLPicker(request):
             pages = Page.objects.filter(date_deleted=None, active=True)
 
             context = {
-                'page_active': True,
                 'modules': modules,
                 'items': pages,
                 'current_module': 'Page'
@@ -23,6 +24,18 @@ def getURLPicker(request):
                 'template': render_to_string('urlpicker/urlpicker.html', context=context, request=request)
             }
             return JsonResponse(data)
+        elif action == 'Article':
+            articles = Article.objects.filter(date_deleted=None, active=True)
+            context = {
+                'modules': modules,
+                'items': articles,
+                'current_module': 'Article'
+            }
+            data = {
+                'template': render_to_string('urlpicker/urlpicker.html', context=context, request=request)
+            }
+            return JsonResponse(data)
+
 
 def get_filemanager(request):
     if request.is_ajax():
@@ -84,3 +97,9 @@ def permaURL(request):
                 url = page.slug
 
             return HttpResponsePermanentRedirect('/' + request.LANGUAGE_CODE + '/' + url) 
+    elif module == 'news':
+        article = Article.objects.get(id=id)
+        if not article:
+            raise Http404
+        else:
+            return HttpResponsePermanentRedirect('/' + request.LANGUAGE_CODE + '/' + article.slug + '/' + article.pk)
