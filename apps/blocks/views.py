@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
+from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 # Create your views here.
@@ -17,14 +18,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.forms.models import modelformset_factory
 
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_block(request):
     blocks = Block.objects.filter(date_deleted=None)
     has_perms(request, ["blocks.add_block"], 'blocks/index.html')
     
     return render(request,'blocks/index.html', {"blocks":blocks})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_block(request):
     has_perms(request, ["blocks.add_block"], None, 'overviewblock')
     if request.method == 'POST':
@@ -42,7 +43,7 @@ def add_block(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_block(request, pk):
     has_perms(request, ["blocks.change_block"], None, 'overviewblock')
     instance = get_object_or_404(Block, pk=pk)
@@ -63,7 +64,7 @@ def edit_block(request, pk):
         'item': instance
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def toggle_activation_view(request, pk):
     has_perms(request, ["blocks.change_block"], None, 'overviewblocks')
 
@@ -74,7 +75,7 @@ def toggle_activation_view(request, pk):
     
     return redirect('overviewblocks')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_block_modal(request):
     if request.is_ajax():
         data = {}
@@ -91,7 +92,7 @@ def delete_ajax_block_modal(request):
     return False
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_block(request,pk):
     has_perms(request, ["blocks.delete_block"], None, 'overviewblock')
     instance = Block.objects.get(pk=pk)
@@ -101,14 +102,14 @@ def delete_block(request,pk):
     return redirect('overviewblocks')
 
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_blockcategories(request):
     categories = BlockCategory.objects.filter(date_deleted=None)
     has_perms(request, ["blocks.add_blockcategory"], 'blocks/index.html')
     
     return render(request,'blockcategory/index.html', {"categories":categories})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_block_category(request):
     has_perms(request, ["blocks.add_blockcategory"], None, 'overviewblocks')
     if request.method == 'POST':
@@ -125,7 +126,7 @@ def add_block_category(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_block_category(request, pk):
     has_perms(request, ["blocks.change_blockcategory"], None, 'overviewblocks')
     instance = get_object_or_404(Block, pk=pk)
@@ -144,7 +145,7 @@ def edit_block_category(request, pk):
         'item': instance,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def toggle_category_activation_view(request, pk):
     has_perms(request, ["blocks.change_blockcategory"], None, 'overviewblock-categories')
 
@@ -155,7 +156,7 @@ def toggle_category_activation_view(request, pk):
     
     return redirect('overviewblock-categories')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_block_category_modal(request):
     if request.is_ajax():
         data = {}
@@ -172,7 +173,7 @@ def delete_ajax_block_category_modal(request):
     return False
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_blockcategory(request,pk):
     has_perms(request, ["blocks.delete_blockcategory"], None, 'overviewblock-categories')
     instance = BlockCategory.objects.get(pk=pk)

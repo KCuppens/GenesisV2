@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from apps.pages.models import Page 
 from apps.user.models import User

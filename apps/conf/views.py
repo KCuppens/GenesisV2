@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView
 from django.contrib.admin.views.decorators import staff_member_required
@@ -11,14 +12,14 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 # Create your views here.
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_conf(request):
     conf = Configuration.objects.filter()
     has_perms(request, ["conf.add_configuration"], 'conf/index.html')
     
     return render(request,'conf/index.html', {"conf":conf})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_conf(request):
     has_perms(request, ["conf.add_configuration"], None, 'overviewconf')
     if request.method == 'POST':
@@ -38,7 +39,7 @@ def add_conf(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_conf(request, pk):
     has_perms(request, ["conf.change_configuration"], None, 'overviewconf')
     instance = get_object_or_404(Configuration, pk=pk)
@@ -71,7 +72,7 @@ def save_conf(request):
             count += 1
     return redirect('overviewconf')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_conf_modal(request):
     if request.is_ajax():
         data = {}
@@ -88,7 +89,7 @@ def delete_ajax_conf_modal(request):
     return False
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_conf(request,pk):
     has_perms(request, ["conf.delete_configuration"], None, 'overviewconf')
     instance = Configuration.objects.get(pk=pk)

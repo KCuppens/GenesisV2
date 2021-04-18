@@ -80,6 +80,15 @@ class UserChangePasswordForm(forms.ModelForm):
         model = User
         fields = ['password']
 
+class UserSetPasswordForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': '******'})
+    )
+
+    class Meta:
+        model = User
+        fields = ['password']
+
     
         
 class GroupForm(forms.ModelForm):

@@ -3,19 +3,19 @@ from .views import export_form_results, delete_formresult,delete_ajax_formresult
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
-    url(_('^overview$'),overview_form,name="overviewform"),
-    url(_('^add$'),add_form,name="addform"),
-    url(_('^edit/(?P<pk>[0-9a-f-]+)$'),edit_form,name="editform"),
-    url(_('^preview$'),render_form,name="previewform"),
-    url(_('^toggle-activation/(?P<pk>[0-9a-f-]+)$'), toggle_form_activation_view, name="activate-form"),
-    url(_('^results/(?P<pk>[0-9a-f-]+)$'), overview_form_results, name="results-form"),
-    url(_('^export/results/(?P<pk>[0-9a-f-]+)$'), export_form_results, name="export-results-form"),
-    url(_('^delete/(?P<pk>[0-9a-f-]+)$'),delete_form,name="deleteform"),
-    url(_('^delete/modal$'),delete_ajax_form_modal,name="deletemodalform"),
-    url(_('^delete/formresult/(?P<pk>[0-9a-f-]+)/(?P<id>[0-9a-f-]+)$'),delete_formresult,name="deleteformresult"),
-    url(_('^delete/formresult/modal$'),delete_ajax_formresult_modal,name="deletemodalformresult"),
+    url(_('^overview$').strip(),overview_form,name="overviewform"),
+    url(_('^add$').strip(),add_form,name="addform"),
+    url(_('^edit/(?P<pk>[0-9a-f-]+)$').strip(),edit_form,name="editform"),
+    url(_('^preview$').strip(),render_form,name="previewform"),
+    url(_('^toggle-activation/(?P<pk>[0-9a-f-]+)$').strip(), toggle_form_activation_view, name="activate-form"),
+    url(_('^results/(?P<pk>[0-9a-f-]+)$').strip(), overview_form_results, name="results-form"),
+    url(_('^export/results/(?P<pk>[0-9a-f-]+)$').strip(), export_form_results, name="export-results-form"),
+    url(_('^delete/(?P<pk>[0-9a-f-]+)$').strip(),delete_form,name="deleteform"),
+    url(_('^delete/modal$').strip(),delete_ajax_form_modal,name="deletemodalform"),
+    url(_('^delete/formresult/(?P<pk>[0-9a-f-]+)/(?P<id>[0-9a-f-]+)$').strip(),delete_formresult,name="deleteformresult"),
+    url(_('^delete/formresult/modal$').strip(),delete_ajax_formresult_modal,name="deletemodalformresult"),
 
-    url(_('^get-formbuilder$'),get_formbuilder,name="getformbuilder"),
-    url(_('^get-form$'),get_form,name="getform"),
-    url(_('^handle-form$'),handle_form,name="handleform"),
+    url(_('^get-formbuilder$').strip(),get_formbuilder,name="getformbuilder"),
+    url(_('^get-form$').strip(),get_form,name="getform"),
+    url(_('^handle-form$').strip(),handle_form,name="handleform"),
 ]

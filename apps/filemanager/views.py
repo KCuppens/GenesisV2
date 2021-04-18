@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from apps.filemanager.models import Directory, Media, Thumbnail
 from apps.filemanager.forms import DirectoryForm, MediaForm, MediaFileForm
 from django.template.loader import render_to_string
@@ -14,13 +15,13 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from apps.filemanager.utils import guess_mime_type, guess_media_type, get_filename
 # Create your views here.
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def media_document_index_view(request):
     return render(request, 'media/index.html', {
 
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def get_media_overview(request):
     if request.method == "GET":
         type = request.GET.get('type', None)
@@ -76,7 +77,7 @@ def get_media_overview(request):
         return JsonResponse(data)
 
     
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def create_directory(request):
     if request.method == "POST":
         dir = request.POST.get('dir')
@@ -118,7 +119,7 @@ def create_directory(request):
         }
         return JsonResponse(data)
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_directory(request):
     if request.method == "POST":
         dir = request.POST.get('dir')
@@ -155,7 +156,7 @@ def edit_directory(request):
             }
             return JsonResponse(data)
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_modal_directory(request):
     if request.is_ajax():
         data = {}
@@ -172,7 +173,7 @@ def delete_modal_directory(request):
         return JsonResponse(data)
     return False
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_directory(request,pk):
     has_perms(request, ["filemanager.delete_directory"], None, 'overviewpage')
     instance = Directory.objects.get(pk=pk)
@@ -181,7 +182,7 @@ def delete_directory(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The directory has been succesfully deleted!'))
     return redirect('media-document-index')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def create_media_type(request):
     if request.method == "GET":
         dir = request.GET.get('dir')
@@ -243,7 +244,7 @@ def create_media_type(request):
         }
         return JsonResponse(data)
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_media(request):
     if request.method == "POST":
         media = request.POST.get('media')
@@ -280,7 +281,7 @@ def edit_media(request):
             }
             return JsonResponse(data)
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_modal_media(request):
     if request.is_ajax():
         data = {}
@@ -297,7 +298,7 @@ def delete_modal_media(request):
         return JsonResponse(data)
     return False
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_media(request,pk):
     has_perms(request, ["filemanager.delete_media"], None, 'overviewmedia')
     instance = Media.objects.get(pk=pk)
@@ -310,7 +311,7 @@ def delete_media(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The media has been succesfully deleted!'))
     return redirect('media-document-index')       
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def download_media(request, pk):
     media = Media.objects.get(id=pk)
 
@@ -320,7 +321,7 @@ def download_media(request, pk):
 
     return response
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def show_thumbnails(request):
     pk = request.GET.get('pk', False)
     media = Media.objects.get(id=pk)
@@ -333,7 +334,7 @@ def show_thumbnails(request):
     }
     return JsonResponse(data)
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_modal_thumbnail(request):
     if request.is_ajax():
         data = {}
@@ -350,7 +351,7 @@ def delete_modal_thumbnail(request):
         return JsonResponse(data)
     return False
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_thumbnail(request,pk):
     has_perms(request, ["filemanager.delete_thumbnail"], None, 'media-document-index')
     instance = Thumbnail.objects.get(pk=pk)

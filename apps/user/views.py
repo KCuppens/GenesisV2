@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
+from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.db.models import Q
@@ -24,16 +25,26 @@ from django.views.generic import View
 User = get_user_model()
 from django.contrib.admin.views.decorators import staff_member_required
 from apps.base.utils import has_perms
-from apps.user.forms import UserForm, UserChangePasswordForm
+from apps.user.forms import UserForm, UserChangePasswordForm, UserSetPasswordForm
 import xlsxwriter
 import io
 from django.http import HttpResponse
 import datetime
 now = datetime.datetime.now()
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth import get_user_model
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
 try:
     from django.contrib.sites.shortcuts import get_current_site
 except ImportError:  # pragma: no cover
     from django.contrib.sites.models import get_current_site
+User = get_user_model()
 
 class LoginView(View):
     def get(self,request):
@@ -52,9 +63,9 @@ class LoginView(View):
                     uname=User.objects.get(email=username).username
                     user=authenticate(username=uname,password=password)
                     if user:
-                        if user.is_superuser or user.is_staff:      
+                        if user.is_superuser or user.is_staff:  
                             login(request,user)
-                            return redirect('dashboard')
+                            return JsonResponse({'url': reverse('dashboard')})
                         return JsonResponse({"not_suser":_("Sorry you do not have the proper access to login")})
                     return JsonResponse({"errorpass":_("Incorrect password")})
                 return JsonResponse({"invalup":_("Sorry email and password is invalid")})
@@ -70,7 +81,7 @@ class LoginView(View):
                 return JsonResponse({"invalup":_("Sorry username and password is invalid")})
         return JsonResponse({"blankf":_("Username and password cant be blank")})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_user(request):
     has_perms(request, ["user.view_user"], 'users/overview.html')
 
@@ -91,7 +102,7 @@ def overview_user(request):
         "group_select": group,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_user(request):
     has_perms(request, ["user.add_user"], None, 'overviewuser')
     if request.method == 'POST':
@@ -100,6 +111,7 @@ def add_user(request):
             instance = form.save(commit=False)
             instance.edited_by = request.user
             instance.save()
+            send_mail_password_set(instance)
             group_ids = dict(request.POST).get('groups', [])
             groups = Group.objects.filter(pk__in=group_ids)
 
@@ -139,7 +151,7 @@ def change_user_password(request, pk):
         'user': instance
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_user(request, pk):
     has_perms(request, ["user.change_user"], None, 'overviewuser')
     instance = get_object_or_404(User, pk=pk)
@@ -168,7 +180,7 @@ def edit_user(request, pk):
         'user':instance
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_user_modal(request):
     if request.is_ajax():
         data = {}
@@ -185,7 +197,7 @@ def delete_ajax_user_modal(request):
     return False
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_user(request,pk):
     has_perms(request, ["user.delete_user"], None, 'overviewuser')
     instance = User.objects.get(pk=pk)
@@ -195,7 +207,7 @@ def delete_user(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The user has been succesfully deleted!'))
     return redirect('overviewuser')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def toggle_activation_view(request, pk):
     has_perms(request, ["user.change_user"], None, 'overviewuser')
 
@@ -206,13 +218,13 @@ def toggle_activation_view(request, pk):
     
     return redirect('overviewuser')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def my_profile(request):
     has_perms(request, ["user.view_user"], None, 'overviewuser')
     user = User.objects.get(id=request.user.id)
     return render(request,'users/myprofile.html',{"user":user})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def group_view(request):
     has_perms(request, ["user.view_group"], "group/index.html")
 
@@ -220,7 +232,7 @@ def group_view(request):
         'groups': Group.objects.filter(date_deleted=None)
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_group_view(request):
     has_perms(request, ["user.view_group"], None, 'overviewgroup')
 
@@ -240,7 +252,7 @@ def add_group_view(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_group_view(request, pk):
     has_perms(request, ["user.change_group"], None, 'overviewgroup')
 
@@ -274,7 +286,7 @@ def edit_group_view(request, pk):
         'group': instance
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_group_view(request, pk):
     has_perms(request, ["user.delete_group"], None, 'overviewgroup')
 
@@ -286,7 +298,7 @@ def delete_group_view(request, pk):
     messages.add_message(request, messages.SUCCESS, _('The group has been succesfully deleted!'))
     return redirect('overviewgroup')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_group_modal(request):
     if request.is_ajax():
         data = {}
@@ -302,7 +314,7 @@ def delete_ajax_group_modal(request):
         return JsonResponse(data)
     return False
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def export_users(request):
     has_perms(request, ["user.view_user"], 'users/overview.html')
     output = io.BytesIO()
@@ -346,3 +358,46 @@ def export_users(request):
     )
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
+
+def send_mail_password_set(user):
+    subject = "Password Set Requested"
+    email_template_name = "users/password_set_email.html"
+    context = {
+        "email": user.email,
+        'domain':'127.0.0.1:8000',
+        'site_name': 'Website',
+        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+        "user": user,
+        'token': default_token_generator.make_token(user),
+        'protocol': 'http',
+    }
+    email = render_to_string(email_template_name, context)
+    try:
+        send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
+    except BadHeaderError:
+        return HttpResponse('Invalid header found.')
+
+def password_set_request(request, uidb64):
+    user = self.get_user(uidb64)
+    if user:
+        if request.method == "POST":
+            form = UserSetPasswordForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data['password']
+                user = User.objects.filter(email=data).first()
+                if user.exists() and data:
+                    user.set_password(data)
+                    user.save()
+                    return render(request=request, template_name="user/setpassword.html", context={"message": _('Password has been succesfully changed')})       
+        password_reset_form = PasswordResetForm()
+        return render(request=request, template_name="user/setpassword.html", context={"form":password_reset_form})
+    else:
+        return render(request=request, template_name="user/setpassword.html", context={"message": _('Link not valid')})
+
+def get_user(self, uidb64):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = UserModel._default_manager.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist, ValidationError):
+        user = None
+    return user

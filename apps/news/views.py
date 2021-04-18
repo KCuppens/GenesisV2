@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
+from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 # Create your views here.
@@ -17,14 +18,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_article(request):
     articles = Article.objects.filter(date_deleted=None)
     has_perms(request, ["news.view_article"], None, 'overviewarticle')
     
     return render(request,'news/index.html', {"articles":articles})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_article(request):
     has_perms(request, ["news.add_article"], None, 'overviewarticle')
     if request.method == 'POST':
@@ -44,7 +45,7 @@ def add_article(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_article(request, pk):
     has_perms(request, ["news.change_article"], None, 'overviewarticle')
     instance = get_object_or_404(Article, pk=pk)
@@ -65,7 +66,7 @@ def edit_article(request, pk):
         'article':instance
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_article_modal(request):
     data = {}
     id = request.POST.get('id', False)
@@ -79,7 +80,7 @@ def delete_ajax_article_modal(request):
         }
     return JsonResponse(data)
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def toggle_article_activation_view(request, pk):
     has_perms(request, ["news.change_article"], None, 'overviewarticle')
 
@@ -91,7 +92,7 @@ def toggle_article_activation_view(request, pk):
     return redirect('overviewarticle')
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_article(request,pk):
     has_perms(request, ["news.delete_article"], None, 'overviewarticle')
     instance = Article.objects.get(pk=pk)

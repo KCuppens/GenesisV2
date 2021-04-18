@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.admin.views.decorators import staff_member_required
@@ -13,20 +14,20 @@ from django.http import JsonResponse
 from django.utils import timezone
 
 # Create your views here.
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def dashboard_view(request):
     has_perms(request, ["dashboard.view_dashboardconfiguration"], 'dashboard/admin/index.html')
     dashboard = DashboardConfiguration.objects.filter(active=True, date_deleted=None).order_by('position')
     return render(request, 'dashboard/dashboard.html', {'dashboard': dashboard})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_dashboard(request):
     dashboard = DashboardConfiguration.objects.filter(date_deleted=None, active=True).order_by('position')
     has_perms(request, ["dashboard.view_dashboardconfiguration"], 'dashboard/admin/index.html')
     
     return render(request,'dashboard/admin/index.html', {"dashboard":dashboard})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_dashboard(request):
     has_perms(request, ["dashboard.add_dashboardconfiguration"], None, 'overviewdashboard')
     if request.method == 'POST':
@@ -46,7 +47,7 @@ def add_dashboard(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_dashboard(request, pk):
     has_perms(request, ["dashboard.change_dashboardconfiguration"], None, 'overviewdashboard')
     instance = get_object_or_404(DashboardConfiguration, pk=pk)
@@ -67,7 +68,7 @@ def edit_dashboard(request, pk):
         'dashboard':instance
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_dashboard_modal(request):
     if request.is_ajax():
         data = {}
@@ -83,7 +84,7 @@ def delete_ajax_dashboard_modal(request):
         return JsonResponse(data)
     return False
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def toggle_dashboard_activation_view(request, pk):
     has_perms(request, ["dashboard.change_dashboardconfiguration"], None, 'overviewdashboard')
 
@@ -95,7 +96,7 @@ def toggle_dashboard_activation_view(request, pk):
     return redirect('overviewdashboard')
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_dashboard(request,pk):
     has_perms(request, ["dashboard.delete_dashboardconfiguration"], None, 'overviewdashboard')
     instance = DashboardConfiguration.objects.get(pk=pk)

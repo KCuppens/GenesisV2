@@ -3,5 +3,5 @@ from .views import overview_history
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
-    url(_('^overview$'),overview_history,name="overviewhistory"),
+    url(_('^overview$').strip(),overview_history,name="overviewhistory"),
 ]

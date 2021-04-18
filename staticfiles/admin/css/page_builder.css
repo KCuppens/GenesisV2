@@ -1,0 +1,92 @@
+.canvas-block {
+    position: relative;
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 4px 6px 0 rgb(85 85 85 / 8%), 0 1px 20px 0 rgb(0 0 0 / 7%), 0px 1px 11px 0px rgb(0 0 0 / 7%);
+}
+.canvas-builder {
+
+}
+
+.canvas-nav {
+    border-left: 3px solid #e0e6ed;
+}
+
+.row-canvas {
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    border: 1px solid #e0e6ed;
+    border-radius: 8px;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
+    width: 100%;
+    min-height: 100px;
+}
+
+.modal-dialog {
+    max-width: 80%;
+}
+
+.row-canvas.is-selected {
+    border: #191e3a solid 2px;
+}
+
+.col-canvas.is-selected {
+    border: #888ea8 solid 2px;
+}
+
+.row-canvas-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.col-canvas-replace {
+    position: absolute;
+    bottom: 0;
+    right: 40px;
+}
+
+.col-canvas-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.canvas-col {
+    display: flex;
+    border: 1px solid #e0e6ed;
+    border-radius: 8px;
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
+    width: 100%;
+    min-height: 75px;
+}
+
+.canvas-col.is-selected {
+    border: #191e3a solid 2px;
+}
+
+.block-image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.form-border-row {
+    position: relative;
+    border: #888ea8 solid 2px;
+    border-radius: 15px;
+    padding: 2rem; 
+    margin-bottom: 1rem;
+}
+.form-left-action {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.form-right-action {
+    position: absolute;
+    right: 0;
+    top: 0;
+}

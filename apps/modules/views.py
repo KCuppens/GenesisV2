@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
+from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 # Create your views here.
@@ -20,13 +21,13 @@ try:
 except ImportError:  # pragma: no cover
     from django.contrib.sites.models import get_current_site
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_tab(request):
     has_perms(request, ["modules.view_tab"], None, 'overviewtab')
     tabs = Tab.objects.filter(date_deleted=None).order_by('position')
     return render(request,'tabs/index.html', {"tabs":tabs})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_tab(request):
     has_perms(request, ["modules.add_tab"], None, 'overviewtab')
     if request.method == 'POST':
@@ -46,7 +47,7 @@ def add_tab(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_tab(request, pk):
     has_perms(request, ["modules.change_tab"], None, 'overviewtab')
     instance = get_object_or_404(Tab, pk=pk)
@@ -67,7 +68,7 @@ def edit_tab(request, pk):
         'tab':instance
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_tab_modal(request):
     if request.is_ajax():
         data = {}
@@ -83,7 +84,7 @@ def delete_ajax_tab_modal(request):
         return JsonResponse(data)
     return False
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def toggle_tab_activation_view(request, pk):
     has_perms(request, ["modules.change_tab"], None, 'overviewtab')
 
@@ -95,7 +96,7 @@ def toggle_tab_activation_view(request, pk):
     return redirect('overviewtab')
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_tab(request,pk):
     has_perms(request, ["modules.delete_tab"], None, 'overviewtab')
     instance = Tab.objects.get(pk=pk)
@@ -124,13 +125,13 @@ def reorder_tab(request):
     return JsonResponse(data)
 
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_modules(request):
     has_perms(request, ["modules.view_module"], 'modules/index.html')
     modules = Module.objects.filter(date_deleted=None).order_by('position')
     return render(request,'modules/index.html', {"modules":modules})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_modules(request):
     has_perms(request, ["modules.add_module"], None, 'overviewmodules')
     ModulePageFormSet = modelformset_factory(ModulePage, form=ModulePageForm)
@@ -161,7 +162,7 @@ def add_modules(request):
         'formset': formset,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_modules(request, pk):
     has_perms(request, ["modules.change_module"], None, 'overviewmodules')
     instance = get_object_or_404(Module, pk=pk)
@@ -196,7 +197,7 @@ def edit_modules(request, pk):
         'modulesPages': modulesPages
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_modules_modal(request):
     if request.is_ajax():
         data = {}
@@ -213,7 +214,7 @@ def delete_ajax_modules_modal(request):
     return False
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_modules(request,pk):
     has_perms(request, ["modules.delete_module"], None, 'overviewmodules')
     instance = Module.objects.get(pk=pk)
@@ -222,7 +223,7 @@ def delete_modules(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The module has been succesfully deleted!'))
     return redirect('overviewmodules')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_modules_page(request,pk):
     has_perms(request, ["modules.delete_modulepage"], None, 'overviewmodules')
     instance = ModulePage.objects.get(pk=pk)
@@ -231,7 +232,7 @@ def delete_modules_page(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The modulepage has been succesfully deleted!'))
     return redirect('overviewmodules')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def toggle_activation_view(request, pk):
     has_perms(request, ["modules.change_module"], None, 'overviewmodules')
 

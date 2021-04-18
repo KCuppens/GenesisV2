@@ -1,10 +1,6 @@
-{% extends 'dashboardadmin/base.html' %}
-{% load i18n django_bootstrap_breadcrumbs %}
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
 {% block admin %}
-{% block breadcrumbs %}
-    {{block.super}}
-    {% breadcrumb "Profiel" "user:profile"%}
-{% endblock %}
 <div class="row">
     <div class="col-12">
         <div class="card">

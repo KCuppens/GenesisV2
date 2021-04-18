@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
+from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 # Create your views here.
@@ -14,13 +15,13 @@ from apps.base.utils import has_perms
 from apps.logs.models import MessageLog
 from django.utils.translation import ugettext_lazy as _
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_logs(request):
     has_perms(request, ["logs.view_messagelog"], None, 'overviewlogs')
     logs = MessageLog.objects.filter()
     return render(request,'logs/index.html', {"logs":logs})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_log_modal(request):
     if request.is_ajax():
         data = {}
@@ -37,7 +38,7 @@ def delete_ajax_log_modal(request):
     return False
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_log(request,pk):
     has_perms(request, ["logs.delete_messagelog"], None, 'overviewlogs')
     instance = MessageLog.objects.get(pk=pk)

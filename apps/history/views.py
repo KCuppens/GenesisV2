@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
+from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 # Create your views here.
@@ -20,7 +21,7 @@ try:
 except ImportError:  # pragma: no cover
     from django.contrib.sites.models import get_current_site
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_history(request):
     has_perms(request, ["history.view_history"], 'history/index.html')
     page = request.GET.get('page', 1)

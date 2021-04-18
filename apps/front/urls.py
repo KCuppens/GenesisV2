@@ -9,10 +9,10 @@ from django.utils.translation import ugettext as _
 
 urlpatterns = [
     #ajax blocks funcions
-    url(_('get-articles'), get_articles, name="get-articles"),
-    url(_('get-article-detail'), get_article_detail, name="get-article-detail"),
+    url(_('get-articles').strip(), get_articles, name="get-articles"),
+    url(_('get-article-detail').strip(), get_article_detail, name="get-article-detail"),
 
-    url(_('^search$'),search_front_view,name="search-front"),
+    url(_('^search$').strip(),search_front_view,name="search-front"),
     url('detail/(?P<model>[-\w]+)/(?P<pk>[0-9a-f-]+)/(?P<slug>[-\w]+)/$', page_detail_view, name="detail"),
     url(r'^$', page_view, name="index", kwargs={'slug': ''}),
     url(r'^(?P<slug>[-\w]+)/$', page_view, name="index"),

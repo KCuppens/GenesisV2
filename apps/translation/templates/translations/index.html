@@ -101,24 +101,33 @@
             var key = $('.searchfunction-key').val();
             var nl = $('.searchfunction-nl').val();
             var en = $('.searchfunction-en').val();
-            if(key || nl || en){
+            var fr = $('.searchfunction-fr').val();
+            if(key || nl || en || fr){
                 var query = '';
                 if(key){
                     query += '?key='+ key;
                 }
                 if(nl){
                     if(key){
-                        query += '&'
+                        query += '&nl='+ nl;
+                    } else {
+                        query += '?nl='+ nl;
                     }
-                    query += '?nl='+ nl;
                 }
                 if(en){
-                    if(nl){
-                        query += '&';
+                    if(nl || key){
+                        query += '&en='+ en;
+                    } else {
+                        query += '?en='+ en;
                     }
-                    query += '?en='+ en;
                 }
-                console.log(query);
+                if(fr){
+                    if(nl || fr || key){
+                        query += '&fr='+ fr;
+                    } else {
+                        query += '?fr='+ en;
+                    }
+                }
                 window.location.href = 'index-translation' + query;
             }
         });

@@ -23,11 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
-
-ALLOWED_HOSTS = []
 AUTH_USER_MODEL = "user.User"
 
 
@@ -46,6 +44,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'translation_manager',
     'modeltranslation',
+    'compressor',
 
     #apps
     'apps.conf',
@@ -68,6 +67,7 @@ INSTALLED_APPS = [
     'apps.mail',
     'apps.formbuilder',
 ]
+ 
 TEMPLATE_ENGINE = 'django'
 SENDING_ORDER = ['-priority']
 LOG_LEVEL = '2'
@@ -76,6 +76,8 @@ THREADS_PER_PROCESS = '5'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -183,10 +185,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 IMAGES_DIR = os.path.join(MEDIA_ROOT, 'images')
+COMPRESS_STORAGE = 'compressor.storage.CompressorFileStorage'
+COMPRESS_ENABLED = True
+STATICFILES_STORAGE = 'GenesisV2.storage.WhiteNoiseStaticFilesStorage'
+
 # for exact login view
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
 

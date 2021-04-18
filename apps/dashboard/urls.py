@@ -6,12 +6,12 @@ urlpatterns = [
     #dashboard urls
     url(r'^$', dashboard_view, name='dashboard'),
     #apps urls
-    url(_('^overview$'),overview_dashboard,name="overviewdashboard"),
-    url(_('^add$'),add_dashboard,name="adddashboard"),
-    url(_('^edit/(?P<pk>[0-9a-f-]+)$'),edit_dashboard,name="editdashboard"),
-    url(_('^toggle-activation/(?P<pk>[0-9a-f-]+)$'), toggle_dashboard_activation_view, name="activate-dashboard"),
-    url(_('^delete/(?P<pk>[0-9a-f-]+)$'),delete_dashboard,name="deletedashboard"),
-    url(_('^delete/modal$'),delete_ajax_dashboard_modal,name="deletemodaldashboard"),
-    url(_('^dashboard/reorder'), reorder_dashboard, name="dashboard-reorder"),
+    url(_('^overview$').strip(),overview_dashboard,name="overviewdashboard"),
+    url(_('^add$').strip(),add_dashboard,name="adddashboard"),
+    url(_('^edit/(?P<pk>[0-9a-f-]+)$').strip(),edit_dashboard,name="editdashboard"),
+    url(_('^toggle-activation/(?P<pk>[0-9a-f-]+)$').strip(), toggle_dashboard_activation_view, name="activate-dashboard"),
+    url(_('^delete/(?P<pk>[0-9a-f-]+)$').strip(),delete_dashboard,name="deletedashboard"),
+    url(_('^delete/modal$').strip(),delete_ajax_dashboard_modal,name="deletemodaldashboard"),
+    url(_('^dashboard/reorder').strip(), reorder_dashboard, name="dashboard-reorder"),
 
 ]

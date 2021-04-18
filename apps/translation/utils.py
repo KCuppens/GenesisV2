@@ -5,11 +5,11 @@ def search_function_dict(dict, key = None, nl = None, en = None, fr = None):
             if key and k == key:
                 results[k] = v
             else:
-                if nl and v['nl']['translation'] == nl:
+                if nl and 'nl' in v and v['nl']['translation'] == nl:
                     results[k] = v
-                elif en and v['en']['translation'] == en:
+                elif en and 'en' in v and v['en']['translation'] == en:
                     results[k] = v
-                elif fr and v['fr']['translation'] == fr:
+                elif fr and 'fr' in v and v['fr']['translation'] == fr:
                     results[k] = v
         return results
     return dict

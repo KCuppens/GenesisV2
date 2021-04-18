@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from translation_manager.manager import Manager
@@ -19,7 +20,7 @@ from apps.translation.forms import ImportFileForm
 now = datetime.datetime.now()
 
 @csrf_exempt
-@staff_member_required(login_url='/nl/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def index_view(request):
     has_perms(request, ["translation.view_translationentry"], None, 'index-translation')
     page = request.GET.get('page', 1)
@@ -53,11 +54,13 @@ def index_view(request):
         'entries': translations,
         'searchkey': key,
         'searchnl': nl,
-        'searchen': en
+        'searchen': en,
+        'searchfr': fr
     })
 
 @csrf_exempt
-@staff_member_required(login_url='/nl/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
+
 def update_translation(request):
     has_perms(request, ["translation.change_translationentry"], None, 'index-translation')
     if request.method == "POST":
@@ -68,7 +71,6 @@ def update_translation(request):
                 'lang': request.POST.get('lang')
             }
         )
-        messages.add_message(request, messages.SUCCESS, _('De vertaling is succesvol geupdate!'))
         translation_manager = Manager()
         for lang in settings.LANGUAGES:
             translation_manager.update_po_from_db(lang=lang[0])

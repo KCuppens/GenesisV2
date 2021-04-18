@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
+from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 # Create your views here.
@@ -21,13 +22,13 @@ from django.http import HttpResponse
 import datetime
 now = datetime.datetime.now()
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_form(request):
     has_perms(request, ["formbuilder.view_form"], None, 'overviewform')
     forms = Form.objects.filter(date_deleted=None)
     return render(request,'forms/index.html', {"forms":forms})
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def add_form(request):
     has_perms(request, ["formbuilder.add_form"], None, 'overviewform')
     if request.method == 'POST':
@@ -53,7 +54,7 @@ def add_form(request):
         'form': form,
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def edit_form(request, pk):
     has_perms(request, ["formbuilder.change_form"], None, 'overviewform')
     instance = get_object_or_404(Form, pk=pk)
@@ -86,7 +87,7 @@ def edit_form(request, pk):
         'instance':instance
     })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_form_modal(request):
     if request.is_ajax():
         data = {}
@@ -102,7 +103,7 @@ def delete_ajax_form_modal(request):
         return JsonResponse(data)
     return False
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def toggle_form_activation_view(request, pk):
     has_perms(request, ["formbuilder.change_form"], None, 'overviewform')
 
@@ -114,7 +115,7 @@ def toggle_form_activation_view(request, pk):
     return redirect('overviewform')
 
         
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_form(request,pk):
     has_perms(request, ["formbuilder.delete_form"], None, 'overviewform')
     instance = Form.objects.get(pk=pk)
@@ -123,7 +124,7 @@ def delete_form(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The form has been succesfully deleted!'))
     return redirect('overviewform')
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def overview_form_results(request, pk):
     has_perms(request, ["formbuilder.view_formresult"], None, 'overviewform')
     form_results = FormResult.objects.filter(form=pk, date_deleted=None)
@@ -134,7 +135,7 @@ def overview_form_results(request, pk):
             'form': form
         })
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def export_form_results(request, pk):
     has_perms(request, ["formbuilder.view_formresult"], None, 'overviewform')
     form_results = FormResult.objects.filter(form=pk, date_deleted=None)
@@ -180,7 +181,7 @@ def export_form_results(request, pk):
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_formresult(request, pk, id):
     has_perms(request, ["formbuilder.delete_formresult"], None, 'overviewform')
     instance = FormResult.objects.get(pk=pk)
@@ -189,7 +190,7 @@ def delete_formresult(request, pk, id):
     messages.add_message(request, messages.SUCCESS, _('The formresult has been succesfully deleted!'))
     return redirect(reverse('results-form', kwargs={'pk': id}))
 
-@staff_member_required(login_url='/nl/account/login')
+@staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_formresult_modal(request):
     if request.is_ajax():
         data = {}
