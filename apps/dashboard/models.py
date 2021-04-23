@@ -33,6 +33,7 @@ class DashboardConfiguration(BaseModel, SortableModel, AdminModel):
     METHOD_COUNT_PAGES = 'count_pages'
     METHOD_LATEST_USERS = 'latest_users'
     METHOD_COUNT_USERS = 'count_users'
+    
 
     GET_METHODS = [
         (METHOD_COUNT_FILES_BY_TYPE, _('Count files by media type')),
