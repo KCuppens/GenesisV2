@@ -41,8 +41,10 @@ def get_filemanager(request):
     if request.is_ajax():
         if request.method == "POST":
             mediatype = request.POST.get('type')
+            selecttype = request.POST.get('selecttype')
         elif request.method == "GET":
             mediatype = request.GET.get('type')
+            selecttype = request.GET.get('selecttype')
         dir = request.GET.get('dir')
         search = request.GET.get('search')
         action = request.GET.get('action')
@@ -74,6 +76,7 @@ def get_filemanager(request):
             'search': search,
             'current_type': mediatype,
             'current_dir': dir,
+            'selecttype':selecttype
         }
         data = {
             'template': render_to_string('filemanager/filemanager.html', context=context, request=request)

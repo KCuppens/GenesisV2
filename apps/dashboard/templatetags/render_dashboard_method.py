@@ -24,4 +24,5 @@ def render_dashboard_method(method, sort, order, param1):
         return dashboard.latest_users(param1)
     elif method == 'count_users':
         return dashboard.count_users()
+        
 

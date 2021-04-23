@@ -14,3 +14,6 @@ class MediaAudioWidget(widgets.TextInput):
 
 class MediaVideoWidget(widgets.TextInput):
     template_name = 'widgets/media_video_widget.html'
+
+class MultipleImageWidget(widgets.TextInput):
+    template_name = 'widgets/multiple_image_widget.html'
