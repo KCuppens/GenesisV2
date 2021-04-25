@@ -1,8 +1,8 @@
 {% load i18n static %}
 <div class="card component-card_2">
-    <img src="{{item.image}}" class="card-img-top" alt="widget-card-2">
+    <img src="{{item.image.url}}" class="card-img-top" alt="widget-card-2">
     <div class="card-body">
         <h5 class="card-title">{{item.name}}</h5>
-        <button type="button" class="btn btn-primary select-page-block" data-id="{{item.id}}" data-col="{{col}}" data-colsize="{{item.col_size}}">{% trans 'Selecteer block' %}</a>
+        <button type="button" class="btn btn-primary select-page-block" data-id="{{item.id}}" data-row="{{row}}">{% trans 'Selecteer block' %}</a>
     </div>
 </div>

@@ -47,14 +47,23 @@
                                 {% if page.children.exists %}
                                     <a class="btn btn-info position-relative mt-3 mb-3 ml-2" title="{% trans 'Children pages' %}" data-placement="top" href="{% url 'overviewchildrenpage' pk=page.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>({% children_page_count page %})</a>
                                 {% endif %}
-                                <a title="{% if page.in_main_menu %}{% trans 'Shown in main menu' %}{% else %}{% trans 'Not shown in main menu' %}{% endif %}" data-placement="top" class="btn btn-{% if page.in_main_menu %}success{% else %}danger{% endif %} position-relative mt-3 mb-3 ml-2" href="javascript::void()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+                                <a title="{% if page.in_main_menu %}{% trans 'Shown in main menu' %}{% else %}{% trans 'Not shown in main menu' %}{% endif %}" data-placement="top" class="btn btn-{% if page.in_main_menu %}success{% else %}danger{% endif %} position-relative mt-3 mb-3 ml-2" href="{% url 'toggle-mainmenu-activation-view' pk=page.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
                                 {% if page.is_homepage %}<a title="{% trans 'Is een homepagina' %}" data-placement="top" class="btn btn-secondary position-relative mt-3 mb-3 ml-2" href="javascript::void()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>{% endif %}
                             </div>
                             <div class="user-phone">
-                                <a href="javascript:void(0)" class="btn btn-dark mt-3 mb-3 ml-2">
-                                    {% trans 'Page Building' %} TODO
-                                </a>
+                                {% if page.canvas and not page.is_link_through %}
+                                    <a href="{% url 'canvaspage' pk=page.pk %}" class="btn btn-dark mt-3 mb-3 ml-2">
+                                        {% trans 'Page Building' %}
+                                    </a>
+                                {% endif %}
                             </div>
+                            {% if page.has_detailpage %}
+                                <div class="user-phone">
+                                    <a href="{% url 'detailpages-overview' pk=page.pk %}" class="btn btn-secondary mt-3 mb-3 ml-2">
+                                        {% trans 'Detailpages' %}
+                                    </a>
+                                </div>
+                            {% endif %}
                             <div class="action-btn">
                                 {% include 'pages/__partials/actions.html' %}
                             </div>

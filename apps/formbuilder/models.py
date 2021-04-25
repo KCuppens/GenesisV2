@@ -35,6 +35,9 @@ class Form(BaseModel, AdminModel):
     store_results = models.BooleanField(default=False) 
     pages = models.ManyToManyField('formpage', blank=True)
 
+    def __str__(self):
+        return self.name
+
 class FormPage(models.Model):
     elements = models.ManyToManyField('formelement', blank=True) 
     name = models.CharField(max_length=255, null=True, blank=True)

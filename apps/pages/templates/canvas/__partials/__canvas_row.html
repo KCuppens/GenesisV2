@@ -3,167 +3,34 @@
     {% for row in canvas.rows.all reversed %}
         <div data-row="{{ row.id }}" 
              class="row-canvas layout-top-spacing col-md-12 {% if not row.cols.exists %}d-flex justify-content-center align-items-center{% endif %}{% if not row.colblock %} empty{% endif %}"
-             id="item_{{row.id}}" data-canvas="{{ canvas.id }}">
-            {% if row.colblock %}
-                {% if row.colblock.cols.exists %}
-                    {% for col in row.colblock.cols.all %}
-                        {% if col.col_size == "12" %}
-                            <div  class="col-md-12 {% if not col.block %}d-flex justify-content-center align-items-center{% endif %} canvas-col">
-                                {% if col.block %}
-                                    <img class="block-image" src="{{ col.block.block.image }}"
-                                         alt="{{ col.block.block.name }}">
-                                    <span data-colsize="12" data-col="{{ col.id }}" data-block="{{ col.block.id }}"
-                                          class="col-canvas-edit badge badge-info"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-edit-2"><path
-                                            d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
-                                    <span data-colsize="12" data-col="{{ col.id }}"
-                                          class="col-canvas-replace badge badge-danger"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-repeat"><polyline points="17 1 21 5 17 9"></polyline><path
-                                            d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline
-                                            points="7 23 3 19 7 15"></polyline><path
-                                            d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></span>
-                                {% else %}
-                                    <button data-colsize="12" data-col="{{ col.id }}"
-                                            class="btn btn-primary mb-2 add-block">{% trans 'Select a block' %}</button>
-                                {% endif %}
-                            </div>
-                        {% elif col.col_size == "6" %}
-                            <div class="col-md-6 {% if not col.block %}d-flex justify-content-center align-items-center{% endif %} canvas-col">
-                                {% if col.block %}
-                                    <img class="block-image" src="{{ col.block.block.image }}"
-                                         alt="{{ col.block.block.name }}">
-                                    <span data-colsize="6" data-col="{{ col.id }}" data-block="{{ col.block.id }}"
-                                          class="col-canvas-edit badge badge-info"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-edit-2"><path
-                                            d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
-                                    <span data-colsize="6" data-col="{{ col.id }}"
-                                          class="col-canvas-replace badge badge-danger"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-repeat"><polyline points="17 1 21 5 17 9"></polyline><path
-                                            d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline
-                                            points="7 23 3 19 7 15"></polyline><path
-                                            d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></span>
-                                {% else %}
-                                    <button data-colsize="6" data-col="{{ col.id }}"
-                                            class="btn btn-primary mb-2 add-block">{% trans 'Select a block' %}</button>
-                                {% endif %}
-                            </div>
-                        {% elif col.col_size == "4" %}
-                            <div class="col-md-4 {% if not col.block %}d-flex justify-content-center align-items-center{% endif %} canvas-col">
-                                {% if col.block %}
-                                    <img class="block-image" src="{{ col.block.block.image }}"
-                                         alt="{{ col.block.block.name }}">
-                                    <span data-colsize="4" data-col="{{ col.id }}" data-block="{{ col.block.id }}"
-                                          class="col-canvas-edit badge badge-info"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-edit-2"><path
-                                            d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
-                                    <span data-colsize="4" data-col="{{ col.id }}"
-                                          class="col-canvas-replace badge badge-danger"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-repeat"><polyline points="17 1 21 5 17 9"></polyline><path
-                                            d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline
-                                            points="7 23 3 19 7 15"></polyline><path
-                                            d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></span>
-                                {% else %}
-                                    <button data-colsize="4" data-col="{{ col.id }}"
-                                            class="btn btn-primary mb-2 add-block">{% trans 'Select a block' %}</button>
-                                {% endif %}
-                            </div>
-                        {% elif col.col_size == "3" %}
-                            <div class="col-md-3 {% if not col.block %}d-flex justify-content-center align-items-center{% endif %} canvas-col">
-                                {% if col.block %}
-                                    <img class="block-image" src="{{ col.block.block.image }}"
-                                         alt="{{ col.block.block.name }}">
-                                    <span data-colsize="3" data-col="{{ col.id }}" data-block="{{ col.block.id }}"
-                                          class="col-canvas-edit badge badge-info"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-edit-2"><path
-                                            d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
-                                    <span data-colsize="3" data-col="{{ col.id }}"
-                                          class="col-canvas-replace badge badge-danger"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-repeat"><polyline points="17 1 21 5 17 9"></polyline><path
-                                            d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline
-                                            points="7 23 3 19 7 15"></polyline><path
-                                            d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></span>
-                                {% else %}
-                                    <button data-colsize="3" data-col="{{ col.id }}"
-                                            class="btn btn-primary mb-2 add-block">{% trans 'Select a block' %}</button>
-                                {% endif %}
-                            </div>
-                        {% elif col.col_size == "8" %}
-                            <div class="col-md-8 {% if not col.block %}d-flex justify-content-center align-items-center{% endif %} canvas-col">
-                                {% if col.block %}
-                                    <img class="block-image" src="{{ col.block.block.image }}"
-                                         alt="{{ col.block.block.name }}">
-                                    <span data-colsize="8" data-col="{{ col.id }}" data-block="{{ col.block.id }}"
-                                          class="col-canvas-edit badge badge-{% if col.block.title %}success{% else %}info{% endif %}"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-edit-2"><path
-                                            d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
-                                    <span data-colsize="8" data-col="{{ col.id }}"
-                                          class="col-canvas-replace badge badge-danger"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-repeat"><polyline points="17 1 21 5 17 9"></polyline><path
-                                            d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline
-                                            points="7 23 3 19 7 15"></polyline><path
-                                            d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></span>
-                                {% else %}
-                                    <button data-colsize="8" data-col="{{ col.id }}"
-                                            class="btn btn-primary mb-2 add-block">{% trans 'Select a block' %}</button>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+             id="{{row.id}}" data-canvas="{{ canvas.id }}">
+            {% if row.block %}
+                <img class="block-image" src="{{row.block.block.image}}"
+                        alt="{{ row.block.block.name }}">
+                <span data-block="{{ row.block.id }}" data-row="{{row.id}}"
+                        class="col-canvas-edit badge badge-info"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-edit-2"><path
+                        d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+                <span data-block="{{ row.block.id }}" class="col-canvas-replace badge badge-danger" data-row="{{row.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-repeat"><polyline points="17 1 21 5 17 9"></polyline><path
+                        d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline
+                        points="7 23 3 19 7 15"></polyline><path
+                        d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></span>
             {% else %}
-                <div class="alert alert-outline-primary mb-2 mt-2 accept-drop" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-x text-black close" data-dismiss="alert">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                    <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
-                    {% trans 'There are no columns available, please add them under column tab.' %}
-                    <p class="small text-center font-weight-bolder">{% trans 'Drop the Selected Column Here' %}</p>
-                </div>
-            {% endif %}
-            <span data-id="{{ row.id }}" class="row-canvas-delete badge badge-dark"><svg
+                <button data-row="{{ row.id }}" class="btn btn-primary mb-2 add-block">{% trans 'Select a block' %}</button>
+            {% endif %}  
+                <span data-id="{{ row.id }}" class="row-canvas-delete badge badge-dark"><svg
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path
                     d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line
                     x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></span>
-        </div>
+            </div>
     {% endfor %}
-{% else %}
+{% else %} 
     <div class="alert alert-outline-primary mb-4 layout-top-spacing" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -176,5 +43,4 @@
         <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
         {% trans 'There are no rows available, please drag them from the row tab.' %}
     </div>
-
 {% endif %}
