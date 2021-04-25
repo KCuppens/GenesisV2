@@ -11,7 +11,7 @@
     {% for category in categories %}
         <button type="button" class="btn btn-{% if current_category == category.slug %}primary{% else %}default{% endif %} set-category" data-slug="{{category.slug}}">{{category.name}}</button>
     {% endfor %}
-    <span class="canvas-id" data-canvas="{{canvas}}" data-colsize={{colsize}} data-col="{{col}}"></span>
+    <span class="canvas-id" data-canvas="{{canvas}}" data-row={{row}}></span>
 </div>
 {% if blocks.object_list.count > 0 %}
     <div class="row layout-top-spacing d-flex justify-content-center align-items-center">
@@ -43,7 +43,7 @@
 <script>
     $(document).ready(function () {
         $('.select-page-block').on('click', function(e){
-            var col = $('.canvas-id').data('col');
+            var row = $('.canvas-id').data('row');
             var canvas = $('.canvas-id').data('canvas');
             var csrf = $('.canvas-builder').data('csrf');
             var item = $(this).data('id');
@@ -53,7 +53,7 @@
                 data: {
                     'csrfmiddlewaretoken': csrf,
                     'item': item,
-                    'col': col,
+                    'row': row,
                     'action': 'addblock',
                     'canvas': canvas
                 },
@@ -63,20 +63,18 @@
             });
         });
         $('.set-category').on('click', function(e){
-            var col = $('.canvas-id').data('col');
+            var row = $('.canvas-id').data('row');
             var canvas = $('.canvas-id').data('canvas');
             var csrf = $('.canvas-builder').data('csrf');
             var category = $(this).data('slug');
-            var colsize = $('.canvas-id').data('colsize');
             $.ajax({
                 type: 'POST',
                 url: '{% url 'canvasrow' %}',
                 data: {
                     'csrfmiddlewaretoken': csrf,
-                    'col': col,
+                    'row': row,
                     'category': category,
                     'canvas': canvas,
-                    'colsize': colsize,
                     'action': 'openmodal'
                 },
                 success: function (data) {
@@ -85,20 +83,18 @@
             });
         });   
         $('.block-search').on('click', function(e){
-            var col = $('.canvas-id').data('col');
+            var row = $('.canvas-id').data('row');
             var canvas = $('.canvas-id').data('canvas');
             var csrf = $('.canvas-builder').data('csrf');
             var search = $('#block-search-value').val();
-            var colsize = $('.canvas-id').data('colsize');
             $.ajax({
                 type: 'POST',
                 url: '{% url 'canvasrow' %}',
                 data: {
                     'csrfmiddlewaretoken': csrf,
-                    'col': col,
+                    'row': row,
                     'search': search,
                     'canvas': canvas,
-                    'colsize': colsize,
                     'action': 'openmodal'
                 },
                 success: function (data) {

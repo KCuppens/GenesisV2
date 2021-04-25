@@ -20,9 +20,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" id="animated-underline-home-tab" data-toggle="tab" href="#animated-underline-home" role="tab" aria-controls="animated-underline-home" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>&nbsp;{% trans 'Row' %}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="animated-underline-profile-tab" data-toggle="tab" href="#animated-underline-profile" role="tab" aria-controls="animated-underline-profile" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns"><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path></svg>&nbsp;{% trans 'Column' %}</a>
-                        </li>
                     </ul>
 
                     <div class="tab-content" id="animateLineContent-4">
@@ -36,63 +33,6 @@
                                 </div>
                             </div>     
                         </div>
-                        <div class="tab-pane fade" id="animated-underline-profile" role="tabpanel" aria-labelledby="animated-underline-profile-tab">
-                            <h4>{% trans 'Choose and add a column below' %}</h4>
-                            <div class="row-canvas-droppable-12 row-canvas layout-top-spacing">
-                                <div class="col-canvas is-selected col-md-12 d-flex justify-content-center align-items-center">
-                                    {% trans 'Column 1' %}
-                                </div>
-                            </div>
-                            <div class="row-canvas-droppable-6 row-canvas layout-top-spacing">
-                                <div class="col-canvas is-selected col-md-6 d-flex justify-content-center align-items-center">
-                                    {% trans 'Column 1' %}
-                                </div>
-                                <div class="col-canvas is-selected col-md-6 d-flex justify-content-center align-items-center ">
-                                    {% trans 'Column 2' %}
-                                </div>
-                            </div> 
-                            <div class="row-canvas-droppable-4 row-canvas layout-top-spacing">
-                                <div class="col-canvas is-selected col-md-4 d-flex justify-content-center align-items-center">
-                                    {% trans 'Column 1' %}
-                                </div>
-                                <div class="col-canvas is-selected col-md-4 d-flex justify-content-center align-items-center ">
-                                    {% trans 'Column 2' %}
-                                </div>
-                                <div class="col-canvas is-selected col-md-4 d-flex justify-content-center align-items-center ">
-                                    {% trans 'Column 3' %}
-                                </div>
-                            </div> 
-                            <div class="row-canvas-droppable-3 row-canvas layout-top-spacing">
-                                <div class="col-canvas is-selected col-md-3 d-flex justify-content-center align-items-center">
-                                    {% trans 'Column 1' %}
-                                </div>
-                                <div class="col-canvas is-selected col-md-3 d-flex justify-content-center align-items-center ">
-                                    {% trans 'Column 2' %}
-                                </div>
-                                <div class="col-canvas is-selected col-md-3 d-flex justify-content-center align-items-center">
-                                    {% trans 'Column 3' %}
-                                </div>
-                                <div class="col-canvas is-selected col-md-3 d-flex justify-content-center align-items-center ">
-                                    {% trans 'Column 4' %}
-                                </div>
-                            </div> 
-                            <div class="row-canvas-droppable-84 row-canvas layout-top-spacing">
-                                <div class="col-canvas is-selected col-md-8 d-flex justify-content-center align-items-center">
-                                    {% trans 'Column 1' %}
-                                </div>
-                                <div class="col-canvas is-selected col-md-4 d-flex justify-content-center align-items-center ">
-                                    {% trans 'Column 2' %}
-                                </div>
-                            </div> 
-                            <div class="row-canvas-droppable-48 row-canvas layout-top-spacing">
-                                <div class="col-canvas is-selected col-md-4 d-flex justify-content-center align-items-center">
-                                    {% trans 'Column 1' %}
-                                </div>
-                                <div class="col-canvas is-selected col-md-8 d-flex justify-content-center align-items-center ">
-                                    {% trans 'Column 2' %}
-                                </div>
-                            </div> 
-                        </div>
                     </div>
                 </div>
             </div>
@@ -104,23 +44,6 @@
 {% endblock %}
 {% block js %}
 <script>
-    // $('.open-delete-modal').on('click', function() {
-    //     var id = $(this).data('id');
-    //     $.ajax({
-    //         url: '{% url 'deletemodalpage'  %}',
-    //         type:"POST",
-    //         data: {
-    //             'id': id,
-    //             'csrfmiddlewaretoken': '{{ csrf_token }}',
-    //         },
-    //         success:function(data){
-    //             console.log(data);
-    //             $('.modal-placeholder').html(data.template);
-    //             $('.modal').modal();
-    //         }
-    //     });
-    // })
-    
     $(function () {
     
         $('#sortable').sortable({
@@ -166,6 +89,7 @@
         var row = $('.row-canvas-delete').data('id');
         var csrf = $('.canvas-builder').data('csrf');
         var row = $(this).data('id');
+        
         $.ajax({
             type: 'POST',
             url: '{% url 'canvasrow' %}',
@@ -177,36 +101,6 @@
             },
             success: function (data) {
                 $('.canvas-builder').html(data.template);
-            }
-        });
-    });
-    $('.canvas-builder').on('click', '.add-block', function (e) {
-        e.stopPropagation();
-        if ($(this).parent().hasClass('is-selected')) {
-            $(this).parent().siblings().removeClass('is-selected');
-            $(this).parent().removeClass('is-selected');
-        } else {
-            $(this).parent().siblings().removeClass('is-selected');
-            $(this).parent().addClass('is-selected');
-        }
-        var colsize = $(this).data('colsize');
-        var col = $(this).data('col');
-        var csrf = $('.canvas-builder').data('csrf');
-        var canvas = $('.canvas-builder').data('id');
-        $.ajax({
-            type: 'POST',
-            url: '{% url 'canvasrow' %}',
-            data: {
-                'csrfmiddlewaretoken': csrf,
-                'colsize': colsize,
-                'detailpage': 1,
-                'col': col,
-                'canvas': canvas,
-                'action': 'openmodal'
-            },
-            success: function (data) {
-                $('.overview-blocks').html(data.template);
-                $('#exampleModal').modal();
             }
         });
     });

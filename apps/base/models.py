@@ -30,7 +30,7 @@ class SortableModel(models.Model):
 class BaseModel(models.Model):  
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False) 
     date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('Date of creation'))
-    date_published = models.DateTimeField(default=datetime.datetime.now, blank=True, null=True, verbose_name=_('Publishingdate'))
+    date_published = models.DateTimeField(default=datetime.datetime.now(), blank=True, null=True, verbose_name=_('Publishingdate'))
     date_expired = models.DateTimeField(blank=True, null=True, verbose_name=_('Expiring date'))
     date_updated = models.DateTimeField(auto_now=True, verbose_name=_('Date of last update'))
     date_deleted = models.DateTimeField(null=True, blank=True, verbose_name=_('Delete date'))

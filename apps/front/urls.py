@@ -15,5 +15,5 @@ urlpatterns = [
     url(_('^search$').strip(),search_front_view,name="search-front"),
     url('detail/(?P<model>[-\w]+)/(?P<pk>[0-9a-f-]+)/(?P<slug>[-\w]+)/$', page_detail_view, name="detail"),
     url(r'^$', page_view, name="index", kwargs={'slug': ''}),
-    url(r'^(?P<slug>[-\w]+)/$', page_view, name="index"),
+    url(r'^(?P<slug>[\w+-/]+)/$', page_view, name="index"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

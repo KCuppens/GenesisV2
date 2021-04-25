@@ -1,16 +1,16 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from apps.pages.models import Page, Canvas, CanvasRow, CanvasCol, PageBlock
+from apps.pages.models import Page, Canvas, CanvasRow, PageBlock
 from apps.formbuilder.models import Form
 from apps.pages.utils import check_if_homepage_exists
 from apps.base.widgets import MediaImageWidget
 
 class PageForm(forms.ModelForm):
     parent = forms.ModelChoiceField(required=False, queryset=Page.objects.filter(date_deleted=None))
-
+    image = forms.CharField(label=_('Afbeelding'), widget=MediaImageWidget, required=False)
     class Meta:
         model = Page
-        fields = ('in_main_menu', 'is_homepage', 'page_title', 'menu_title','url_type','slug','linkthrough','parent','meta_title','meta_keywords','meta_description','date_published','date_expired','active')
+        fields = ('in_main_menu', 'image', 'is_homepage', 'page_title', 'menu_title','url_type','slug','linkthrough','parent','meta_title','meta_keywords','meta_description','date_published','date_expired','active')
         labels = {
             'in_main_menu': _('Is it the homepage?'),
             'in_main_menu': _('Show in main menu'),
