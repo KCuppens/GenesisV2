@@ -31,15 +31,6 @@
     {{ form.detailpage_only|add_label_class:'' }}
 </div>
 <div class="form-group mb-4">
-    {{ form.col_size|add_label_class:'' }}
-    {{form.col_size|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}     
-    {% if form.col_size.errors %}
-        <div class="invalid-feedback">
-            {{form.col_size.errors}}
-        </div>
-    {% endif %}   
-</div>
-<div class="form-group mb-4">
     {{ form.template|add_label_class:'' }}
     {{form.template|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}     
     {% if form.template.errors %}

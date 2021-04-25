@@ -7,7 +7,7 @@ class BlockForm(forms.ModelForm):
     image = forms.CharField(widget=MediaImageWidget)
     class Meta:
         model = Block
-        fields = ('name', 'template', 'image', 'category', 'active', 'date_published', 'date_expired','col_size', 'has_title', 'has_subtitle', 'has_form', 'has_content', 'detailpage_only', 'has_module', 'has_image', 'has_image_second', 'has_url', 'has_url_text', 'has_video', 'has_embed', 'has_sort_method', 'has_limit', 'has_sort_order', 'has_pagination', 'has_detailpage')
+        fields = ('name', 'template', 'image', 'category', 'active', 'date_published', 'date_expired', 'has_title', 'has_subtitle', 'has_form', 'has_content', 'detailpage_only', 'has_module', 'has_image', 'has_image_second', 'has_url', 'has_url_text', 'has_video', 'has_embed', 'has_sort_method', 'has_limit', 'has_sort_order', 'has_pagination', 'has_detailpage', 'has_block_elements', 'has_block_element_title', 'has_block_element_image', 'has_block_element_content', 'has_block_element_subtitle', 'has_block_element_image_second')
         labels = {
             'name': _('Name'),
             'image': _('Block image'),
@@ -15,7 +15,6 @@ class BlockForm(forms.ModelForm):
             'active': _('Active?'),
             'date_published': _('Publicatiedatum'),
             'date_expired': _('Vervaldatum'),
-            'col_size': _('Kolom grootte'),
             'has_title': _('Bevat een titel'),
             'has_subtitle': _('Bevat een subtitel'),
             'has_content': _('Bevat een inhoud'), 
@@ -33,7 +32,13 @@ class BlockForm(forms.ModelForm):
             'has_detailpage': _('Bevat een detailpagina'),
             'has_form': _('Bevat een formulier'),
             'template': _('Template name'),
-            'detailpage_only': _('Alleen detailpagina block?')
+            'detailpage_only': _('Alleen detailpagina block?'),
+            'has_block_elements': _('Bevat blok elementen'),
+            'has_block_element_title': _('Bevat blok element titel'),
+            'has_block_element_image': _('Bevat blok element afbeelding'),
+            'has_block_element_content': _('Bevat blok element inhoud'),
+            'has_block_element_subtitle': _('Bevat blok element subtitel'),
+            'has_block_element_image_second': _('Bevat blok element tweede afbeelding')
         }
 
 class BlockCategoryForm(forms.ModelForm):
