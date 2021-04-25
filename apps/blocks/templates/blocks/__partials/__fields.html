@@ -41,6 +41,31 @@
     {{form.has_embed|add_error_attr:"class:is-invalid"}}&nbsp;
     {{ form.has_embed|add_label_class:'' }}
 </div>
+<h3>{% trans 'Blok elementen' %}</h3>
+<div class="form-group mb-4">
+    {{form.has_block_elements|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_block_elements|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_block_element_title|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_block_element_title|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_block_element_image|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_block_element_image|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_block_element_content|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_block_element_content|add_label_class:'' }}
+</div>
+<div class="form-group mb-4">
+    {{form.has_block_element_subtitle|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_block_element_subtitle|add_label_class:'' }}
+</div>
+<div class="form-group mb-4"> 
+    {{form.has_block_element_image_second|add_error_attr:"class:is-invalid"}}&nbsp;
+    {{ form.has_block_element_image_second|add_label_class:'' }}
+</div>
 <h3>{% trans 'Module' %}</h3>
 <div class="form-group mb-4">
     {{form.has_form|add_error_attr:"class:is-invalid"}}&nbsp;
@@ -74,4 +99,30 @@
     {{form.has_detailpage|add_error_attr:"class:is-invalid"}}&nbsp;
     {{ form.has_detailpage|add_label_class:'' }}
 </div>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        if(!$('#id_has_block_elements').prop('checked')){
+            $('#id_has_block_element_title').closest('.form-group').css('display', 'none');
+            $('#id_has_block_element_image').closest('.form-group').css('display', 'none');
+            $('#id_has_block_element_content').closest('.form-group').css('display', 'none');
+            $('#id_has_block_element_subtitle').closest('.form-group').css('display', 'none');
+            $('#id_has_block_element_image_second').closest('.form-group').css('display', 'none');
+        }
+        $('#id_has_block_elements').on('change', function(){
+            if($('#id_has_block_elements').prop('checked')){
+                $('#id_has_block_element_title').closest('.form-group').css('display', 'block');
+                $('#id_has_block_element_image').closest('.form-group').css('display', 'block');
+                $('#id_has_block_element_content').closest('.form-group').css('display', 'block');
+                $('#id_has_block_element_subtitle').closest('.form-group').css('display', 'block');
+                $('#id_has_block_element_image_second').closest('.form-group').css('display', 'block');
+            } else {
+                $('#id_has_block_element_title').closest('.form-group').css('display', 'none');
+                $('#id_has_block_element_image').closest('.form-group').css('display', 'none');
+                $('#id_has_block_element_content').closest('.form-group').css('display', 'none');
+                $('#id_has_block_element_subtitle').closest('.form-group').css('display', 'none');
+                $('#id_has_block_element_image_second').closest('.form-group').css('display', 'none');
+            }
+        })
+    });
+</script>
 

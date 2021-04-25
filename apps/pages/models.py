@@ -94,6 +94,7 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
     url_text = models.CharField(max_length=255, null=True, blank=True)
     video = models.CharField(max_length=255, null=True, blank=True)
     embed = models.CharField(max_length=255, null=True, blank=True)
+    block_elements = models.ManyToManyField('pageblockelement', blank=True)
 
     #Module blocks
     SORT_ORDER_ASC = 'asc'
@@ -125,10 +126,18 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
     limit = models.IntegerField(default=0, blank=True, null=True)
     sort_order = models.CharField(max_length=255, choices=GET_SORT_ORDER, default=SORT_ORDER_ASC, blank=True, null=True)
     paginated = models.IntegerField(default=0, blank=True, null=True)
-    detailpage = models.BooleanField(default=True, blank=True, null=True)    
+    detailpage = models.BooleanField(default=True, blank=True, null=True)   
+
 
     class Meta:
         verbose_name = _('Page block')
+
+class PageBlockElement(BaseModel, SeoModel):
+    block_element_title = models.CharField(max_length=255, null=True, blank=True)
+    block_element_image = models.CharField(max_length=255, null=True, blank=True)
+    block_element_content = models.TextField(null=True, blank=True)
+    block_element_subtitle = models.CharField(max_length=255, null=True, blank=True)
+    block_element_image_second = models.CharField(max_length=255, null=True, blank=True)
   
 class DetailPage(models.Model):
     object_id = models.CharField(max_length=255, null=True, blank=True)
