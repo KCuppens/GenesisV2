@@ -55,7 +55,7 @@ class AdminModel(models.Model):
 
     @receiver(post_save)
     def create_history_record(sender, instance, **kwargs):
-        apps = ['User','DashboardConfiguration','Session','Migration','History','Icon','Configuration','TranslationEntry','Thumbnail','DetailPage', 'MessageLog', 'FormPage', 'FormElement', 'FormElementOption','FormResult','FormResultField', 'Email']
+        apps = ['PageBlockElement','User','DashboardConfiguration','Session','Migration','History','Icon','Configuration','TranslationEntry','Thumbnail','DetailPage', 'MessageLog', 'FormPage', 'FormElement', 'FormElementOption','FormResult','FormResultField', 'Email']
         if not instance.__class__.__name__ in apps:
             if instance.edited_by:
                 user = instance.edited_by 

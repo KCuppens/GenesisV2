@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from apps.pages.models import Page, Canvas, CanvasRow, PageBlock
+from apps.pages.models import Page, Canvas, CanvasRow, PageBlock, PageBlockElement
 from apps.formbuilder.models import Form
 from apps.pages.utils import check_if_homepage_exists
 from apps.base.widgets import MediaImageWidget
@@ -73,4 +73,18 @@ class BlockForm(forms.ModelForm):
             'module': _('Module'),
             'detailpage': _('Detailpagina'),
             'form': _('Formulier')
+        }
+    
+class BlockElementForm(forms.ModelForm):
+    block_element_image = forms.CharField(label=_('Blok afbeelding'), required=False, widget=MediaImageWidget)
+    block_element_image_second = forms.CharField(label=_('Blok tweede afbeelding'), required=False, widget=MediaImageWidget)
+    class Meta:
+        model = PageBlockElement
+        fields = {'block_element_title', 'block_element_image', 'block_element_content', 'block_element_subtitle', 'block_element_image_second'}
+        labels = {
+            'block_element_title': _('Blok titel'),
+            'block_element_image': _('Blok afbeelding'),
+            'block_element_content': _('Blok inhoud'),
+            'block_element_subtitle': _('Blok subtitel'),
+            'block_element_image_second': _('Blok tweede afbeelding'),
         }
