@@ -2,9 +2,9 @@ from django.views.generic import View
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
 from apps.base.utils import has_perms
-from apps.pages.models import Page, Canvas, CanvasRow, PageBlock, DetailPage
+from apps.pages.models import Page, Canvas, CanvasRow, PageBlock, DetailPage, PageBlockElement
 from apps.blocks.models import Block, BlockCategory
-from apps.pages.forms import PageForm, BlockForm
+from apps.pages.forms import PageForm, BlockForm, BlockElementForm
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render,get_object_or_404,redirect, reverse
 from django.contrib import messages
@@ -16,7 +16,7 @@ from django.db.models import Q
 from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.defaultfilters import slugify
-
+from django.forms.models import modelformset_factory
 import datetime
 now = datetime.datetime.now()
 @staff_member_required(login_url=reverse_lazy('login'))
@@ -316,7 +316,34 @@ def canvas_row_reorder(request):
 def content_block_view(request):
     block = request.POST.get('block', None)
     ajax = request.POST.get('ajax', None)
+    action = request.POST.get('action', None)
     instance = PageBlock.objects.filter(id=block).first()
+    if action == "createelement":
+        element = PageBlockElement.objects.create()
+        instance.block_elements.add(element)
+        instance.save()
+    if action == "saveelement":
+        title = request.POST.get('title', '')
+        image = request.POST.get('image', '')
+        content = request.POST.get('content', '')
+        subtitle = request.POST.get('subtitle', '')
+        second_image = request.POST.get('second_image', '')
+        block_elem = request.POST.get('block_elem')
+        if block_elem:
+            block_elem_obj = PageBlockElement.objects.filter(id=block_elem).first()
+            if block_elem_obj:
+                block_elem_obj.block_element_title = title 
+                block_elem_obj.block_element_image = image 
+                block_elem_obj.block_element_content = content 
+                block_elem_obj.block_element_subtitle = subtitle
+                block_elem_obj.block_element_image_second = second_image
+                block_elem_obj.save()
+    if action == 'deleteelement':
+        block_elem = request.POST.get('block_elem')
+        if block_elem:
+            block_elem_obj = PageBlockElement.objects.filter(id=block_elem).first()
+            if block_elem_obj:
+                block_elem_obj.delete()
     if instance:
         if request.method == "POST" and not ajax:
             form = BlockForm(request.POST, request.FILES, instance=instance)

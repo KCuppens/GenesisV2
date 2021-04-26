@@ -138,6 +138,9 @@ class PageBlockElement(BaseModel, SeoModel):
     block_element_content = models.TextField(null=True, blank=True)
     block_element_subtitle = models.CharField(max_length=255, null=True, blank=True)
     block_element_image_second = models.CharField(max_length=255, null=True, blank=True)
+
+    def get_actives(self):
+        return self.filter(date_deleted=None)
   
 class DetailPage(models.Model):
     object_id = models.CharField(max_length=255, null=True, blank=True)

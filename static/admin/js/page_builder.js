@@ -103,6 +103,22 @@ $(document).ready(function () {
     };
 
     $('.canvas-builder').on('click', '.col-canvas-edit', function (e) {
+        $(document).on('shown.bs.modal','#contentModal', function () {
+            tinymce.init({
+                selector: '.form-control.tinymce-editor',
+                plugins: [
+                    'advlist autolink autoresize link image imagetools lists charmap print preview hr anchor pagebreak',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                    'table emoticons template paste help hr template'
+                ],
+                image_uploadtab: true,
+                images_upload_base_path: '/media/tinymce',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                    'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+                    'forecolor backcolor emoticons | help template',
+                menubar: 'favs file edit view insert format tools table help',
+            });
+        })
         $('#contentModal').modal();
         var block = $(this).data('block');
         getAjaxForm(block);
