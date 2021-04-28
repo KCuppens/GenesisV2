@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','46.101.244.242']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 AUTH_USER_MODEL = "user.User"
@@ -66,8 +66,22 @@ INSTALLED_APPS = [
     'apps.news',
     'apps.mail',
     'apps.formbuilder',
+    "tags_input",
 ]
- 
+TAGS_INPUT_INCLUDE_JQUERY = True
+def get_queryset(*args, **kwargs):
+    from apps.filemanager.models import Media
+    return Media.objects.all()
+
+TAGS_INPUT_MAPPINGS = {
+    'filemanager.Media': 
+        {
+            'field': 'file', 'queryset': get_queryset
+        }
+}
+
+
+
 TEMPLATE_ENGINE = 'django'
 SENDING_ORDER = ['-priority']
 LOG_LEVEL = '2'
