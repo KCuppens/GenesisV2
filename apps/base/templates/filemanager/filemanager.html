@@ -294,7 +294,7 @@
             }
         });
     });
-    $('.select-file').on('click', function() {
+    $(document).on('click', '.select-file', function() {
         var file = $(this).data('file');
         $('.filemanager-widget').val(file);
         $('#filemanagerModal').modal('toggle');        

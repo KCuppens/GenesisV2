@@ -38,3 +38,16 @@ class ArticleForm(ModelForm):
             raise forms.ValidationError(errors)
 
         return self.cleaned_data
+
+    @property
+    def media(self):
+        import copy
+        media = super(ArticleForm, self).media
+        sorted_media_js = copy.copy(media._js)
+        # Below code to change javascript file order
+        sorted_media_js.remove('jquery.tagsinput-revisited-2.0.min.js')
+        sorted_media_js.append('https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js')
+        return forms.Media(
+            css=media._css,
+            js=tuple(sorted_media_js)
+        )
