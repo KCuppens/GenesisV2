@@ -22,6 +22,7 @@ class ArticleManager(models.Manager):
 class Article(BaseModel, SeoModel, AdminModel):
     title = models.CharField(max_length=255, null=True, db_index=True, blank=True)
     image = models.CharField(max_length=255, null=True, blank=True)
+    gallery = models.TextField(null=True, blank=True)
     slug = AutoSlugField(populate_from='title')
     summary = models.TextField(null=True, blank=True)
     content = models.TextField(null=True, blank=True)

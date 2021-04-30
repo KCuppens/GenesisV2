@@ -2,13 +2,16 @@ from django.forms import ModelForm
 from apps.news.models import Article
 from django.utils.translation import gettext_lazy as _
 from django import forms 
-from apps.base.widgets import MediaImageWidget
+from apps.base.widgets import MediaImageWidget, MultipleImageWidget
+from tags_input import fields
+from apps.filemanager.models import Media
 
 class ArticleForm(ModelForm):
     image = forms.CharField(label=_('Afbeelding'), widget=MediaImageWidget)
+    gallery = fields.TagsInputField(Media.objects.filter(date_deleted=None), create_missing=True, required=False, widget=MultipleImageWidget)
     class Meta:
         model = Article 
-        fields = ['title', 'image', 'content', 'summary', 'meta_title', 'meta_description', 'meta_keywords', 'date_expired', 'date_published','active']
+        fields = ['title', 'gallery', 'image', 'content', 'summary', 'meta_title', 'meta_description', 'meta_keywords', 'date_expired', 'date_published','active']
         labels = {
             'title': _('Titel*'),
             'content': _('Inhoud'),
