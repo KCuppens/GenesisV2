@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'django.contrib.sites',
 
     #third-party apps
     'widget_tweaks',
     'translation_manager',
     'modeltranslation',
     'compressor',
+    'tags_input',
 
     #apps
     'apps.conf',
@@ -66,7 +68,6 @@ INSTALLED_APPS = [
     'apps.news',
     'apps.mail',
     'apps.formbuilder',
-    "tags_input",
 ]
 TAGS_INPUT_INCLUDE_JQUERY = True
 def get_queryset(*args, **kwargs):
@@ -223,3 +224,6 @@ BACKENDS = ''
 # EMAIL_HOST_PASSWORD = 'App password from google'
 #Logging
 import logging
+
+
+SITE_ID=1

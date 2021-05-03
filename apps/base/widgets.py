@@ -6,7 +6,7 @@ from django.conf import settings
 from django import urls
 from django.template.loader import render_to_string
 from django import forms
-
+from collections import OrderedDict
 
 class URLPickerWidget(widgets.TextInput):
     template_name = 'widgets/url_picker.html'
@@ -44,7 +44,6 @@ class MultipleImageWidget(TagsInputWidget):
                 fields='-'.join(self.mapping['fields']),
             ),
         )
-        print(self.mapping['queryset'])
         if value:
             fields = self.mapping['fields']
             join_func = self.mapping['join_func']
