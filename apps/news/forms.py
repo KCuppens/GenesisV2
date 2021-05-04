@@ -5,10 +5,11 @@ from django import forms
 from apps.base.widgets import MediaImageWidget, MultipleImageWidget
 from tags_input import fields
 from apps.filemanager.models import Media
+from tags_input.widgets import TagsInputWidget
 
 class ArticleForm(ModelForm):
     image = forms.CharField(label=_('Afbeelding'), widget=MediaImageWidget)
-    gallery = fields.TagsInputField(Media.objects.filter(date_deleted=None), create_missing=True, required=False, widget=MultipleImageWidget)
+    gallery = forms.CharField(widget=MultipleImageWidget)
     class Meta:
         model = Article 
         fields = ['title', 'gallery', 'image', 'content', 'summary', 'meta_title', 'meta_description', 'meta_keywords', 'date_expired', 'date_published','active']
@@ -38,16 +39,3 @@ class ArticleForm(ModelForm):
             raise forms.ValidationError(errors)
 
         return self.cleaned_data
-
-    @property
-    def media(self):
-        import copy
-        media = super(ArticleForm, self).media
-        sorted_media_js = copy.copy(media._js)
-        # Below code to change javascript file order
-        sorted_media_js.remove('jquery.tagsinput-revisited-2.0.min.js')
-        sorted_media_js.append('https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js')
-        return forms.Media(
-            css=media._css,
-            js=tuple(sorted_media_js)
-        )

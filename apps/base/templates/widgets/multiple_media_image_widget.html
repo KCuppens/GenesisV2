@@ -1,36 +1,33 @@
 {% load i18n static %}
 <div class="row">
+
     <div class="col-md-8">
-        <input type="{{ type }}" id="{{ id }}_tags_input" name="{{ name }}" class="filemanager-widget form-control" value="" autocomplete="off" {{ attrs }}>
+        <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} class="filemanager-widget form-control" value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
 
-<script src="/static/jquery-3.2.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
-<script src="/static/jquery-ui-1.12.1.min.js"></script>
+<script src="{% static 'admin/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'admin/js/jquery.tagsinput.min.js' %}"></script>
+<script src="{% static 'admin/js/jquery-ui-1.12.1.min.js' %}"></script>
 <script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
-
+<link rel="stylesheet" type="text/css" href="{% static  'admin/css/jquery.tagsinput.min.css' %}">
 <script type="text/javascript">
 //<![CDATA[
 
 jQuery(document).ready(function($){
-    $(document).on('click', ".{{id}}_widget_a", function(e) {
+    $(document).on('click', ".{{widget.attrs.id}}_widget_a", function(e) {
             var file = $(this).data('file');
-            var target = $("#{{ id }}_tags_input");
+            var target = $("#{{widget.attrs.id}}");
             var tags = (file).split(/[ ,]+/);
+            console.log(tags)
             for (var i = 0, z = tags.length; i<z; i++) {
                 var tag = $.trim(tags[i]);
             if (!target.tagExist(tag)) {
                     target.addTag(tag); 
                 }
-            
             }
             $(".close").trigger('click')
         });
-    $('#{{ id }}_tags_input').tagsInput({
-        autocomplete: {
-            source: '{{ autocomplete_url }}',
-            autoFocus: true,
-            delay: 20
-        },
+    $('#{{widget.attrs.id}}').tagsInput({
+        defaultText: "add a image to gallery",
         width:'100%',
         height:"100%",
         {% if not mapping.create_missing %}autocompleteOnly: true,{% endif %}
@@ -38,7 +35,6 @@ jQuery(document).ready(function($){
         {% if on_add_tag %}onAddTag: {{ on_add_tag }},{% endif %}
         {% if on_remove_tag %}onRemoveTag: {{ on_remove_tag }},{% endif %}
         {% if on_change_tag %}onChangeTag: {{ on_change_tag }},{% endif %}
-        autocomplete_url: '{{ autocomplete_url }}'
     });
 
 });
@@ -64,11 +60,11 @@ jQuery(document).ready(function($){
     var  ids= "{{id}}"
     $(document).ready(function(){
 
-    var main_btn = $("#{{id}}_tags_input_addTag").closest(".row").find(".browse-filemanager")
+    var main_btn = $("#{{widget.attrs.id}}").closest(".row").find(".browse-filemanager")
                 main_btn.removeClass("browse-filemanager")
-                main_btn.addClass("{{id}}_widget_btn")
+                main_btn.addClass("{{widget.attrs.id}}_widget_btn")
     });
-    $(document).on('click', ".{{id}}_widget_btn", function() {
+    $(document).on('click', ".{{widget.attrs.id}}_widget_btn", function() {
         function getCookie(name) {
             var cookieValue = null; 
             if (document.cookie && document.cookie !== '') {
@@ -97,7 +93,7 @@ jQuery(document).ready(function($){
                 $('.get-filemanager').html(data.template);
                 ids = $("#filemanagerModal").find(".select-file")
                 ids.removeClass("select-file")
-                ids.addClass("{{id}}_widget_a")
+                ids.addClass("{{widget.attrs.id}}_widget_a")
             },
         })
         
