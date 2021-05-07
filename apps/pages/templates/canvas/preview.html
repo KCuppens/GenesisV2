@@ -1,38 +1,6 @@
 {% load render_block_page %}
 {% for row in canvas.rows.all %} 
-    <div class="row">
-        {% for col in row.colblock.cols.all %}
-            {% if col.col_size == "12" %}
-                <div  class="col-md-12">
-                   {% if col.block %}
-                        {% render_block_page request col.block %}
-                   {% endif %}
-                </div>
-            {% elif col.col_size == "6" %}
-                <div class="col-md-6">
-                    {% if col.block %}
-                        {% render_block_page request col.block %}
-                    {% endif %}
-                </div>
-            {% elif col.col_size == "4" %}
-                <div class="col-md-4">
-                   {% if col.block %}
-                        {% render_block_page request col.block %}
-                   {% endif %}
-                </div>
-            {% elif col.col_size == "3" %}
-                <div class="col-md-3">
-                    {% if col.block %}
-                        {% render_block_page request col.block %}
-                    {% endif %}
-                </div>
-            {% elif col.col_size == "8" %}
-                <div class="col-md-8">
-                    {% if col.block %}
-                        {% render_block_page request col.block %}
-                    {% endif %}
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+    {% if row.block %}
+        {% render_block_page request row.block %}
+    {% endif %}
 {% endfor %}
