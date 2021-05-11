@@ -2,7 +2,6 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
 from django.http import JsonResponse
-# Create your views here.
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib import messages
@@ -12,29 +11,43 @@ from apps.conf.utils import get_config
 from django.views.generic import View
 from django.contrib.admin.views.decorators import staff_member_required
 from apps.base.utils import has_perms
-from apps.news.models import Article
+from apps.news.models import Article , NewsRevision, NewsVersion
 from apps.news.forms import ArticleForm
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from collections import OrderedDict
+from django.db import transaction
+import json
+from datetime import datetime
+
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_article(request):
     articles = Article.objects.filter(date_deleted=None)
     has_perms(request, ["news.view_article"], None, 'overviewarticle')
+    for article in articles:
+        try:
+            newsrevision = NewsRevision.objects.get(current_instance=article)
+            versions = newsrevision.versions.all()
+            article.has_versions = bool(versions)
+        except:
+            continue
     
     return render(request,'news/index.html', {"articles":articles})
 
+
+@transaction.atomic
 @staff_member_required(login_url=reverse_lazy('login'))
 def add_article(request):
     has_perms(request, ["news.add_article"], None, 'overviewarticle')
     if request.method == 'POST':
+        # import pdb;pdb.set_trace()
         form = ArticleForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.save()
             form.save_m2m()
-
             messages.add_message(request, messages.SUCCESS, _('The article has been succesfully added!'))
 
             return redirect('overviewarticle')
@@ -45,6 +58,7 @@ def add_article(request):
         'form': form,
     })
 
+@transaction.atomic
 @staff_member_required(login_url=reverse_lazy('login'))
 def edit_article(request, pk):
     has_perms(request, ["news.change_article"], None, 'overviewarticle')
@@ -60,7 +74,6 @@ def edit_article(request, pk):
             return redirect('overviewarticle')
     else:
         form = ArticleForm(instance=instance)
-
     return render(request, 'news/edit.html', {
         'form': form,
         'article':instance
@@ -81,6 +94,80 @@ def delete_ajax_article_modal(request):
     return JsonResponse(data)
 
 @staff_member_required(login_url=reverse_lazy('login'))
+def get_version_ajax_article_modal(request):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    reversion = NewsRevision.objects.get(current_instance=Article.objects.get(id=id))
+    article_version = NewsVersion.objects.filter(revision=reversion).order_by("date_created")
+    if article_version:
+        context = {
+            'article_version': article_version
+        }
+        data = {
+            'template': render_to_string('news/__partials/version_modal.html', context=context, request=request)
+        }
+    return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def get_delete_version_ajax_article_modal(request):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    try:
+        version = NewsVersion.objects.get(id=id)
+    except:
+        version = None
+    if version:
+        context = {
+            'version': version
+        }
+        data = {
+            'template': render_to_string('news/__partials/delete_version_modal.html', context=context, request=request)
+        }
+    return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def select_version(request, pk):
+    # import pdb;pdb.set_trace();
+    article_version = NewsVersion.objects.get(id=pk)
+    # article_version.is_current = True
+    # article_version.save()
+
+    article_version_dict = json.loads(article_version.serialized_instance)
+    article = NewsRevision.objects.get(versions__id=pk).current_instance
+    for attr, value in article_version_dict.items():
+        setattr(article, attr, value)
+    article.not_new_object=1
+    article.save()
+    # messages.add_message(request, messages.SUCCESS, _('De versie is succesvol verwijderd'))
+    return redirect('overviewarticle')
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def delete_version(request, pk):
+    # import pdb;pdb.set_trace();
+    article_version = NewsVersion.objects.get(id=pk)
+    if article_version.is_current:
+        # redirect if is_current=True
+        messages.add_message(request, messages.WARNING, _('U kunt de momenteel geselecteerde versie niet verwijderen!'))
+        return redirect('overviewarticle')
+    article_version.delete()
+    messages.add_message(request, messages.SUCCESS, _('De versie is succesvol verwijderd'))
+    return redirect('overviewarticle')
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def add_version_comment(request, pk):
+    # import pdb;pdb.set_trace();
+    article_version = NewsVersion.objects.get(id=pk)
+    comment = request.POST.get('comment')
+    if comment and comment != article_version.comment:
+        article_version.comment = comment
+        article_version.save()
+        messages.add_message(request, messages.SUCCESS, _('De opmerking is succesvol opgeslagen!'))
+    return redirect('overviewarticle')
+
+
+@staff_member_required(login_url=reverse_lazy('login'))
 def toggle_article_activation_view(request, pk):
     has_perms(request, ["news.change_article"], None, 'overviewarticle')
 
@@ -91,7 +178,7 @@ def toggle_article_activation_view(request, pk):
     
     return redirect('overviewarticle')
 
-        
+@transaction.atomic
 @staff_member_required(login_url=reverse_lazy('login'))
 def delete_article(request,pk):
     has_perms(request, ["news.delete_article"], None, 'overviewarticle')

@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from .views import delete_ajax_tab_modal, overview_tab, add_tab, edit_tab, delete_tab, reorder_tab, \
-                    delete_ajax_modules_modal, overview_modules, add_modules, edit_modules, delete_modules, delete_modules_page, toggle_activation_view, toggle_tab_activation_view, reorder_module
+                    delete_ajax_modules_modal, overview_modules, add_modules, edit_modules, delete_modules, delete_modules_page, toggle_activation_view, toggle_tab_activation_view, reorder_module, \
+                    get_version_ajax_modal, select_version, \
+                    delete_version, add_version_comment, get_delete_version_ajax_modal
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
@@ -20,4 +22,10 @@ urlpatterns = [
     url(_('^delete/modulepages/(?P<pk>[0-9a-f-]+)$').strip(),delete_modules_page,name="deletepagemodules"),
     url(_('^reorder').strip(), reorder_module, name="module-reorder"),
     url(_('^delete/modal$').strip(),delete_ajax_modules_modal,name="deletemodalmodules"),
+
+    url(_('^version/modal/(?P<mode>[a-z]+)/$').strip(),get_version_ajax_modal,name="moduleversionmodal"),
+    url(_('^version/modal/delete/(?P<mode>[a-z]+)/$').strip(),get_delete_version_ajax_modal,name="moduledeleteversionmodal"),
+    url(_('^version/(?P<mode>[a-z]+)/(?P<pk>[0-9a-f-]+)$').strip(),select_version,name="moduleselectversion"),
+    url(_('^version/delete/(?P<mode>[a-z]+)/(?P<pk>[0-9a-f-]+)$').strip(),delete_version,name="moduledeleteversion"),
+    url(_('^version/comment/(?P<mode>[a-z]+)/(?P<pk>[0-9a-f-]+)$').strip(),add_version_comment,name="moduleaddversioncomment"),
 ]

@@ -1,5 +1,5 @@
 from django.db import models
-from apps.base.models import BaseModel, AdminModel
+from apps.base.models import BaseModel, AdminModel, BaseRevision, BaseVersion
 from django_extensions.db.fields import AutoSlugField
 from django.utils.translation import gettext_lazy as _
 
@@ -43,6 +43,9 @@ class Block(BaseModel, AdminModel):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
 
 class BlockCategory(BaseModel, AdminModel):
     name = models.CharField(max_length=55, db_index=True, blank=True)
@@ -53,3 +56,25 @@ class BlockCategory(BaseModel, AdminModel):
 
     def __str__(self):
         return self.name
+
+
+class BlocksRevision(BaseRevision):
+    current_instance = models.OneToOneField(Block, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="block")
+
+
+class BlocksVersion(BaseVersion):
+    revision = models.ForeignKey(BlocksRevision, on_delete=models.CASCADE, related_name="versions")
+
+    def save(self, *args, **kwargs):
+        try:
+            blocksversion = BlocksVersion.objects.get(id=self.id)
+            for version in BlocksVersion.objects.exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in BlocksVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)

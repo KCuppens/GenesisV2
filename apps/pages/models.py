@@ -1,5 +1,5 @@
 from django.db import models
-from apps.base.models import BaseModel, AdminModel, SeoModel, SortableModel
+from apps.base.models import BaseModel, AdminModel, SeoModel, SortableModel, BaseRevision, BaseVersion
 from apps.formbuilder.models import Form
 from apps.blocks.models import Block
 from django_extensions.db.fields import AutoSlugField
@@ -35,6 +35,7 @@ class Page(BaseModel, AdminModel, SeoModel, SortableModel):
 
     has_detailpage = models.BooleanField(default=False)
     detailpage_models = models.CharField(max_length=255, null=True, blank=True)
+    is_deletable = models.BooleanField(null=True, default=True)
     
     
     def __str__(self):
@@ -95,6 +96,7 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
     video = models.CharField(max_length=255, null=True, blank=True)
     embed = models.CharField(max_length=255, null=True, blank=True)
     block_elements = models.ManyToManyField('pageblockelement', blank=True)
+    is_deletable = models.BooleanField(null=True, default=True)
 
     #Module blocks
     SORT_ORDER_ASC = 'asc'
@@ -148,3 +150,24 @@ class DetailPage(models.Model):
     default = models.BooleanField(default=False)
     canvas = models.ForeignKey(Canvas, on_delete=models.CASCADE)
     overridden = models.BooleanField(default=False)
+
+
+class PageRevision(BaseRevision):
+    current_instance = models.OneToOneField(Page, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="page")
+
+class PageVersion(BaseVersion):
+    revision = models.ForeignKey(PageRevision, on_delete=models.CASCADE, related_name='versions')
+
+    def save(self, *args, **kwargs):
+        try:
+            pageversion = PageVersion.objects.get(id=self.id)
+            for version in pageversion.revision.versions.all().exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in PageVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)

@@ -1,5 +1,10 @@
 from django.db import models
-from apps.base.models import BaseModel, AdminModel
+from apps.base.models import (
+    BaseModel, 
+    AdminModel,
+    BaseRevision,
+    BaseVersion
+)
 from collections import namedtuple
 from django.utils.translation import gettext_lazy as _
 from apps.mail.validators import validate_template_syntax, validate_email_with_name
@@ -231,3 +236,49 @@ class Email(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         return super().save(*args, **kwargs)
+
+
+class MailTemplateRevision(BaseRevision):
+    current_instance = models.OneToOneField(MailTemplate, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="mail_template")
+
+
+class MailTemplateVersion(BaseVersion):
+    revision = models.ForeignKey(MailTemplateRevision, on_delete=models.CASCADE, related_name="versions")
+
+    def save(self, *args, **kwargs):
+        # import pdb; pdb.set_trace()
+        try:
+            mailtempversion = MailTemplateVersion.objects.get(id=self.id)
+            for version in mailtempversion.revision.versions.all().exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in MailTemplateVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)
+
+
+class MailConfigRevision(BaseRevision):
+    current_instance = models.OneToOneField(MailConfig, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="mail_config")
+
+
+class MailConfigVersion(BaseVersion):
+    revision = models.ForeignKey(MailConfigRevision, on_delete=models.CASCADE, related_name="versions")
+
+    def save(self, *args, **kwargs):
+        # import pdb; pdb.set_trace()
+        try:
+            mailconfigversion = MailConfigVersion.objects.get(id=self.id)
+            for version in mailconfigversion.revision.versions.all().exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in MailConfigVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)

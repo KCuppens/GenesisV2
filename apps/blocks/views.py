@@ -12,20 +12,35 @@ from apps.conf.utils import get_config
 from django.views.generic import View
 from django.contrib.admin.views.decorators import staff_member_required
 from apps.base.utils import has_perms
-from apps.blocks.models import Block, BlockCategory
+from apps.blocks.models import (
+    Block, 
+    BlockCategory,
+    BlocksRevision as ModelRevision,
+    BlocksVersion as ModelVersion
+)
 from apps.blocks.forms import BlockForm, BlockCategoryForm
 from django.utils.translation import ugettext_lazy as _
 from django.forms.models import modelformset_factory
+from django.db import transaction
+import json
 
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_block(request):
     blocks = Block.objects.filter(date_deleted=None)
     has_perms(request, ["blocks.add_block"], 'blocks/index.html')
+    for block in blocks:
+        try:
+            revision = ModelRevision.objects.get(current_instance=block)
+            versions = revision.versions.all()
+            block.has_versions = bool(versions)
+        except:
+            continue
     
     return render(request,'blocks/index.html', {"blocks":blocks})
 
 @staff_member_required(login_url=reverse_lazy('login'))
+@transaction.atomic
 def add_block(request):
     has_perms(request, ["blocks.add_block"], None, 'overviewblock')
     if request.method == 'POST':
@@ -44,7 +59,9 @@ def add_block(request):
     })
 
 @staff_member_required(login_url=reverse_lazy('login'))
+@transaction.atomic
 def edit_block(request, pk):
+    # import pdb; pdb.set_trace()
     has_perms(request, ["blocks.change_block"], None, 'overviewblock')
     instance = get_object_or_404(Block, pk=pk)
     if request.method == 'POST':
@@ -182,4 +199,78 @@ def delete_blockcategory(request,pk):
     messages.add_message(request, messages.SUCCESS, _('The block category has been succesfully deleted!'))
     return redirect('overviewblock-categories')
 
+@staff_member_required(login_url=reverse_lazy('login'))
+def get_version_ajax_modal(request):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    reversion = ModelRevision.objects.get(current_instance=Block.objects.get(id=id))
+    versions = ModelVersion.objects.filter(revision=reversion).order_by("date_created")
+    if versions:
+        context = {
+            'versions': versions
+        }
+        data = {
+            'template': render_to_string('blocks/__partials/version_modal.html', context=context, request=request)
+        }
+    return JsonResponse(data)
 
+@staff_member_required(login_url=reverse_lazy('login'))
+def get_delete_version_ajax_modal(request):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    try:
+        version = ModelVersion.objects.get(id=id)
+    except:
+        version = None
+    if version:
+        context = {
+            'version': version
+        }
+        data = {
+            'template': render_to_string('blocks/__partials/delete_version_modal.html', context=context, request=request)
+        }
+    return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def select_version(request, pk):
+    # import pdb;pdb.set_trace();
+    version = ModelVersion.objects.get(id=pk)
+    # article_version.is_current = True
+    # article_version.save()
+
+    version_dict = json.loads(version.serialized_instance)
+    model_obj = ModelRevision.objects.get(versions__id=pk).current_instance
+    for attr, value in version_dict.items():
+        if attr == 'category':
+            model_obj.category.set(value)
+            continue
+        setattr(model_obj, attr, value)
+    model_obj.not_new_object=1
+    model_obj.save()
+    messages.add_message(request, messages.SUCCESS, _('Versie succesvol gewijzigd'))
+    return redirect('overviewblocks')
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def delete_version(request, pk):
+    # import pdb;pdb.set_trace();
+    version = ModelVersion.objects.get(id=pk)
+    if version.is_current:
+        # redirect if is_current=True
+        messages.add_message(request, messages.WARNING, _('U kunt de momenteel geselecteerde versie niet verwijderen!'))
+        return redirect('overviewblocks')
+    version.delete()
+    messages.add_message(request, messages.SUCCESS, _('De versie is succesvol verwijderd'))
+    return redirect('overviewblocks')
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def add_version_comment(request, pk):
+    # import pdb;pdb.set_trace();
+    version = ModelVersion.objects.get(id=pk)
+    comment = request.POST.get('comment')
+    if comment and comment != version.comment:
+        version.comment = comment
+        version.save()
+        messages.add_message(request, messages.SUCCESS, _('De opmerking is succesvol opgeslagen!'))
+    return redirect('overviewblocks')

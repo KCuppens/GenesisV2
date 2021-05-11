@@ -46,7 +46,7 @@ class MailConfigForm(forms.ModelForm):
         }
 
     def clean(self, *args, **kwargs):
-        cleaned_data = super(MailTemplateForm, self).clean()
+        cleaned_data = super(MailConfigForm, self).clean()
 
         errors = {}
         mailconfig = MailConfig.objects.filter(key_name=self.cleaned_data.get('key_name')).first()

@@ -5,12 +5,15 @@ from apps.formbuilder.models import Form
 from apps.pages.utils import check_if_homepage_exists
 from apps.base.widgets import MediaImageWidget
 
+DATE_INPUT_FORMATS = ('%Y-%m-%d %H-%i',)
+
 class PageForm(forms.ModelForm):
     parent = forms.ModelChoiceField(required=False, queryset=Page.objects.filter(date_deleted=None))
     image = forms.CharField(label=_('Afbeelding'), widget=MediaImageWidget, required=False)
+    # date_expired = forms.DateTimeField(input_formats=DATE_INPUT_FORMATS)
     class Meta:
         model = Page
-        fields = ('in_main_menu', 'image', 'is_homepage', 'page_title', 'menu_title','url_type','slug','linkthrough','parent','meta_title','meta_keywords','meta_description','date_published','date_expired','active')
+        fields = ('in_main_menu', 'image', 'is_homepage', 'page_title', 'menu_title','url_type','slug','linkthrough','parent','meta_title','meta_keywords','meta_description','date_published','date_expired','active', 'is_deletable')
         labels = {
             'in_main_menu': _('Is it the homepage?'),
             'in_main_menu': _('Show in main menu'),
@@ -25,7 +28,8 @@ class PageForm(forms.ModelForm):
             'meta_description': _('Meta description'),
             'date_published': _('Publishing date'),
             'date_expired': _('Expiring date'),
-            'active': _('Active')
+            'active': _('Active'),
+            'is_deletable': _('Is it deletable?'),
         }
         help_texts = {
             'page_title': _('This title will be shown on the website and in the metadata.'),
@@ -33,6 +37,9 @@ class PageForm(forms.ModelForm):
             'meta_title': _('This title will only overwrite page title in the meta data for SEO purposes.'),
             'meta_keywords': _('These keywords will be written in the meta data of the browser for SEO purposes.'),
             'meta_description': _('This description will be written in the meta data of the browser for SEO purposes.'),
+        }
+        widgets = {
+            'is_deletable': forms.CheckboxInput()
         }
 
     def clean(self, *args, **kwargs):

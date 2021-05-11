@@ -1,5 +1,6 @@
 import mimetypes
 from django.conf import settings
+from apps.filemanager import models
 
 def get_size(value):
     if value < 512000:
@@ -142,3 +143,29 @@ def guess_media_type(mime):
     elif mime in get_valid_audio_mime_types():
         return Media.TYPE_AUDIO
     return Media.TYPE_FILE
+
+def attach_has_versions(queryset, model_type):
+    if model_type == 'directory':
+        ModelRevision = models.DirectoryRevision
+    else:
+        ModelRevision = models.MediaRevision
+    if not queryset:
+        return queryset
+    for obj in queryset:
+        try:
+            revision = ModelRevision.objects.get(current_instance=obj)
+            versions = revision.versions.all()
+            obj.has_versions = bool(versions)
+        except:
+            continue
+    return queryset
+
+def attach_version_type(queryset, mode):
+    if not queryset:
+        return queryset
+    for obj in queryset:
+        try:
+            obj.mode = mode
+        except:
+            continue
+    return queryset

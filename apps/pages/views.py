@@ -1,8 +1,20 @@
 from django.views.generic import View
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
+from django.dispatch import Signal
+from django.db.models.signals import post_save
+from apps.pages.signals import post_pagerevision_commit
 from apps.base.utils import has_perms
-from apps.pages.models import Page, Canvas, CanvasRow, PageBlock, DetailPage, PageBlockElement
+from apps.pages.models import (
+    Page, 
+    Canvas, 
+    CanvasRow, 
+    PageBlock, 
+    DetailPage, 
+    PageBlockElement,
+    PageRevision as ModelRevision,
+    PageVersion as ModelVersion
+)
 from apps.blocks.models import Block, BlockCategory
 from apps.pages.forms import PageForm, BlockForm, BlockElementForm
 from django.utils.translation import ugettext_lazy as _
@@ -17,7 +29,8 @@ from django.http import HttpResponseNotFound
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.defaultfilters import slugify
 from django.forms.models import modelformset_factory
-import datetime
+from django.db import transaction
+import datetime, json
 now = datetime.datetime.now()
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_page(request):
@@ -28,7 +41,13 @@ def overview_page(request):
         pages = Page.objects.filter(Q(page_title__contains=search)| Q(menu_title__contains=search), date_deleted=None, parent__isnull=True)
     else:
         pages = Page.objects.filter(date_deleted=None, parent__isnull=True).order_by('position')
-
+    for page in pages:
+        try:
+            revision = ModelRevision.objects.get(current_instance=page)
+            versions = revision.versions.all()
+            page.has_versions = bool(versions)
+        except:
+            continue
     
     return render(request,'pages/index.html', {"pages":pages, "search": search})
 
@@ -39,11 +58,20 @@ def overview_children_page(request, pk):
     if not page:
         return HttpResponseNotFound(_("Pagina niet gevonden"))
     pages = Page.objects.filter(parent=page, date_deleted=None)
-
+    for page in pages:
+        try:
+            revision = ModelRevision.objects.get(current_instance=page)
+            versions = revision.versions.all()
+            page.has_versions = bool(versions)
+        except:
+            continue
     return render(request,'pages/children-index.html', {"pages":pages, "page": page})
 
 @staff_member_required(login_url=reverse_lazy('login'))
+@transaction.atomic
 def add_page(request):
+    # import pdb; pdb.set_trace()
+    page_signal = Signal()
     has_perms(request, ["pages.add_page"], None, 'overviewpage')
     if request.method == 'POST':
         form = PageForm(request.POST)
@@ -55,7 +83,7 @@ def add_page(request):
                 instance.full_slug = generate_full_slug(instance)
             instance.save()
             form.save_m2m()
-
+            post_save.send(sender=Page, instance=instance, created=False, final_save=True)
             messages.add_message(request, messages.SUCCESS, _('The page has been succesfully added!'))
 
             return redirect('overviewpage')
@@ -67,6 +95,7 @@ def add_page(request):
     })
 
 @staff_member_required(login_url=reverse_lazy('login'))
+@transaction.atomic
 def add_children_page(request, pk):
     has_perms(request, ["pages.add_page"], None, 'overviewpage')
     if request.method == 'POST':
@@ -78,7 +107,7 @@ def add_children_page(request, pk):
             if not instance.url_type == Page.URL_TYPE_LINK_THROUGH:
                 instance.full_slug = generate_full_slug(instance)
             instance.save()
-
+            post_save.send(sender=Page, instance=instance, created=False, final_save=True)
             messages.add_message(request, messages.SUCCESS, _('The page has been succesfully added!'))
 
             return redirect(reverse('overviewchildrenpage', kwargs={'pk': instance.parent.pk}))
@@ -94,7 +123,9 @@ def add_children_page(request, pk):
     })
 
 @staff_member_required(login_url=reverse_lazy('login'))
+@transaction.atomic
 def edit_page(request, pk):
+    # import pdb; pdb.set_trace()
     has_perms(request, ["pages.change_page"], None, 'overviewpage')
     instance = get_object_or_404(Page, pk=pk)
     if request.method == 'POST':
@@ -104,6 +135,7 @@ def edit_page(request, pk):
             generate_slug(instance)
             generate_full_slug(instance)
             instance.save()
+            post_save.send(sender=Page, instance=instance, created=False, final_save=True)
             messages.add_message(request, messages.SUCCESS, _('The page has been succesfully changed!'))
             if instance.parent:
                 return redirect(reverse('overviewchildrenpage', kwargs={'pk': instance.parent.pk}))
@@ -159,9 +191,12 @@ def delete_ajax_page_modal(request):
 def delete_page(request,pk):
     has_perms(request, ["pages.delete_page"], None, 'overviewpage')
     instance = Page.objects.get(pk=pk)
-    instance.date_deleted = timezone.now()
-    instance.save()
-    messages.add_message(request, messages.SUCCESS, _('The page has been succesfully deleted!'))
+    if not instance.is_deletable:
+        messages.add_message(request, messages.WARNING, _('The page is not deletable!'))
+    else:
+        instance.date_deleted = timezone.now()
+        instance.save()
+        messages.add_message(request, messages.SUCCESS, _('The page has been succesfully deleted!'))
     if instance.parent:
         return redirect(reverse('overviewchildrenpage', kwargs={'pk': instance.parent.pk}))
     return redirect('overviewpage')
@@ -432,3 +467,80 @@ def get_detailpages(request):
             'template': render_to_string('detailpages/__partials/__overview.html', context=context, request=request),
         }
         return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def get_version_ajax_modal(request):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    reversion = ModelRevision.objects.get(current_instance=Page.objects.get(id=id))
+    versions = ModelVersion.objects.filter(revision=reversion).order_by("date_created")
+    if versions:
+        context = {
+            'versions': versions
+        }
+        data = {
+            'template': render_to_string('pages/__partials/version_modal.html', context=context, request=request)
+        }
+    return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def get_delete_version_ajax_modal(request):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    try:
+        version = ModelVersion.objects.get(id=id)
+    except:
+        version = None
+    if version:
+        context = {
+            'version': version
+        }
+        data = {
+            'template': render_to_string('pages/__partials/delete_version_modal.html', context=context, request=request)
+        }
+    return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def select_version(request, pk):
+    # import pdb;pdb.set_trace();
+    version = ModelVersion.objects.get(id=pk)
+    # article_version.is_current = True
+    # article_version.save()
+
+    version_dict = json.loads(version.serialized_instance)
+    model_obj = ModelRevision.objects.get(versions__id=pk).current_instance
+    for attr, value in version_dict.items():
+        if attr == 'pages':
+            model_obj.pages.set(value)
+            continue
+        setattr(model_obj, attr, value)
+    model_obj.not_new_object=1
+    model_obj.save()
+    post_save.send(sender=Page, instance=model_obj, created=False, final_save=True)
+    messages.add_message(request, messages.SUCCESS, _('Versie succesvol gewijzigd'))
+    return redirect('overviewpage')
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def delete_version(request, pk):
+    # import pdb;pdb.set_trace();
+    version = ModelVersion.objects.get(id=pk)
+    if version.is_current:
+        # redirect if is_current=True
+        messages.add_message(request, messages.WARNING, _('U kunt de momenteel geselecteerde versie niet verwijderen!'))
+        return redirect('overviewpage')
+    version.delete()
+    messages.add_message(request, messages.SUCCESS, _('De versie is succesvol verwijderd'))
+    return redirect('overviewpage')
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def add_version_comment(request, pk):
+    # import pdb;pdb.set_trace();
+    version = ModelVersion.objects.get(id=pk)
+    comment = request.POST.get('comment')
+    if comment and comment != version.comment:
+        version.comment = comment
+        version.save()
+        messages.add_message(request, messages.SUCCESS, _('De opmerking is succesvol opgeslagen!'))
+    return redirect('overviewpage')

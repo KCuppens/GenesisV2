@@ -1,0 +1,5 @@
+{% load i18n %}
+{% trans 'Are you sure you want to delete?' %}
+<br>
+<br>
+<a href="{% url 'filemanagerdeleteversion' version.mode version.pk %}" class="btn btn-danger">{% trans 'Delete' %}</a>

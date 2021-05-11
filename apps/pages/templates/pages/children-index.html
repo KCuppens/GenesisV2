@@ -97,6 +97,43 @@ $('.open-delete-modal').on('click', function() {
     });
 })
 
+$('.open-version-modal').on('click', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'pageversionmodal'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $(document).find('.modal-placeholder').html(data.template);
+            $('.version-modal').modal();
+        }
+    });
+});
+
+$(document).on('click', '.open-delete-version-modal', function(e) {
+    // e.preventDefault();
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'pagedeleteversionmodal'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            debugger;
+            $('.modal-backdrop').removeClass("modal-backdrop fade show")
+            $(document).find('.modal-placeholder').html(data.template)
+            $('.delete-version-modal').modal();
+        }
+    });
+});
+
 $(function () {
 
     $('#sortable').sortable({

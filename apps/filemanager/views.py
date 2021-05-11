@@ -1,6 +1,14 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from apps.filemanager.models import Directory, Media, Thumbnail
+from apps.filemanager.models import (
+    Directory, 
+    Media, 
+    Thumbnail,
+    DirectoryRevision as ModelRevision1, 
+    DirectoryVersion as ModelVersion1,
+    MediaRevision as ModelRevision2,
+    MediaVersion as ModelVersion2,
+)
 from apps.filemanager.forms import DirectoryForm, MediaForm, MediaFileForm
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
@@ -13,7 +21,14 @@ from django.contrib import messages
 from django.db.models import Q
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from apps.filemanager.utils import guess_mime_type, guess_media_type, get_filename
+from apps.filemanager.utils import (
+    guess_mime_type, 
+    guess_media_type, 
+    get_filename,
+    attach_has_versions,
+    attach_version_type
+)
+import json
 # Create your views here.
 @staff_member_required(login_url=reverse_lazy('login'))
 def media_document_index_view(request):
@@ -23,6 +38,7 @@ def media_document_index_view(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_media_overview(request):
+    # import pdb; pdb.set_trace()
     if request.method == "GET":
         type = request.GET.get('type', None)
         dir = request.GET.get('dir')
@@ -64,8 +80,8 @@ def get_media_overview(request):
             directories = Directory.objects.filter(date_deleted=None, parent__isnull=True)
         types = Media.GET_TYPES
         context = {
-            'documents': documents,
-            'directories': directories,
+            'documents': attach_has_versions(documents, 'media'),
+            'directories': attach_has_versions(directories, 'directory'),
             'types': types,
             'search': search,
             'current_type': type,
@@ -359,3 +375,132 @@ def delete_thumbnail(request,pk):
     instance.save()
     messages.add_message(request, messages.SUCCESS, _('The thumbnail has been succesfully deleted!'))
     return redirect('media-document-index')   
+
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def get_version_ajax_modal(request, mode):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    if mode == 'directory':
+        reversion = ModelRevision1.objects.get(current_instance=Directory.objects.get(id=id))
+        versions = ModelVersion1.objects.filter(revision=reversion).order_by("date_created")
+    else:
+        reversion = ModelRevision2.objects.get(current_instance=Media.objects.get(id=id))
+        versions = ModelVersion2.objects.filter(revision=reversion).order_by("date_created")
+    if versions:
+        context = {
+            'versions': attach_version_type(versions, mode)
+        }
+        data = {
+            'template': render_to_string('media/__partials/version_modal.html', context=context, request=request),
+            'title': _('Versions')
+        }
+    return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def get_delete_version_ajax_modal(request, mode):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    try:
+        if mode == 'directory':
+            version = ModelVersion1.objects.get(id=id)
+            version.mode = mode
+        else:
+            version = ModelVersion2.objects.get(id=id)
+            version.mode = mode
+    except Exception as e:
+        print('Error: ', e)
+        version = None
+    if version:
+        context = {
+            'version': version
+        }
+        data = {
+            'template': render_to_string('media/__partials/delete_version_modal.html', context=context, request=request)
+        }
+    return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def select_version(request, mode, pk):
+    # import pdb;pdb.set_trace();
+
+    if mode == 'directory':
+        try:
+            version = ModelVersion1.objects.get(id=pk)
+            model_obj = ModelRevision1.objects.get(versions__id=pk).current_instance
+        except Exception as e:
+            messages.add_message(request, messages.WARNING, _(str(e)))
+            return redirect('media-document-index')
+    else:
+        try:
+            version = ModelVersion2.objects.get(id=pk)
+            model_obj = ModelRevision2.objects.get(versions__id=pk).current_instance
+        except Exception as e:
+            messages.add_message(request, messages.WARNING, _(str(e)))
+            return redirect('media-document-index')
+
+    version_dict = json.loads(version.serialized_instance)
+    for attr, value in version_dict.items():
+        if attr == 'documents':
+            model_obj.documents.set(value)
+            continue
+        if attr == 'thumbnails':
+            model_obj.thumbnails.set(value)
+            continue
+        setattr(model_obj, attr, value)
+    model_obj.not_new_object=1
+    model_obj.save()
+    messages.add_message(request, messages.SUCCESS, _('Versie succesvol gewijzigd'))
+    return redirect('media-document-index')
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def delete_version(request, mode, pk):
+    # import pdb;pdb.set_trace();
+    # if mode == 'template':
+    #     redirect_obj = redirect('overviewmailtemplate')
+    # else:
+    #     redirect_obj = redirect('overviewmailconfig')
+    redirect_obj = redirect('media-document-index')
+
+    try:
+        if mode == 'directory':
+            version = ModelVersion1.objects.get(id=pk)
+        else:
+            version = ModelVersion2.objects.get(id=pk)
+    except Exception as e:
+        messages.add_message(request, messages.WARNING, _(str(e)))
+        return redirect_obj
+    if version.is_current:
+        # redirect if is_current=True
+        messages.add_message(request, messages.WARNING, _('U kunt de momenteel geselecteerde versie niet verwijderen!'))
+        return redirect_obj
+    version.delete()
+    messages.add_message(request, messages.SUCCESS, _('De versie is succesvol verwijderd'))
+    return redirect_obj
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def add_version_comment(request, mode, pk):
+    # import pdb;pdb.set_trace();
+    # if mode == 'template':
+    #     redirect_obj = redirect('overviewmailtemplate')
+    # else:
+    #     redirect_obj = redirect('overviewmailconfig')
+
+    redirect_obj = redirect('media-document-index')
+
+    try:
+        if mode == 'directory':
+            version = ModelVersion1.objects.get(id=pk)
+        else:
+            version = ModelVersion2.objects.get(id=pk)
+    except Exception as e:
+        messages.add_message(request, messages.WARNING, _(str(e)))
+        return redirect_obj
+    comment = request.POST.get('comment')
+    if comment and comment != version.comment:
+        version.comment = comment
+        version.save()
+        messages.add_message(request, messages.SUCCESS, _('De opmerking is succesvol opgeslagen!'))
+    return redirect_obj

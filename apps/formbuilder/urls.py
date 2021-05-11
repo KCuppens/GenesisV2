@@ -1,5 +1,24 @@
 from django.conf.urls import url
-from .views import export_form_results, delete_formresult,delete_ajax_formresult_modal,  handle_form, render_form, delete_ajax_form_modal, overview_form, add_form, edit_form, delete_form, toggle_form_activation_view, get_formbuilder, overview_form_results, get_form
+from .views import (
+    export_form_results, 
+    delete_formresult,
+    delete_ajax_formresult_modal,  
+    handle_form, render_form, 
+    delete_ajax_form_modal, 
+    overview_form, 
+    add_form, 
+    edit_form, 
+    delete_form, 
+    toggle_form_activation_view, 
+    get_formbuilder, 
+    overview_form_results, 
+    get_form,
+    get_version_ajax_modal,
+    get_delete_version_ajax_modal,
+    select_version,
+    delete_version,
+    add_version_comment
+)
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
@@ -18,4 +37,10 @@ urlpatterns = [
     url(_('^get-formbuilder$').strip(),get_formbuilder,name="getformbuilder"),
     url(_('^get-form$').strip(),get_form,name="getform"),
     url(_('^handle-form$').strip(),handle_form,name="handleform"),
+
+    url(_('^version/modal$').strip(),get_version_ajax_modal,name="formversionmodal"),
+    url(_('^version/deletemodal$').strip(),get_delete_version_ajax_modal,name="formdeleteversionmodal"),
+    url(_('^version/(?P<pk>[0-9a-f-]+)$').strip(),select_version,name="formselectversion"),
+    url(_('^version/delete/(?P<pk>[0-9a-f-]+)$').strip(),delete_version,name="formdeleteversion"),
+    url(_('^version/comment/(?P<pk>[0-9a-f-]+)$').strip(),add_version_comment,name="formaddversioncomment"),
 ]

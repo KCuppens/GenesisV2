@@ -42,6 +42,30 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+
+class Tags(models.Model):
+    file = models.CharField(max_length=200, unique=True)
+
+class BaseRevision(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+
+class BaseVersion(models.Model):
+    serialized_instance = models.TextField()
+    is_deleted = models.BooleanField(default=False)
+    date_deleted = models.DateField(blank=True, null=True)
+    is_current = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField()
+
+    class Meta:
+        abstract = True
+
+
+
 class AdminModel(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_author', null=True,blank=True, verbose_name=_('Author'))
     edited_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_edited_by',null=True, blank=True, verbose_name=_('Edited by'))
@@ -55,7 +79,17 @@ class AdminModel(models.Model):
 
     @receiver(post_save)
     def create_history_record(sender, instance, **kwargs):
-        apps = ['PageBlockElement','User','DashboardConfiguration','Session','Migration','History','Icon','Configuration','TranslationEntry','Thumbnail','DetailPage', 'MessageLog', 'FormPage', 'FormElement', 'FormElementOption','FormResult','FormResultField', 'Email']
+        apps = ['PageBlockElement','User','DashboardConfiguration',
+                'Session','Migration','History','Icon','Configuration',
+                'TranslationEntry','Thumbnail','DetailPage', 'MessageLog', 
+                'FormPage', 'FormElement', 'FormElementOption','FormResult',
+                'FormResultField', 'Email', "PageRevision", "PageVersion", 
+                "NewsRevision", "NewsVersion", 'FormRevision', 'FormVersion',
+                'MailTemplateRevision', 'MailTemplateVersion', 'MailConfigRevision',
+                'MailConfigVersion', 'ModuleRevision', 'ModuleVersion',
+                'TabRevision', 'TabVersion', 'BlocksRevision', 'BlocksVersion',
+                'DirectoryRevision', 'DirectoryVersion', 'MediaRevision', 
+                'MediaVersion']
         if not instance.__class__.__name__ in apps:
             if instance.edited_by:
                 user = instance.edited_by 

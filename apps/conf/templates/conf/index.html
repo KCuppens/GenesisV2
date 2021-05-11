@@ -14,6 +14,16 @@
                                 <a href="{% url 'addconf' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> {% trans 'Add configuration' %}</a>
                             {% endif %}
                             <button type="submit" class="btn btn-success mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> {% trans 'Save' %}</button>
+
+                            <div class="form-group col-md-3"
+                                style="display: inline-block;">
+                                  <!-- <label for="inputState">State</label> -->
+                                  <select name="sort_by" class="form-control sort-conf-field">
+                                    <option selected>Sort by</option>
+                                    <option value="type">Type</option>
+                                    <option value="conf_type">Category</option>
+                                  </select>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -74,5 +84,12 @@
             }
         });
     })
+
+    $('.sort-conf-field').change(function(e){
+        let value = $(this).val();
+        let url = "{% url 'overviewconf'  %}";
+        window.location = `${url}?sort_by=${value}`
+
+    });
 </script>
 {% endblock %}

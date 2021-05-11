@@ -2,4 +2,7 @@ from django.apps import AppConfig
 
 
 class BlocksConfig(AppConfig):
-    name = 'blocks'
+    name = 'apps.blocks'
+
+    def ready(self):
+    	import apps.blocks.signals

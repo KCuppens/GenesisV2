@@ -1,5 +1,5 @@
 from django.db import models
-from apps.base.models import BaseModel, AdminModel
+from apps.base.models import BaseModel, AdminModel, BaseRevision, BaseVersion
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
 from apps.filemanager.utils import base_media_path
@@ -153,3 +153,45 @@ class Thumbnail(models.Model):
     size = models.CharField(max_length=255, blank=True)
     path = models.CharField(max_length=255, null=True, blank=True)
     date_deleted = models.DateTimeField(null=True, blank=True, verbose_name=_('Delete date'))
+
+class DirectoryRevision(BaseRevision):
+    current_instance = models.OneToOneField(Directory, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="directory")
+
+
+class DirectoryVersion(BaseVersion):
+    revision = models.ForeignKey(DirectoryRevision, on_delete=models.CASCADE, related_name="versions")
+
+    def save(self, *args, **kwargs):
+        try:
+            directoryversion = DirectoryVersion.objects.get(id=self.id)
+            for version in DirectoryVersion.objects.exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in DirectoryVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)
+
+class MediaRevision(BaseRevision):
+    current_instance = models.OneToOneField(Media, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="media")
+
+
+class MediaVersion(BaseVersion):
+    revision = models.ForeignKey(MediaRevision, on_delete=models.CASCADE, related_name="versions")
+
+    def save(self, *args, **kwargs):
+        try:
+            mediaversion = MediaVersion.objects.get(id=self.id)
+            for version in MediaVersion.objects.exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in MediaVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)

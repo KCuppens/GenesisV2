@@ -69,18 +69,19 @@ INSTALLED_APPS = [
     "tags_input",
 ]
 TAGS_INPUT_INCLUDE_JQUERY = True
+
 def get_queryset(*args, **kwargs):
     from apps.filemanager.models import Media
     return Media.objects.all()
 
 TAGS_INPUT_MAPPINGS = {
-    'filemanager.Media': 
+    'base.Tags': 
         {
-            'field': 'file', 'queryset': get_queryset
+            'field': 'file'
         }
 }
 
-
+TRANSLATABLE_MODEL_MODULES = []
 
 TEMPLATE_ENGINE = 'django'
 SENDING_ORDER = ['-priority']
@@ -223,3 +224,6 @@ BACKENDS = ''
 # EMAIL_HOST_PASSWORD = 'App password from google'
 #Logging
 import logging
+
+# versions older than VERSION_DELETE_DAYS will be deleted
+VERSION_DELETE_DAYS = 15

@@ -37,6 +37,9 @@
 
     </div>
 </div>
+
+{% endblock content %}
+
 {% block js %}
 <script>
 $('.open-delete-modal').on('click', function() {
@@ -55,6 +58,41 @@ $('.open-delete-modal').on('click', function() {
         }
     });
 })
+
+$('.open-version-modal').on('click', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'blockversionmodal'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $(document).find('.modal-placeholder').html(data.template);
+            $('.version-modal').modal();
+        }
+    });
+});
+
+$(document).on('click', '.open-delete-version-modal', function(e) {
+    // e.preventDefault();
+    var id = $(this).data('id');
+    $.ajax({
+        url: '{% url 'blockdeleteversionmodal'  %}',
+        type:"POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(data){
+            console.log(data);
+            $('.modal-backdrop').removeClass("modal-backdrop fade show")
+            $(document).find('.modal-placeholder').html(data.template)
+            $('.delete-version-modal').modal();
+        }
+    });
+});
 </script>
 {% endblock %}
-{% endblock content %}

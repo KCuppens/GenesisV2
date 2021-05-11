@@ -2,10 +2,10 @@
 var f1 = flatpickr($('.basicFlatpickr'));
 var f2 = flatpickr($('.dateTimeFlatpickr'), {
     enableTime: true,
-    dateFormat: "Y-m-d H:i",
+    dateFormat: "Y-m-d H:i:S",
     time_24hr: true,
     minDate: "today",
-    defaultDate: "today"
+    // defaultDate: "today"
 });
 var f3 = flatpickr($('.rangeCalendarFlatpickr'), {
     mode: "range",

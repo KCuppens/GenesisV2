@@ -1,9 +1,18 @@
 from django.db import models
-from apps.base.models import BaseModel, SeoModel, AdminModel
+from apps.base.models import (
+    BaseModel, 
+    SeoModel, 
+    AdminModel, 
+    Tags,
+    BaseRevision,
+    BaseVersion
+)
 from django_extensions.db.fields import AutoSlugField
 from django.db.models import Q
-import datetime 
+import datetime
+from django.db import transaction
 now = datetime.datetime.now()
+
 # Create your models here.
 class ArticleManager(models.Manager):
     def get_actives(self, sort_method, sort_order):
@@ -35,3 +44,31 @@ class Article(BaseModel, SeoModel, AdminModel):
 
     def __str__(self):
         return self.title
+
+    @transaction.atomic()
+    def save(self, *args, **kwargs):
+        # if not_new_object:
+        #     kwargs['not_new_object'] = not_new_object
+        super().save(*args, **kwargs)
+
+
+class NewsRevision(BaseRevision):
+    current_instance = models.OneToOneField(Article, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="news")
+
+class NewsVersion(BaseVersion):
+    revision = models.ForeignKey(NewsRevision, on_delete=models.CASCADE, related_name="versions")
+
+    def save(self, *args, **kwargs):
+        try:
+            newsversion = NewsVersion.objects.get(id=self.id)
+            for version in NewsVersion.objects.exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in NewsVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)
+

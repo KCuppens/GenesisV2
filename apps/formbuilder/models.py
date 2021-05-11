@@ -1,5 +1,5 @@
 from django.db import models
-from apps.base.models import BaseModel, AdminModel, SortableModel
+from apps.base.models import BaseModel, AdminModel, SortableModel, BaseRevision, BaseVersion
 from apps.mail.models import MailTemplate
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
@@ -183,4 +183,25 @@ class FormResultField(models.Model):
     page = models.CharField(max_length=255, null=True, blank=True) 
 
 
+class FormRevision(BaseRevision):
+    current_instance = models.OneToOneField(Form, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="form")
+
+
+class FormVersion(BaseVersion):
+    revision = models.ForeignKey(FormRevision, on_delete=models.CASCADE, related_name="versions")
+
+    def save(self, *args, **kwargs):
+        # import pdb; pdb.set_trace()
+        try:
+            formversion = FormVersion.objects.get(id=self.id)
+            for version in formversion.revision.versions.all().exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in FormVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)
 

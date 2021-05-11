@@ -10,14 +10,25 @@ from django.urls import reverse
 from django.shortcuts import redirect, resolve_url
 from apps.conf.utils import get_config
 from django.views.generic import View
+from django.db import transaction
 from django.contrib.admin.views.decorators import staff_member_required
 from apps.base.utils import has_perms
-from apps.formbuilder.models import Form, FormPage, FormElement, FormElementOption, FormResult, FormResultField
+from apps.formbuilder.models import (
+    Form, 
+    FormPage, 
+    FormElement, 
+    FormElementOption, 
+    FormResult, 
+    FormResultField,
+    FormRevision as ModelRevision,
+    FormVersion as ModelVersion
+)
 from apps.formbuilder.forms import FormbuilderForm, FormPageForm
 from django.utils.translation import ugettext_lazy as _
 from apps.mail.mail import send
 import xlsxwriter
 import io
+import json
 from django.http import HttpResponse
 import datetime
 now = datetime.datetime.now()
@@ -26,9 +37,18 @@ now = datetime.datetime.now()
 def overview_form(request):
     has_perms(request, ["formbuilder.view_form"], None, 'overviewform')
     forms = Form.objects.filter(date_deleted=None)
+    for form in forms:
+        try:
+            revision = ModelRevision.objects.get(current_instance=form)
+            versions = revision.versions.all()
+            form.has_versions = bool(versions)
+        except:
+            continue
+
     return render(request,'forms/index.html', {"forms":forms})
 
 @staff_member_required(login_url=reverse_lazy('login'))
+@transaction.atomic
 def add_form(request):
     has_perms(request, ["formbuilder.add_form"], None, 'overviewform')
     if request.method == 'POST':
@@ -55,6 +75,7 @@ def add_form(request):
     })
 
 @staff_member_required(login_url=reverse_lazy('login'))
+@transaction.atomic
 def edit_form(request, pk):
     has_perms(request, ["formbuilder.change_form"], None, 'overviewform')
     instance = get_object_or_404(Form, pk=pk)
@@ -690,3 +711,79 @@ def send_admin_email(request, form):
     html_message = render_to_string('mail/default.html', context=context, request=request)
     send([form.mail_recipient_email], form.mail_sender_email, form.mail_admin, {'form': form}, form.mail_admin.subject,
         form.mail_admin.content_plain, html_message)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def get_version_ajax_modal(request):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    reversion = ModelRevision.objects.get(current_instance=Form.objects.get(id=id))
+    versions = ModelVersion.objects.filter(revision=reversion).order_by("date_created")
+    if versions:
+        context = {
+            'versions': versions
+        }
+        data = {
+            'template': render_to_string('forms/__partials/version_modal.html', context=context, request=request)
+        }
+    return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def get_delete_version_ajax_modal(request):
+    data = {}
+    # import pdb;pdb.set_trace();
+    id = request.POST.get('id', False)
+    try:
+        version = ModelVersion.objects.get(id=id)
+    except:
+        version = None
+    if version:
+        context = {
+            'version': version
+        }
+        data = {
+            'template': render_to_string('forms/__partials/delete_version_modal.html', context=context, request=request)
+        }
+    return JsonResponse(data)
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def select_version(request, pk):
+    # import pdb;pdb.set_trace();
+    version = ModelVersion.objects.get(id=pk)
+    # article_version.is_current = True
+    # article_version.save()
+
+    version_dict = json.loads(version.serialized_instance)
+    model_obj = ModelRevision.objects.get(versions__id=pk).current_instance
+    for attr, value in version_dict.items():
+        if attr == 'pages':
+            model_obj.pages.set(value)
+            continue
+        setattr(model_obj, attr, value)
+    model_obj.not_new_object=1
+    model_obj.save()
+    messages.add_message(request, messages.SUCCESS, _('Versie succesvol gewijzigd'))
+    return redirect('overviewform')
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def delete_version(request, pk):
+    # import pdb;pdb.set_trace();
+    version = ModelVersion.objects.get(id=pk)
+    if version.is_current:
+        # redirect if is_current=True
+        messages.add_message(request, messages.WARNING, _('U kunt de momenteel geselecteerde versie niet verwijderen!'))
+        return redirect('overviewform')
+    version.delete()
+    messages.add_message(request, messages.SUCCESS, _('De versie is succesvol verwijderd'))
+    return redirect('overviewform')
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def add_version_comment(request, pk):
+    # import pdb;pdb.set_trace();
+    version = ModelVersion.objects.get(id=pk)
+    comment = request.POST.get('comment')
+    if comment and comment != version.comment:
+        version.comment = comment
+        version.save()
+        messages.add_message(request, messages.SUCCESS, _('De opmerking is succesvol opgeslagen!'))
+    return redirect('overviewform')

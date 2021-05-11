@@ -1,0 +1,61 @@
+{% load i18n %}
+<div class="modal fade version-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{% trans 'Versions' %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="style-3" class="table style-3  table-hover">
+                    <thead>
+                        <tr>
+                            <th>Versions</th>
+                            <th>Comment</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for version in versions %}
+                        {% if not version.is_deleted %}
+                        <tr>
+                            <td>{{ version.id }}
+                            </td>
+                            <td>
+                                <form method="POST" action="{% url 'moduleaddversioncomment' 'module' version.id %}"
+                                class="d-flex justify-content-start">
+                                <input type="text" name="comment" value="{{ version.comment }}" maxlength="255" class="form-control" id="id_comment"
+                                placeholder="Put your comment here">
+                                {% csrf_token %}
+                                
+                                <button class="btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> {% trans 'Save' %}</button>
+                                </form>
+                            </td>
+                            <td>
+                                <ul class="table-controls">
+                                    {% if version.is_current %}
+                                    <span class="badge badge-primary">Current</span>
+                                    {% else %}
+                                        <li>
+                                        <a href="{% url 'moduleselectversion' 'module' version.id %}"><span class="badge outline-badge-{% if version.is_current %}success{% endif %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></span></a></li>
+
+                                        <li>
+                                        <a data-id={{version.id}}
+                                        class="open-delete-version-modal"><span class="badge outline-badge-{% if version.is_current %}success{% else %}danger{% endif %}"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></span></a></li>
+
+                                        {% endif %}
+                                </ul>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

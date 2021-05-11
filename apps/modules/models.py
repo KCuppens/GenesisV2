@@ -1,5 +1,5 @@
 from django.db import models
-from apps.base.models import BaseModel, AdminModel, SortableModel
+from apps.base.models import BaseModel, AdminModel, SortableModel, BaseRevision, BaseVersion
 from django_extensions.db.fields import AutoSlugField
 from apps.feathericons.models import Icon
 from django.utils.translation import gettext_lazy as _
@@ -48,4 +48,52 @@ class Tab(BaseModel, AdminModel, SortableModel):
 
     class Meta:
         verbose_name = _('Tab')
+
+
+class ModuleRevision(BaseRevision):
+    current_instance = models.OneToOneField(Module, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="module")
+
+
+class ModuleVersion(BaseVersion):
+    revision = models.ForeignKey(ModuleRevision, on_delete=models.CASCADE, related_name="versions")
+
+    def save(self, *args, **kwargs):
+        # import pdb; pdb.set_trace()
+        try:
+            moduleversion = ModuleVersion.objects.get(id=self.id)
+            for version in moduleversion.revision.versions.all().exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in ModuleVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)
+
+
+class TabRevision(BaseRevision):
+    current_instance = models.OneToOneField(Tab, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=10, default="tab")
+
+
+class TabVersion(BaseVersion):
+    revision = models.ForeignKey(TabRevision, on_delete=models.CASCADE, related_name="versions")
+
+    def save(self, *args, **kwargs):
+        # import pdb; pdb.set_trace()
+        try:
+            tabversion = TabVersion.objects.get(id=self.id)
+            for version in tabversion.revision.versions.all().exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in TabVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)
+
+
 

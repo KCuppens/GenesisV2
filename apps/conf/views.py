@@ -15,9 +15,15 @@ from django.http import JsonResponse
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_conf(request):
     conf = Configuration.objects.filter()
+    sort_by = request.GET.get('sort_by')
+    if sort_by and (sort_by in [f.name for f in Configuration._meta.fields]):
+        if sort_by:
+            conf = conf.order_by(sort_by)
     has_perms(request, ["conf.add_configuration"], 'conf/index.html')
-    
-    return render(request,'conf/index.html', {"conf":conf})
+    context = {
+        "conf":conf,
+    }
+    return render(request,'conf/index.html', context)
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def add_conf(request):
