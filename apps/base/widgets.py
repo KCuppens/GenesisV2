@@ -9,7 +9,6 @@ from django import forms
 from collections import OrderedDict
 from apps.filemanager.models import Media
 
-
 class URLPickerWidget(widgets.TextInput):
     template_name = 'widgets/url_picker.html'
 

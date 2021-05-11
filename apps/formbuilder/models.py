@@ -36,7 +36,7 @@ class Form(BaseModel, AdminModel):
     pages = models.ManyToManyField('formpage', blank=True)
 
     def __str__(self):
-        return self.name
+        return self.name 
 
 class FormPage(models.Model):
     elements = models.ManyToManyField('formelement', blank=True) 

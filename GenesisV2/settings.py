@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'django.contrib.sites',
 
     #third-party apps
     'widget_tweaks',
     'translation_manager',
     'modeltranslation',
     'compressor',
+    'tags_input',
 
     #apps
     'apps.conf',
@@ -66,7 +68,6 @@ INSTALLED_APPS = [
     'apps.news',
     'apps.mail',
     'apps.formbuilder',
-    "tags_input",
 ]
 TAGS_INPUT_INCLUDE_JQUERY = True
 
@@ -227,3 +228,5 @@ import logging
 
 # versions older than VERSION_DELETE_DAYS will be deleted
 VERSION_DELETE_DAYS = 15
+
+SITE_ID=1
