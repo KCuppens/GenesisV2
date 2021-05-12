@@ -347,6 +347,22 @@ def canvas_row_reorder(request):
 
     return JsonResponse({}, status=200)
 
+def pageblockelement_reorder(request):
+    # has_perms(request, ["modules.change_module"], None, 'overviewmodules')
+    items = request.POST.get('item', 'None')
+    ids = items.split('&')
+    position = 0 
+
+    for id in ids:
+        item = PageBlockElement.objects.get(id=id)
+        position += 1
+        item.position = position 
+        item.save()
+    data = {
+
+    }
+    return JsonResponse(data)
+
 @staff_member_required(login_url=reverse_lazy('login'))
 def content_block_view(request):
     block = request.POST.get('block', None)
@@ -416,7 +432,8 @@ def content_block_view(request):
                 'instance': instance,
                 'form': form,
                 'block': block,
-                'instance': instance
+                'instance': instance,
+                'block_elements': instance.block_elements.order_by('position')
             }
             data = {
                 'template': render_to_string('canvas/__partials/__content_form.html', context=context, request=request),

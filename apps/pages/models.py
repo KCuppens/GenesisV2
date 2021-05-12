@@ -134,7 +134,7 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
     class Meta:
         verbose_name = _('Page block')
 
-class PageBlockElement(BaseModel, SeoModel):
+class PageBlockElement(BaseModel, SeoModel, SortableModel):
     block_element_title = models.CharField(max_length=255, null=True, blank=True)
     block_element_image = models.CharField(max_length=255, null=True, blank=True)
     block_element_content = models.TextField(null=True, blank=True)

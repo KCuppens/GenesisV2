@@ -1,7 +1,8 @@
 from django.conf.urls import url
 from .views import canvas_detailpage, get_detailpages, detailpages_overview, open_preview, toggle_activation_view, canvas_row_reorder, content_block_view, delete_ajax_page_modal, overview_page, add_page, edit_page, delete_page, page_reorder, overview_children_page, add_children_page, canvas_page, canvas_row, toggle_mainmenu_activation_view,\
                    get_version_ajax_modal, select_version, delete_version, \
-                   add_version_comment, get_delete_version_ajax_modal
+                   add_version_comment, get_delete_version_ajax_modal,\
+                   pageblockelement_reorder
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
@@ -23,6 +24,7 @@ urlpatterns = [
     url(_('^page-builder/preview/(?P<canvas>[0-9a-f-]+)$').strip(),open_preview,name="open-preview"),
     url(_('^page-builder/canvas-content$').strip(), content_block_view, name="canvascontent"),
     url(_('^page-builder/verander-canvas-row-order').strip(), canvas_row_reorder, name="canvas-row-reorder"),
+    url(_('^page-builder/pageblockelement_reorder').strip(), pageblockelement_reorder, name="pageblockelement_reorder"),
 
     url(_('^version/modal$').strip(),get_version_ajax_modal,name="pageversionmodal"),
     url(_('^version/deletemodal$').strip(),get_delete_version_ajax_modal,name="pagedeleteversionmodal"),

@@ -248,8 +248,8 @@
             <div id="style-2_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                 <table id="style-2" class="table style-2 table-hover dataTable no-footer">
                     <tbody>
-                        {% for block in instance.block_elements.all %}
-                            <tr>
+                        {% for block in block_elements %}
+                            <tr class="main-tr" id="{{block.id}}">
                                 <td colspan="2">
                                     <h3>{% trans 'Blok element' %}&nbsp;{{forloop.counter}}</h3>
                                     <svg data-block_elem="{{block.id}}" class="save-block-element" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
@@ -259,15 +259,96 @@
                     class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path
                     d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line
                     x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                </td> 
+                                    {% if instance.block.has_block_element_title %}
+                                    <div class="row mt-3">
+                                        <div class="col-2">{% trans 'Titel' %}</div>
+                                        <div class="col-10"><input type="text" class="form-control" value="{{block.block_element_title|default_if_none:""}}" name="block_elem_title" id="block_elem_title_{{block.id}}"></div>
+                                    </div>
+                                    {% endif %}
+                                
+
+                                {% if instance.block.has_block_element_image %}
+                                    <div class="row mt-3">
+                                        <div class="col-2">{% trans 'Afbeelding' %}</div>
+                                        <div class="row col-10">
+                                            <div class="col-md-8">
+                                                <input type="text" name="block_elem_image" value="{{block.block_element_image|default_if_none:""}}" class="filemanager-widget form-control modal-open-check" id="block_elem_image_{{block.id}}">
+                                            </div>
+                                            <div class="input-group-append col-md-4">
+                                                <button class="btn btn-block btn-dark browse-filemanager" type="button">{% trans 'Browse' %}</button>
+                                            </div>
+                                        </div>
+                                        <script src="{% static 'admin/js/libs/jquery-3.6.0.min.js' %}"></script>
+                                        <script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
+                                        <script>
+                                            $('.browse-filemanager').on('click', function() {
+                                                function getCookie(name) {
+                                                    var cookieValue = null; 
+                                                    if (document.cookie && document.cookie !== '') {
+                                                        var cookies = document.cookie.split(';');
+                                                        for (var i = 0; i < cookies.length; i++) {
+                                                            var cookie = jQuery.trim(cookies[i]);
+                                                            // Does this cookie string begin with the name we want?
+                                                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                    return cookieValue;
+                                                }
+                                                var csrftoken = getCookie('csrftoken');
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: '{% url 'get_filemanager' %}',
+                                                    data: {
+                                                        'csrfmiddlewaretoken': csrftoken,
+                                                        'type': 'image'
+                                                    },
+                                                    success: function(data){
+                                                        $('#filemanagerModal').modal();
+                                                        $('.get-filemanager').html(data.template);                                                    
+                                                    },
+                                                })
+                                                
+                                            });
+                                        </script>
+                                    </div>
+                                {% endif %}
+                    
+                                {% if instance.block.has_block_element_content %}
+                                    <div class="row mt-3">
+                                        <div class="col-2">{% trans 'Inhoud' %}</div>
+                                        <div class="col-10"><textarea name="block_element_content" class="form-control tinymce-editor" id="block_elem_content_{{block.id}}" cols="30" rows="10">{{block.block_element_content|default_if_none:""}}</textarea></div>
+                                    </div>
+                                {% endif %}
+                                {% if instance.block.has_block_element_subtitle %}
+                                    <div class="row mt-3">
+                                        <div class="col-2">{% trans 'Subtitel' %}</div>
+                                        <div class="col-10"><input type="text" value="{{block.block_element_subtitle|default_if_none:""}}" class="form-control" name="block_elem_subtitle" id="block_elem_subtitle_{{block.id}}"></div>
+                                    </div>
+                                {% endif %}
+                                {% if instance.block.has_block_element_image_second %}
+                                    <div class="row mt-3">
+                                        <div class="col-2">{% trans 'Tweede afbeelding' %}</div>
+                                        <div class="col-10"><input type="text" value="{{block.block_element_image_second|default_if_none:""}}" class="form-control" name="block_elem_image_second" id="block_elem_second_image_{{block.id}}"></div>
+                                    </td>
+                                </tr>
+                                    
+                                {% endif %}
+                                <tr>
+                                    <td colspan="2"><hr style="    color: #212529;
+                                        background-color: #212529;
+                                        height: 3px;"></td>
+                                </tr>
                             </tr>
-                            {% if instance.block.has_block_element_title %}
+                            <!-- {% if instance.block.has_block_element_title %}
                                 <tr>
                                     <td>{% trans 'Titel' %}</td>
                                     <td><input type="text" class="form-control" value="{{block.block_element_title|default_if_none:""}}" name="block_elem_title" id="block_elem_title_{{block.id}}"></td>
                                 </tr>
-                            {% endif %}
-                            {% if instance.block.has_block_element_image %}
+                            {% endif %} -->
+                            <!-- {% if instance.block.has_block_element_image %}
                                 <tr>
                                     <td>{% trans 'Afbeelding' %}</td>
                                     <td><div class="row">
@@ -338,7 +419,7 @@
                                 <td colspan="2"><hr style="    color: #212529;
                                     background-color: #212529;
                                     height: 3px;"></td>
-                            </tr>
+                            </tr> -->
                         {% empty %} 
                                 <p>{% trans 'Er zijn nog geen blok elementen' %}</p>
                         {% endfor %}
@@ -496,4 +577,28 @@
             },
         })
     });
+</script>
+<script src="{% static 'admin/js/libs/jquery-ui.js' %}"></script>
+<script>
+    $('#style-2 tbody').sortable({
+            items: '.main-tr',
+            opacity: 1,
+            update: function () {
+                move($('#style-2 tbody').sortable('serialize', 'id'));
+            }
+        });
+        function move(order) {
+            order = order.replaceAll('[]=', '');
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'pageblockelement_reorder' %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'item': order
+                },
+                success: function () {
+                    //OK
+                }
+            });
+        }
 </script>
