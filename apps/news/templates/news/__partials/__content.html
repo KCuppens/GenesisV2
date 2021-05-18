@@ -1,4 +1,10 @@
 {% load i18n widget_tweaks %}
+{% load static %}
+<script>
+    var is_multiple_media_image = false;
+</script>
+<input type='hidden' id="file_tag">
+
 <div class="row">
     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
         <h4>{% trans 'Content' %}</h4>
@@ -27,7 +33,7 @@
     {% endif %}   
 </div>
 <div class="form-group mb-4">
-    {{form.gallery|append_attr:"class:form-control"}}   
+    {{form.gallery|append_attr:""}}   
 </div>
 
 <div class="form-group mb-4">

@@ -224,9 +224,20 @@ BACKENDS = ''
 # EMAIL_PORT = 587
 # EMAIL_HOST_PASSWORD = 'App password from google'
 #Logging
-import logging
+# import logging
 
 # versions older than VERSION_DELETE_DAYS will be deleted
 VERSION_DELETE_DAYS = 15
 
 SITE_ID=1
+
+MIGRATION_MODULES = {
+    'admin': None,
+    'auth': None,
+    'contenttypes': None,
+    'sessions': None,
+    'messages': None,
+    'staticfiles': None,
+    'sitemaps': None,
+    'sites': None,
+}

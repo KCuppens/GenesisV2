@@ -28,5 +28,4 @@ def generate_full_slug(current_page):
         
         current_page.full_slug =  full_slug
         current_page.save()
-        return full_slug
     

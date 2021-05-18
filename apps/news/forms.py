@@ -6,10 +6,11 @@ from apps.base.widgets import MediaImageWidget, MultipleImageWidget
 from tags_input import fields
 from apps.filemanager.models import Media
 from tags_input.widgets import TagsInputWidget
+from apps.news.widgets import NewsMultipleImageWidget
 
 class ArticleForm(ModelForm):
     image = forms.CharField(label=_('Afbeelding'), widget=MediaImageWidget)
-    gallery = forms.CharField(widget=MultipleImageWidget)
+    gallery = forms.CharField(widget=NewsMultipleImageWidget)
     class Meta:
         model = Article 
         fields = ['title', 'gallery', 'image', 'content', 'summary', 'meta_title', 'meta_description', 'meta_keywords', 'date_expired', 'date_published','active']

@@ -42,9 +42,11 @@ def get_filemanager(request):
         if request.method == "POST":
             mediatype = request.POST.get('type')
             selecttype = request.POST.get('selecttype')
+            is_multiple_media_image = request.POST.get('is_multiple_media_image')
         elif request.method == "GET":
             mediatype = request.GET.get('type')
             selecttype = request.GET.get('selecttype')
+            is_multiple_media_image = request.GET.get('is_multiple_media_image')
         dir = request.GET.get('dir')
         search = request.GET.get('search')
         action = request.GET.get('action')
@@ -76,7 +78,8 @@ def get_filemanager(request):
             'search': search,
             'current_type': mediatype,
             'current_dir': dir,
-            'selecttype':selecttype
+            'selecttype':selecttype,
+            'is_multiple_media_image': is_multiple_media_image,
         }
         data = {
             'template': render_to_string('filemanager/filemanager.html', context=context, request=request)

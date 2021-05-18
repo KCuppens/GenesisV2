@@ -3,8 +3,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="{% static  'admin/css/tagify.css' %}">
 <script src="/static/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+<script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'admin/js/jquery-ui-1.12.1.min.js' %}"></script>
+<script src="{% static 'admin/js/jquery.tagsinput.min.js' %}"></script>
+<script src="{% static 'admin/js/jQuery.tagify.min.js' %}"></script>
 <title>{% trans 'CMSX - Dashboard' %}</title>
 <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
 {% include 'dashboard/layout/__partials/css.html' %}

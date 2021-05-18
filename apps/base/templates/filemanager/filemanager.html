@@ -1,4 +1,5 @@
 {% load i18n get_image %}
+{% load static %}
 <div class="mail-overlay"></div>
 <div id="mailbox-inbox" class="accordion mailbox-inbox" data-type="{{current_type}}">
 
@@ -91,7 +92,12 @@
                                                     <p class="meta-time align-self-center">{{document.date_updated|date:"d/m/Y H:i"}}</p>
                                                 </div>
                                                 <div>
-                                                    <a href="javascript:void(0)" data-file="{% get_image document.file %}" class="select-file btn btn-primary mr-2">{% trans 'Select' %}</a>
+                                                    <a href="javascript:void(0)" data-file="{% get_image document.file %}" 
+                                                    {% if is_multiple_media_image %}
+                                                    class="select-file-media btn btn-primary mr-2"
+                                                    {% else %}
+                                                    class="select-file btn btn-primary mr-2"
+                                                    {% endif %}>{% trans 'Select' %}</a>
                                                 </div>
                                                 <a href="{% url 'download-media' pk=document.pk %}" class="action-media-download" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></a>
                                                 <a href="javascript:void(0)" class="action-media-edit" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a>
@@ -121,7 +127,18 @@
         </div>
     </div>
 </div> 
+{% if is_multiple_media_image %}
+<!-- <script src="{% static 'admin/js/jquery-3.2.1.min.js' %}"></script> -->
+<script src="{% static 'admin/js/jQuery.tagify.min.js' %}"></script>
+<!-- <script src="{% static 'admin/js/jquery-ui-1.12.1.min.js' %}"></script>
+<script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static  'admin/css/jquery.tagsinput.min.css' %}"> -->
+{% endif %}
+
+
 <script>
+$(document).ready(function(){
+
     $('.action-create-dir').on('click', function (e) {
         var dir = $(this).data('dir');
         var type = $('#mailbox-inbox').data('type');
@@ -240,7 +257,11 @@
             url: '{% url 'get_filemanager' %}',
             data: {
                 'search': search,
-                'type': type
+                'type': type,
+
+                {% if is_multiple_media_image %}
+                'is_multiple_media_image': true
+                {% endif %}
             },
             success: function (data) {
                 $('.get-filemanager').html(data.template);
@@ -256,7 +277,11 @@
             url: '{% url 'get_filemanager' %}',
             data: {
                 'dir': dir,
-                'type': type
+                'type': type, 
+
+                {% if is_multiple_media_image %}
+                'is_multiple_media_image': true
+                {% endif %}
             },
             success: function (data) {
                 $('.get-filemanager').html(data.template);
@@ -272,7 +297,11 @@
             data: {
                 'dir': dir,
                 'action': 'go-level-up',
-                'type': type
+                'type': type,
+
+                {% if is_multiple_media_image %}
+                'is_multiple_media_image': true
+                {% endif %}
             },
             success: function (data) {
                 $('.get-filemanager').html(data.template);
@@ -287,17 +316,56 @@
             url: '{% url 'get_filemanager' %}',
             data: {
                 'dir': dir,
-                'type': type
+                'type': type, 
+
+                {% if is_multiple_media_image %}
+                'is_multiple_media_image': true
+                {% endif %}
             },
             success: function (data) {
                 $('.get-filemanager').html(data.template);
             }
         });
     });
+    
+    {% if is_multiple_media_image %}
+
+    $(document).on('click', '.select-file-media', function() {
+
+        // this code block will be executed when filemanager is
+        // invoked by multiple_media_image_widget
+
+        var file = $(this).data('file');
+        var target = $("#id_gallery");
+        console.log('current tags: ', target.val())
+
+        var tags = JSON.parse(target.val());
+        console.log(tags)
+        for (tag of tags){
+            if (tag.value == file) {
+                $(".close").trigger('click');
+                return;
+            }
+        }
+
+        $('#file_tag').val(file);
+        // Create a new 'change' event
+        var event = new Event('change');
+        // Dispatch it.
+        $('#file_tag')[0].dispatchEvent(event);
+        console.log('Target: ', target)
+        $(".close").trigger('click')
+        
+    });
+    {% else %}
+
     $(document).on('click', '.select-file', function() {
+
         var file = $(this).data('file');
         $('.filemanager-widget').val(file);
-        $('#filemanagerModal').modal('toggle');        
+        $('#filemanagerModal').modal('toggle');
     });
 
+    {% endif %}
+});
 </script>
