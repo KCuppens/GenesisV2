@@ -3,6 +3,7 @@ from apps.base.models import BaseModel, AdminModel, SortableModel, BaseRevision,
 from django_extensions.db.fields import AutoSlugField
 from apps.feathericons.models import Icon
 from django.utils.translation import gettext_lazy as _
+from django.db import transaction
 
 # Create your models here.
 class Module(BaseModel, AdminModel, SortableModel):
@@ -60,17 +61,12 @@ class ModuleVersion(BaseVersion):
 
     def save(self, *args, **kwargs):
         # import pdb; pdb.set_trace()
-        try:
-            moduleversion = ModuleVersion.objects.get(id=self.id)
-            for version in moduleversion.revision.versions.all().exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in ModuleVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(ModuleVersion, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(ModuleVersion, self).save(*args, **kwargs)
 
 
 class TabRevision(BaseRevision):
@@ -82,18 +78,12 @@ class TabVersion(BaseVersion):
     revision = models.ForeignKey(TabRevision, on_delete=models.CASCADE, related_name="versions")
 
     def save(self, *args, **kwargs):
-        # import pdb; pdb.set_trace()
-        try:
-            tabversion = TabVersion.objects.get(id=self.id)
-            for version in tabversion.revision.versions.all().exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in TabVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(self._meta.model, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(self._meta.model, self).save(*args, **kwargs)
 
 
 

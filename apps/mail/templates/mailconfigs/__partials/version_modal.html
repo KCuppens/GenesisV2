@@ -21,7 +21,7 @@
                         {% for version in versions %}
                         {% if not version.is_deleted %}
                         <tr>
-                            <td>{{ version.id }}
+                            <td>v{{ forloop.counter }}
                             </td>
                             <td>
                                 <form method="POST" action="{% url 'mailaddversioncomment' 'config' version.id %}"

@@ -6,6 +6,7 @@ User = get_user_model()
 from django.utils.translation import ugettext as _
 import uuid
 from django.dispatch import receiver
+from django.db import transaction
 try:
     from apps.history.models import History
 except ImportError:  # pragma: no cover
@@ -63,7 +64,6 @@ class BaseVersion(models.Model):
 
     class Meta:
         abstract = True
-
 
 
 class AdminModel(models.Model):

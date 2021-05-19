@@ -339,7 +339,11 @@ $(document).ready(function(){
         var target = $("#id_gallery");
         console.log('current tags: ', target.val())
 
-        var tags = JSON.parse(target.val());
+        try{
+            var tags = JSON.parse(target.val());
+        }catch(e){
+            var tags = [];
+        }
         console.log(tags)
         for (tag of tags){
             if (tag.value == file) {

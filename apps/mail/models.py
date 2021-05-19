@@ -7,6 +7,7 @@ from apps.base.models import (
 )
 from collections import namedtuple
 from django.utils.translation import gettext_lazy as _
+from django.db import transaction
 from apps.mail.validators import validate_template_syntax, validate_email_with_name
 from apps.mail.fields import CommaSeparatedEmailField
 from apps.mail.settings import context_field_class, get_log_level, get_template_engine
@@ -248,17 +249,12 @@ class MailTemplateVersion(BaseVersion):
 
     def save(self, *args, **kwargs):
         # import pdb; pdb.set_trace()
-        try:
-            mailtempversion = MailTemplateVersion.objects.get(id=self.id)
-            for version in mailtempversion.revision.versions.all().exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in MailTemplateVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(self._meta.model, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(self._meta.model, self).save(*args, **kwargs)
 
 
 class MailConfigRevision(BaseRevision):
@@ -271,14 +267,9 @@ class MailConfigVersion(BaseVersion):
 
     def save(self, *args, **kwargs):
         # import pdb; pdb.set_trace()
-        try:
-            mailconfigversion = MailConfigVersion.objects.get(id=self.id)
-            for version in mailconfigversion.revision.versions.all().exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in MailConfigVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(self._meta.model, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(self._meta.model, self).save(*args, **kwargs)

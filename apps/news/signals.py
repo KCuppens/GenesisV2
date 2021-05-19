@@ -28,9 +28,10 @@ def myconverter(o):
         return o.__str__()
 
 def create_new_version(revision, serialized_instance):
-    return NewsVersion.objects.create(revision=revision,
+    version = NewsVersion.objects.create(revision=revision,
                                       serialized_instance=serialized_instance,
                                       is_current=True)
+    return version
 
 @receiver(post_save, sender=Article)
 def post_revision_commit(sender, instance, created, **kwargs):
@@ -62,5 +63,5 @@ def post_revision_commit(sender, instance, created, **kwargs):
                         version.date_created = datetime.datetime.now()
                 except:
                     pass
-                # version.is_current = True
+                version.is_current = True
                 version.save()

@@ -2,6 +2,7 @@ from django.db import models
 from apps.base.models import BaseModel, AdminModel, BaseRevision, BaseVersion
 from django_extensions.db.fields import AutoSlugField
 from django.utils.translation import gettext_lazy as _
+from django.db import transaction
 
 # Create your models here.
 class Block(BaseModel, AdminModel):
@@ -67,14 +68,9 @@ class BlocksVersion(BaseVersion):
     revision = models.ForeignKey(BlocksRevision, on_delete=models.CASCADE, related_name="versions")
 
     def save(self, *args, **kwargs):
-        try:
-            blocksversion = BlocksVersion.objects.get(id=self.id)
-            for version in BlocksVersion.objects.exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in BlocksVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(self._meta.model, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(self._meta.model, self).save(*args, **kwargs)

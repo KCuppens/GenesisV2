@@ -3,6 +3,7 @@ from apps.base.models import BaseModel, AdminModel, SeoModel, SortableModel, Bas
 from apps.formbuilder.models import Form
 from apps.blocks.models import Block
 from django_extensions.db.fields import AutoSlugField
+from django.db import transaction
 from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
@@ -160,14 +161,9 @@ class PageVersion(BaseVersion):
     revision = models.ForeignKey(PageRevision, on_delete=models.CASCADE, related_name='versions')
 
     def save(self, *args, **kwargs):
-        try:
-            pageversion = PageVersion.objects.get(id=self.id)
-            for version in pageversion.revision.versions.all().exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in PageVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(self._meta.model, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(self._meta.model, self).save(*args, **kwargs)

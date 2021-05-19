@@ -30,7 +30,7 @@ def create_new_version2(revision, serialized_instance):
                                       is_current=True)
 
 @receiver(post_save, sender=Module)
-def post_mailtemplaterevision_commit(sender, instance, created, **kwargs):
+def post_modulerevision_commit(sender, instance, created, **kwargs):
     # import pdb; pdb.set_trace()
     if created:
         try:
@@ -65,7 +65,7 @@ def post_mailtemplaterevision_commit(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Tab)
-def post_mailconfigrevision_commit(sender, instance, created, **kwargs):
+def post_tabrevision_commit(sender, instance, created, **kwargs):
     # import pdb; pdb.set_trace()
     if created:
         try:

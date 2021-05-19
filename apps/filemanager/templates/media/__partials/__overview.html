@@ -367,7 +367,8 @@
         });
     });
 
-    $('.open-version-modal').on('click', function() {
+    $('.open-version-modal').on('click', function(e) {
+        e.stopPropagation();
         var id = $(this).data('id');
         var type = $(this).data('type');
         var url_path = $(this).data('url');

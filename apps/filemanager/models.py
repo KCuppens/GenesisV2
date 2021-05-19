@@ -2,6 +2,7 @@ from django.db import models
 from apps.base.models import BaseModel, AdminModel, BaseRevision, BaseVersion
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
+from django.db import transaction
 from apps.filemanager.utils import base_media_path
 import datetime
 from pathlib import Path
@@ -163,17 +164,12 @@ class DirectoryVersion(BaseVersion):
     revision = models.ForeignKey(DirectoryRevision, on_delete=models.CASCADE, related_name="versions")
 
     def save(self, *args, **kwargs):
-        try:
-            directoryversion = DirectoryVersion.objects.get(id=self.id)
-            for version in DirectoryVersion.objects.exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in DirectoryVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(self._meta.model, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(self._meta.model, self).save(*args, **kwargs)
 
 class MediaRevision(BaseRevision):
     current_instance = models.OneToOneField(Media, on_delete=models.CASCADE)
@@ -184,14 +180,9 @@ class MediaVersion(BaseVersion):
     revision = models.ForeignKey(MediaRevision, on_delete=models.CASCADE, related_name="versions")
 
     def save(self, *args, **kwargs):
-        try:
-            mediaversion = MediaVersion.objects.get(id=self.id)
-            for version in MediaVersion.objects.exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in MediaVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(self._meta.model, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(self._meta.model, self).save(*args, **kwargs)

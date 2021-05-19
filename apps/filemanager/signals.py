@@ -13,11 +13,20 @@ import datetime
 import json
 from django.forms.models import model_to_dict
 from django.utils.translation import ugettext_lazy as _
+from django.db import models
 from apps.base import errors
 
 def myconverter(o):
+    # import pdb; pdb.set_trace()
     if isinstance(o, datetime.datetime):
         return o.__str__()
+    try:
+        # if o is filefield then it'll return url
+        if o.url:
+            return o.url
+    except:
+        pass
+
 
 def create_new_version1(revision, serialized_instance):
     return ModelVersion1.objects.create(revision=revision,

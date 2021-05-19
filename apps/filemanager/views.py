@@ -424,8 +424,6 @@ def get_delete_version_ajax_modal(request, mode):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def select_version(request, mode, pk):
-    # import pdb;pdb.set_trace();
-
     if mode == 'directory':
         try:
             version = ModelVersion1.objects.get(id=pk)
@@ -448,6 +446,8 @@ def select_version(request, mode, pk):
             continue
         if attr == 'thumbnails':
             model_obj.thumbnails.set(value)
+            continue
+        if attr == 'file' or attr == 'directory':
             continue
         setattr(model_obj, attr, value)
     model_obj.not_new_object=1

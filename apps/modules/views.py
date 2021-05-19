@@ -371,7 +371,10 @@ def select_version(request, mode, pk):
             model_obj.modules.set(value)
             continue
         if attr == 'icon':
-            model_obj.icon = Icon.objects.get(id=value)
+            try:
+                model_obj.icon = Icon.objects.get(id=value)
+            except:
+                pass
             continue
         setattr(model_obj, attr, value)
     model_obj.not_new_object=1

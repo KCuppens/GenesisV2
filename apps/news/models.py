@@ -60,15 +60,10 @@ class NewsVersion(BaseVersion):
     revision = models.ForeignKey(NewsRevision, on_delete=models.CASCADE, related_name="versions")
 
     def save(self, *args, **kwargs):
-        try:
-            newsversion = NewsVersion.objects.get(id=self.id)
-            for version in NewsVersion.objects.exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in NewsVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(self._meta.model, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(self._meta.model, self).save(*args, **kwargs)
 

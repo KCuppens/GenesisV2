@@ -332,15 +332,19 @@
                                     <div class="row mt-3">
                                         <div class="col-2">{% trans 'Tweede afbeelding' %}</div>
                                         <div class="col-10"><input type="text" value="{{block.block_element_image_second|default_if_none:""}}" class="form-control" name="block_elem_image_second" id="block_elem_second_image_{{block.id}}"></div>
+
+                                        <td colspan="2"><hr style="    color: #212529;
+                                        background-color: #212529;
+                                        height: 3px;"></td>
                                     </td>
                                 </tr>
                                     
                                 {% endif %}
-                                <tr>
+                                <!-- <tr>
                                     <td colspan="2"><hr style="    color: #212529;
                                         background-color: #212529;
                                         height: 3px;"></td>
-                                </tr>
+                                </tr> -->
                             </tr>
                             <!-- {% if instance.block.has_block_element_title %}
                                 <tr>

@@ -3,6 +3,7 @@ from apps.base.models import BaseModel, AdminModel, SortableModel, BaseRevision,
 from apps.mail.models import MailTemplate
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
+from django.db import transaction
 # Create your models here.
 
 class Form(BaseModel, AdminModel):
@@ -193,15 +194,10 @@ class FormVersion(BaseVersion):
 
     def save(self, *args, **kwargs):
         # import pdb; pdb.set_trace()
-        try:
-            formversion = FormVersion.objects.get(id=self.id)
-            for version in formversion.revision.versions.all().exclude(id=self.id):
-                if self.is_current:
-                    version.is_current = False
-                    version.save()
-        except:
-            for version in FormVersion.objects.exclude(id=self.id):
-                version.is_current = False
-                version.save()
-        super().save(*args, **kwargs)
+        if not self.is_current:
+            return super(self._meta.model, self).save(*args, **kwargs)
+        with transaction.atomic():
+            self.revision.versions.filter(
+                is_current=True).update(is_current=False)
+            return super(self._meta.model, self).save(*args, **kwargs)
 
