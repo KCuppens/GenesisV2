@@ -7,12 +7,13 @@ class BlockForm(forms.ModelForm):
     image = forms.CharField(widget=MediaImageWidget)
     class Meta:
         model = Block
-        fields = ('name', 'template', 'image', 'category', 'active', 'date_published', 'date_expired', 'has_title', 'has_subtitle', 'has_form', 'has_content', 'detailpage_only', 'has_module', 'has_image', 'has_image_second', 'has_url', 'has_url_text', 'has_video', 'has_embed', 'has_sort_method', 'has_limit', 'has_sort_order', 'has_pagination', 'has_detailpage', 'has_block_elements', 'has_block_element_title', 'has_block_element_image', 'has_block_element_content', 'has_block_element_subtitle', 'has_block_element_image_second')
+        fields = ('name', 'module', 'template', 'image', 'category', 'active', 'date_published', 'date_expired', 'has_title', 'has_subtitle', 'has_form', 'has_content', 'detailpage_only', 'has_image', 'has_image_second', 'has_url', 'has_url_text', 'has_video', 'has_embed', 'has_sort_method', 'has_limit', 'has_sort_order', 'has_pagination', 'has_detailpage', 'has_block_elements', 'has_block_element_title', 'has_block_element_image', 'has_block_element_content', 'has_block_element_subtitle', 'has_block_element_image_second')
         labels = {
             'name': _('Name'),
             'image': _('Block image'),
             'category': _('Category'),
             'active': _('Active?'),
+            'module': _('Bevat module?'),
             'date_published': _('Publicatiedatum'),
             'date_expired': _('Vervaldatum'),
             'has_title': _('Bevat een titel'),
@@ -26,9 +27,8 @@ class BlockForm(forms.ModelForm):
             'has_embed': _('Bevat een embed'),
             'has_sort_method': _('Bevat een sorteer methode'),
             'has_limit': _('Bevat een limiet'),
-            'has_sort_order': _('Bevat een sorteer volgorde'),
+            'has_sort_order': _('Bevat een sorteer volgorde'), 
             'has_pagination': _('Bevat een paginatie'),
-            'has_module': _('Bevat een module'),
             'has_detailpage': _('Bevat een detailpagina'),
             'has_form': _('Bevat een formulier'),
             'template': _('Template name'),

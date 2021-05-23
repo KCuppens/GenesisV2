@@ -237,7 +237,7 @@ MIGRATION_MODULES = {
     'contenttypes': None,
     'sessions': None,
     'messages': None,
-    'staticfiles': None,
+    'staticfiles': None, 
     'sitemaps': None,
     'sites': None,
-}
+} 

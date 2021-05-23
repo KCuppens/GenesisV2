@@ -203,19 +203,6 @@
             </div>
         </div>
     {% endif %}
-    {% if instance.block.has_module %}
-        <div class="form-group row">
-            <div class="col-sm-12 ml-2">
-                {{ form.module|add_label_class:''}}
-                {{ form.module|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
-                {% if form.module.errors %}
-                    <div class="invalid-feedback">
-                        {{form.module.errors}}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
     {% if instance.block.has_form %}
         <div class="form-group row">
             <div class="col-sm-12 ml-2">

@@ -5,12 +5,22 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class Block(BaseModel, AdminModel):
+    MODULE_PAGE = 'Page'
+    MODULE_NEWS = 'Article'
+
+    GET_MODELS = [
+        (MODULE_PAGE, _('Pagina module')),
+        (MODULE_NEWS, _('Artikel module'))
+    ]
+
     name = models.CharField(max_length=55, db_index=True, blank=True)
     slug = AutoSlugField(populate_from='name')
     image = models.ImageField(upload_to="blocks/images")
     category = models.ManyToManyField('blockcategory', blank=True)
     template =  models.CharField(max_length=255, null=True, blank=True)
     detailpage_only = models.BooleanField(default=False)
+    module = models.CharField(max_length=255, choices=GET_MODELS, default=MODULE_PAGE, blank=True, null=True) 
+     
 
     has_title = models.BooleanField(default=True)
     has_subtitle = models.BooleanField(default=False)
@@ -34,7 +44,6 @@ class Block(BaseModel, AdminModel):
     has_limit = models.BooleanField(default=False)
     has_sort_order = models.BooleanField(default=False)
     has_pagination = models.BooleanField(default=False)
-    has_module = models.BooleanField(default=False)
     has_detailpage = models.BooleanField(default=False)
 
     class Meta:

@@ -1,0 +1,36 @@
+[
+    {
+        "model":"user.user",
+        "pk":19,
+        "fields":
+            {
+                "password":"",
+                "last_login":null,
+                "is_superuser":false,
+                "username":"KobeCuppens",
+                "first_name":"Kobe",
+                "last_name":"Cuppens",
+                "email":"kobecuppens@gmail.com",
+                "is_staff":true,
+                "is_active":true,
+                "date_joined":"2021-04-18T08:03:19.648Z",
+                "user_type":"personal",
+                "company_name":null,
+                "phone":null,
+                "biography":null,
+                "birthdate":null,
+                "profession":null,
+                "avatar":"",
+                "front_client":true,
+                "company_vat":null,
+                "delivery_address":null,
+                "invoice_address":null,
+                "date_created":"2021-04-18T08:03:19.652Z",
+                "date_deleted":"2021-04-18T08:21:09.734Z",
+                "groups":[],
+                "user_permissions":[
+                
+                ]
+            }
+    }
+]

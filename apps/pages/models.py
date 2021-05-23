@@ -107,14 +107,6 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
         (SORT_ORDER_DESC, _('Descending'))
     ]
 
-    MODULE_PAGE = 'Page'
-    MODULE_NEWS = 'Article'
-
-    GET_MODELS = [
-        (MODULE_PAGE, _('Pagina module')),
-        (MODULE_NEWS, _('Artikel module'))
-    ]
-
     SORT_TYPE_DATE = 'date'
     SORT_TYPE_NAME = 'name'
 
@@ -123,7 +115,6 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
         (SORT_TYPE_NAME, _('Gesorteerd op naam'))
     ]
     form = models.ForeignKey(Form, on_delete=models.CASCADE, null=True, blank=True)
-    module = models.CharField(max_length=255, choices=GET_MODELS, default=MODULE_PAGE, blank=True, null=True)
     sort = models.CharField(max_length=255, choices=GET_SORT_TYPE , default=SORT_TYPE_DATE, blank=True, null=True)
     limit = models.IntegerField(default=0, blank=True, null=True)
     sort_order = models.CharField(max_length=255, choices=GET_SORT_ORDER, default=SORT_ORDER_ASC, blank=True, null=True)

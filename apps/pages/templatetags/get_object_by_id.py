@@ -10,4 +10,4 @@ def get_object_by_id(request, object_id, model):
     object = eval(model).objects.filter(id=object_id).first()
     if object:
         return str(object) + ' - ' + str(object.id)
-    return _('Default object')
+    return _('Default object') 
