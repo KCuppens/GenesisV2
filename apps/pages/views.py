@@ -58,11 +58,11 @@ def overview_children_page(request, pk):
     if not page:
         return HttpResponseNotFound(_("Pagina niet gevonden"))
     pages = Page.objects.filter(parent=page, date_deleted=None)
-    for page in pages:
+    for child_page in pages:
         try:
-            revision = ModelRevision.objects.get(current_instance=page)
+            revision = ModelRevision.objects.get(current_instance=child_page)
             versions = revision.versions.all()
-            page.has_versions = bool(versions)
+            child_page.has_versions = bool(versions)
         except:
             continue
     return render(request,'pages/children-index.html', {"pages":pages, "page": page})
@@ -85,7 +85,8 @@ def add_page(request):
             form.save_m2m()
             post_save.send(sender=Page, instance=instance, created=False, final_save=True)
             messages.add_message(request, messages.SUCCESS, _('The page has been succesfully added!'))
-
+            if instance.parent:
+                return redirect(reverse('overviewchildrenpage', kwargs={'pk': instance.parent.pk}))
             return redirect('overviewpage')
     else:
         form = PageForm()
@@ -97,6 +98,7 @@ def add_page(request):
 @staff_member_required(login_url=reverse_lazy('login'))
 @transaction.atomic
 def add_children_page(request, pk):
+    # import pdb; pdb.set_trace()
     has_perms(request, ["pages.add_page"], None, 'overviewpage')
     if request.method == 'POST':
         form = PageForm(request.POST)
@@ -119,7 +121,7 @@ def add_children_page(request, pk):
         )
 
     return render(request, 'pages/add.html', {
-        'form': form,
+        'form': form
     })
 
 @staff_member_required(login_url=reverse_lazy('login'))
