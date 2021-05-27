@@ -101,6 +101,8 @@
         label = $('[name="label-{{field.id}}"]').val()
         if(!$('[name="required-{{field.id}}"]:checked').length==0){
             required = '1';
+        }else{
+            required = '0';
         }
         option_value = new Array();
         option_label = new Array();

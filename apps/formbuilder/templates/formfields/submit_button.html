@@ -1,0 +1,5 @@
+<div class="form-group row">
+    <div class="col-md-{% if field.col_size == 'full' %}12{% elif field.col_size == 'half' %}6{% elif field.col_size == 'quarter' %}3{% endif %} ml-2">
+        <button class="btn btn-primary" type="submit">{{field.label}}</button>
+    </div>
+</div>
