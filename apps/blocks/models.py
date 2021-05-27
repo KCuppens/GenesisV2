@@ -12,6 +12,7 @@ class Block(BaseModel, AdminModel):
     category = models.ManyToManyField('blockcategory', blank=True)
     template =  models.CharField(max_length=255, null=True, blank=True)
     detailpage_only = models.BooleanField(default=False)
+    is_deletable = models.BooleanField(default=True)
 
     has_title = models.BooleanField(default=True)
     has_subtitle = models.BooleanField(default=False)

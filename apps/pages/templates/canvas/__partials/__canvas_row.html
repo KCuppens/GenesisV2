@@ -14,15 +14,17 @@
                         stroke-linecap="round" stroke-linejoin="round"
                         class="feather feather-edit-2"><path
                         d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+                {% if row.block.block.is_deletable %}
                 <span data-block="{{ row.block.id }}" class="col-canvas-replace badge badge-danger" data-row="{{row.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="feather feather-repeat"><polyline points="17 1 21 5 17 9"></polyline><path
                         d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline
                         points="7 23 3 19 7 15"></polyline><path
                         d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></span>
+                {% endif %}
             {% else %}
                 <button data-row="{{ row.id }}" class="btn btn-primary mb-2 add-block">{% trans 'Select a block' %}</button>
             {% endif %}  
-                {% if row.block.is_deletable %}
+                {% if row.block.block.is_deletable %}
                 <span data-id="{{ row.id }}" class="row-canvas-delete badge badge-dark"><svg
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
