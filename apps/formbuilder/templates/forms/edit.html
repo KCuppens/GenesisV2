@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <form class="form" action="{% url 'editform' instance.pk %}" name="form" method="post" enctype='multipart/form-data'>
-                    {% include 'forms/__form.html' %}
+                    {% include 'forms/__form.html' with form_obj=instance %}
                 </form>
             </div>
         </div>

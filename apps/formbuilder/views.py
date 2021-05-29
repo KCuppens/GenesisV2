@@ -231,9 +231,11 @@ def delete_ajax_formresult_modal(request):
     return False
 
 def get_formbuilder(request):
+    # import pdb; pdb.set_trace()
     if request.method == "POST":
         action = request.POST.get('action', '')
         page = request.POST.get('page', '')
+        form_obj = request.POST.get('form_obj')
     else:
         action = request.GET.get('action', '')
         page = request.GET.get('page', '')    
@@ -263,6 +265,12 @@ def get_formbuilder(request):
                 form_page = request.session['form_page']
                 form_page.append(instance.id)
                 request.session['form_page'] = form_page
+
+                if form_obj: #new block
+                    form_obj = Form.objects.filter(id=form_obj).first()
+                    if form_obj:
+                        form_obj.pages.add(instance)
+
                 context = {
                     'form': form,
                 }
@@ -563,6 +571,7 @@ def render_form(request):
 
 
 def get_form(request):
+    import pdb; pdb.set_trace()
     form = request.POST.get('form')
     form_obj = Form.objects.filter(id=form).first()
     if not 'form_' + str(form_obj.id) in request.session:
@@ -748,10 +757,7 @@ def get_delete_version_ajax_modal(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def select_version(request, pk):
-    # import pdb;pdb.set_trace();
     version = ModelVersion.objects.get(id=pk)
-    # article_version.is_current = True
-    # article_version.save()
 
     version_dict = json.loads(version.serialized_instance)
     model_obj = ModelRevision.objects.get(versions__id=pk).current_instance
@@ -774,7 +780,7 @@ def delete_version(request, pk):
         messages.add_message(request, messages.WARNING, _('U kunt de momenteel geselecteerde versie niet verwijderen!'))
         return redirect('overviewform')
     version.delete()
-    messages.add_message(request, messages.SUCCESS, _('De versie is succesvol verwijderd'))
+    messages.add_message(request, messages.SUCCESS, _('The version has been successfully deleted!'))
     return redirect('overviewform')
 
 @staff_member_required(login_url=reverse_lazy('login'))

@@ -46,10 +46,11 @@
     $('.submit-page-form').on('click', function(e){
         e.preventDefault();
         var serializedData = $('#page-form').serialize();
+        var form_obj_pk = $('.formbuilder-overview').data('instance');
         $.ajax({
             type: 'POST',
             url: '{% url 'getformbuilder' %}',
-            data: serializedData + '&action=createpage',
+            data: serializedData + '&action=createpage' + `&form_obj=${form_obj_pk}`,
             success: function(data){
                 $('.form-modal').html(data.template);
                 if(data.success) {

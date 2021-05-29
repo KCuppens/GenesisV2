@@ -34,7 +34,7 @@
                 {% include 'forms/__partials/__content.html' %}
             </div>
             <div class="tab-pane fade" id="rounded-pills-icon-fields" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
-                {% include 'forms/__partials/__fields.html' %}
+                {% include 'forms/__partials/__fields.html' with form_obj=form_obj %}
             </div>
             <div class="tab-pane fade" id="rounded-pills-icon-visitor" role="tabpanel" aria-labelledby="rounded-pills-icon-profile-tab">
                 {% include 'forms/__partials/__visitor.html' %}
