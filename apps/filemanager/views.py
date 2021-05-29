@@ -45,7 +45,7 @@ def get_media_overview(request):
         search = request.GET.get('search')
         action = request.GET.get('action')
         if search:
-            documents = Media.objects.filter(Q(name__contains=search)| Q(summary__contains=search), date_deleted=None)
+            documents = Media.objects.filter(Q(name__contains=search)| Q(filename__contains=search)| Q(summary__contains=search), date_deleted=None)
             directories = Directory.objects.filter(Q(name__contains=search)| Q(summary__contains=search), date_deleted=None)
         elif type == 'directories':
             documents = None 
@@ -57,7 +57,8 @@ def get_media_overview(request):
             if dir:
                 documents = Media.objects.filter(date_deleted=None, directory=dir, type=type)
             else:
-                documents = Media.objects.filter(date_deleted=None, type=type, directory__isnull=True)
+                # documents = Media.objects.filter(date_deleted=None, type=type, directory__isnull=True)
+                documents = Media.objects.filter(date_deleted=None, type=type)
             directories = None
         elif dir and action == 'go-level-up' and not dir == "None":
             dir_obj = Directory.objects.filter(id=dir).first()
@@ -401,7 +402,6 @@ def get_version_ajax_modal(request, mode):
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_delete_version_ajax_modal(request, mode):
     data = {}
-    # import pdb;pdb.set_trace();
     id = request.POST.get('id', False)
     try:
         if mode == 'directory':
@@ -457,11 +457,6 @@ def select_version(request, mode, pk):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def delete_version(request, mode, pk):
-    # import pdb;pdb.set_trace();
-    # if mode == 'template':
-    #     redirect_obj = redirect('overviewmailtemplate')
-    # else:
-    #     redirect_obj = redirect('overviewmailconfig')
     redirect_obj = redirect('media-document-index')
 
     try:
