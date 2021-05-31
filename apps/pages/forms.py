@@ -4,7 +4,7 @@ from apps.pages.models import Page, Canvas, CanvasRow, PageBlock, PageBlockEleme
 from apps.formbuilder.models import Form
 from apps.pages.utils import check_if_homepage_exists
 from apps.base.widgets import MediaImageWidget
-from apps.pages.widgets import PageMediaImageWidget
+from apps.pages.widgets import PageMediaImageWidget, PageMediaVideoWidget
 
 DATE_INPUT_FORMATS = ('%Y-%m-%d %H-%i',)
 
@@ -62,6 +62,7 @@ class BlockForm(forms.ModelForm):
     # image_second = forms.CharField(required=False, widget=MediaImageWidget)
     image = forms.CharField(required=False, widget=PageMediaImageWidget)
     image_second = forms.CharField(required=False, widget=PageMediaImageWidget)
+    video = forms.CharField(required=False, widget=PageMediaVideoWidget)
     form = forms.ModelChoiceField(required=False, queryset=Form.objects.filter(date_deleted=None, active=True))
     class Meta:
         model = PageBlock
