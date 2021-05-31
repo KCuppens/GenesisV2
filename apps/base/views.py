@@ -38,11 +38,13 @@ def getURLPicker(request):
 
 
 def get_filemanager(request):
+    # import pdb; pdb.set_trace()
     if request.is_ajax():
         if request.method == "POST":
             mediatype = request.POST.get('type')
             selecttype = request.POST.get('selecttype')
             is_multiple_media_image = request.POST.get('is_multiple_media_image')
+            target_elem_uuid = request.POST.get('target_elem_uuid')
         elif request.method == "GET":
             mediatype = request.GET.get('type')
             selecttype = request.GET.get('selecttype')
@@ -80,6 +82,7 @@ def get_filemanager(request):
             'current_dir': dir,
             'selecttype':selecttype,
             'is_multiple_media_image': is_multiple_media_image,
+            'target_elem_uuid': target_elem_uuid
         }
         data = {
             'template': render_to_string('filemanager/filemanager.html', context=context, request=request)

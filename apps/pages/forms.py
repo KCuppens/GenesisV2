@@ -4,6 +4,7 @@ from apps.pages.models import Page, Canvas, CanvasRow, PageBlock, PageBlockEleme
 from apps.formbuilder.models import Form
 from apps.pages.utils import check_if_homepage_exists
 from apps.base.widgets import MediaImageWidget
+from apps.pages.widgets import PageMediaImageWidget
 
 DATE_INPUT_FORMATS = ('%Y-%m-%d %H-%i',)
 
@@ -15,7 +16,7 @@ class PageForm(forms.ModelForm):
         model = Page
         fields = ('in_main_menu', 'image', 'is_homepage', 'page_title', 'menu_title','url_type','slug','linkthrough','parent','meta_title','meta_keywords','meta_description','date_published','date_expired','active', 'is_deletable')
         labels = {
-            'in_main_menu': _('Is it the homepage?'),
+            'is_homepage': _('Is it the homepage?'),
             'in_main_menu': _('Show in main menu'),
             'page_title': _('Page title*'),
             'menu_title': _('Menu title*'),
@@ -57,8 +58,10 @@ class PageForm(forms.ModelForm):
         return self.cleaned_data
 
 class BlockForm(forms.ModelForm):
-    image = forms.CharField(required=False, widget=MediaImageWidget)
-    image_second = forms.CharField(required=False, widget=MediaImageWidget)
+    # image = forms.CharField(required=False, widget=MediaImageWidget)
+    # image_second = forms.CharField(required=False, widget=MediaImageWidget)
+    image = forms.CharField(required=False, widget=PageMediaImageWidget)
+    image_second = forms.CharField(required=False, widget=PageMediaImageWidget)
     form = forms.ModelChoiceField(required=False, queryset=Form.objects.filter(date_deleted=None, active=True))
     class Meta:
         model = PageBlock

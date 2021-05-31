@@ -95,6 +95,8 @@
                                                     <a href="javascript:void(0)" data-file="{% get_image document.file %}" 
                                                     {% if is_multiple_media_image %}
                                                     class="select-file-media btn btn-primary mr-2"
+                                                    {% elif target_elem_uuid %}
+                                                    class="select-file-{{target_elem_uuid}} btn btn-primary mr-2"
                                                     {% else %}
                                                     class="select-file btn btn-primary mr-2"
                                                     {% endif %}>{% trans 'Select' %}</a>
@@ -128,11 +130,7 @@
     </div>
 </div> 
 {% if is_multiple_media_image %}
-<!-- <script src="{% static 'admin/js/jquery-3.2.1.min.js' %}"></script> -->
 <script src="{% static 'admin/js/jQuery.tagify.min.js' %}"></script>
-<!-- <script src="{% static 'admin/js/jquery-ui-1.12.1.min.js' %}"></script>
-<script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
-<link rel="stylesheet" type="text/css" href="{% static  'admin/css/jquery.tagsinput.min.css' %}"> -->
 {% endif %}
 
 
@@ -361,6 +359,16 @@ $(document).ready(function(){
         $(".close").trigger('click')
         
     });
+
+    {% elif target_elem_uuid %}
+    {# This block is executed when PageMediaImageWidget is used #}
+    $(document).on('click', '.select-file-{{target_elem_uuid}}', function() {
+
+        var file = $(this).data('file');
+        $(document).find('input[data-uuid="{{target_elem_uuid}}"]').val(file);
+        $('#filemanagerModal').modal('toggle');
+    });
+
     {% else %}
 
     $(document).on('click', '.select-file', function() {
