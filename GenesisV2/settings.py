@@ -198,6 +198,7 @@ MESSAGE_TAGS = {
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'new_static')
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -230,14 +231,3 @@ BACKENDS = ''
 VERSION_DELETE_DAYS = 15
 
 SITE_ID=1
-
-MIGRATION_MODULES = {
-    'admin': None,
-    'auth': None,
-    'contenttypes': None,
-    'sessions': None,
-    'messages': None,
-    'staticfiles': None,
-    'sitemaps': None,
-    'sites': None,
-}

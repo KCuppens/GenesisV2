@@ -89,7 +89,7 @@ class AdminModel(models.Model):
                 'MailConfigVersion', 'ModuleRevision', 'ModuleVersion',
                 'TabRevision', 'TabVersion', 'BlocksRevision', 'BlocksVersion',
                 'DirectoryRevision', 'DirectoryVersion', 'MediaRevision', 
-                'MediaVersion', 'Site']
+                'MediaVersion', 'Site', 'Attachment', 'Group']
         if not instance.__class__.__name__ in apps:
             if instance.edited_by:
                 user = instance.edited_by 

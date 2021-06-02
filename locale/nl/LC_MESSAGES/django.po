@@ -4034,7 +4034,7 @@ msgstr "^tab/delete/modal$\t"
 
 #: .\apps\modules\urls.py:10
 msgid "^tab/edit/(?P<pk>[0-9a-f-]+)$"
-msgstr "^tab/aanpassen/(?P<pk>\\d+)$\t"
+msgstr "^tab/aanpassen/(?P<pk>[0-9a-f-]+)$\t"
 
 #: .\apps\modules\urls.py:7
 msgid "^tab/overview$"
