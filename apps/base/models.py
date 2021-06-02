@@ -6,7 +6,6 @@ User = get_user_model()
 from django.utils.translation import ugettext as _
 import uuid
 from django.dispatch import receiver
-from django.db import transaction
 try:
     from apps.history.models import History
 except ImportError:  # pragma: no cover
@@ -27,7 +26,7 @@ class SortableModel(models.Model):
 
     class Meta:
         abstract = True
-
+ 
 class BaseModel(models.Model):  
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False) 
     date_created = models.DateTimeField(auto_now_add=True, verbose_name=_('Date of creation'))
@@ -35,7 +34,7 @@ class BaseModel(models.Model):
     date_expired = models.DateTimeField(blank=True, null=True, verbose_name=_('Expiring date'))
     date_updated = models.DateTimeField(auto_now=True, verbose_name=_('Date of last update'))
     date_deleted = models.DateTimeField(null=True, blank=True, verbose_name=_('Delete date'))
-    active = models.BooleanField(default=False, verbose_name=_('Active'))
+    active = models.BooleanField(default=False, verbose_name=_('Active')) 
 
     def get_status(self):
         return self.active and (self.date_published <= now) and (self.date_expired == None or self.date_expired > now)
@@ -64,6 +63,7 @@ class BaseVersion(models.Model):
 
     class Meta:
         abstract = True
+
 
 
 class AdminModel(models.Model):

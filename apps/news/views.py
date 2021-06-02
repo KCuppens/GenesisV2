@@ -1,3 +1,4 @@
+from apps.pages.models import DetailPage
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
@@ -20,6 +21,7 @@ from collections import OrderedDict
 from django.db import transaction
 import json
 from datetime import datetime
+from apps.pages.models import DetailPage
 
 
 @staff_member_required(login_url=reverse_lazy('login'))
@@ -203,6 +205,9 @@ def delete_article(request,pk):
     instance = Article.objects.get(pk=pk)
     instance.date_deleted = timezone.now()
     instance.save()
+    detailpage = DetailPage.objects.filter(model='Article', object_id=instance.id, default=False).first()
+    if detailpage:
+        detailpage.delete()
     messages.add_message(request, messages.SUCCESS, _('The article has been succesfully deleted!'))
     return redirect('overviewarticle')
 

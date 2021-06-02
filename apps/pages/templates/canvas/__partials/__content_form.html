@@ -203,19 +203,6 @@
             </div>
         </div>
     {% endif %}
-    {% if instance.block.has_module %}
-        <div class="form-group row">
-            <div class="col-sm-12 ml-2">
-                {{ form.module|add_label_class:''}}
-                {{ form.module|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
-                {% if form.module.errors %}
-                    <div class="invalid-feedback">
-                        {{form.module.errors}}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
     {% if instance.block.has_form %}
         <div class="form-group row">
             <div class="col-sm-12 ml-2">
@@ -332,19 +319,15 @@
                                     <div class="row mt-3">
                                         <div class="col-2">{% trans 'Tweede afbeelding' %}</div>
                                         <div class="col-10"><input type="text" value="{{block.block_element_image_second|default_if_none:""}}" class="form-control" name="block_elem_image_second" id="block_elem_second_image_{{block.id}}"></div>
-
-                                        <td colspan="2"><hr style="    color: #212529;
-                                        background-color: #212529;
-                                        height: 3px;"></td>
                                     </td>
                                 </tr>
                                     
                                 {% endif %}
-                                <!-- <tr>
+                                <tr>
                                     <td colspan="2"><hr style="    color: #212529;
                                         background-color: #212529;
                                         height: 3px;"></td>
-                                </tr> -->
+                                </tr>
                             </tr>
                             <!-- {% if instance.block.has_block_element_title %}
                                 <tr>

@@ -53,7 +53,7 @@ def get_filemanager(request):
         search = request.GET.get('search')
         action = request.GET.get('action')
         if search:
-            documents = Media.objects.filter(Q(name__contains=search)| Q(summary__contains=search), date_deleted=None, type=mediatype)
+            documents = Media.objects.filter(Q(name__contains=search)| Q(summary__contains=search), date_deleted=None, type=mediatype).order_by('-date_published')
             directories = Directory.objects.filter(Q(name__contains=search)| Q(summary__contains=search), date_deleted=None)
         elif dir and action == 'go-level-up' and not dir == "None":
             dir_obj = Directory.objects.filter(id=dir).first()
@@ -63,16 +63,16 @@ def get_filemanager(request):
             else:
                 dir = None
             if parent:
-                documents = Media.objects.filter(date_deleted=None, directory=parent, type=mediatype)
+                documents = Media.objects.filter(date_deleted=None, directory=parent, type=mediatype).order_by('-date_published')
                 directories = Directory.objects.filter(date_deleted=None, parent=parent)
             else:
-                documents = Media.objects.filter(date_deleted=None, directory__isnull=True, type=mediatype)
+                documents = Media.objects.filter(date_deleted=None, directory__isnull=True, type=mediatype).order_by('-date_published')
                 directories = Directory.objects.filter(date_deleted=None, parent__isnull=True)
         elif dir and not dir == "None":
-            documents = Media.objects.filter(date_deleted=None, directory=dir, type=mediatype)
+            documents = Media.objects.filter(date_deleted=None, directory=dir, type=mediatype).order_by('-date_published')
             directories = Directory.objects.filter(date_deleted=None, parent=dir)
         else:
-            documents = Media.objects.filter(date_deleted=None, directory__isnull=True, type=mediatype)
+            documents = Media.objects.filter(date_deleted=None, directory__isnull=True, type=mediatype).order_by('-date_published')
             directories = Directory.objects.filter(date_deleted=None, parent__isnull=True)
         context = {
             'documents': documents,
