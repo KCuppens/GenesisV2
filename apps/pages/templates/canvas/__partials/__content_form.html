@@ -422,6 +422,7 @@
 <script>
     $('.submit-content-form').on('click', function(e){
         e.preventDefault();
+        tinymce.triggerSave(true, true);
         var serializedData = $('#content-form').serialize();
         var csrf = $('.canvas-builder').data('csrf');
         var block = $('.block-data').data('block');
@@ -476,6 +477,8 @@
                         'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
                         'table emoticons template paste help hr template'
                     ],
+                    force_br_newlines : true,
+                    force_p_newlines : true,
                     image_uploadtab: true,
                     images_upload_base_path: '/media/tinymce',
                     toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
@@ -491,6 +494,7 @@
 <script>
     $('.delete-block-element').click(function(e) {
         e.preventDefault();
+        tinymce.triggerSave(true, true);
         var serializedData = $('#content-form').serialize();
         var csrf = $('.canvas-builder').data('csrf');
         var block = $('.block-data').data('block');
@@ -512,6 +516,8 @@
                         'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
                         'table emoticons template paste help hr template'
                     ],
+                    force_br_newlines : true,
+                    force_p_newlines : true,
                     image_uploadtab: true,
                     images_upload_base_path: '/media/tinymce',
                     toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
