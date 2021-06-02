@@ -9,6 +9,9 @@
     });
     function get_form(){
         form = '{{block.form.id}}';
+        if (!form){
+            return;
+        }
         $.ajax({
             type: 'POST',
             url: '{% url 'getform' %}',
