@@ -7,9 +7,8 @@
             <div class="widget-header">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                        <h4>{% trans 'Users overview' %}</h4>
-                        <a href="{% url 'adduser' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> {% trans 'Add user' %}</a>
-                        <a href="{% url 'overviewreversionuser' %}" class="btn btn-warning mb-2 ml-2">{% trans 'Reversion' %}</a>
+                        <h4>{% trans 'Users Reversion overview' %}</h4>
+                        <a href="{% url 'overviewuser' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-left"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg> {% trans 'Back to User overview' %}</a>
                     </div>
                 </div>
             </div>
@@ -30,15 +29,6 @@
                                         </form>
                                     </div>
                                 {% endif %}
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <div id="zero-config_filter" class="dataTables_filter">
-                                    <form action="{% url 'overviewuser' %}">
-                                        <label>
-                                            <input type="search" class="form-control" id="search-user" value="{{search|default_if_none:""}}" name="search" placeholder="Search..." aria-controls="zero-config">
-                                        </label>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -72,7 +62,7 @@
                                                 {% endif %}
                                             </td>
                                             <td class="text-center">
-                                                {% include 'user/__partials/actions.html' with item=item %}
+                                                {% include 'user/__partials/reversion-actions.html' with item=user %}
                                             </td>
                                         </tr>
                                         
@@ -92,26 +82,4 @@
 </div>
 {% endblock content %}
 {% block js %}
-    <script>
-        $('.open-delete-modal').on('click', function() {
-            var id = $(this).data('id');
-            $.ajax({
-                url: '{% url 'deletemodaluser'  %}',
-                type:"POST",
-                data: {
-                    'id': id,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                },
-                success:function(data){
-                    console.log(data);
-                    $('.modal-placeholder').html(data.template);
-                    $('.modal').modal();
-                }
-            });
-        })
-        $('#groups-select').on('change', function() {
-            $(this).closest('form').submit();
-        })
-
-    </script>
 {% endblock %}

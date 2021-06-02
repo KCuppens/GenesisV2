@@ -7,9 +7,8 @@
             <div class="widget-header">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                        <h4>{% trans 'News overview' %}</h4>
-                        <a href="{% url 'addarticle' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> {% trans 'Add article' %}</a>
-                        <a href="{% url 'overviewreversionarticle' %}" class="btn btn-warning mb-2 ml-2">{% trans 'Reversion' %}</a>
+                        <h4>{% trans 'Article Reversion overview' %}</h4>
+                        <a href="{% url 'overviewarticle' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-left"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg> {% trans 'Back to Article overview' %}</a>
                     </div>
                 </div>
             </div>
@@ -21,7 +20,7 @@
                                 <tr>
                                     <th>{% trans 'Afbeelding' %}</th>
                                     <th>{% trans 'Titel' %}</th>
-                                    <th>{% trans 'Publicatiedatum' %}</th>
+                                    <th>{% trans 'Verwijderingsdatum' %}</th>
                                     <th class="text-center">{% trans 'Action' %}</th>
                                 </tr>
                             </thead>
@@ -32,7 +31,7 @@
                                         <td>{{item.title}}</td>
                                         <td>{{item.date_published}}</td>
                                         <td class="text-center">
-                                            {% include 'news/__partials/actions.html' with item=item %}
+                                            {% include 'news/__partials/reversion-actions.html' with item=item %}
                                         </td>
                                     </tr>
                                 {% endfor %}  
@@ -50,7 +49,7 @@
                             </svg>
                         </button>
                         <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
-                        {% trans 'There are no articles available.' %}
+                        {% trans 'There are no articles available to restore.' %}
                     </div>
                 {% endif %}
             </div>
@@ -61,60 +60,3 @@
     </div>
 </div>
 {% endblock content %}
-{% block js %}
-<script>
-$('.open-delete-modal').on('click', function() {
-    var id = $(this).data('id');
-    $.ajax({
-        url: '{% url 'deletemodalarticle'  %}',
-        type:"POST",
-        data: {
-            'id': id,
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-        },
-        success:function(data){
-            console.log(data);
-            $('.modal-placeholder').html(data.template);
-            $('.modal').modal();
-        }
-    });
-})
-
-$('.open-version-modal').on('click', function() {
-    var id = $(this).data('id');
-    $.ajax({
-        url: '{% url 'versionmodalarticle'  %}',
-        type:"POST",
-        data: {
-            'id': id,
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-        },
-        success:function(data){
-            console.log(data);
-            $('.modal-placeholder').html(data.template);
-            $('.modal').modal();
-        }
-    });
-})
-
-$(document).on('click', '.open-delete-version-modal', function(e) {
-    // e.preventDefault();
-    var id = $(this).data('id');
-    $.ajax({
-        url: '{% url 'deleteversionmodalarticle'  %}',
-        type:"POST",
-        data: {
-            'id': id,
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-        },
-        success:function(data){
-            console.log(data);
-            $('.modal-backdrop').removeClass("modal-backdrop fade show")
-            $(document).find('.modal-placeholder').html(data.template)
-            $('.delete-version-modal').modal();
-        }
-    });
-});
-
-</script>
-{% endblock %}

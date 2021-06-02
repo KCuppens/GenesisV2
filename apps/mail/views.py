@@ -210,6 +210,32 @@ def delete_mailtemplate(request,pk):
     return redirect('overviewmailtemplate')
 
 @staff_member_required(login_url=reverse_lazy('login'))
+def overview_reversion(request, mode):
+    if mode == 'template':
+        items = MailTemplate.objects.filter(date_deleted__isnull=False)
+    else:
+        items = MailConfig.objects.filter(date_deleted__isnull=False)
+    return render(request,'mail/reversion-overview-index.html', {"items": items, 'mode': mode})
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def revert_mail_item(request, mode, pk):
+    try:
+        if mode == 'template':
+            item = MailTemplate.objects.get(id=pk)
+            # redirect_obj = redirect('overviewreversionmail', mode)
+            messages.add_message(request, messages.SUCCESS, _('The template has been succesfully reverted!'))
+        else:
+            item = MailConfig.objects.get(id=pk)
+            # redirect_obj = redirect('overviewreversionmail', mode)
+            messages.add_message(request, messages.SUCCESS, _('The configuration has been succesfully reverted!'))
+        item.date_deleted = None
+        item.save()
+    except:
+        messages.add_message(request, messages.WARNING, _('No such item is available!'))
+    
+    return redirect('overviewreversionmail', mode)
+
+@staff_member_required(login_url=reverse_lazy('login'))
 def get_version_ajax_modal(request):
     if 'template' in request.get_full_path():
         mode = 'template'

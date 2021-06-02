@@ -47,6 +47,28 @@ def get_media_overview(request):
         if search:
             documents = Media.objects.filter(Q(name__contains=search)| Q(filename__contains=search)| Q(summary__contains=search), date_deleted=None)
             directories = Directory.objects.filter(Q(name__contains=search)| Q(summary__contains=search), date_deleted=None)
+        elif action == 'get_reversion': #new
+            if type == 'directories':
+                documents = None
+                directories = Directory.objects.filter(date_deleted__isnull=False)
+            else:
+                directories = None
+                documents = Media.objects.filter(date_deleted__isnull=False, type=type)
+        elif action == 'revert': #new
+            if type == 'directories':
+                documents = None
+                directory = Directory.objects.get(id=request.GET.get('id'))
+                directory.date_deleted = None
+                directory.save()
+                directories = Directory.objects.filter(date_deleted=None, parent__isnull=True)
+                action = ''
+            else:
+                directories = None
+                document = Media.objects.get(id=request.GET.get('id'), type=type)
+                document.date_deleted = None
+                document.save()
+                documents = Media.objects.filter(date_deleted=None, type=type)
+                action = ''
         elif type == 'directories':
             documents = None 
             if dir:
@@ -87,6 +109,7 @@ def get_media_overview(request):
             'search': search,
             'current_type': type,
             'current_dir': dir,
+            'current_action': action
         }
         data = {
             'template': render_to_string('media/__partials/__overview.html', context=context, request=request),

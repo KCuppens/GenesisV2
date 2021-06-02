@@ -200,6 +200,23 @@ def delete_blockcategory(request,pk):
     return redirect('overviewblock-categories')
 
 @staff_member_required(login_url=reverse_lazy('login'))
+def overview_reversion(request):
+    blocks = Block.objects.filter(date_deleted__isnull=False)
+    return render(request,'blocks/reversion-overview-index.html', {"blocks": blocks})
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def revert_block(request, pk):
+    try:
+        block = Block.objects.get(id=pk)
+        block.date_deleted = None
+        block.save()
+        messages.add_message(request, messages.SUCCESS, _('The Block has been succesfully reverted!'))
+    except:
+        messages.add_message(request, messages.WARNING, _('No such Block is available!'))
+    
+    return redirect('overviewreversionblock')
+
+@staff_member_required(login_url=reverse_lazy('login'))
 def get_version_ajax_modal(request):
     data = {}
     # import pdb;pdb.set_trace();

@@ -2,7 +2,8 @@ from django.conf.urls import url
 from .views import delete_ajax_mailtemplate_modal, overview_mailtemplate, add_mailtemplate, edit_mailtemplate, delete_mailtemplate, \
                    delete_ajax_mailconfig_modal, overview_mailconfig, add_mailconfig, edit_mailconfig, delete_mailconfig, toggle_mailconfig_activation_view, toggle_mailtemplate_activation_view, \
                    get_version_ajax_modal, select_version, \
-                   delete_version, add_version_comment, get_delete_version_ajax_modal
+                   delete_version, add_version_comment, get_delete_version_ajax_modal, \
+                   overview_reversion, revert_mail_item
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
@@ -19,6 +20,9 @@ urlpatterns = [
     url(_('^toggle-activation/(?P<pk>[0-9a-f-]+)$').strip(), toggle_mailconfig_activation_view, name="activate-mailconfig"),
     url(_('^delete/(?P<pk>[0-9a-f-]+)$').strip(),delete_mailconfig,name="deletemailconfig"),
     url(_('^delete/modal$').strip(),delete_ajax_mailconfig_modal,name="deletemodalmailconfig"),
+
+    url(_('^overview/reversion/(?P<mode>[a-z]+)/$').strip(),overview_reversion,name="overviewreversionmail"),
+    url(_('^revert/(?P<mode>[a-z]+)/(?P<pk>[0-9a-f-]+)/$').strip(),revert_mail_item,name="revertmail"),
 
     url(_('^version/modal/template/$').strip(),get_version_ajax_modal,name="mailtemplateversionmodal"),
     url(_('^version/modal/config/$').strip(),get_version_ajax_modal,name="mailconfigversionmodal"),

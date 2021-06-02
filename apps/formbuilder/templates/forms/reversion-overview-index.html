@@ -1,0 +1,58 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n svg get_form_entry_count %}
+{% block content %}
+<div class="row layout-top-spacing layout-spacing">
+    <div class="col-lg-12">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>{% trans 'Form Reversion Overview' %}</h4>
+                        <a href="{% url 'overviewform' %}" class="btn btn-info mb-2 ml-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-left"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg> {% trans 'Back to Form overview' %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area">
+                {% if forms.exists %} 
+                    <div class="table-responsive mb-4">
+                        <table id="style-3" class="table style-3  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{% trans 'Name' %}</th>
+                                    <th class="text-center">{% trans 'Action' %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for form in forms %}
+                                    <tr>
+                                        <td>{% if form.name %}{{form.name}}{% else %}{% endif %}</td> 
+                                        <td class="text-center">
+                                            {% include 'forms/__partials/reversion-actions.html' with item=form %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}  
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-outline-primary mb-2 mt-2 accept-drop" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-x text-black close" data-dismiss="alert">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
+                        {% trans 'There are no forms available to revert.' %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="modal-placeholder">
+
+    </div>
+</div>
+{% endblock content %}

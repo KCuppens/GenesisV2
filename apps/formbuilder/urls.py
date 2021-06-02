@@ -17,7 +17,9 @@ from .views import (
     get_delete_version_ajax_modal,
     select_version,
     delete_version,
-    add_version_comment
+    add_version_comment, 
+    overview_reversion,
+    revert_form
 )
 from django.utils.translation import ugettext as _
 
@@ -37,6 +39,9 @@ urlpatterns = [
     url(_('^get-formbuilder$').strip(),get_formbuilder,name="getformbuilder"),
     url(_('^get-form$').strip(),get_form,name="getform"),
     url(_('^handle-form$').strip(),handle_form,name="handleform"),
+
+    url(_('^overview/reversion/$').strip(),overview_reversion,name="overviewreversionform"),
+    url(_('^revert/(?P<pk>[0-9a-f-]+)$').strip(),revert_form,name="revertform"),
 
     url(_('^version/modal$').strip(),get_version_ajax_modal,name="formversionmodal"),
     url(_('^version/deletemodal$').strip(),get_delete_version_ajax_modal,name="formdeleteversionmodal"),
