@@ -490,7 +490,7 @@ def get_detailpages(request):
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_reversion(request):
     has_perms(request, ["pages.view_page"], 'pages/index.html')
-    pages = Page.objects.filter(date_deleted__isnull=False).order_by('position')
+    pages = Page.objects.filter(date_deleted__isnull=False, slug__isnull=False, page_title__isnull=False, menu_title__isnull=False).order_by('position')
     
     return render(request,'pages/reversion-overview-index.html', {"pages":pages})
 

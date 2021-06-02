@@ -191,7 +191,11 @@
                         </svg>
                     </button>
                     <i class="flaticon-cancel-12 close text-black" data-dismiss="alert"></i>
-                    {% trans 'There are no documents and directories found.' %}
+                    {% if current_action == 'get_reversion' %}
+                        {% trans 'Currently no deleted '%} {% trans current_type %} {% trans 'object is available to revert' %}
+                    {% else %}
+                        {% trans 'There are no documents and directories found.' %}
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
