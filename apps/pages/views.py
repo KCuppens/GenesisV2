@@ -411,7 +411,9 @@ def content_block_view(request):
                     'message': _('Content succesfully changed'),
                     'form': form,
                     'block': block,
-                    'instance': instance
+                    'instance': instance,
+                    'block_elements': instance.block_elements.order_by('position')
+
                 }
                 data = {
                     'template': render_to_string('canvas/__partials/__content_form.html', context=context, request=request),
@@ -422,7 +424,8 @@ def content_block_view(request):
                     'errors': form.errors,
                     'form': form,
                     'block': block,
-                    'instance': instance
+                    'instance': instance,
+                    'block_elements': instance.block_elements.order_by('position')
                 }
                 data = {
                     'template': render_to_string('canvas/__partials/__content_form.html', context=context, request=request),
@@ -441,6 +444,7 @@ def content_block_view(request):
                 'template': render_to_string('canvas/__partials/__content_form.html', context=context, request=request),
                 'success': False
             }
+    print(context) 
     return JsonResponse(data)
 
 def open_preview(request, canvas):
