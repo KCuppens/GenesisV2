@@ -488,6 +488,26 @@ def get_detailpages(request):
         return JsonResponse(data)
 
 @staff_member_required(login_url=reverse_lazy('login'))
+def overview_reversion(request):
+    has_perms(request, ["pages.view_page"], 'pages/index.html')
+    pages = Page.objects.filter(date_deleted__isnull=False).order_by('position')
+    
+    return render(request,'pages/reversion-overview-index.html', {"pages":pages})
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def restore_page(request, pk):
+    has_perms(request, ["pages.view_page"], 'pages/index.html')
+    try:
+        page = Page.objects.get(id=pk)
+        page.date_deleted = None
+        page.save()
+        messages.add_message(request, messages.SUCCESS, _('Page has been succesfully restored!'))
+    except:
+        messages.add_message(request, messages.WARNING, _('No such page is available!'))
+    
+    return redirect('overviewreversionpage')
+
+@staff_member_required(login_url=reverse_lazy('login'))
 def get_version_ajax_modal(request):
     data = {}
     # import pdb;pdb.set_trace();

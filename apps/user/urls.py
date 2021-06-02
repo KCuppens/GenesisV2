@@ -1,5 +1,6 @@
 from django.conf.urls import url
-from .views import export_users, toggle_activation_view, change_user_password, delete_ajax_group_modal, delete_ajax_user_modal, overview_user, add_user, edit_user, delete_user, my_profile, group_view, add_group_view, edit_group_view, delete_group_view
+from .views import export_users, toggle_activation_view, change_user_password, delete_ajax_group_modal, delete_ajax_user_modal, overview_user, add_user, edit_user, delete_user, my_profile, group_view, add_group_view, edit_group_view, delete_group_view, \
+                   overview_reversion, revert_user
 from django.utils.translation import ugettext as _
 
 urlpatterns = [
@@ -16,4 +17,7 @@ urlpatterns = [
     url(_('^group/edit/(?P<pk>\d+)$').strip(),edit_group_view,name="editgroup"),
     url(_('^group/delete/(?P<pk>\d+)$').strip(),delete_group_view,name="deletegroup"),
     url(_('^group/delete/modal$').strip(),delete_ajax_group_modal,name="deletemodalgroup"),
+
+    url(_('^overview/reversion/$').strip(),overview_reversion,name="overviewreversionuser"),
+    url(_('^revert/(?P<pk>[0-9a-f-]+)$').strip(),revert_user,name="revertuser"),
 ]

@@ -8,6 +8,7 @@ from django.contrib import messages
 from . forms import GroupForm
 from django.utils import timezone
 from django.contrib.auth.models import Group,Permission
+from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, authenticate
 from django.urls import reverse
@@ -239,7 +240,7 @@ def add_group_view(request):
     if request.method == 'POST':
         form = GroupForm(request.POST)
         if form.is_valid():
-            form.save(commit=False)
+            instance = form.save(commit=False)
             instance.edited_by = request.user
             instance.save()
             messages.add_message(request, messages.SUCCESS, _('The group has been succesfully added!'))
@@ -401,3 +402,21 @@ def get_user(self, uidb64):
     except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist, ValidationError):
         user = None
     return user
+
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def overview_reversion(request):
+    users = User.objects.filter(date_deleted__isnull=False)
+    return render(request,'user/reversion-overview-index.html', {"users": users})
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def revert_user(request, pk):
+    try:
+        user = User.objects.get(id=pk)
+        user.date_deleted = None
+        user.save()
+        messages.add_message(request, messages.SUCCESS, _('User has been succesfully reverted!'))
+    except:
+        messages.add_message(request, messages.WARNING, _('No such user is available!'))
+    
+    return redirect('overviewreversionuser')

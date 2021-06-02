@@ -292,6 +292,30 @@ def reorder_module(request):
     }
     return JsonResponse(data)
 
+@staff_member_required(login_url=reverse_lazy('login'))
+def overview_reversion(request, mode):
+    if mode == 'module':
+        items = Module.objects.filter(date_deleted__isnull=False)
+    else:
+        items = Tab.objects.filter(date_deleted__isnull=False)
+    return render(request,'modules/reversion-overview-index.html', {"items": items, 'mode': mode})
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def revert_module_item(request, mode, pk):
+    try:
+        if mode == 'module':
+            item = Module.objects.get(id=pk)
+            messages.add_message(request, messages.SUCCESS, _('The module has been succesfully reverted!'))
+        else:
+            item = Tab.objects.get(id=pk)
+            messages.add_message(request, messages.SUCCESS, _('The tab has been succesfully reverted!'))
+        item.date_deleted = None
+        item.save()
+    except:
+        messages.add_message(request, messages.WARNING, _('No such item is available!'))
+    
+    return redirect('overviewreversionmodule', mode)
+
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_version_ajax_modal(request, mode):

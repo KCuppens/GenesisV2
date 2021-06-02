@@ -122,3 +122,21 @@ def reorder_dashboard(request):
 
     }
     return JsonResponse(data)
+
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def overview_reversion(request):
+    dashboard_confs = DashboardConfiguration.objects.filter(date_deleted__isnull=False)
+    return render(request,'dashboard/admin/reversion-overview-index.html', {"dashboard":dashboard_confs})
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def revert_dashboard(request, pk):
+    try:
+        dashboard = DashboardConfiguration.objects.get(id=pk)
+        dashboard.date_deleted = None
+        dashboard.save()
+        messages.add_message(request, messages.SUCCESS, _('The Dashboard Configuration has been succesfully reverted!'))
+    except:
+        messages.add_message(request, messages.WARNING, _('No such Dashboard Configuration is available!'))
+    
+    return redirect('overviewreversiondashboard')

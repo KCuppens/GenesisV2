@@ -93,6 +93,24 @@ def delete_ajax_article_modal(request):
         }
     return JsonResponse(data)
 
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def overview_reversion(request):
+    articles = Article.objects.filter(date_deleted__isnull=False)
+    return render(request,'news/reversion-overview-index.html', {"articles":articles})
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def revert_article(request, pk):
+    try:
+        article = Article.objects.get(id=pk)
+        article.date_deleted = None
+        article.save()
+        messages.add_message(request, messages.SUCCESS, _('The Article has been succesfully reverted!'))
+    except:
+        messages.add_message(request, messages.WARNING, _('No such article is available!'))
+    
+    return redirect('overviewreversionarticle')
+
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_version_ajax_article_modal(request):
     data = {}
@@ -185,7 +203,7 @@ def delete_article(request,pk):
     instance = Article.objects.get(pk=pk)
     instance.date_deleted = timezone.now()
     instance.save()
-    messages.add_message(request, messages.SUCCESS, _('The module has been succesfully deleted!'))
+    messages.add_message(request, messages.SUCCESS, _('The article has been succesfully deleted!'))
     return redirect('overviewarticle')
 
 def get_articles(request):

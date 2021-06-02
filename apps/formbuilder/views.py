@@ -722,6 +722,23 @@ def send_admin_email(request, form):
         form.mail_admin.content_plain, html_message)
 
 @staff_member_required(login_url=reverse_lazy('login'))
+def overview_reversion(request):
+    forms = Form.objects.filter(date_deleted__isnull=False)
+    return render(request,'forms/reversion-overview-index.html', {"forms": forms})
+
+@staff_member_required(login_url=reverse_lazy('login'))
+def revert_form(request, pk):
+    try:
+        form = Form.objects.get(id=pk)
+        form.date_deleted = None
+        form.save()
+        messages.add_message(request, messages.SUCCESS, _('The Form has been succesfully reverted!'))
+    except:
+        messages.add_message(request, messages.WARNING, _('No such form is available!'))
+    
+    return redirect('overviewreversionform')
+
+@staff_member_required(login_url=reverse_lazy('login'))
 def get_version_ajax_modal(request):
     data = {}
     # import pdb;pdb.set_trace();
