@@ -3,7 +3,6 @@ from apps.base.models import BaseModel, AdminModel, SeoModel, SortableModel, Bas
 from apps.formbuilder.models import Form
 from apps.blocks.models import Block
 from django_extensions.db.fields import AutoSlugField
-from django.db import transaction
 from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
@@ -108,14 +107,6 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
         (SORT_ORDER_DESC, _('Descending'))
     ]
 
-    MODULE_PAGE = 'Page'
-    MODULE_NEWS = 'Article'
-
-    GET_MODELS = [
-        (MODULE_PAGE, _('Pagina module')),
-        (MODULE_NEWS, _('Artikel module'))
-    ]
-
     SORT_TYPE_DATE = 'date'
     SORT_TYPE_NAME = 'name'
 
@@ -124,7 +115,6 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
         (SORT_TYPE_NAME, _('Gesorteerd op naam'))
     ]
     form = models.ForeignKey(Form, on_delete=models.CASCADE, null=True, blank=True)
-    module = models.CharField(max_length=255, choices=GET_MODELS, default=MODULE_PAGE, blank=True, null=True)
     sort = models.CharField(max_length=255, choices=GET_SORT_TYPE , default=SORT_TYPE_DATE, blank=True, null=True)
     limit = models.IntegerField(default=0, blank=True, null=True)
     sort_order = models.CharField(max_length=255, choices=GET_SORT_ORDER, default=SORT_ORDER_ASC, blank=True, null=True)
@@ -161,9 +151,14 @@ class PageVersion(BaseVersion):
     revision = models.ForeignKey(PageRevision, on_delete=models.CASCADE, related_name='versions')
 
     def save(self, *args, **kwargs):
-        if not self.is_current:
-            return super(self._meta.model, self).save(*args, **kwargs)
-        with transaction.atomic():
-            self.revision.versions.filter(
-                is_current=True).update(is_current=False)
-            return super(self._meta.model, self).save(*args, **kwargs)
+        try:
+            pageversion = PageVersion.objects.get(id=self.id)
+            for version in pageversion.revision.versions.all().exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in PageVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)

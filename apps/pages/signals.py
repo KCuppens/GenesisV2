@@ -30,7 +30,7 @@ def update_page_detail(sender, instance, created, **kwargs):
     
     if not created and instance.detailpage:
         page = instance.page
-        module = instance.module
+        module = instance.block.module
         if not module == 'Page':
             if not page.detailpage_models:
                 page.detailpage_models = module

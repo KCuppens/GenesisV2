@@ -12,6 +12,8 @@ tinymce.init({
         'forecolor backcolor emoticons | help template',
     menubar: 'favs file edit view insert format tools table help',
 });
+
+
 /*
 =========================================
 |                                       |
@@ -22,7 +24,26 @@ tinymce.init({
 $('.scrollTop').click(function() {
     $("html, body").animate({scrollTop: 0});
 });
-
+$(document).on('focusin', function(e) {
+    if ($(e.target).closest(".tox-textfield").length)
+        e.stopImmediatePropagation();
+});
+$(document).on('focusin', (e) => {
+    if ($(e.target).closest('.mce-window').length) {
+        $('.ModalHeader').attr('tabindex', '');
+    }
+});
+$(document).on('focusin', (e) => {
+    if ($(e.target).closest('.mce-window').length) {
+        e.stopImmediatePropagation(); 
+    }
+});
+$(document).on('focusin', function(e) {
+    if ($(e.target).closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root, .tox-dialog").length) {
+        $('.tox-dialog').css('z-index', '2003');
+        e.stopImmediatePropagation();
+    }
+});
 
 
 $('.navbar .dropdown.notification-dropdown > .dropdown-menu, .navbar .dropdown.message-dropdown > .dropdown-menu ').click(function(e) {

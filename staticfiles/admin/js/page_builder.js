@@ -21,7 +21,6 @@ $(document).ready(function () {
         var canvas = $('.canvas-builder').data('id');
         var row = $('.row-canvas-delete').data('id');
         var csrf = $('.canvas-builder').data('csrf');
-        var row = $(this).data('id');
         $.ajax({
             type: 'POST',
             url: 'canvas-row',
@@ -45,17 +44,16 @@ $(document).ready(function () {
             $(this).parent().siblings().removeClass('is-selected');
             $(this).parent().addClass('is-selected');
         }
-        var colsize = $(this).data('colsize');
-        var col = $(this).data('col');
+        var row = $(this).data('row');
         var csrf = $('.canvas-builder').data('csrf');
         var canvas = $('.canvas-builder').data('id');
+        console.log(row);
         $.ajax({
             type: 'POST',
             url: 'canvas-row',
             data: {
                 'csrfmiddlewaretoken': csrf,
-                'colsize': colsize,
-                'col': col,
+                'row': row,
                 'canvas': canvas,
                 'action': 'openmodal'
             },
@@ -67,8 +65,7 @@ $(document).ready(function () {
     });
 
     $('.canvas-builder').on('click', '.col-canvas-replace', function (e) {
-        var colsize = $(this).data('colsize');
-        var col = $(this).data('col');
+        var row = $(this).data('row');
         var csrf = $('.canvas-builder').data('csrf');
         var canvas = $('.canvas-builder').data('id');
         $.ajax({
@@ -76,8 +73,7 @@ $(document).ready(function () {
             url: 'canvas-row',
             data: {
                 'csrfmiddlewaretoken': csrf,
-                'colsize': colsize,
-                'col': col,
+                'row': row,
                 'canvas': canvas,
                 'action': 'openmodal'
             },
@@ -107,6 +103,22 @@ $(document).ready(function () {
     };
 
     $('.canvas-builder').on('click', '.col-canvas-edit', function (e) {
+        $(document).on('shown.bs.modal','#contentModal', function () {
+            tinymce.init({
+                selector: '.form-control.tinymce-editor',
+                plugins: [
+                    'advlist autolink autoresize link image imagetools lists charmap print preview hr anchor pagebreak',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                    'table emoticons template paste help hr template'
+                ],
+                image_uploadtab: true,
+                images_upload_base_path: '/media/tinymce',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                    'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+                    'forecolor backcolor emoticons | help template',
+                menubar: 'favs file edit view insert format tools table help',
+            });
+        })
         $('#contentModal').modal();
         var block = $(this).data('block');
         getAjaxForm(block);
@@ -125,31 +137,6 @@ $(document).ready(function () {
         return '<p class="d-block col-md-12 shadow-lg h1 text-center py-4 rounded">Add Row</p>';
     }
 
-    function getCol12HTML()
-    {
-        return '<p class="d-block col-md-12 shadow-lg text-center py-4 round h1">12</p>';
-    }
-
-    function getCol6HTML() {
-        return '<p class="d-block col-md-12 shadow-lg text-center py-4 round h1">6 - 6</p>';
-    }
-
-    function getCol3HTML() {
-        return '<p class="d-block col-md-12 shadow-lg h3 text-center py-4 round">3 - 3 - 3 - 3</p>';
-    }
-
-    function getCol4HTML() {
-        return '<p class="d-block col-md-12 shadow-lg h1 text-center py-4 round">4 - 4 - 4</p>';
-    }
-
-    function getCol84HTML() {
-        return '<p class="d-block col-md-12 shadow-lg h1 text-center py-4 round">8 - 4</p>';
-    }
-
-    function getCol48HTML() {
-        return '<p class="d-block col-md-12 shadow-lg h1 text-center py-4 rounded">4 - 8</p>';
-    }
-
     function query_canvas_rows() {
         let canvasRows = $('.canvas-builder').children();
         for (var i = 0; i < canvasRows.length; i++) {
@@ -158,213 +145,6 @@ $(document).ready(function () {
             }
         }
     }
-    $(".row-canvas-droppable-12").draggable({
-        cursor: 'move',
-        revert:false,
-        helper: function () {
-            return getCol12HTML()
-        },
-        snapTo: '.empty',
-        delay: 100,
-        scrollSensitivity: 100,
-        scrollSpeed: 20,
-        opacity: 1,
-        zIndex: 100,
-        stop: function (ev, ui) {
-            var row = query_canvas_rows();
-            var canvas = $('.canvas-builder').data('id');
-            var csrf = $('.canvas-builder').data('csrf');
-            if (row && canvas)  {
-                $.ajax({
-                    type: 'POST',
-                    url: 'canvas-row',
-                    data: {
-                        'canvas': canvas,
-                        'row': $(row).data('row'),
-                        'action': 'addcolumn',
-                        'colblock': "12",
-                        'csrfmiddlewaretoken': csrf,
-                    },
-                    success: function (data) {
-                        $('.canvas-builder').html(data.template);
-                    }
-                });
-            }
-        },
-    });
-    $(".row-canvas-droppable-6").draggable({
-        cursor: 'move',
-        revert:false,
-        helper: function () {
-            return getCol6HTML()
-        },
-        snapTo: '.empty',
-        delay: 100,
-        scrollSensitivity: 100,
-        scrollSpeed: 20,
-        opacity: 1,
-        zIndex: 100,
-        stop: function (ev, ui) {
-            var row = query_canvas_rows();
-            var canvas = $('.canvas-builder').data('id');
-            var csrf = $('.canvas-builder').data('csrf');
-            if (row && canvas)  {
-                $.ajax({
-                    type: 'POST',
-                    url: 'canvas-row',
-                    data: {
-                        'canvas': canvas,
-                        'row': $(row).data('row'),
-                        'action': 'addcolumn',
-                        'colblock': "6-6",
-                        'csrfmiddlewaretoken': csrf,
-                    },
-                    success: function (data) {
-                        $('.canvas-builder').html(data.template);
-                    }
-                });
-            }
-        },
-    });
-    $(".row-canvas-droppable-4").draggable({
-        cursor: 'move',
-        revert:false,
-        helper: function () {
-            return getCol4HTML()
-        },
-        snapTo: '.empty',
-        delay: 100,
-        scrollSensitivity: 100,
-        scrollSpeed: 20,
-        opacity: 1,
-        zIndex: 100,
-        stop: function (ev, ui) {
-            var row = query_canvas_rows();
-            var canvas = $('.canvas-builder').data('id');
-            var csrf = $('.canvas-builder').data('csrf');
-
-            if (row && canvas) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'canvas-row',
-                    data: {
-                        'canvas': canvas,
-                        'row': $(row).data('row'),
-                        'action': 'addcolumn',
-                        'colblock': "4-4-4",
-                        'csrfmiddlewaretoken': csrf,
-                    },
-                    success: function (data) {
-                        $('.canvas-builder').html(data.template);
-                    }
-                });
-            }
-        },
-
-    });
-    $(".row-canvas-droppable-3").draggable({
-        cursor: 'move',
-        revert:false,
-        helper: function () {
-            return getCol3HTML()
-        },
-        snapTo: '.empty',
-        delay: 100,
-        scrollSensitivity: 100,
-        scrollSpeed: 20,
-        opacity: 1,
-        zIndex: 100,
-        stop: function (ev, ui) {
-            var row = query_canvas_rows();
-            var canvas = $('.canvas-builder').data('id');
-            var csrf = $('.canvas-builder').data('csrf');
-            if (row && canvas) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'canvas-row',
-                    data: {
-                        'canvas': canvas,
-                        'row': $(row).data('row'),
-                        'action': 'addcolumn',
-                        'colblock': "3-3-3-3",
-                        'csrfmiddlewaretoken': csrf,
-                    },
-                    success: function (data) {
-                        $('.canvas-builder').html(data.template);
-                    }
-                });
-            }
-        },
-
-    });
-    $(".row-canvas-droppable-84").draggable({
-        cursor: 'move',
-        revert:false,
-        helper: function () {
-            return getCol84HTML()
-        },
-        snapTo: '.empty',
-        delay: 100,
-        scrollSensitivity: 100,
-        scrollSpeed: 20,
-        opacity: 1,
-        zIndex: 100,
-        stop: function (ev, ui) {
-            var row = query_canvas_rows();
-            var canvas = $('.canvas-builder').data('id');
-            var csrf = $('.canvas-builder').data('csrf');
-            if (row && canvas) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'canvas-row',
-                    data: {
-                        'canvas': canvas,
-                        'row': $(row).data('row'),
-                        'action': 'addcolumn',
-                        'colblock': "8-4",
-                        'csrfmiddlewaretoken': csrf,
-                    },
-                    success: function (data) {
-                        $('.canvas-builder').html(data.template);
-                    }
-                });
-            }
-        },
-    });
-    $(".row-canvas-droppable-48").draggable({
-        cursor: 'move',
-        revert:false,
-        helper: function () {
-            return getCol48HTML()
-        },
-        snapTo: '.empty',
-        delay: 100,
-        scrollSensitivity: 100,
-        scrollSpeed: 20,
-        opacity: 1,
-        zIndex: 100,
-        stop: function (ev, ui) {
-            var row = query_canvas_rows();
-            var canvas = $('.canvas-builder').data('id');
-            var csrf = $('.canvas-builder').data('csrf');
-            if (row && canvas) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'canvas-row',
-                    data: {
-                        'canvas': canvas,
-                        'row': $(row).data('row'),
-                        'action': 'addcolumn',
-                        'colblock': "4-8",
-                        'csrfmiddlewaretoken': csrf,
-                    },
-                    success: function (data) {
-                        $('.canvas-builder').html(data.template);
-                    }
-                });
-            }
-        },
-    });
     $(".row-canvas-draggable").on('click', function(){
         var canvas = $('.canvas-builder').data('id');
         var csrf = $('.canvas-builder').data('csrf');
@@ -381,7 +161,7 @@ $(document).ready(function () {
             }
         });
     });
-    $('.canvas-builder').sortable({
+    $('.canvas-builder').sortable({ 
         axis: 'y',
         placeholder: 'py-5',
         scrollSpeed: 20,

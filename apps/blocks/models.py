@@ -2,10 +2,17 @@ from django.db import models
 from apps.base.models import BaseModel, AdminModel, BaseRevision, BaseVersion
 from django_extensions.db.fields import AutoSlugField
 from django.utils.translation import gettext_lazy as _
-from django.db import transaction
 
 # Create your models here.
 class Block(BaseModel, AdminModel):
+    MODULE_PAGE = 'Page'
+    MODULE_NEWS = 'Article'
+
+    GET_MODELS = [
+        (MODULE_PAGE, _('Pagina module')),
+        (MODULE_NEWS, _('Artikel module'))
+    ]
+
     name = models.CharField(max_length=55, db_index=True, blank=True)
     slug = AutoSlugField(populate_from='name')
     image = models.ImageField(upload_to="blocks/images")
@@ -13,6 +20,7 @@ class Block(BaseModel, AdminModel):
     template =  models.CharField(max_length=255, null=True, blank=True)
     detailpage_only = models.BooleanField(default=False)
     is_deletable = models.BooleanField(default=True)
+    module = models.CharField(max_length=255, choices=GET_MODELS, default=MODULE_PAGE, blank=True, null=True)
 
     has_title = models.BooleanField(default=True)
     has_subtitle = models.BooleanField(default=False)
@@ -36,7 +44,6 @@ class Block(BaseModel, AdminModel):
     has_limit = models.BooleanField(default=False)
     has_sort_order = models.BooleanField(default=False)
     has_pagination = models.BooleanField(default=False)
-    has_module = models.BooleanField(default=False)
     has_detailpage = models.BooleanField(default=False)
 
     class Meta:
@@ -69,9 +76,14 @@ class BlocksVersion(BaseVersion):
     revision = models.ForeignKey(BlocksRevision, on_delete=models.CASCADE, related_name="versions")
 
     def save(self, *args, **kwargs):
-        if not self.is_current:
-            return super(self._meta.model, self).save(*args, **kwargs)
-        with transaction.atomic():
-            self.revision.versions.filter(
-                is_current=True).update(is_current=False)
-            return super(self._meta.model, self).save(*args, **kwargs)
+        try:
+            blocksversion = BlocksVersion.objects.get(id=self.id)
+            for version in BlocksVersion.objects.exclude(id=self.id):
+                if self.is_current:
+                    version.is_current = False
+                    version.save()
+        except:
+            for version in BlocksVersion.objects.exclude(id=self.id):
+                version.is_current = False
+                version.save()
+        super().save(*args, **kwargs)

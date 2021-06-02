@@ -62,7 +62,7 @@ class BlockForm(forms.ModelForm):
     form = forms.ModelChoiceField(required=False, queryset=Form.objects.filter(date_deleted=None, active=True))
     class Meta:
         model = PageBlock
-        fields = {'title', 'content', 'form', 'image', 'subtitle', 'image_second', 'url', 'url_text', 'video', 'embed', 'sort', 'limit', 'sort_order', 'paginated', 'module', 'detailpage'}
+        fields = {'title', 'content', 'form', 'image', 'subtitle', 'image_second', 'url', 'url_text', 'video', 'embed', 'sort', 'limit', 'sort_order', 'paginated', 'detailpage'}
         labels = {
             'title': _('Titel'),
             'content': _('Inhoud'),
@@ -77,7 +77,6 @@ class BlockForm(forms.ModelForm):
             'limit': _('Limiet'),
             'sort_order': _('Sorteer volgorde'),
             'paginated': _('Paginatie'),
-            'module': _('Module'),
             'detailpage': _('Detailpagina'),
             'form': _('Formulier')
         }

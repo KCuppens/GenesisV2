@@ -14,4 +14,4 @@ def get_url_detail(object_id, model):
         detailpage = DetailPage.objects.filter(model=model, default=True).first()
     if not object or not detailpage:
         return '#' 
-    return _('detail') + '/' + model.lower() + '/' + str(detailpage.id) + '/' + object.slug
+    return '/detail/' + model.lower() + '/' + str(detailpage.id) + '/' + object.slug 
