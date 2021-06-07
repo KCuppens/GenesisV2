@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 ALLOWED_HOSTS = ['localhost', '127.0.0.1','46.101.244.242']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
-AUTH_USER_MODEL = "user.User"
+# AUTH_USER_MODEL = "user.User"
 
 
 # Application definition
@@ -69,6 +69,9 @@ INSTALLED_APPS = [
     'apps.mail',
     'apps.formbuilder',
 ]
+
+AUTH_USER_MODEL = "user.User"
+
 TAGS_INPUT_INCLUDE_JQUERY = True
 
 def get_queryset(*args, **kwargs):
