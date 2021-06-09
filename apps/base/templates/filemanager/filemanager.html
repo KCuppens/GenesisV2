@@ -170,7 +170,10 @@ $(document).ready(function(){
             success: function (data) {
                 $('.modal').modal();
                 $('.get-filemanager').html(data.template);
-                
+                $('.get-filemanager').data('method', 'widget')
+                {% if is_multiple_media_image %}
+                $('.get-filemanager').data('is_multiple_media_image', 'true')
+                {% endif %}
             }
         });
     });
