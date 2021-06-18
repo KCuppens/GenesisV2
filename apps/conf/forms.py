@@ -9,4 +9,4 @@ class ConfigurationValueForm(ModelForm):
 class ConfigurationForm(ModelForm):
     class Meta:
         model = Configuration
-        fields = ['value','key_name', 'title', 'description', 'conf_type']
+        fields = ['value','key_name', 'title', 'description', 'conf_type', 'type']
