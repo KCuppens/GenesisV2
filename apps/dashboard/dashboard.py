@@ -2,6 +2,7 @@ from apps.filemanager.models import Directory, Media
 from apps.pages.models import Page 
 from apps.user.models import User
 from apps.history.models import History
+from apps.api.google_analytics_api import GoogleAnalyticsAPI
 class Dashboard:
     #filemanager
     def count_files_by_type(self, type):
@@ -45,3 +46,21 @@ class Dashboard:
 
     def count_users(self):
         return User.objects.filter(is_active=True, date_deleted=None).count()
+
+    def active7DayUsers(self):
+        return GoogleAnalyticsAPI().get_active7DayUsers()
+
+    def active28DayUsers(self):
+        return GoogleAnalyticsAPI().get_active28DayUsers()
+
+    def activeUsers(self):
+        return GoogleAnalyticsAPI().get_activeUsers()
+
+    def engagedSessions(self):
+        return GoogleAnalyticsAPI().get_engagedSessions()
+
+    def engagementRate(self):
+        return GoogleAnalyticsAPI().get_engagementRate()
+
+    def sessions(self):
+        return GoogleAnalyticsAPI().get_sessions()
