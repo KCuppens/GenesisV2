@@ -11,6 +11,7 @@ tinymce.init({
         'bullist numlist outdent indent | link image | print preview media fullpage | ' +
         'forecolor backcolor emoticons | help template',
     menubar: 'favs file edit view insert format tools table help',
+    templates: temp_config_url,
     file_picker_callback : function myFileBrowser(callback, value, meta){
         var cmsUrl = `${filemanager_url}?type=${meta.filetype}&tinyMCE=1`;
         

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse
 from apps.modules.models import Module
 from apps.pages.models import Page
 from django.template.loader import render_to_string
@@ -117,3 +118,25 @@ def permaURL(request):
             raise Http404
         else:
             return HttpResponsePermanentRedirect('/' + request.LANGUAGE_CODE + '/' + article.slug + '/' + article.pk)
+
+
+def get_tinymce_template_config(request):
+    # return the template plugin config for tinyMCE editor
+    template_config = [
+        {
+            'title': 'Image left, content right',
+            'url': f'{reverse("get-tineymce-templates")}?template=image-left-content-right',
+            'description': 'Image will be on left side, and content on right'
+        },
+        {
+            'title': 'Image right, content left',
+            'url': f'{reverse("get-tineymce-templates")}?template=image-right-content-left',
+            'description': 'Image will be on right side, and content on left'
+        }
+    ]
+    return JsonResponse(template_config, safe=False)
+
+def get_tinymce_templates(request):
+    # renders the selected tinyMCE template
+    template_name = request.GET.get('template')
+    return render(request, f'tinymce_templates/{template_name}.html')
