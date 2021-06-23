@@ -1,5 +1,9 @@
 {% load i18n get_image %}
 {% load static %}
+
+{% if tinyMCE %}
+{% include 'dashboard/layout/__partials/css.html' %}
+{% endif %}
 <div class="mail-overlay"></div>
 <div id="mailbox-inbox" class="accordion mailbox-inbox" data-type="{{current_type}}">
 
@@ -131,6 +135,14 @@
 </div> 
 {% if is_multiple_media_image %}
 <script src="{% static 'admin/js/jQuery.tagify.min.js' %}"></script>
+{% endif %}
+
+{% if tinyMCE %}
+<script src="{% static 'admin/js/libs/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'admin/bootstrap/js/popper.min.js' %}"></script>
+<script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://cdn.tiny.cloud/1/x91uo4kqiv1mefxf9fahuxqr5jj9f3hvbfxe7aw87zjyawgc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/3.5.8/tiny_mce_popup.js"></script> -->
 {% endif %}
 
 
@@ -379,6 +391,14 @@ $(document).ready(function(){
         var file = $(this).data('file');
         $('.filemanager-widget').val(file);
         $('#filemanagerModal').modal('toggle');
+
+        {% if tinyMCE %}
+        {# This code is included when filemanager is called from tinyMCE #}
+
+        top.tinymce.activeEditor.windowManager.oninsert(file);
+        top.tinymce.activeEditor.windowManager.close();
+        
+        {% endif %}
     });
 
     {% endif %}

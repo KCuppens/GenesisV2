@@ -2,7 +2,7 @@ from django.shortcuts import render
 from apps.modules.models import Module
 from apps.pages.models import Page
 from django.template.loader import render_to_string
-from django.http import JsonResponse, HttpResponsePermanentRedirect, Http404
+from django.http import JsonResponse, HttpResponsePermanentRedirect, Http404, HttpResponse
 from apps.filemanager.models import Directory, Media
 from apps.news.models import Article
 from django.db.models import Q
@@ -38,8 +38,8 @@ def getURLPicker(request):
 
 
 def get_filemanager(request):
-    # import pdb; pdb.set_trace()
-    if request.is_ajax():
+    tinyMCE = request.GET.get('tinyMCE', None)
+    if request.is_ajax() or tinyMCE:
         if request.method == "POST":
             mediatype = request.POST.get('type')
             selecttype = request.POST.get('selecttype')
@@ -49,6 +49,7 @@ def get_filemanager(request):
             mediatype = request.GET.get('type')
             selecttype = request.GET.get('selecttype')
             is_multiple_media_image = request.GET.get('is_multiple_media_image')
+            target_elem_uuid = None
         dir = request.GET.get('dir')
         search = request.GET.get('search')
         action = request.GET.get('action')
@@ -82,11 +83,15 @@ def get_filemanager(request):
             'current_dir': dir,
             'selecttype':selecttype,
             'is_multiple_media_image': is_multiple_media_image,
-            'target_elem_uuid': target_elem_uuid
+            'target_elem_uuid': target_elem_uuid,
+            'tinyMCE': tinyMCE
         }
         data = {
             'template': render_to_string('filemanager/filemanager.html', context=context, request=request)
         }
+        if tinyMCE:
+            data = render_to_string('filemanager/filemanager.html', context=context, request=request)
+            return HttpResponse(data)
         return JsonResponse(data)
 
 

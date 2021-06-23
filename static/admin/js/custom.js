@@ -11,8 +11,27 @@ tinymce.init({
         'bullist numlist outdent indent | link image | print preview media fullpage | ' +
         'forecolor backcolor emoticons | help template',
     menubar: 'favs file edit view insert format tools table help',
-});
+    file_picker_callback : function myFileBrowser(callback, value, meta){
+        var cmsUrl = `${filemanager_url}?type=${meta.filetype}&tinyMCE=1`;
+        
+        tinyMCE.activeEditor.windowManager.openUrl({
+            url: cmsUrl,
+            width: 820,
+            height: 600,
+            title : 'My File Browser',
+            resizable : "yes",
+            inline : "yes",  // This parameter only has an effect if you use the inlinepopups plugin!
+            close_previous : "no"
+        });
 
+        tinyMCE.activeEditor.windowManager.oninsert = function(url){
+            callback(url);
+        }
+
+        return false;
+    }
+
+});
 
 /*
 =========================================
