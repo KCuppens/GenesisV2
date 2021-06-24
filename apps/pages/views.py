@@ -207,17 +207,16 @@ def delete_page(request,pk):
 def page_reorder(request):
     has_perms(request, ["pages.change_page"], None, 'overviewpage')
     items = request.POST.get('item', 'None')
-    array = items.split('page[]=')
+    array = items.split('[]=')
     ids = ''.join(array)
     ids = ids.split('&')
     position = 0
 
     for id in ids:
-        if id.isnumeric():
-            item = Page.objects.get(id=id)
-            position += 1
-            item.position = position
-            item.save()
+        item = Page.objects.get(id=id)
+        position += 1
+        item.position = position
+        item.save()
     
 
     return JsonResponse({}, status=200)

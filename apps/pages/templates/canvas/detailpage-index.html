@@ -82,7 +82,34 @@
             }
         });
     }
-
+    $('.canvas-builder').on('click', '.add-block', function (e) {
+        e.stopPropagation();
+        if ($(this).parent().hasClass('is-selected')) {
+            $(this).parent().siblings().removeClass('is-selected');
+            $(this).parent().removeClass('is-selected');
+        } else {
+            $(this).parent().siblings().removeClass('is-selected');
+            $(this).parent().addClass('is-selected');
+        }
+        var row = $(this).data('row');
+        var csrf = $('.canvas-builder').data('csrf');
+        var canvas = $('.canvas-builder').data('id');
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'canvasrow' %}',
+            data: {
+                'csrfmiddlewaretoken': csrf,
+                'row': row,
+                'canvas': canvas,
+                'action': 'openmodal',
+                'detailpage': true,
+            },
+            success: function (data) {
+                $('.overview-blocks').html(data.template);
+                $('#exampleModal').modal();
+            }
+        });
+    }); 
     $('.canvas-builder').on('click', '.row-canvas-delete', function (e) {
         e.stopPropagation();
         var canvas = $('.canvas-builder').data('id');
