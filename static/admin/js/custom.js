@@ -29,6 +29,19 @@ tinymce.init({
             callback(url);
         }
 
+        tinyMCE.activeEditor.windowManager.onreload = function(url){
+            top.tinymce.activeEditor.windowManager.close();
+            tinyMCE.activeEditor.windowManager.openUrl({
+                url: url,
+                width: 820,
+                height: 600,
+                title : 'My File Browser',
+                resizable : "yes",
+                inline : "yes",  // This parameter only has an effect if you use the inlinepopups plugin!
+                close_previous : "no"
+            });
+        }
+
         return false;
     }
 

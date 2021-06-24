@@ -2,11 +2,29 @@
 {% load static %}
 
 {% if tinyMCE %}
-{% include 'dashboard/layout/__partials/css.html' %}
+{# include css files to get necessary styles in tinyMCE window #}
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+<link href="{% static 'admin/css/loader.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'admin/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'admin/css/plugins.css' %}" rel="stylesheet" type="text/css" />
+<!-- END GLOBAL MANDATORY STYLES -->
+
+<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+<link href="{% static 'admin/css/dashboard/dash_2.css' %}" rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+<link href="{% static 'admin/css/apps/mailbox.css' %}" rel="stylesheet" type="text/css" />
+<style>
+    .mailbox-inbox .message-box .message-box-scroll{
+        height: calc(100vh - 100px);
+    }
+</style>
 {% endif %}
+
 <div class="mail-overlay"></div>
 <div id="mailbox-inbox" class="accordion mailbox-inbox" data-type="{{current_type}}">
 
+    {% if not tinyMCE %}
     <div class="search">
         <form action="">
             <div class="form-row" style="width: 75vw;">
@@ -19,15 +37,21 @@
             </div>
         </form>
     </div>
+    {% endif %}
 
     <div class="action-center">
         <div class="">    
             {% if current_dir %}  
                 <a href="javascript:void(0)" class="go-level-up" data-dir="{{current_dir|default_if_none:""}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-left-up"><polyline points="14 9 9 4 4 9"></polyline><path d="M20 20h-7a4 4 0 0 1-4-4V4"></path></svg></a>
             {% endif %}
-            <a href="javascript:void(0)" class="resync" data-dir="{{current_dir|default_if_none:""}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-ccw"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg></a>
+
+            {% if not tinyMCE %}
+                <a href="javascript:void(0)" class="resync" data-dir="{{current_dir|default_if_none:""}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-ccw"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg></a>
+            {% endif %}
         </div>
-        <div class="dropdown d-inline-block more-actions">
+
+        {% if not tinyMCE %}
+            <div class="dropdown d-inline-block more-actions">
             <a class="nav-link dropdown-toggle" id="more-actions-btns-dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>                                            </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="more-actions-btns-dropdown">
@@ -38,7 +62,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> {% trans 'Upload media' %}
                 </a>
             </div>
-        </div>
+            </div>
+        {% endif %}
     </div>
 
     <div class="message-box">
@@ -61,8 +86,11 @@
                                                 <div class="meta-title-tag">
                                                     <p class="meta-time align-self-center">{{directory.date_updated|date:"d/m/Y H:i"}}</p>
                                                 </div>
-                                                <a href="javascript:void(0)" class="action-directory-edit" data-dir="{{directory.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a>
-                                                <a href="javascript:void(0)" class="action-directory-delete" data-dir="{{directory.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
+
+                                                {% if not tinyMCE %}
+                                                    <a href="javascript:void(0)" class="action-directory-edit" data-dir="{{directory.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a>
+                                                    <a href="javascript:void(0)" class="action-directory-delete" data-dir="{{directory.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +110,7 @@
                                             <div class="f-body" data-mailfrom="info@mail.com" data-mailto="kf@mail.com" data-mailcc="">
                                                 <div class="meta-mail-time">
                                                     {% if document.type == "image" %}
-                                                        <img src="{{document.file}}" width="100" alt="{{document.name}}">
+                                                        <img src="{% get_image document.file %}" width="100" alt="{{document.name}}">
                                                     {% elif document.type == "file" %}
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                                                     {% elif document.type == "audio" %}
@@ -105,9 +133,12 @@
                                                     class="select-file btn btn-primary mr-2"
                                                     {% endif %}>{% trans 'Select' %}</a>
                                                 </div>
-                                                <a href="{% url 'download-media' pk=document.pk %}" class="action-media-download" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></a>
-                                                <a href="javascript:void(0)" class="action-media-edit" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a>
-                                                <a href="javascript:void(0)" class="action-media-delete" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
+
+                                                {% if not tinyMCE %}
+                                                    <a href="{% url 'download-media' pk=document.pk %}" class="action-media-download" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></a>
+                                                    <a href="javascript:void(0)" class="action-media-edit" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a>
+                                                    <a href="javascript:void(0)" class="action-media-delete" data-media="{{document.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -284,10 +315,19 @@ $(document).ready(function(){
     $('.go-to-directory').on('click', function() {
         var dir = $(this).data('dir');
         var type = $('#mailbox-inbox').data('type');
-        console.log(type);
+        var url = "{% url 'get_filemanager' %}";
+        
+        {% if tinyMCE %}
+        {# This code is included when filemanager is called from tinyMCE #}
+        
+        var get_dir_url = url + `?dir=${dir}&type=${type}&tinyMCE=1`;
+        top.tinymce.activeEditor.windowManager.onreload(get_dir_url);
+        
+        {% endif %}
+
         $.ajax({
             type: 'GET',
-            url: '{% url 'get_filemanager' %}',
+            url: url,
             data: {
                 'dir': dir,
                 'type': type, 
@@ -304,9 +344,19 @@ $(document).ready(function(){
     $('.go-level-up').on('click', function() {
         var dir = $(this).data('dir');
         var type = $('#mailbox-inbox').data('type');
+        var url = "{% url 'get_filemanager' %}";
+
+        {% if tinyMCE %}
+        {# This code is included when filemanager is called from tinyMCE #}
+        
+        var get_dir_url = url + `?dir=${dir}&type=${type}&action=go-level-up&tinyMCE=1`;
+        top.tinymce.activeEditor.windowManager.onreload(get_dir_url);
+        
+        {% endif %}
+
         $.ajax({
             type: 'GET',
-            url: '{% url 'get_filemanager' %}',
+            url: url,
             data: {
                 'dir': dir,
                 'action': 'go-level-up',
@@ -342,11 +392,8 @@ $(document).ready(function(){
     });
     
     {% if is_multiple_media_image %}
-
+    {# this code block will be executed when filemanager is invoked by multiple_media_image_widget #}
     $(document).on('click', '.select-file-media', function() {
-
-        // this code block will be executed when filemanager is
-        // invoked by multiple_media_image_widget
 
         var file = $(this).data('file');
         var target = $("#id_gallery");
