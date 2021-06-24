@@ -46,14 +46,19 @@
 <script>
     $('.change-page').on('click', function() {
         var page = $(this).data('page');
+        var row = $('.canvas-id').data('row');
+        var detailpage = $('.canvas-id').data('detailpage');
+        console.log(row);
         $.ajax({
             type: 'POST',
-            url: 'canvas-row?page=' + page,
+            url: '{% url 'canvasrow' %}?page=' + page,
             data: {
+                'row': row,
                 'canvas': '{{canvas}}',
                 'action': 'openmodal',
-                'detailpage': true,
+                'detailpage': detailpage,
                 'csrfmiddlewaretoken': '{{csrf_token}}',
+
             },
             success: function (data) {
                 $('.overview-blocks').html(data.template);

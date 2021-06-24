@@ -1,5 +1,5 @@
 {% load render_block_page %}
-{% for row in detailpage.canvas.rows.all %}
+{% for row in detailpage.canvas.rows.all reversed %}
     {% if row.block %}
         {% render_block_page request row.block object %}
     {% endif %}
