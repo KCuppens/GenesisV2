@@ -2,6 +2,7 @@ from django.db import models
 from apps.base.models import BaseModel, SortableModel, AdminModel
 from django.utils.translation import ugettext_lazy as _
 from apps.feathericons.models import Icon
+from apps.api.google_analytics_api import GoogleAnalyticsAPI
 
 # Create your models here.
 
@@ -69,5 +70,24 @@ class DashboardConfiguration(BaseModel, SortableModel, AdminModel):
 
     #modules
     default = models.BooleanField(default=False)
+
+    def is_available(self):
+        # return True if GoogleAnalyticsAPI doesn't throw any errors
+        
+        google_analytics_methods = [
+            self.METHOD_ACTIVE7DAYUSERS,
+            self.METHOD_ACTIVE28DAYUSERS,
+            self.METHOD_ACTIVEUSERS,
+            self.METHOD_ENGAGED_SESSIONS,
+            self.METHOD_ENGAGEMENT_RATE,
+            self.METHOD_SESSIONS
+        ]
+        if self.method in google_analytics_methods:
+            try:
+                client = GoogleAnalyticsAPI().initiate_client()
+            except Exception as e:
+                print('Google Analytics Exception: ', e)
+                return False
+        return True
 
     

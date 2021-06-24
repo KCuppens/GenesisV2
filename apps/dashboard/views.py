@@ -18,6 +18,8 @@ from django.utils import timezone
 def dashboard_view(request):
     has_perms(request, ["dashboard.view_dashboardconfiguration"], 'dashboard/admin/index.html')
     dashboard = DashboardConfiguration.objects.filter(active=True, date_deleted=None).order_by('position')
+    # filtering dashboard on the basis of GoogleAnalytics presence
+    dashboard = [dash for dash in dashboard if dash.is_available()]
     return render(request, 'dashboard/dashboard.html', {'dashboard': dashboard})
 
 @staff_member_required(login_url=reverse_lazy('login'))
