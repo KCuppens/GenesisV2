@@ -26,7 +26,23 @@
                     $('.get-filemanager').html(data.template);
                 }
             });
-        } else {
+        } else if(method == 'widget'){
+            console.log("Method: ", method)
+            var is_multiple_media_image = $('.get-filemanager').data('is_multiple_media_image')
+
+            var data_post = {'type': 'image'}
+            if (is_multiple_media_image == 'true'){
+                data['is_multiple_media_image'] = true
+            }
+            $.ajax({
+                type: 'GET',
+                url: '{% url 'get_filemanager' %}',
+                data: data_post,
+                success: function (data) {
+                    $('.get-filemanager').html(data.template);
+                }
+            });
+        }else {
             window.location = '{% url "media-document-index" %}';
             // $.ajax({
             // type: 'GET',

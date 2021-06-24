@@ -33,6 +33,12 @@ class DashboardConfiguration(BaseModel, SortableModel, AdminModel):
     METHOD_COUNT_PAGES = 'count_pages'
     METHOD_LATEST_USERS = 'latest_users'
     METHOD_COUNT_USERS = 'count_users'
+    METHOD_ACTIVE7DAYUSERS = 'active7DayUsers'
+    METHOD_ACTIVE28DAYUSERS = 'active28DayUsers'
+    METHOD_ACTIVEUSERS = 'activeUsers'
+    METHOD_ENGAGED_SESSIONS = 'engagedSessions'
+    METHOD_ENGAGEMENT_RATE = 'engagementRate'
+    METHOD_SESSIONS = 'sessions'
     
 
     GET_METHODS = [
@@ -44,7 +50,13 @@ class DashboardConfiguration(BaseModel, SortableModel, AdminModel):
         (METHOD_LATEST_PAGES, _('Latest pages')),
         (METHOD_COUNT_PAGES, _('Count pages')),
         (METHOD_LATEST_USERS, _('Latest users')),
-        (METHOD_COUNT_USERS, _('Count users'))
+        (METHOD_COUNT_USERS, _('Count users')),
+        (METHOD_ACTIVE7DAYUSERS, _('Active 7 day users')),
+        (METHOD_ACTIVE28DAYUSERS, _('Active 28 day users')),
+        (METHOD_ACTIVEUSERS, _('Active users')),
+        (METHOD_ENGAGED_SESSIONS, _('Engaged sessions')),
+        (METHOD_ENGAGEMENT_RATE, _('Engagement rate')),
+        (METHOD_SESSIONS, _('Sessions'))
     ]
 
     title = models.CharField(max_length=255, null=True, blank=True)

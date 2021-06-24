@@ -24,5 +24,17 @@ def render_dashboard_method(method, sort, order, param1):
         return dashboard.latest_users(param1)
     elif method == 'count_users':
         return dashboard.count_users()
+    elif method == 'active7DayUsers':
+        return dashboard.active7DayUsers()
+    elif method == 'active28DayUsers':
+        return dashboard.active28DayUsers()
+    elif method == 'activeUsers':
+        return dashboard.activeUsers()
+    elif method == 'engagedSessions':
+        return dashboard.engagedSessions()
+    elif method == 'engagementRate':
+        return dashboard.engagementRate()
+    elif method == 'sessions':
+        return dashboard.sessions()
         
 

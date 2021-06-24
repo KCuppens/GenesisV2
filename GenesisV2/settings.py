@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 ALLOWED_HOSTS = ['localhost', '127.0.0.1','46.101.244.242']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
-AUTH_USER_MODEL = "user.User"
+# AUTH_USER_MODEL = "user.User"
 
 
 # Application definition
@@ -69,6 +69,9 @@ INSTALLED_APPS = [
     'apps.mail',
     'apps.formbuilder',
 ]
+
+AUTH_USER_MODEL = "user.User"
+
 TAGS_INPUT_INCLUDE_JQUERY = True
 
 def get_queryset(*args, **kwargs):
@@ -231,3 +234,10 @@ BACKENDS = ''
 VERSION_DELETE_DAYS = 15
 
 SITE_ID=1
+
+GOOGLE_APPLICATION_CREDENTIALS = config('GOOGLE_APPLICATION_CREDENTIALS')
+GOOGLE_PROPERTY_ID = config('GOOGLE_PROPERTY_ID')
+
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']

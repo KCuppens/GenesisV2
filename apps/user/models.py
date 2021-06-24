@@ -8,8 +8,6 @@ from django.conf import settings
 
 # Create your models here.
 from django.contrib.auth.models import Group
-Group.add_to_class('date_deleted', models.DateTimeField(null=True, blank=True))
-Group.add_to_class('edited_by', models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_edited_by',null=True, blank=True))
     
 class User(AbstractUser):
     USER_TYPE_PERSONAL = 'personal'
@@ -71,3 +69,6 @@ class User(AbstractUser):
     def activate(self):
         self.is_active = True
         self.save()
+
+Group.add_to_class('date_deleted', models.DateTimeField(null=True, blank=True))
+Group.add_to_class('edited_by', models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_edited_by',null=True, blank=True))

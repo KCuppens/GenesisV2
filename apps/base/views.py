@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from django.urls import reverse
 from apps.modules.models import Module
 from apps.pages.models import Page
 from django.template.loader import render_to_string
-from django.http import JsonResponse, HttpResponsePermanentRedirect, Http404
+from django.http import JsonResponse, HttpResponsePermanentRedirect, Http404, HttpResponse
 from apps.filemanager.models import Directory, Media
 from apps.news.models import Article
 from django.db.models import Q
@@ -38,8 +39,8 @@ def getURLPicker(request):
 
 
 def get_filemanager(request):
-    # import pdb; pdb.set_trace()
-    if request.is_ajax():
+    tinyMCE = request.GET.get('tinyMCE', None)
+    if request.is_ajax() or tinyMCE:
         if request.method == "POST":
             mediatype = request.POST.get('type')
             selecttype = request.POST.get('selecttype')
@@ -49,6 +50,7 @@ def get_filemanager(request):
             mediatype = request.GET.get('type')
             selecttype = request.GET.get('selecttype')
             is_multiple_media_image = request.GET.get('is_multiple_media_image')
+            target_elem_uuid = None
         dir = request.GET.get('dir')
         search = request.GET.get('search')
         action = request.GET.get('action')
@@ -82,11 +84,15 @@ def get_filemanager(request):
             'current_dir': dir,
             'selecttype':selecttype,
             'is_multiple_media_image': is_multiple_media_image,
-            'target_elem_uuid': target_elem_uuid
+            'target_elem_uuid': target_elem_uuid,
+            'tinyMCE': tinyMCE
         }
         data = {
             'template': render_to_string('filemanager/filemanager.html', context=context, request=request)
         }
+        if tinyMCE:
+            data = render_to_string('filemanager/filemanager.html', context=context, request=request)
+            return HttpResponse(data)
         return JsonResponse(data)
 
 
@@ -112,3 +118,25 @@ def permaURL(request):
             raise Http404
         else:
             return HttpResponsePermanentRedirect('/' + request.LANGUAGE_CODE + '/' + article.slug + '/' + article.pk)
+
+
+def get_tinymce_template_config(request):
+    # return the template plugin config for tinyMCE editor
+    template_config = [
+        {
+            'title': 'Image left, content right',
+            'url': f'{reverse("get-tineymce-templates")}?template=image-left-content-right',
+            'description': 'Image will be on left side, and content on right'
+        },
+        {
+            'title': 'Image right, content left',
+            'url': f'{reverse("get-tineymce-templates")}?template=image-right-content-left',
+            'description': 'Image will be on right side, and content on left'
+        }
+    ]
+    return JsonResponse(template_config, safe=False)
+
+def get_tinymce_templates(request):
+    # renders the selected tinyMCE template
+    template_name = request.GET.get('template')
+    return render(request, f'tinymce_templates/{template_name}.html')
