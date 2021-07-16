@@ -53,6 +53,9 @@ class User(AbstractUser):
     class Meta:
         verbose_name = _('Gebruiker')
         verbose_name_plural = _('Gebruikers')
+        constraints = [
+            models.UniqueConstraint(fields=['email'], name='unique_user_email')
+        ]
 
     def get_full_name(self):
         """ Return the email."""
