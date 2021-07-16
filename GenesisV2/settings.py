@@ -103,6 +103,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'apps.base.middleware.RedirectMiddleware'
 ]
 
 ROOT_URLCONF = 'GenesisV2.urls'

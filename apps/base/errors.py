@@ -8,3 +8,6 @@ class RevisionManagementError(Exception):
 
 class RegistrationError(Exception):
     """Exception thrown when registration with revision goes wrong."""
+
+class PermissionDenied(Exception):
+    """Exception raised when try to access without permission"""

@@ -1,4 +1,10 @@
 from django.db import connection
+from django.shortcuts import render
+from apps.base.middleware import redirect
+from apps.base.errors import PermissionDenied
+from django.utils.translation import ugettext as _
+from django.contrib import messages
+
 
 def check_tables(table_name):
     with connection.cursor() as cursor:
@@ -8,7 +14,9 @@ def check_tables(table_name):
     return result
 
 
-def has_perms(request, permissions, template, redirect = None, raise_exception=False):
+def has_perms(request, permissions, template, redirect_url = None, raise_exception=False):
+    current_url = request.resolver_match.url_name
+    print('current_url: ', current_url)
     if isinstance(permissions, str):
         perms = (permissions,)
     else:
@@ -24,8 +32,13 @@ def has_perms(request, permissions, template, redirect = None, raise_exception=F
         return render(request, template, {
                 'permission_denied': True,
             })
-    elif redirect:
-        return redirect(redirect)
+    elif redirect_url == current_url:
+        # preveting the infinite loop if view redirects to itself
+        msg = _(f'You don\'t have {permissions} permission for this operation')
+        raise PermissionDenied(msg)
+    elif redirect_url:
+        messages.add_message(request, messages.WARNING, _(f'You don\'t have {permissions} permission for this operation'))
+        return redirect(redirect_url)
 
 def generate_perma_url(locale, model, id):
     return '/' + locale + '/' + 'perma/url/' + model.lower()  + '/' + str(id)
