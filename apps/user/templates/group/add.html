@@ -30,5 +30,13 @@
             $('[data-toggle="pill"][href="#' + tab.attr('id') + '"]').find('.tab-error-indicator').html(tab.find('.form-control.is-invalid').length);
         }
     });
+
+    $('.select-all-checkbox').change(function(e){
+        var checked = $(this).is(':checked');
+        console.log('checked', checked);
+        $('input.new-control-input[name="permissions"]').each(function(e){
+            $(this).prop('checked', checked);
+        })
+    });
 </script>
 {% endblock %}

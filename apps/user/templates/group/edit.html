@@ -30,6 +30,25 @@
             $('[data-toggle="pill"][href="#' + tab.attr('id') + '"]').find('.tab-error-indicator').html(tab.find('.form-control.is-invalid').length);
         }
     });
+
+    $('.select-all-checkbox').change(function(e){
+        var checked = $(this).is(':checked');
+        $('input.new-control-input[name="permissions"]').each(function(e){
+            if (checked){
+                $(this).prop('checked', checked);
+            }else{
+                var already_checked = $(this).data('checked');
+                console.log('already_checked: ', already_checked)
+                if (already_checked){
+                    $(this).prop('checked', true);
+                }
+                else{
+                    $(this).prop('checked', false);
+                }
+                
+            }
+        })
+    });
 </script>
 {% endblock %}
 

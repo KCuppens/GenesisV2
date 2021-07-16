@@ -243,6 +243,15 @@ def add_group_view(request):
             instance = form.save(commit=False)
             instance.edited_by = request.user
             instance.save()
+
+            permission_ids = dict(request.POST).get('permissions', [])
+            permissions = Permission.objects.filter(pk__in=permission_ids)
+
+            for id_ in list(Permission.objects.values_list('id', flat=True)):
+                instance.permissions.remove(int(id_))
+            for id_ in list(permissions.values_list('id', flat=True)):
+                instance.permissions.add(int(id_))
+            instance.save()
             messages.add_message(request, messages.SUCCESS, _('The group has been succesfully added!'))
             return redirect('overviewgroup')
 
