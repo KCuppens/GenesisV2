@@ -126,14 +126,17 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
         verbose_name = _('Page block')
 
 class PageBlockElement(BaseModel, SeoModel, SortableModel):
-    block_element_title = models.CharField(max_length=255, null=True, blank=True)
-    block_element_image = models.CharField(max_length=255, null=True, blank=True)
-    block_element_content = models.TextField(null=True, blank=True)
-    block_element_subtitle = models.CharField(max_length=255, null=True, blank=True)
-    block_element_image_second = models.CharField(max_length=255, null=True, blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    image = models.CharField(max_length=255, null=True, blank=True)
+    content = models.TextField(null=True, blank=True)
+    subtitle = models.CharField(max_length=255, null=True, blank=True)
+    image_second = models.CharField(max_length=255, null=True, blank=True)
 
     def get_actives(self):
         return self.filter(date_deleted=None)
+
+    class Meta:
+        ordering = ['position']
   
 class DetailPage(models.Model):
     object_id = models.CharField(max_length=255, null=True, blank=True)

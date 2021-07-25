@@ -37,13 +37,13 @@
         <div class="form-placeholder">
             <label for="{{field.id}}">
                 {% trans 'Minimum' %}
-                <input class="form-control dateTimeFlatpickr" type="datetime-local" name="minimum-{{field.id}}" value="{{field.min_date|default_if_none:""}}" id="{{field.id}}">
+                <input class="form-control expiredDateTimeFlatpickr" type="datetime-local" name="minimum-{{field.id}}" value="{{field.min_date|default_if_none:""}}" id="{{field.id}}">
             </label>
         </div>
         <div class="form-placeholder">
             <label for="{{field.id}}">
                 {% trans 'Maximum' %}
-                <input class="form-control dateTimeFlatpickr" type="datetime-local" name="maximum-{{field.id}}" value="{{field.max_date|default_if_none:""}}" id="{{field.id}}">
+                <input class="form-control expiredDateTimeFlatpickr" type="datetime-local" name="maximum-{{field.id}}" value="{{field.max_date|default_if_none:""}}" id="{{field.id}}">
             </label>
         </div>
     </div>

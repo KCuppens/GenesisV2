@@ -7,5 +7,7 @@ register = template.Library()
 def get_url(page):
     if page.url_type == Page.URL_TYPE_LINK_THROUGH:
         return page.linkthrough 
-    else:
+    elif page.full_slug:
         return reverse('index', kwargs={'slug': page.full_slug})
+    else:
+        return reverse('index', kwargs={'slug': page.slug})

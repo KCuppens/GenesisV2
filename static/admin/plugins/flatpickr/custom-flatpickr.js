@@ -1,11 +1,17 @@
 // Flatpickr
 var f1 = flatpickr($('.basicFlatpickr'));
-var f2 = flatpickr($('.dateTimeFlatpickr'), {
+var f2 = flatpickr($('.DateTimeFlatpickr'), {
     enableTime: true,
     dateFormat: "Y-m-d H:i:S",
     time_24hr: true,
     minDate: "today",
-    // defaultDate: "today"
+    defaultDate: "today"
+});
+var f2 = flatpickr($('.expiredDateTimeFlatpickr'), {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i:S",
+    time_24hr: true,
+    minDate: "today",
 });
 var f3 = flatpickr($('.rangeCalendarFlatpickr'), {
     mode: "range",
@@ -17,5 +23,5 @@ var f4 = flatpickr($('.timeFlatpickr'), {
     defaultDate: "13:45"
 });
 $("#clear-date").click(function() {
-    $('.dateTimeFlatpickr.expired').flatpickr().clear();
+    $('.expiredDateTimeFlatpickr.expired').flatpickr().clear();
 })

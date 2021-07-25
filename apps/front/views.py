@@ -20,6 +20,8 @@ def page_view(request, slug):
         page = Page.objects.filter(slug=slug, active=True, date_deleted=None).first()
     else:
         page = Page.objects.filter(full_slug=slug, active=True, date_deleted=None).first()
+        if not page:
+            page = Page.objects.filter(slug=slug, active=True, date_deleted=None).first()
     template_name = None
     if page and page.url_type == Page.URL_TYPE_LINK_THROUGH:
         return redirect(page.linkthrough)

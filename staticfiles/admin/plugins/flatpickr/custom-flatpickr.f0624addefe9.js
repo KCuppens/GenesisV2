@@ -1,6 +1,6 @@
 // Flatpickr
 var f1 = flatpickr($('.basicFlatpickr'));
-var f2 = flatpickr($('.dateTimeFlatpickr'), {
+var f2 = flatpickr($('.expiredDateTimeFlatpickr'), {
     enableTime: true,
     dateFormat: "Y-m-d H:i",
     time_24hr: true,
@@ -15,5 +15,5 @@ var f4 = flatpickr($('.timeFlatpickr'), {
     defaultDate: "13:45"
 });
 $("#clear-date").click(function() {
-    $('.dateTimeFlatpickr.expired').flatpickr().clear();
+    $('.expiredDateTimeFlatpickr.expired').flatpickr().clear();
 })

@@ -106,6 +106,7 @@ def add_children_page(request, pk):
             instance = form.save(commit=False)
             if instance.url_type == Page.URL_TYPE_GENERATED:
                 generate_slug(instance)
+                generate_full_slug(instance)
             if not instance.url_type == Page.URL_TYPE_LINK_THROUGH:
                 instance.full_slug = generate_full_slug(instance)
             instance.save()
@@ -384,11 +385,11 @@ def content_block_view(request):
         if block_elem:
             block_elem_obj = PageBlockElement.objects.filter(id=block_elem).first()
             if block_elem_obj:
-                block_elem_obj.block_element_title = title 
-                block_elem_obj.block_element_image = image 
-                block_elem_obj.block_element_content = content 
-                block_elem_obj.block_element_subtitle = subtitle
-                block_elem_obj.block_element_image_second = second_image
+                block_elem_obj.title = title 
+                block_elem_obj.image = image 
+                block_elem_obj.content = content 
+                block_elem_obj.subtitle = subtitle
+                block_elem_obj.image_second = second_image
                 block_elem_obj.save()
     if action == 'deleteelement':
         block_elem = request.POST.get('block_elem')
