@@ -1,0 +1,33 @@
+# Name of the Pipeline
+name: Stage Pipeline
+
+# Define Trigger
+on:
+  push:
+    branches:
+      - master
+
+# Jobs
+jobs:
+
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    # Steps
+    steps:
+    # Step 1 - Checkout
+    - name: checkout
+      uses: actions/checkout@v2
+
+    # Step 2 - SSH into server and run script
+    - name: ssh into server and run bash script
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.STAGE_HOST }}
+        username: ${{ secrets.STAGE_USERNAME }}
+        password: ${{ secrets.STAGE_PASSWORD }}
+        script: |
+          /bin/bash /root/install.sh -p /root/GenesisV2
+          
+    
