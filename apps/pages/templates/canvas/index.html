@@ -43,6 +43,11 @@
 {% include 'canvas/__partials/__block_modal.html' %}
 {% include 'canvas/__partials/__content_modal.html' %}
 <script src="{% static 'admin/js/libs/jquery-3.6.0.min.js' %}"></script>
+<script>
+    // to be used by tinyMCE file_picker_callback
+    var filemanager_url = "{% url 'get_filemanager' %}";
+    var temp_config_url = "{% url 'get-tineymce-template-config' %}";
+</script>
 <script src="{% static 'admin/js/page_builder.js' %}"></script>
 <script>
     // $('.open-delete-modal').on('click', function() {

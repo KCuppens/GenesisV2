@@ -104,6 +104,7 @@ $(document).ready(function () {
 
     $('.canvas-builder').on('click', '.col-canvas-edit', function (e) {
         $(document).on('shown.bs.modal','#contentModal', function () {
+            tinymce.remove();
             tinymce.init({
                 selector: '.form-control.tinymce-editor',
                 plugins: [
@@ -117,8 +118,9 @@ $(document).ready(function () {
                     'bullist numlist outdent indent | link image | print preview media fullpage | ' +
                     'forecolor backcolor emoticons | help template',
                 menubar: 'favs file edit view insert format tools table help',
+                templates: temp_config_url,
             });
-        })
+        });
         $('#contentModal').modal();
         var block = $(this).data('block');
         getAjaxForm(block);
