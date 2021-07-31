@@ -1,7 +1,31 @@
 {% load i18n static %}
 <!-- Modal -->
+<style type="text/css">
+
+    @media (min-width: 576px){
+        .modal-dialog {
+            max-width: 80%;
+        }
+
+        .width-50 {
+            width: 50% !important;
+        }
+
+        hr.separator{
+            display: none ;
+        }
+    }
+    
+
+    @media (max-width: 575px){
+        .modal-dialog {
+            max-width: none;
+        }
+    }
+    
+</style>
 <div class="modal fade" {% if multiple_media_image %} id="filemanagerMediaModal" {% else %} id="filemanagerModal" {% endif %} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{% trans 'Filemanager' %}</h5>
