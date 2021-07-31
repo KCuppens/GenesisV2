@@ -249,7 +249,7 @@
                                     {% if instance.block.has_block_element_title %}
                                     <div class="row mt-3">
                                         <div class="col-2">{% trans 'Titel' %}</div>
-                                        <div class="col-10"><input type="text" class="form-control" value="{{block.title|default_if_none:""}}" name="block_elem_title" id="block_elem_title_{{block.id}}"></div>
+                                        <div class="col-10"><input type="text" class="form-control" value="{{block.block_element_title|default_if_none:""}}" name="block_elem_title" id="block_elem_title_{{block.id}}"></div>
                                     </div>
                                     {% endif %}
                                 
@@ -259,16 +259,16 @@
                                         <div class="col-2">{% trans 'Afbeelding' %}</div>
                                         <div class="row col-10">
                                             <div class="col-md-8">
-                                                <input type="text" name="block_elem_image" value="{{block.image|default_if_none:""}}" class="filemanager-widget form-control modal-open-check" id="block_elem_image_{{block.id}}">
+                                                <input type="text" name="block_elem_image" value="{{block.block_element_image|default_if_none:""}}" class="filemanager-widget form-control modal-open-check" id="block_elem_image_{{block.id}}" data-uuid="{{block.id}}">
                                             </div>
                                             <div class="input-group-append col-md-4">
-                                                <button class="btn btn-block btn-dark browse-filemanager" type="button">{% trans 'Browse' %}</button>
+                                                <button class="btn btn-block btn-dark browse-filemanager-{{block.id}}" type="button">{% trans 'Browse' %}</button>
                                             </div>
                                         </div>
                                         <script src="{% static 'admin/js/libs/jquery-3.6.0.min.js' %}"></script>
                                         <script src="{% static 'admin/bootstrap/js/bootstrap.min.js' %}"></script>
                                         <script>
-                                            $('.browse-filemanager').on('click', function() {
+                                            $('.browse-filemanager-{{block.id}}').on('click', function() {
                                                 function getCookie(name) {
                                                     var cookieValue = null; 
                                                     if (document.cookie && document.cookie !== '') {
@@ -290,7 +290,8 @@
                                                     url: '{% url 'get_filemanager' %}',
                                                     data: {
                                                         'csrfmiddlewaretoken': csrftoken,
-                                                        'type': 'image'
+                                                        'type': 'image',
+                                                        'target_elem_uuid': "{{block.id}}"
                                                     },
                                                     success: function(data){
                                                         $('#filemanagerModal').modal();
@@ -306,13 +307,13 @@
                                 {% if instance.block.has_block_element_content %}
                                     <div class="row mt-3">
                                         <div class="col-2">{% trans 'Inhoud' %}</div>
-                                        <div class="col-10"><textarea name="block_element_content" class="form-control tinymce-editor" id="block_elem_content_{{block.id}}" cols="30" rows="10">{{block.content|default_if_none:""}}</textarea></div>
+                                        <div class="col-10"><textarea name="block_element_content" class="form-control tinymce-editor" id="block_elem_content_{{block.id}}" cols="30" rows="10">{{block.block_element_content|default_if_none:""}}</textarea></div>
                                     </div>
                                 {% endif %}
                                 {% if instance.block.has_block_element_subtitle %}
                                     <div class="row mt-3">
                                         <div class="col-2">{% trans 'Subtitel' %}</div>
-                                        <div class="col-10"><input type="text" value="{{block.subtitle|default_if_none:""}}" class="form-control" name="block_elem_subtitle" id="block_elem_subtitle_{{block.id}}"></div>
+                                        <div class="col-10"><input type="text" value="{{block.block_element_subtitle|default_if_none:""}}" class="form-control" name="block_elem_subtitle" id="block_elem_subtitle_{{block.id}}"></div>
                                     </div>
                                 {% endif %}
                                 {% if instance.block.has_block_element_url %}
@@ -330,7 +331,7 @@
                                 {% if instance.block.has_block_element_image_second %}
                                     <div class="row mt-3">
                                         <div class="col-2">{% trans 'Tweede afbeelding' %}</div>
-                                        <div class="col-10"><input type="text" value="{{block.image_second|default_if_none:""}}" class="form-control" name="block_elem_image_second" id="block_elem_second_image_{{block.id}}"></div>
+                                        <div class="col-10"><input type="text" value="{{block.block_element_image_second|default_if_none:""}}" class="form-control" name="block_elem_image_second" id="block_elem_second_image_{{block.id}}"></div>
                                     </td>
                                 </tr>
                                     
