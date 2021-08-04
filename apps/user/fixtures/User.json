@@ -1,16 +1,16 @@
 [
     {
         "model":"user.user",
-        "pk":19,
+        "pk":1,
         "fields":
             {
-                "password":"",
+                "password":"pbkdf2_sha256$216000$y1qnjy0XoQ08$ZH/DoEfXGoPwViLExc05P/gGpTWX7Rj8jtLylrqLA70=",
                 "last_login":null,
                 "is_superuser":false,
                 "username":"KobeCuppens",
                 "first_name":"Kobe",
                 "last_name":"Cuppens",
-                "email":"kobecuppens@gmail.com",
+                "email":"kobe@digitalx.be",
                 "is_staff":true,
                 "is_active":true,
                 "date_joined":"2021-04-18T08:03:19.648Z",

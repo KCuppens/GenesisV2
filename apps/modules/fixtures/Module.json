@@ -704,50 +704,6 @@
                 "modules": ["a33e8cb6-f237-4da5-a05a-109978ef5b1f"]
             }
     },
-    {
-        "model":"modules.modulepage",
-        "pk":"09bfeca3-4156-4450-b2bf-99b71f9adc7d",
-        "fields":{
-           "date_created":"2021-04-24T18:03:56.298Z",
-           "date_published":"2021-04-24T18:03:56.296Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:03:56.298Z",
-           "date_deleted":null,
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"cb86d3e4-1ef4-4124-a9d5-45b37dc938d6",
-           "name":"Overview",
-           "name_nl":"Overview",
-           "name_en":null,
-           "name_fr":null,
-           "route":"overviewjob",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
-        "pk":"1708df3c-6a95-4c37-9227-93a029257ee4",
-        "fields":{
-           "date_created":"2021-04-24T18:25:42.364Z",
-           "date_published":"2021-04-24T18:25:42.363Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:27:39.328Z",
-           "date_deleted":"2021-04-24T18:27:39.328Z",
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Overview category",
-           "name_nl":"Overview category",
-           "name_en":null,
-           "name_fr":null,
-           "route":null,
-           "show_nav":true
-        }
-     },
      {
         "model":"modules.modulepage",
         "pk":"17493dbc-29ef-405a-a790-58f23e97cc63",
@@ -855,28 +811,6 @@
            "name_en":null,
            "name_fr":null,
            "route":"overviewtab",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
-        "pk":"27c60800-4289-4ea6-b641-315d7dc39a0c",
-        "fields":{
-           "date_created":"2021-04-24T18:29:00.786Z",
-           "date_published":"2021-04-24T18:29:00.785Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:29:00.787Z",
-           "date_deleted":null,
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Overview category",
-           "name_nl":"Overview category",
-           "name_en":null,
-           "name_fr":null,
-           "route":"overviewcasecategory",
            "show_nav":true
         }
      },
@@ -1036,50 +970,6 @@
      },
      {
         "model":"modules.modulepage",
-        "pk":"4f0074a9-e45e-48e2-8c65-a866b0192755",
-        "fields":{
-           "date_created":"2021-04-24T18:29:00.800Z",
-           "date_published":"2021-04-24T18:29:00.798Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:29:00.801Z",
-           "date_deleted":null,
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Add category",
-           "name_nl":"Add category",
-           "name_en":null,
-           "name_fr":null,
-           "route":"addcasecategory",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
-        "pk":"51c5f4f3-b9da-4f04-879a-ffe29488278a",
-        "fields":{
-           "date_created":"2021-04-24T18:28:27.447Z",
-           "date_published":"2021-04-24T18:28:27.446Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:29:25.765Z",
-           "date_deleted":"2021-04-24T18:29:25.765Z",
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Overview",
-           "name_nl":"Overview",
-           "name_en":null,
-           "name_fr":null,
-           "route":"overviewjob",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
         "pk":"5dd9d2cc-bba8-4be1-93f7-df456e0b8dcd",
         "fields":{
            "date_created":"2021-04-01T10:49:11.575Z",
@@ -1124,28 +1014,6 @@
      },
      {
         "model":"modules.modulepage",
-        "pk":"6a78b104-655b-4d7e-b0c0-15b256ce4866",
-        "fields":{
-           "date_created":"2021-04-24T18:29:53.012Z",
-           "date_published":"2021-04-24T18:29:53.011Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:29:53.013Z",
-           "date_deleted":null,
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Add",
-           "name_nl":"Add",
-           "name_en":null,
-           "name_fr":null,
-           "route":"addcase",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
         "pk":"78b4c30a-7c63-421c-94f2-71628e6a1435",
         "fields":{
            "date_created":"2021-04-09T08:45:56.685Z",
@@ -1163,50 +1031,6 @@
            "name_en":null,
            "name_fr":null,
            "route":"overviewform",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
-        "pk":"7d3f51f1-f3ea-466b-adf8-610b8d5ba251",
-        "fields":{
-           "date_created":"2021-04-24T18:28:27.459Z",
-           "date_published":"2021-04-24T18:28:27.458Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:29:32.891Z",
-           "date_deleted":"2021-04-24T18:29:32.891Z",
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Add",
-           "name_nl":"Add",
-           "name_en":null,
-           "name_fr":null,
-           "route":"addjob",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
-        "pk":"80aef3fc-ca94-4246-8f28-feecbb36b953",
-        "fields":{
-           "date_created":"2021-04-24T18:03:56.311Z",
-           "date_published":"2021-04-24T18:03:56.309Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:03:56.312Z",
-           "date_deleted":null,
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"cb86d3e4-1ef4-4124-a9d5-45b37dc938d6",
-           "name":"Add",
-           "name_nl":"Add",
-           "name_en":null,
-           "name_fr":null,
-           "route":"addjob",
            "show_nav":true
         }
      },
@@ -1256,28 +1080,6 @@
      },
      {
         "model":"modules.modulepage",
-        "pk":"89954d2c-74e1-4118-8624-fb89d367ab36",
-        "fields":{
-           "date_created":"2021-04-24T18:25:42.337Z",
-           "date_published":"2021-04-24T18:25:42.336Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:27:47.777Z",
-           "date_deleted":"2021-04-24T18:27:47.776Z",
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Overview",
-           "name_nl":"Overview",
-           "name_en":null,
-           "name_fr":null,
-           "route":null,
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
         "pk":"9e834dd3-a0ec-444f-89ad-1f359ac178ce",
         "fields":{
            "date_created":"2021-04-01T10:38:07.402Z",
@@ -1295,50 +1097,6 @@
            "name_en":null,
            "name_fr":null,
            "route":"addgroup",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
-        "pk":"a16644cb-a5b6-462c-8920-206e0d8d0e32",
-        "fields":{
-           "date_created":"2021-04-24T18:25:42.377Z",
-           "date_published":"2021-04-24T18:25:42.376Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:27:23.885Z",
-           "date_deleted":"2021-04-24T18:27:23.885Z",
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Add category",
-           "name_nl":"Add category",
-           "name_en":null,
-           "name_fr":null,
-           "route":null,
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
-        "pk":"a9152c2e-ea02-4e6d-8bb8-44fd834cf5fb",
-        "fields":{
-           "date_created":"2021-04-24T18:50:00.410Z",
-           "date_published":"2021-04-24T18:50:00.409Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:50:00.411Z",
-           "date_deleted":null,
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"2246901a-c808-45e8-b59e-ad0e3a2ebfe4",
-           "name":"Add",
-           "name_nl":"Add",
-           "name_en":null,
-           "name_fr":null,
-           "route":"addteam",
            "show_nav":true
         }
      },
@@ -1410,28 +1168,6 @@
      },
      {
         "model":"modules.modulepage",
-        "pk":"b5d2aedf-ef98-407d-9fb7-af429e5aee8e",
-        "fields":{
-           "date_created":"2021-04-24T18:29:52.998Z",
-           "date_published":"2021-04-24T18:29:52.997Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:29:53.000Z",
-           "date_deleted":null,
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Overview",
-           "name_nl":"Overview",
-           "name_en":null,
-           "name_fr":null,
-           "route":"overviewcase",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
         "pk":"bc8a1d24-e345-4006-a61e-56594364efa8",
         "fields":{
            "date_created":"2021-04-01T10:34:03.455Z",
@@ -1449,50 +1185,6 @@
            "name_en":null,
            "name_fr":null,
            "route":"addtab",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
-        "pk":"bf122779-07fc-4595-b371-0109bad88530",
-        "fields":{
-           "date_created":"2021-04-24T18:50:00.398Z",
-           "date_published":"2021-04-24T18:50:00.397Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:50:00.399Z",
-           "date_deleted":null,
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"2246901a-c808-45e8-b59e-ad0e3a2ebfe4",
-           "name":"Overview",
-           "name_nl":"Overview",
-           "name_en":null,
-           "name_fr":null,
-           "route":"overviewteam",
-           "show_nav":true
-        }
-     },
-     {
-        "model":"modules.modulepage",
-        "pk":"c5403aab-661d-447e-861a-70abf4adbbaa",
-        "fields":{
-           "date_created":"2021-04-24T18:25:42.351Z",
-           "date_published":"2021-04-24T18:25:42.351Z",
-           "date_expired":null,
-           "date_updated":"2021-04-24T18:27:58.396Z",
-           "date_deleted":"2021-04-24T18:27:58.396Z",
-           "active":false,
-           "author":null,
-           "edited_by":null,
-           "deletable":true,
-           "module":"582a0677-9c28-420a-b59e-08e1e6d1ae6c",
-           "name":"Add",
-           "name_nl":"Add",
-           "name_en":null,
-           "name_fr":null,
-           "route":null,
            "show_nav":true
         }
      },

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'tags_input',
 
     #apps
+    'apps.blocks', 
     'apps.conf',
     'apps.base',
     'apps.dashboard',
@@ -59,7 +60,6 @@ INSTALLED_APPS = [
     'apps.feathericons',
     'apps.translation',
     'apps.pages',
-    'apps.blocks',
     'apps.filemanager',
     'apps.logs',
     'apps.front',
