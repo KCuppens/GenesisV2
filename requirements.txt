@@ -70,7 +70,6 @@ oauthlib==3.1.1
 packaging==20.9
 pandas==1.1.5
 Pillow==8.1.0
-pkg-resources==0.0.0
 pluggy==0.13.1
 polib==1.1.0
 promise==2.3
