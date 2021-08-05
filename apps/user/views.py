@@ -226,7 +226,7 @@ def my_profile(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def group_view(request):
-    has_perms(request, ["user.view_group"], None, 'dashboard')
+    has_perms(request, ["auth.view_group"], None, 'dashboard')
 
     return render(request, 'group/index.html', {
         'groups': Group.objects.filter(date_deleted=None)
@@ -234,7 +234,7 @@ def group_view(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def add_group_view(request):
-    has_perms(request, ["user.view_group"], None, 'overviewgroup')
+    has_perms(request, ["auth.add_group"], None, 'overviewgroup')
 
     if request.method == 'POST':
         form = GroupForm(request.POST)
@@ -263,7 +263,7 @@ def add_group_view(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def edit_group_view(request, pk):
-    has_perms(request, ["user.change_group"], None, 'overviewgroup')
+    has_perms(request, ["auth.change_group"], None, 'overviewgroup')
 
     try:
         instance = Group.objects.filter(pk=pk).first()
@@ -297,7 +297,7 @@ def edit_group_view(request, pk):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def delete_group_view(request, pk):
-    has_perms(request, ["user.delete_group"], None, 'overviewgroup')
+    has_perms(request, ["auth.delete_group"], None, 'overviewgroup')
 
     item = Group.objects.get(pk=pk)
     item.date_deleted = timezone.now()

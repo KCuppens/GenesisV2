@@ -22,7 +22,7 @@ now = datetime.datetime.now()
 @csrf_exempt
 @staff_member_required(login_url=reverse_lazy('login'))
 def index_view(request):
-    has_perms(request, ["translation.view_translationentry"], None, 'dashboard')
+    has_perms(request, ["translation_manager.view_translationentry"], None, 'dashboard')
     page = request.GET.get('page', 1)
     translationEntries = TranslationEntry.objects.filter()
     entries = {}
