@@ -34,7 +34,7 @@ import datetime, json
 now = datetime.datetime.now()
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_page(request):
-    has_perms(request, ["pages.view_page"], 'pages/index.html')
+    has_perms(request, ["pages.view_page"], None, 'dashboard')
 
     search = request.GET.get('search')
     if search:
@@ -53,7 +53,7 @@ def overview_page(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_children_page(request, pk):
-    has_perms(request, ["pages.view_page"], 'pages/index.html')
+    has_perms(request, ["pages.view_page"], None, 'dashboard')
     page = Page.objects.get(pk=pk)
     if not page:
         return HttpResponseNotFound(_("Pagina niet gevonden"))

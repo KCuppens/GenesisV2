@@ -28,7 +28,7 @@ import json
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_block(request):
     blocks = Block.objects.filter(date_deleted=None)
-    has_perms(request, ["blocks.add_block"], 'blocks/index.html')
+    has_perms(request, ["blocks.view_block"], None, 'dashboard')
     for block in blocks:
         try:
             revision = ModelRevision.objects.get(current_instance=block)
@@ -42,7 +42,7 @@ def overview_block(request):
 @staff_member_required(login_url=reverse_lazy('login'))
 @transaction.atomic
 def add_block(request):
-    has_perms(request, ["blocks.add_block"], None, 'overviewblock')
+    has_perms(request, ["blocks.add_block"], None, 'overviewblocks')
     if request.method == 'POST':
         form = BlockForm(request.POST, request.FILES)
         if form.is_valid():
@@ -62,7 +62,7 @@ def add_block(request):
 @transaction.atomic
 def edit_block(request, pk):
     # import pdb; pdb.set_trace()
-    has_perms(request, ["blocks.change_block"], None, 'overviewblock')
+    has_perms(request, ["blocks.change_block"], None, 'overviewblocks')
     instance = get_object_or_404(Block, pk=pk)
     if request.method == 'POST':
         form = BlockForm(request.POST or request.FILES,instance=instance)

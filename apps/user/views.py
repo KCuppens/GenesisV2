@@ -84,7 +84,7 @@ class LoginView(View):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_user(request):
-    has_perms(request, ["user.view_user"], 'users/overview.html')
+    has_perms(request, ["user.view_user"], None, 'dashboard')
 
     search = request.GET.get('search', None)
     group = request.GET.get('group', None)
@@ -227,7 +227,7 @@ def my_profile(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def group_view(request):
-    has_perms(request, ["user.view_group"], "group/index.html")
+    has_perms(request, ["user.view_group"], None, 'dashboard')
 
     return render(request, 'group/index.html', {
         'groups': Group.objects.filter(date_deleted=None)

@@ -38,7 +38,6 @@ def media_document_index_view(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_media_overview(request):
-    # import pdb; pdb.set_trace()
     if request.method == "GET":
         type = request.GET.get('type', None)
         dir = request.GET.get('dir')

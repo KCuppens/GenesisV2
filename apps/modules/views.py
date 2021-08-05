@@ -35,7 +35,7 @@ except ImportError:  # pragma: no cover
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_tab(request):
-    has_perms(request, ["modules.view_tab"], None, 'overviewtab')
+    has_perms(request, ["modules.view_tab"], None, 'dashboard')
     tabs = Tab.objects.filter(date_deleted=None).order_by('position')
 
     for tab in tabs:
@@ -149,7 +149,7 @@ def reorder_tab(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_modules(request):
-    has_perms(request, ["modules.view_module"], 'modules/index.html')
+    has_perms(request, ["modules.view_module"], None, 'dashboard')
     modules = Module.objects.filter(date_deleted=None).order_by('position')
     for module in modules:
         try:

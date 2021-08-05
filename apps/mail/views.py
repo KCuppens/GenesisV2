@@ -28,7 +28,7 @@ import json
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_mailconfig(request):
-    has_perms(request, ["mail.view_mailconfig"], None, 'overviewmailconfig')
+    has_perms(request, ["mail.view_mailconfig"], None, 'dashboard')
     mailconfigs = MailConfig.objects.filter(date_deleted=None)
     for config in mailconfigs:
         try:
@@ -42,7 +42,7 @@ def overview_mailconfig(request):
 @staff_member_required(login_url=reverse_lazy('login'))
 @transaction.atomic
 def add_mailconfig(request):
-    has_perms(request, ["mail.add_mailconfig"], None, 'overviewmailconfig')
+    has_perms(request, ["mail.add_mailconfig"], None, 'dashboard')
     if request.method == 'POST':
         form = MailConfigForm(request.POST)
         if form.is_valid():

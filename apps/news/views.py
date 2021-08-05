@@ -27,7 +27,7 @@ from apps.pages.models import DetailPage
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_article(request):
     articles = Article.objects.filter(date_deleted=None)
-    has_perms(request, ["news.view_article"], None, 'overviewarticle')
+    has_perms(request, ["news.view_article"], None, 'dashboard')
     for article in articles:
         try:
             newsrevision = NewsRevision.objects.get(current_instance=article)

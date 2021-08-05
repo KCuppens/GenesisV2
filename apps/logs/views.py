@@ -17,7 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_logs(request):
-    has_perms(request, ["logs.view_messagelog"], None, 'overviewlogs')
+    has_perms(request, ["logs.view_messagelog"], None, 'dashboard')
     logs = MessageLog.objects.filter()
     return render(request,'logs/index.html', {"logs":logs})
 

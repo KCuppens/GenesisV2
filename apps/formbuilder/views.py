@@ -35,7 +35,7 @@ now = datetime.datetime.now()
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_form(request):
-    has_perms(request, ["formbuilder.view_form"], None, 'overviewform')
+    has_perms(request, ["formbuilder.view_form"], None, 'dashboard')
     forms = Form.objects.filter(date_deleted=None)
     for form in forms:
         try:
@@ -571,7 +571,7 @@ def render_form(request):
 
 
 def get_form(request):
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     form = request.POST.get('form')
     form_obj = Form.objects.filter(id=form).first()
     if not 'form_' + str(form_obj.id) in request.session:

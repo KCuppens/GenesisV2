@@ -15,12 +15,18 @@ def check_tables(table_name):
 
 
 def has_perms(request, permissions, template, redirect_url = None, raise_exception=False):
+    import pdb; pdb.set_trace()
     current_url = request.resolver_match.url_name
     print('current_url: ', current_url)
     if isinstance(permissions, str):
         perms = (permissions,)
     else:
         perms = permissions
+
+    # Check if user is superuser
+    if request.user.is_superuser:
+        return True
+
     # First check if the user has the permission (even anon users)
     if request.user.has_perms(perms):
         return True
