@@ -1,7 +1,7 @@
 from django.db import models
 from apps.base.models import BaseModel, AdminModel, SeoModel, SortableModel, BaseRevision, BaseVersion
 from apps.formbuilder.models import Form
-from apps.blocks.models import Block
+from apps.blocks.models import Block 
 from django_extensions.db.fields import AutoSlugField
 from django.utils.translation import ugettext_lazy as _
 # Create your models here.

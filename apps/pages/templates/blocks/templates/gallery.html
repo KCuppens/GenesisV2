@@ -1,0 +1,18 @@
+{% load show_thumbnail %}
+<section class="services-listing">
+    <div class="container">
+        <div class="img-gallery-slider line-dots">
+            {% for element in block.block_elements.all %}
+                {% if element.image %}
+                    <div class="gallery-img">
+                        <picture>
+                            <source srcset="{% show_thumbnail element '500x500' 'webp' %}" type="image/png">
+                            <source srcset="{% show_thumbnail element '500x500' 'png' %}" type="image/png">
+                            <img src="{% show_thumbnail element '500x500' 'png' %}" alt="gallery">
+                        </picture>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>

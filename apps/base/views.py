@@ -140,3 +140,17 @@ def get_tinymce_templates(request):
     # renders the selected tinyMCE template
     template_name = request.GET.get('template')
     return render(request, f'tinymce_templates/{template_name}.html')
+
+def get_sitemap(request):
+    sort_method = request.POST.get('sort_method', False)
+    sort_order = request.POST.get('sort_order', False)
+
+    news = Article.objects.get_actives(sort_method, sort_order)
+
+    context = {
+        'news': news,
+    }
+    data = {
+        'template': render_to_string('sitemap/template.html', context=context, request=request), 
+    }
+    return JsonResponse(data)  

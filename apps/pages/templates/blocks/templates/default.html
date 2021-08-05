@@ -1,22 +1,12 @@
 {% load show_thumbnail %}
 {% if block %}
-    <div class="news-container">
-        {% if block.title or block.content %}
-            <div class="news-content">
-                <h1>{{block.title}}</h1>
-                {{block.content|safe}}
+    <section class="services-listing">
+        <div class="container">
+            <div class="service-detail-wrapper">
+                <div class="content-para">
+                    {{block.content|safe}}
+                </div>
             </div>
-        {% endif %}
-        {% if block.image %}
-            <div class="news-media">
-                <picture>
-                    <source srcset="{% show_thumbnail block '375x250' 'webp' %}" media="(min-width:750px)" type="image/webp"> 
-                    <source srcset="{% show_thumbnail block '250x175' 'webp' %}" media="(min-width:500px)" type="image/webp"> 
-                    <source srcset="{% show_thumbnail block '375x250' 'png' %}" media="(min-width:750px)" type="image/png">
-                    <source srcset="{% show_thumbnail block '250x175' 'png' %}" media="(min-width:500px)" type="image/png">
-                    <img src="{% show_thumbnail block '250x175' 'png' %}" alt="{{block.title}}">
-                </picture>
-            </div>
-        {% endif %}
-    </div>
+        </div>
+    </section>
 {% endif %}

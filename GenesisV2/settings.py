@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'tags_input',
 
     #apps
+    'apps.blocks', 
     'apps.conf',
     'apps.base',
     'apps.dashboard',
@@ -59,7 +60,6 @@ INSTALLED_APPS = [
     'apps.feathericons',
     'apps.translation',
     'apps.pages',
-    'apps.blocks',
     'apps.filemanager',
     'apps.logs',
     'apps.front',
@@ -103,10 +103,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'apps.base.middleware.RedirectMiddleware'
+    'apps.base.middleware.RedirectMiddleware',
+    'django_cprofile_middleware.middleware.ProfilerMiddleware'
 ]
 
 ROOT_URLCONF = 'GenesisV2.urls'
+DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False
 
 TEMPLATES = [
     {
@@ -242,3 +244,4 @@ GOOGLE_PROPERTY_ID = config('GOOGLE_PROPERTY_ID')
 X_FRAME_OPTIONS = 'ALLOWALL'
 
 XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+

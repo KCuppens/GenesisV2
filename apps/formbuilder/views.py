@@ -7,31 +7,23 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib import messages
 from django.urls import reverse
+from django.db import transaction
 from django.shortcuts import redirect, resolve_url
 from apps.conf.utils import get_config
 from django.views.generic import View
-from django.db import transaction
 from django.contrib.admin.views.decorators import staff_member_required
 from apps.base.utils import has_perms
-from apps.formbuilder.models import (
-    Form, 
-    FormPage, 
-    FormElement, 
-    FormElementOption, 
-    FormResult, 
-    FormResultField,
-    FormRevision as ModelRevision,
-    FormVersion as ModelVersion
-)
+from apps.formbuilder.models import Form, FormPage, FormElement, FormElementOption, FormResult, FormResultField, FormRevision as ModelRevision, FormVersion as ModelVersion
 from apps.formbuilder.forms import FormbuilderForm, FormPageForm
 from django.utils.translation import ugettext_lazy as _
 from apps.mail.mail import send
 import xlsxwriter
 import io
-import json
 from django.http import HttpResponse
 import datetime
 now = datetime.datetime.now()
+from apps.mail.utils import send_mail
+import json
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_form(request):
@@ -44,7 +36,6 @@ def overview_form(request):
             form.has_versions = bool(versions)
         except:
             continue
-
     return render(request,'forms/index.html', {"forms":forms})
 
 @staff_member_required(login_url=reverse_lazy('login'))
@@ -231,7 +222,6 @@ def delete_ajax_formresult_modal(request):
     return False
 
 def get_formbuilder(request):
-    # import pdb; pdb.set_trace()
     if request.method == "POST":
         action = request.POST.get('action', '')
         page = request.POST.get('page', '')
@@ -246,6 +236,11 @@ def get_formbuilder(request):
     if not 'form_page' in request.session:
         page = FormPage.objects.create(name="Page 1")
         request.session['form_page'] = [page.id]
+
+        if form_obj:
+            form_obj = Form.objects.filter(id=form_obj).first()
+            if form_obj:
+                form_obj.pages.add(instance)
         context = {
             'pages': request.session['form_page'],
             'fields': fields,
@@ -265,12 +260,6 @@ def get_formbuilder(request):
                 form_page = request.session['form_page']
                 form_page.append(instance.id)
                 request.session['form_page'] = form_page
-
-                if form_obj: #new block
-                    form_obj = Form.objects.filter(id=form_obj).first()
-                    if form_obj:
-                        form_obj.pages.add(instance)
-
                 context = {
                     'form': form,
                 }
@@ -571,7 +560,6 @@ def render_form(request):
 
 
 def get_form(request):
-    # import pdb; pdb.set_trace()
     form = request.POST.get('form')
     form_obj = Form.objects.filter(id=form).first()
     if not 'form_' + str(form_obj.id) in request.session:
@@ -602,7 +590,6 @@ def handle_form(request):
     form = request.POST.get('form')
     form_obj = Form.objects.filter(id=form).first()
     page_session_obj = request.session['form_' + str(form_obj.id)] 
-    print(request.session['form_'+ str(form_obj.id)])
     current_page_obj = FormPage.objects.filter(id=(page_session_obj['pages'][page_session_obj['current_page'] - 1])).first()
     if form_obj:
         fields = {}
@@ -671,7 +658,6 @@ def handle_form(request):
                 value = form_obj.success_action
             elif form_obj.success_type == 'redirect':
                 value = form_obj.success_url
-
             if form_obj.send_mail and not 'results_not_stored' in request.session['form_entry_' + str(form_obj.id)]:
                 send_admin_email(request, form_obj)
             if form_obj.mail_sender_visitor and not 'results_not_stored' in request.session['form_entry_' + str(form_obj.id)]:
@@ -703,6 +689,8 @@ def handle_form(request):
                 'template': render_to_string('forms/__partials/formrendered.html', context=context, request=request), 
             }
             return JsonResponse(data)
+from collections import namedtuple
+PRIORITY = namedtuple('PRIORITY', 'low medium high now')._make(range(4))
 
 def send_visitor_email(request, form):
     if 'visitor_email' in request.session: 
@@ -710,38 +698,35 @@ def send_visitor_email(request, form):
             'content_html': form.mail_visitor.content_html
         }
         html_message = render_to_string('mail/default.html', context=context, request=request)
-        send([request.session['visitor_email']], form.mail_visitor_sender_email, form.mail_visitor, {'form': form}, form.mail_visitor.subject,
-         form.mail_visitor.content_plain, html_message)
+        send_mail(form.mail_visitor.subject, html_message, form.mail_visitor_sender_email, [request.session['visitor_email']], html_message, None, None, PRIORITY.now)
 
-def send_admin_email(request, form):        
+def send_admin_email(request, form): 
     context = {
         'content_html': form.mail_admin.content_html
     }
     html_message = render_to_string('mail/default.html', context=context, request=request)
-    send([form.mail_recipient_email], form.mail_sender_email, form.mail_admin, {'form': form}, form.mail_admin.subject,
-        form.mail_admin.content_plain, html_message)
+    send_mail(form.mail_admin.subject, html_message, form.mail_sender_email, [form.mail_recipient_email], html_message, None, None, PRIORITY.now)
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_reversion(request):
     forms = Form.objects.filter(date_deleted__isnull=False)
-    return render(request,'forms/reversion-overview-index.html', {"forms": forms})
+    return render(request, 'forms/reversion-overview-index.html', {"forms": forms})
 
 @staff_member_required(login_url=reverse_lazy('login'))
-def revert_form(request, pk):
+def revert_form(request,pk):
     try:
         form = Form.objects.get(id=pk)
         form.date_deleted = None
         form.save()
-        messages.add_message(request, messages.SUCCESS, _('The Form has been succesfully reverted!'))
+        messages.add_message(request, messages.SUCCESS, _('The form has been succesfully reverted!'))
     except:
-        messages.add_message(request, messages.WARNING, _('No such form is available!'))
-    
+        messages.add_message(request, messages.WARNING, _('No such form is available'))
+
     return redirect('overviewreversionform')
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_version_ajax_modal(request):
     data = {}
-    # import pdb;pdb.set_trace();
     id = request.POST.get('id', False)
     reversion = ModelRevision.objects.get(current_instance=Form.objects.get(id=id))
     versions = ModelVersion.objects.filter(revision=reversion).order_by("date_created")
@@ -752,61 +737,53 @@ def get_version_ajax_modal(request):
         data = {
             'template': render_to_string('forms/__partials/version_modal.html', context=context, request=request)
         }
-    return JsonResponse(data)
+        return JsonResponse(data)
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_delete_version_ajax_modal(request):
     data = {}
-    # import pdb;pdb.set_trace();
     id = request.POST.get('id', False)
     try:
-        version = ModelVersion.objects.get(id=id)
+        version = ModelRevision.objects.get(id=id)
     except:
-        version = None
+        version = None 
+
     if version:
         context = {
             'version': version
         }
         data = {
-            'template': render_to_string('forms/__partials/delete_version_modal.html', context=context, request=request)
+            'template': render_to_string('forms/__partials/delete_version_modal.html', context=context, request=request) 
         }
-    return JsonResponse(data)
+        return JsonResponse(data)
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def select_version(request, pk):
-    version = ModelVersion.objects.get(id=pk)
-
-    version_dict = json.loads(version.serialized_instance)
-    model_obj = ModelRevision.objects.get(versions__id=pk).current_instance
-    for attr, value in version_dict.items():
-        if attr == 'pages':
-            model_obj.pages.set(value)
-            continue
-        setattr(model_obj, attr, value)
-    model_obj.not_new_object=1
-    model_obj.save()
-    messages.add_message(request, messages.SUCCESS, _('Versie succesvol gewijzigd'))
-    return redirect('overviewform')
+    pass
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def delete_version(request, pk):
-    # import pdb;pdb.set_trace();
     version = ModelVersion.objects.get(id=pk)
-    if version.is_current:
-        # redirect if is_current=True
-        messages.add_message(request, messages.WARNING, _('U kunt de momenteel geselecteerde versie niet verwijderen!'))
-        return redirect('overviewform')
-    version.delete()
-    messages.add_message(request, messages.SUCCESS, _('The version has been successfully deleted!'))
+    version_dict= json.loads(version.serialized_instance)
+    model_obj = ModelRevision.objects.get(versions__id=pk).current_instance
+
+    for attr, value in version_dict.items():
+        if attr == 'pages':
+            model_obj.pages.set(value)
+            continue 
+        setattr(model_obj, attr, value)
+    model_obj.not_new_object = 1
+    model_obj.save()
+    messages.add_message(request, messages.SUCCESS, _('Versie succesvol gewijzigd.'))
     return redirect('overviewform')
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def add_version_comment(request, pk):
-    # import pdb;pdb.set_trace();
-    version = ModelVersion.objects.get(id=pk)
+    version = ModelVersion.bojects.get(id=pk)
     comment = request.POST.get('comment')
     if comment and comment != version.comment:
         version.comment = comment
         version.save()
-        messages.add_message(request, messages.SUCCESS, _('De opmerking is succesvol opgeslagen!'))
+        messages.add_message(request, messages.SUCCESS, _('De opmerking is succesvol opgeslagen.'))
+
     return redirect('overviewform')

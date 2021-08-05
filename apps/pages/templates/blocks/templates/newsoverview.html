@@ -1,10 +1,13 @@
 {% load i18n static %}
-<div class="news-overview" data-sort-method="{{block.sort}}" data-sort-order="{{block.sort_order}}" data-pagination="{{block.paginated}}">
-    <h2>{% trans 'News articles' %}</h2>
-    <div class="news-items">
+<section class="news-listing" data-sort-method="{{block.sort}}" data-sort-order="{{block.sort_order}}" data-pagination="{{block.paginated}}">
+    <div class="container">
+        <div class="marginForNews">
+            <div class="row" id="news-overview">
+                
+            </div>
+        </div>
     </div>
-    <a href="javascript:void(0);" id="load-more" data-page="2">{% trans 'Load more articles' %}</a>
-</div>
+</section>
 {% block js %} 
     <script src="{% static 'front/js/jquery-3.6.0.min.js' %}"></script>
     <script>
@@ -12,9 +15,9 @@
             get_articles();
         });
         function get_articles(){
-            var sort_method = $('.news-overview').data('sort-method');
-            var sort_order = $('.news-overview').data('sort-order');
-            var pagination = $('.news-overview').data('pagination');
+            var sort_method = $('.news-listing').data('sort-method');
+            var sort_order = $('.news-listing').data('sort-order');
+            var pagination = $('.news-listing').data('pagination');
             $.ajax({
                 type: 'POST',
                 url: '{% url 'get-articles' %}',
@@ -27,37 +30,8 @@
                 },
                 success: function(data) {
                     if(data.template){
-                        $('.news-items').html(data.template);
+                        $('#news-overview').html(data.template);
                     }
-                    if(!data.has_next) {
-                        $('#load-more').hide();
-                    }
-                }
-            });
-        }
-        $('#load-more').on('click', function() {
-            load_more_articles();
-        });
-        function load_more_articles(){
-            var page = $(this).data('page');
-            var sort_method = $('.news-overview').data('sort-method');
-            var sort_order = $('.news-overview').data('sort-order');
-            var pagination = $('.news-overview').data('pagination');
-            $.ajax({
-                type: 'POST',
-                url: '{% url 'get-articles' %}',
-                data: {
-                    'page': page,
-                    'sort_method': sort_method,
-                    'sort_order': sort_order,
-                    'pagination': pagination,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                },
-                success: function(data) {
-                    if(data.has_next) {
-                        $(this).data('page', page+1);
-                    } 
-                    $('.news-items').append(data);
                 }
             });
         }
