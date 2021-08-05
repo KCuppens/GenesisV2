@@ -1,0 +1,27 @@
+{% load show_thumbnail get_url i18n static %}
+{% for child in childrenpages %} 
+    <div class="col-lg-12 col-md-6">
+        <div class="search-box overview">
+            {% if child.image %}
+                <div class="search-box-img">
+                    <picture>
+                        <source srcset="{% show_thumbnail child '389x250' 'webp' %}" media="(min-width:1000px)" type="image/webp"> 
+                        <source srcset="{% show_thumbnail child '389x250' 'png' %}" media="(min-width:1000px)" type="image/png"> 
+                        <source srcset="{% show_thumbnail child '330x250' 'webp' %}" media="(min-width:600px)" type="image/webp"> 
+                        <source srcset="{% show_thumbnail child '330x250' 'png' %}" media="(min-width:600px)" type="image/png">
+                        <source srcset="{% show_thumbnail child '345x250' 'png' %}" media="(min-width:100px)" type="image/png">
+                        <source srcset="{% show_thumbnail child '345x250' 'webp' %}" media="(min-width:100px)" type="image/webp"> 
+                        <img src="{% show_thumbnail child '389x250' 'png' %}" alt="{{service.title}}">
+                    </picture>
+                </div>
+            {% endif %}
+            <div class="search-content">
+                <h3>{{child.menu_title}}</h3>
+                {{child.meta_description|default_if_none:""}}
+                <a href="{% get_url child %}" class="btn btn-outline-primary text-uppercase">
+                    {% trans 'Lees meer' %}
+                    <img src="{% static 'front/images/blue-arrow.svg' %}" alt="blue-arrow"></a>
+            </div>
+        </div>
+    </div>
+{% endfor %}

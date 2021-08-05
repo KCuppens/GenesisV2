@@ -1,0 +1,47 @@
+{% load i18n static widget_tweaks %}
+<div class="cookies_form_area">
+</div>
+<!-- End Services Details Area -->
+
+<script src="{% static 'front/js/jquery-3.6.0.min.js' %}"></script>
+<script>
+    $( document ).ready(function() {
+        get_cookies_form_view();
+
+        $(document).on('submit', 'form', function(e){
+            e.preventDefault()
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'cookie-view' %}',
+                data: $(this).serialize(),
+                success: function(data) {
+                    if(data.template){
+                        $('.cookies_form_area').html(data.template);
+                    }
+                    if(data.redirect){
+                        window.location = data.redirect
+                    }
+                }
+            });
+        })
+    });
+    function get_cookies_form_view(){
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'cookie-view' %}',
+            // data: {
+            //     'form': form,
+            //     'csrfmiddlewaretoken': '{{ csrf_token }}',
+            // },
+            success: function(data) {
+                console.log(data.template);
+                if(data.template){
+                    $('.cookies_form_area').html(data.template);
+                }
+                if(data.redirect){
+                    window.location = data.redirect
+                }
+            }
+        });
+    }
+</script>

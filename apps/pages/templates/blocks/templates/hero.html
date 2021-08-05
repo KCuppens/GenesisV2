@@ -1,0 +1,46 @@
+{% load show_thumbnail static %}
+<section class="main-slider-section">
+    <div class="banner-slider line-dots">
+        {% for element in block.block_elements.all %}
+            <div class="slideBox">
+                <div class="banner-img">
+                    <picture>
+                        <source srcset="{% show_thumbnail element '1520x600' 'webp' %}" media="(min-width:1000px)" type="image/webp"> 
+                        <source srcset="{% show_thumbnail element '768x650' 'webp' %}" media="(min-width:600px)" type="image/webp"> 
+                        <source srcset="{% show_thumbnail element '1520x600' 'png' %}" media="(min-width:100px)" type="image/png">
+                        <source srcset="{% show_thumbnail element '768x650' 'png' %}" media="(min-width:500px)" type="image/png">
+                        <source srcset="{% show_thumbnail element '376x500' 'webp' %}" type="image/webp"> 
+                        <img src="{% show_thumbnail element '376x500' 'png' %}" alt="{{block.title}}">
+                    </picture>
+                </div>
+                <div class="banner-content">
+                    <div class="container">
+                        <div class="banner-content-inner">
+                            {% if element.title %}
+                                <h1>{{element.title}}</h1>
+                            {% endif %}
+                            {% if element.subtitle %}
+                                <h3>{{element.subtitle}}</h3>
+                            {% endif %}
+                            {% if element.url and element.url_text %} 
+                                <a href="{{element.url_text}}">{{element.url}}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %} 
+    </div>
+</section>
+{% block js %} 
+<script src="{% static 'front/plugin/slick/slick.min.js' %}"></script>
+<script>
+jQuery('.banner-slider').slick({
+        arrows: false,
+        dots: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+
+    });
+</script>
+{% endblock %}

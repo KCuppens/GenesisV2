@@ -1,0 +1,44 @@
+{% load i18n get_url_detail redirect_page %}
+<div class="col-md-4 col-sm-4 col-6 mb-4">
+    <h3>{% trans 'Realisaties' %}</h3>
+    {% for case in cases %}
+        <a href="{% get_url_detail case.id 'Case' %}">{{case.title}}</a>
+    {% endfor %}
+</div>
+<div class="col-md-4 col-sm-4 col-6 mb-4">
+    <h3>{% trans 'Artikelen' %}</h3>
+    {% for article in news %}
+        <a href="{% get_url_detail article.id 'Article' %}">{{article.title}}</a>
+    {% endfor %}
+</div>
+<div class="col-md-4 col-sm-4 col-6 mb-4">
+    <h3>{% trans 'Acties' %}</h3>
+    {% for article in news %}
+        <a href="{% get_url_detail article.id 'Article' %}">{{article.title}}</a>
+    {% endfor %}
+</div>
+<div class="col-md-4 col-sm-4 col-6 mb-4">
+    <h3>{% trans 'Veelgestelde vragen' %}</h3>
+    {% for question in questions %}
+        <a href="{% redirect_page '2103e00a-9f5d-4a38-8594-705190203e97' %}">{{question.question}}</a>
+    {% endfor %}
+</div>
+<div class="col-md-4 col-sm-4 col-6 mb-4">
+    <h3>{% trans 'Partners' %}</h3>
+    {% for partner in partners %}
+        <a href="{% redirect_page 'c50bb31f-af26-49ff-9615-9d06a0991689' %}">{{partner.title}}</a>
+    {% endfor %}
+</div>
+<div class="col-md-4 col-sm-4 col-6 mb-4">
+    <h3>{% trans 'Diensten' %}</h3>
+    {% for service in services %}
+        <a href="{% get_url_detail service.id 'Service' %}">{{service.title}}</a>
+    {% endfor %}
+</div>
+<div class="col-md-4 col-sm-4 col-6 mb-4">
+    <h3>{% trans 'Team' %}</h3>
+    {% for member in team %}
+        <a href="{% redirect_page '2c8a9d8a-10b3-4c9b-8d85-913168f5a596' %}">{{member.first_name}}&nbsp;{{member.last_name}}</a>
+    {% endfor %}
+</div>
+

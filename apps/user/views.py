@@ -84,7 +84,7 @@ class LoginView(View):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_user(request):
-    has_perms(request, ["user.view_user"], 'users/overview.html')
+    has_perms(request, ["user.view_user"], 'user/index.html')
 
     search = request.GET.get('search', None)
     group = request.GET.get('group', None)

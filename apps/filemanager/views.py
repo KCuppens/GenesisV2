@@ -45,7 +45,7 @@ def get_media_overview(request):
         search = request.GET.get('search')
         action = request.GET.get('action')
         if search:
-            documents = Media.objects.filter(Q(name__contains=search)| Q(filename__contains=search)| Q(summary__contains=search), date_deleted=None)
+            documents = Media.objects.filter(Q(name__contains=search)| Q(filename__contains=search)| Q(summary__contains=search), date_deleted=None).order_by('-date_created')
             directories = Directory.objects.filter(Q(name__contains=search)| Q(summary__contains=search), date_deleted=None)
         elif action == 'get_reversion': #new
             if type == 'directories':
@@ -53,7 +53,7 @@ def get_media_overview(request):
                 directories = Directory.objects.filter(date_deleted__isnull=False)
             else:
                 directories = None
-                documents = Media.objects.filter(date_deleted__isnull=False, type=type)
+                documents = Media.objects.filter(date_deleted__isnull=False, type=type).order_by('-date_created')
         elif action == 'revert': #new
             if type == 'directories':
                 documents = None
@@ -64,10 +64,10 @@ def get_media_overview(request):
                 action = ''
             else:
                 directories = None
-                document = Media.objects.get(id=request.GET.get('id'), type=type)
+                document = Media.objects.get(id=request.GET.get('id'), type=type).order_by('-date_created')
                 document.date_deleted = None
                 document.save()
-                documents = Media.objects.filter(date_deleted=None, type=type)
+                documents = Media.objects.filter(date_deleted=None, type=type).order_by('-date_created')
                 action = ''
         elif type == 'directories':
             documents = None 
@@ -77,10 +77,10 @@ def get_media_overview(request):
                 directories = Directory.objects.filter(date_deleted=None, parent__isnull=True)
         elif type and not type == 'directories':
             if dir:
-                documents = Media.objects.filter(date_deleted=None, directory=dir, type=type)
+                documents = Media.objects.filter(date_deleted=None, directory=dir, type=type).order_by('-date_created')
             else:
                 # documents = Media.objects.filter(date_deleted=None, type=type, directory__isnull=True)
-                documents = Media.objects.filter(date_deleted=None, type=type)
+                documents = Media.objects.filter(date_deleted=None, type=type).order_by('-date_created')
             directories = None
         elif dir and action == 'go-level-up' and not dir == "None":
             dir_obj = Directory.objects.filter(id=dir).first()
@@ -90,16 +90,16 @@ def get_media_overview(request):
             else:
                 dir = None
             if parent:
-                documents = Media.objects.filter(date_deleted=None, directory=parent)
+                documents = Media.objects.filter(date_deleted=None, directory=parent).order_by('-date_created')
                 directories = Directory.objects.filter(date_deleted=None, parent=parent)
             else:
-                documents = Media.objects.filter(date_deleted=None, directory__isnull=True)
+                documents = Media.objects.filter(date_deleted=None, directory__isnull=True).order_by('-date_created')
                 directories = Directory.objects.filter(date_deleted=None, parent__isnull=True)
         elif dir and not dir == "None":
-            documents = Media.objects.filter(date_deleted=None, directory=dir)
+            documents = Media.objects.filter(date_deleted=None, directory=dir).order_by('-date_created')
             directories = Directory.objects.filter(date_deleted=None, parent=dir)
         else:
-            documents = Media.objects.filter(date_deleted=None, directory__isnull=True)
+            documents = Media.objects.filter(date_deleted=None, directory__isnull=True).order_by('-date_created')
             directories = Directory.objects.filter(date_deleted=None, parent__isnull=True)
         types = Media.GET_TYPES
         context = {

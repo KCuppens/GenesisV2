@@ -103,10 +103,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'apps.base.middleware.RedirectMiddleware'
+    'apps.base.middleware.RedirectMiddleware',
+    'django_cprofile_middleware.middleware.ProfilerMiddleware'
 ]
 
 ROOT_URLCONF = 'GenesisV2.urls'
+DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False
 
 TEMPLATES = [
     {

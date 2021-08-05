@@ -1,0 +1,35 @@
+{% load generate_breadcrumbs get_url static %}
+<section class="news-listing">
+    <div class="container">
+        <div class="marginForNews">
+            <div class="row" id="pages-overview">
+                
+
+            </div>
+        </div>
+    </div>
+</section>
+{% block js %} 
+    <script src="{% static 'front/js/jquery-3.6.0.min.js' %}"></script>
+    <script>
+        $( document ).ready(function() {
+            get_children();
+        });
+        function get_children(){
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'get-children' %}',
+                data: {
+                    'page': '{{current_page.id}}',
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function(data) {
+                    if(data.template){
+                        $('#pages-overview').html(data.template);
+                    }
+                }
+            });
+        }
+
+    </script>
+{% endblock %}

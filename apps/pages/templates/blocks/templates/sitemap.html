@@ -1,0 +1,47 @@
+{% load generate_breadcrumbs get_url static i18n %}
+<section class="sitemap-wrapper">
+    <div class="container">
+        <div class="site-map-wrapper">
+            <h2>{{block.title|default_if_none:""}}</h2>
+            {{block.content|default_if_none:""|safe}}
+        </div>
+
+        <div class="site-map-box" data-sort-method="{{block.sort}}" data-sort-order="{{block.sort_order}}">
+            <div class="row" id="append-sitemap">
+                <div class="col-md-4 col-sm-4 col-6 mb-4">
+                    <h3>{% trans 'Pagina\'s' %}</h3>
+                    {% for page in pages %}
+                        <a href="{% get_url page %}">{{page.menu_title}}</a>
+                    {% endfor %}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% block js %} 
+    <script src="{% static 'front/js/jquery-3.6.0.min.js' %}"></script>
+    <script>
+        $( document ).ready(function() {
+            get_sitemap();
+        });
+        function get_sitemap(){
+            var sort_method = $('.site-map-box').data('sort-method');
+            var sort_order = $('.site-map-box').data('sort-order');
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'get-sitemap' %}',
+                data: {
+                    'sort_method': sort_method,
+                    'sort_order': sort_order,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function(data) {
+                    if(data.template){
+                        $('#append-sitemap').append(data.template);
+                    }
+                }
+            });
+        };
+    </script>
+{% endblock %}

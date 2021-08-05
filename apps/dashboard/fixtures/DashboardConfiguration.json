@@ -1,0 +1,123 @@
+[
+    {
+      "model": "dashboard.dashboardconfiguration",
+      "pk": "41b2802f-6ebc-43e3-a40a-b8a22a867501",
+      "fields": {
+        "position": 999999,
+        "date_created": "2021-08-03T08:13:00.065Z",
+        "date_published": "2021-08-03T08:10:33.553Z",
+        "date_expired": null,
+        "date_updated": "2021-08-03T08:13:00.065Z",
+        "date_deleted": null,
+        "active": true,
+        "author": null,
+        "edited_by": null,
+        "deletable": true,
+        "title": "Bestanden",
+        "method": "count_files",
+        "param1": null,
+        "sort": "title",
+        "order": "desc",
+        "template": "count",
+        "icon": 107,
+        "default": false
+      }
+    },
+    {
+      "model": "dashboard.dashboardconfiguration",
+      "pk": "4d03365c-9d15-47cd-9835-fcc21056afa8",
+      "fields": {
+        "position": 999999,
+        "date_created": "2021-08-03T08:16:36.652Z",
+        "date_published": "2021-08-03T08:15:29.668Z",
+        "date_expired": null,
+        "date_updated": "2021-08-03T08:16:36.698Z",
+        "date_deleted": null,
+        "active": false,
+        "author": null,
+        "edited_by": null,
+        "deletable": true,
+        "title": "Bestandsmappen",
+        "method": "count_dirs",
+        "param1": null,
+        "sort": "title",
+        "order": "desc",
+        "template": "count",
+        "icon": 153,
+        "default": false
+      }
+    },
+    {
+      "model": "dashboard.dashboardconfiguration",
+      "pk": "ca188ba3-1882-478a-8e9c-1d679c9bd214",
+      "fields": {
+        "position": 999999,
+        "date_created": "2021-08-03T08:12:36.652Z",
+        "date_published": "2021-08-03T08:10:33.553Z",
+        "date_expired": null,
+        "date_updated": "2021-08-03T08:16:10.365Z",
+        "date_deleted": null,
+        "active": true,
+        "author": null,
+        "edited_by": null,
+        "deletable": true,
+        "title": "Gebruikers",
+        "method": "count_users",
+        "param1": null,
+        "sort": "title",
+        "order": "desc",
+        "template": "count",
+        "icon": 261,
+        "default": false
+      }
+    },
+    {
+      "model": "dashboard.dashboardconfiguration",
+      "pk": "dc4e33df-523f-452c-8691-839b6c1890f2",
+      "fields": {
+        "position": 999999,
+        "date_created": "2021-08-03T08:11:54.753Z",
+        "date_published": "2021-08-03T08:10:33.553Z",
+        "date_expired": null,
+        "date_updated": "2021-08-03T08:11:54.753Z",
+        "date_deleted": null,
+        "active": true,
+        "author": null,
+        "edited_by": null,
+        "deletable": true,
+        "title": "Pagina's",
+        "method": "count_pages",
+        "param1": null,
+        "sort": "title",
+        "order": "desc",
+        "template": "count",
+        "icon": 146,
+        "default": false
+      }
+    },
+    {
+      "model": "dashboard.dashboardconfiguration",
+      "pk": "f56ad396-cfe9-4c44-abbe-a788c2ebcc53",
+      "fields": {
+        "position": 999999,
+        "date_created": "2021-08-03T08:17:13.102Z",
+        "date_published": "2021-08-03T08:15:29.668Z",
+        "date_expired": null,
+        "date_updated": "2021-08-03T08:17:13.102Z",
+        "date_deleted": null,
+        "active": true,
+        "author": null,
+        "edited_by": null,
+        "deletable": true,
+        "title": "Mappen",
+        "method": "count_dirs",
+        "param1": null,
+        "sort": "title",
+        "order": "desc",
+        "template": "count",
+        "icon": 153,
+        "default": false
+      }
+    }
+]
+    

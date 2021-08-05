@@ -1,7 +1,85 @@
-{% load i18n static %}
+{% load i18n static get_setting get_openingheader %}
 {% if block %} 
-<div class="form-overview" data-form="{{block.form.id}}">
-</div>
+<section class="services-listing">
+    <div class="container">
+        <div class="contact-letter-wrapper">
+            <div class="contact-letter-wrapper-heading">
+                <h3>{{block.title}}</h3>
+                {{block.content|safe}}
+            </div>
+            <div class="contact-us-form-wrapper">
+                <div class="contact-form-wrapper">
+                    <div class="form-overview" data-form="{{block.form.id}}">
+                    </div>
+                </div>
+                <div class="contact-detias">
+                    <div class="detail-box">
+                        <div class="key">
+                            <img src="{% static 'front/images/map.svg' %}" alt="map">
+                            <h4>{% trans 'Adres' %}:</h4>
+                        </div>
+                        <div class="value">
+                            {% get_setting request 'client_address' %}
+                        </div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="key">
+                            <img src="{% static 'front/images/phone.svg' %}" alt="phone">
+                            <h4>{% trans 'Telefoon' %}:</h4>
+                        </div>
+                        <div class="value">
+                            <a href="tel:{% get_setting request 'client_phone' %}">{% get_setting request 'client_phone' %}</a>
+                        </div>
+                    </div>
+                    <div class="detail-box">
+                        <div class="key">
+                            <img src="{% static 'front/images/email.svg' %}" alt="email">
+                            <h4>{% trans 'Email' %}:</h4>
+                        </div>
+                        <div class="value">
+                            {% get_setting request 'client_email' %}
+                        </div>
+                    </div>
+                    {% get_setting request 'account_linkedin' as account_linkedin %}
+                    {% get_setting request 'account_facebook' as account_facebook %}
+                    {% if account_linkedin or account_facebook %}
+                        <div class="detail-box">
+                            <div class="key">
+
+                                <h4>{% trans 'Socials' %}:</h4>
+                            </div>
+                            <div class="value">
+                                {% if account_linkedin %}
+                                    <a href="{{account_linkedin}}">
+                                        <img src="{% static 'front/images/li-blue.svg' %}" alt="linkedin">
+                                    </a>
+                                {% endif %}
+                                {% if account_facebook %}
+                                    <a href="{{account_facebook}}">
+                                        <img src="{% static 'front/images/fb-blue.svg' %}" alt="facebook">
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="detail-box">
+                        <div class="key">
+                            <img src="{% static 'front/images/clock-blue.svg' %}" alt="">
+                            <h4>{% trans 'Openingsuren' %}</h4>
+                        </div>
+                        <div class="value">
+                            {% get_openingheader request %}
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <script src="{% static 'front/js/jquery-3.6.0.min.js' %}"></script>
 <script>
     $( document ).ready(function() {
