@@ -29,10 +29,11 @@ class TabForm(forms.ModelForm):
     modules = forms.ModelMultipleChoiceField(queryset=Module.objects.filter(date_deleted=None), required=False)
     class Meta:
         model = Tab
-        fields = ('active', 'name', 'icon','modules')
+        fields = ('active', 'name', 'icon','modules','is_superuser')
         labels = {
             'active': _('Actief'),
             'name': _('Name'),
             'icon': _('Icoon'),
-            'modules': _('Modules')
+            'modules': _('Modules'),
+            'is_superuser': _('Is superuser'), 
         }

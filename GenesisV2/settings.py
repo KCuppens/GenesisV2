@@ -27,7 +27,15 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1','46.101.244.242']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 # AUTH_USER_MODEL = "user.User"
-
+AWS_SECRET_KEY = 'hMpAxmec0JfbnN4f/2iJFHqQzUXxUxVmHYGomfBm' 
+AWS_ACCESS_KEY = 'AKIAS2WYD7DB4HIRFX6T'
+AWS_REGION = 'eu-central-1'
+AWS_ACTIVE = True
+AWS_IMAGE_BUCKET = 'BUCKET_NAME' 
+AWS_S3_CUSTOM_DOMAIN = 'https://%s.s3.amazonaws.com' % AWS_IMAGE_BUCKET
+AWS_S3_HTTP_DOMAIN = 'http://%s.s3.amazonaws.com' % AWS_IMAGE_BUCKET
+AWS_CLOUDFRONT_DOMAIN = 'CLOUDFRONT_DISTRIBUTION'
+AWS_MAIN_DIR = '' 
 
 # Application definition
 
@@ -68,6 +76,7 @@ INSTALLED_APPS = [
     'apps.news',
     'apps.mail',
     'apps.formbuilder',
+    'apps.filebase',
 ]
 
 AUTH_USER_MODEL = "user.User"

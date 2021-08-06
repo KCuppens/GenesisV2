@@ -15,6 +15,7 @@
                         <ul class="collapse submenu list-unstyled" id="{{tab.name}}" data-parent="#topAccordion">
                             {% for module in tab.get_active_modules %}
                                 {% if module.is_superuser and request.user.is_superuser %}
+                                    
                                     <li class="sub-sub-submenu-list">
                                         <a href="{% url module.route %}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" data-target="{{ module.route }}"> {{module.name}}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
                                         {% get_active_module_pages module as modulepages %}
@@ -30,7 +31,7 @@
                                             </ul>
                                         {% endif %}
                                     </li>
-                                {% else %} 
+                                {% elif not module.is_superuser %} 
                                     <li class="sub-sub-submenu-list">
                                         <a href="{% url module.route %}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" data-target="{{ module.route }}"> {{module.name}}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
                                         {% get_active_module_pages module as modulepages %}

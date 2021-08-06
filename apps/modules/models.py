@@ -39,6 +39,7 @@ class Tab(BaseModel, AdminModel, SortableModel):
     slug = AutoSlugField(populate_from='name')
     icon = models.ForeignKey(Icon, on_delete=models.CASCADE, blank=True, null=True)
     modules = models.ManyToManyField(Module, blank=True)
+    is_superuser = models.BooleanField(default=False)
 
     def get_active_modules(self):
         tabs = []
