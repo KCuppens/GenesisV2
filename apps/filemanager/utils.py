@@ -25,6 +25,11 @@ def guess_mime_type(file):
     return mimetypes.MimeTypes().guess_type(file)
 
 def get_filename(file):
+    path = file.split('/')
+    filename = path[-1]
+    return filename
+
+def get_filename_manager(file):
     path = file.name.split('/')
     filename = path[-1]
     return filename
@@ -34,6 +39,11 @@ def get_filename_without_extension(filename):
     filename = path[0]
     return filename
 
+def get_extension(filename):
+    path = filename.split('.')
+    filename = path[-1]
+    return filename 
+    
 def get_valid_image_mime_types():
     return {
         'image/png',

@@ -20,12 +20,12 @@ def upload_file(bucket_name, path, object_name=None):
         original_path = object_name
     else:
         original_path = path
-    if path.startswith('/'):
-        path = path[1:]
+    if original_path.startswith('/'):
+        original_path = original_path[1:]
     bucket = s3_resource.Bucket(bucket_name)
     bucket.upload_file(
-      Filename=original_path,
-      Key=path,
+      Filename=path,
+      Key=original_path,
       ExtraArgs={'ACL': 'public-read'}
     )
 

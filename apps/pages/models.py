@@ -20,6 +20,7 @@ class Page(BaseModel, AdminModel, SeoModel, SortableModel):
     in_main_menu = models.BooleanField(default=False, db_index=True, verbose_name=_('In main menu'))
     in_topnav_menu = models.BooleanField(default=False, db_index=True, verbose_name=_('In Top menu'))
     in_quicklinks_menu = models.BooleanField(default=False, db_index=True, verbose_name=_('In Quicklink menu'))
+    in_marked_menu = models.BooleanField(default=False, db_index=True, verbose_name=_('In gemarkeerd menu'))
 
     page_title = models.CharField(max_length=55, db_index=True, blank=True, verbose_name=_('Page title'))
     menu_title = models.CharField(max_length=55, blank=True, null=True, verbose_name=_('Menu title'))
@@ -61,6 +62,9 @@ class Page(BaseModel, AdminModel, SeoModel, SortableModel):
 
     def fetch_seo_keywords(self):
         return self.meta_keywords
+    
+    def has_children(self):
+        return self.children.exists()
     
     def get_active_children(self):
         return self.children.filter(active=True, date_deleted=None)

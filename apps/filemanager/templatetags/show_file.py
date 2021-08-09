@@ -7,6 +7,6 @@ from django.conf import settings
 @register.simple_tag
 def show_file(instance):
     if settings.AWS_ACTIVE:
-        return settings.AWS_CLOUDFRONT_DOMAIN + str(instance.file)
+        return settings.AWS_CLOUDFRONT_DOMAIN + str(instance.media_path)
     else:
         return str(instance.file)

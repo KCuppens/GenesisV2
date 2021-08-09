@@ -115,6 +115,7 @@ class Media(BaseModel, AdminModel):
     name = models.CharField(max_length=255, db_index=True, blank=True)
     file = models.FileField(upload_to=base_media_path)
     filename = models.CharField(max_length=255)
+    media_path = models.CharField(max_length=255, blank=True) 
     directory = models.ForeignKey('directory', on_delete=models.CASCADE, blank=True, null=True, related_name="media_directory")
     summary = models.TextField(blank=True, null=True)
     slug = AutoSlugField(populate_from='name')

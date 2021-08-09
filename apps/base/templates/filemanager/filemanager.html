@@ -1,4 +1,4 @@
-{% load i18n get_image %}
+{% load i18n get_image show_file %}
 {% load static %}
 
 {% if tinyMCE %}
@@ -116,7 +116,7 @@
                                             <div class="f-body" data-mailfrom="info@mail.com" data-mailto="kf@mail.com" data-mailcc="">
                                                 <div class="meta-mail-time">
                                                     {% if document.type == "image" %}
-                                                        <img src="{% get_image document.file %}" width="100" alt="{{document.name}}">
+                                                        <img src="{% show_file document %}" width="200" alt="{{document.name}}">
                                                     {% elif document.type == "file" %}
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                                                     {% elif document.type == "audio" %}
@@ -130,7 +130,7 @@
                                                     <span class=" align-self-center">{{document.date_updated|date:"d/m/Y H:i"}}</span>
                                                 </div>
                                                 <div class="width-50">
-                                                    <a href="javascript:void(0)" data-file="{% get_image document.file %}" 
+                                                    <a href="javascript:void(0)" data-file="{% get_image document %}"  
                                                     {% if is_multiple_media_image %}
                                                     class="select-file-media btn btn-primary mr-2 mb-sm-1"
                                                     {% elif target_elem_uuid %}

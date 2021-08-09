@@ -25,10 +25,14 @@ from apps.filemanager.utils import (
     guess_mime_type, 
     guess_media_type, 
     get_filename,
+    get_filename_manager,
     attach_has_versions,
     attach_version_type
 )
 import json
+import os
+from django.conf import settings 
+from apps.filebase.file import upload_file
 # Create your views here.
 @staff_member_required(login_url=reverse_lazy('login'))
 def media_document_index_view(request):
@@ -242,14 +246,20 @@ def create_media_type(request):
             instance = form.save(commit=False)
             mimetype = guess_mime_type(instance.file.name)
             mediatype = guess_media_type(mimetype[0])
-            instance.filename = get_filename(instance.file)
+            instance.filename = get_filename_manager(instance.file)
             instance.filesize = instance.file.size
+            instance.media_path = settings.MEDIA_URL + "image/orig/" + instance.filename
             instance.type = mediatype
             if dir and not dir == "None":
                 directory = Directory.objects.get(id=dir)
                 instance.directory = directory
             instance.save()
-            
+            if settings.AWS_ACTIVE:
+                upload_file(settings.AWS_IMAGE_BUCKET, str(instance.file), instance.media_path)
+
+            if os.path.exists(str(instance.file)):
+                os.remove(str(instance.file))
+
             context = {
                 'form': form,
                 'dir': dir,
