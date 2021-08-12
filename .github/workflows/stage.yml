@@ -26,7 +26,9 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        passphrase: ${{ secrets.PASSPHRASE }}
         script: |
           /bin/bash -c "$(curl -sL https://raw.nt.com/KCuppens/installation-script/master/install.sh)"
           cd ${{ secrets.REPO_PATH }} && git pull origin ${{ secrets.BRANCH_NAME }}
