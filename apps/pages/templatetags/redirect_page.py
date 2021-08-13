@@ -9,5 +9,6 @@ from django.urls import reverse
 
 @register.simple_tag
 def redirect_page(id):
-    page = Page.objects.filter(id=id).first()
-    return reverse('index', kwargs={'slug': page.full_slug})
+    if id:
+        page = Page.objects.filter(id=id).first()
+        return reverse('index', kwargs={'slug': page.full_slug})

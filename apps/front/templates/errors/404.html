@@ -1,0 +1,12 @@
+{% extends 'front/base.html' %}
+{% load i18n static %}
+{% block content %}
+<div class="f-error">
+    <img src="{% static 'front/images/400.svg' %}" alt="404-image">
+
+    <div class="b-home">
+       <p class="oops">{% trans 'Oops... pagina niet gevonden' %}</p>
+        <a href="{% url 'index' %}">{% trans 'Terug naar de homepagina' %}</a>
+    </div>
+</div>
+{% endblock %}
