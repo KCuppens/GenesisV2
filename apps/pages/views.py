@@ -57,7 +57,7 @@ def overview_children_page(request, pk):
     page = Page.objects.get(pk=pk)
     if not page:
         return HttpResponseNotFound(_("Pagina niet gevonden"))
-    pages = Page.objects.filter(parent=page, date_deleted=None)
+    pages = Page.objects.filter(parent=page, date_deleted=None).order_by('position')
     for child_page in pages:
         try:
             revision = ModelRevision.objects.get(current_instance=child_page)
