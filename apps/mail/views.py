@@ -13,108 +13,25 @@ from django.views.generic import View
 from django.contrib.admin.views.decorators import staff_member_required
 from apps.base.utils import has_perms
 from apps.mail.models import (
-    MailConfig, 
+    Email, 
     MailTemplate,
     MailTemplateRevision as ModelRevision1,
     MailTemplateVersion as ModelVersion1,
-    MailConfigRevision as ModelRevision2,
-    MailConfigVersion as ModelVersion2
 )
-from apps.mail.forms import MailConfigForm, MailTemplateForm
+from collections import namedtuple
+from apps.mail.forms import MailTemplateForm
 from django.utils.translation import ugettext_lazy as _
 from django.db import transaction
 import json
-
-
-@staff_member_required(login_url=reverse_lazy('login'))
-def overview_mailconfig(request):
-    has_perms(request, ["mail.view_mailconfig"], None, 'dashboard')
-    mailconfigs = MailConfig.objects.filter(date_deleted=None)
-    for config in mailconfigs:
-        try:
-            revision = ModelRevision2.objects.get(current_instance=config)
-            versions = revision.versions.all()
-            config.has_versions = bool(versions)
-        except:
-            continue
-    return render(request,'mailconfigs/index.html', {"configs":mailconfigs})
+from django.db.models import Q
+STATUS = namedtuple('STATUS', 'sent failed queued requeued')._make(range(4))
+PRIORITY = namedtuple('PRIORITY', 'low medium high now')._make(range(4))
 
 @staff_member_required(login_url=reverse_lazy('login'))
-@transaction.atomic
-def add_mailconfig(request):
-    has_perms(request, ["mail.add_mailconfig"], None, 'dashboard')
-    if request.method == 'POST':
-        form = MailConfigForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            messages.add_message(request, messages.SUCCESS, _('The mailconfig has been succesfully added!'))
-            return redirect('overviewmailconfig')
-    else:
-        form = MailConfigForm()
-
-    return render(request, 'mailconfigs/add.html', {
-        'form': form,
-    })
-
-@staff_member_required(login_url=reverse_lazy('login'))
-@transaction.atomic
-def edit_mailconfig(request, pk):
-    has_perms(request, ["mail.change_mailconfig"], None, 'overviewmailconfig')
-    instance = get_object_or_404(MailConfig, pk=pk)
-    if request.method == 'POST':
-        form = MailConfigForm(request.POST or request.FILES,instance=instance)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            form.save_m2m()
-            messages.add_message(request, messages.SUCCESS, _('The mailconfig has been succesfully changed!'))
-
-            return redirect('overviewmailconfig')
-    else:
-        form = MailConfigForm(instance=instance)
-
-    return render(request, 'mailconfigs/edit.html', {
-        'form': form,
-        'instance':instance
-    })
-
-@staff_member_required(login_url=reverse_lazy('login'))
-def delete_ajax_mailconfig_modal(request):
-    if request.is_ajax():
-        data = {}
-        id = request.POST.get('id', False)
-        mailconfig = MailConfig.objects.get(id=id)
-        if mailconfig:
-            context = {
-                'mailconfig': mailconfig
-            }
-            data = {
-                'template': render_to_string('mailconfigs/__partials/modal.html', context=context, request=request)
-            }
-        return JsonResponse(data)
-    return False
-
-@staff_member_required(login_url=reverse_lazy('login'))
-def toggle_mailconfig_activation_view(request, pk):
-    has_perms(request, ["mail.change_mailconfig"], None, 'overviewmailconfig')
-
-    item = MailConfig.objects.get(pk=pk)
-    item.active = not item.active
-    messages.add_message(request, messages.SUCCESS, _('De status van de mailconfig is succesvol aangepast!'))
-    item.save()
-    
-    return redirect('overviewmailconfig')
-
-        
-@staff_member_required(login_url=reverse_lazy('login'))
-def delete_mailconfig(request,pk):
-    has_perms(request, ["mail.delete_mailconfig"], None, 'overviewmailconfig')
-    instance = MailConfig.objects.get(pk=pk)
-    instance.date_deleted = timezone.now()
-    instance.save()
-    messages.add_message(request, messages.SUCCESS, _('The module has been succesfully deleted!'))
-    return redirect('overviewmailconfig')
+def overview_email(request):
+    has_perms(request, ["mail.view_email"], None, 'dashboard')
+    emails = Email.objects.filter(Q(status=STATUS.queued) | Q(status=STATUS.requeued))
+    return render(request,'emails/index.html', {"emails":emails})
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_mailtemplate(request):
@@ -214,7 +131,7 @@ def overview_reversion(request, mode):
     if mode == 'template':
         items = MailTemplate.objects.filter(date_deleted__isnull=False)
     else:
-        items = MailConfig.objects.filter(date_deleted__isnull=False)
+        items = Email.objects.filter(date_deleted__isnull=False)
     return render(request,'mail/reversion-overview-index.html', {"items": items, 'mode': mode})
 
 @staff_member_required(login_url=reverse_lazy('login'))
@@ -225,7 +142,7 @@ def revert_mail_item(request, mode, pk):
             # redirect_obj = redirect('overviewreversionmail', mode)
             messages.add_message(request, messages.SUCCESS, _('The template has been succesfully reverted!'))
         else:
-            item = MailConfig.objects.get(id=pk)
+            item = Email.objects.get(id=pk)
             # redirect_obj = redirect('overviewreversionmail', mode)
             messages.add_message(request, messages.SUCCESS, _('The configuration has been succesfully reverted!'))
         item.date_deleted = None
@@ -249,9 +166,9 @@ def get_version_ajax_modal(request):
         versions = ModelVersion1.objects.filter(revision=reversion).order_by("date_created")
         template_path = 'mailtemplates/__partials/version_modal.html'
     else:
-        reversion = ModelRevision2.objects.get(current_instance=MailConfig.objects.get(id=id))
+        reversion = ModelRevision2.objects.get(current_instance=Email.objects.get(id=id))
         versions = ModelVersion2.objects.filter(revision=reversion).order_by("date_created")
-        template_path = 'mailconfigs/__partials/version_modal.html'
+        template_path = 'emails/__partials/version_modal.html'
     if versions:
         context = {
             'versions': versions
@@ -272,7 +189,7 @@ def get_delete_version_ajax_modal(request, mode):
             template_path = 'mailtemplates/__partials/delete_version_modal.html'
         else:
             version = ModelVersion2.objects.get(id=id)
-            template_path = 'mailconfigs/__partials/delete_version_modal.html'
+            template_path = 'emails/__partials/delete_version_modal.html'
     except Exception as e:
         print('Error: ', e)
         version = None
@@ -291,7 +208,7 @@ def select_version(request, mode, pk):
     if mode == 'template':
         redirect_obj = redirect('overviewmailtemplate')
     else:
-        redirect_obj = redirect('overviewmailconfig')
+        redirect_obj = redirect('overviewemail')
 
     if mode == 'template':
         try:
@@ -325,7 +242,7 @@ def delete_version(request, mode, pk):
     if mode == 'template':
         redirect_obj = redirect('overviewmailtemplate')
     else:
-        redirect_obj = redirect('overviewmailconfig')
+        redirect_obj = redirect('overviewemail')
 
     try:
         if mode == 'template':
@@ -349,7 +266,7 @@ def add_version_comment(request, mode, pk):
     if mode == 'template':
         redirect_obj = redirect('overviewmailtemplate')
     else:
-        redirect_obj = redirect('overviewmailconfig')
+        redirect_obj = redirect('overviewemail')
 
     try:
         if mode == 'template':

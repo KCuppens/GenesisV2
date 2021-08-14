@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
@@ -18,8 +19,15 @@ from django.utils.translation import ugettext_lazy as _
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_logs(request):
     has_perms(request, ["logs.view_messagelog"], None, 'dashboard')
-    logs = MessageLog.objects.filter()
-    return render(request,'logs/index.html', {"logs":logs})
+    logs = MessageLog.objects.all().order_by('-date')
+    amount_billable = MessageLog.objects.filter(invoiced__isnull=True).count()
+    amount_billed = MessageLog.objects.filter(invoiced__isnull=False).count()
+    if settings.MAIL_CREDITS_COST:
+        mailcredits_cost = settings.MAIL_CREDITS_COST 
+    else: 
+        mailcredits_cost = 7.5
+    billable_amount = int(amount_billable)/1000 * settings.MAIL_CREDITS_COST
+    return render(request,'logs/index.html', {"logs":logs, 'amount_billable': amount_billable, 'amount_billed': amount_billed, 'mailcredits_cost': mailcredits_cost, 'billable_amount': billable_amount})
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def delete_ajax_log_modal(request):

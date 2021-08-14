@@ -21,7 +21,7 @@ from .signals import email_queued
 from .utils import (
     create_attachment, get_email_template, parse_emails, parse_priority, split_emails,
 )
-
+from apps.logs.models import MessageLog
 logger = setup_loghandlers("INFO")
 from collections import namedtuple
 
@@ -185,9 +185,11 @@ def get_queued():
         (Q(scheduled_time__lte=now) | Q(scheduled_time__isnull=True)) &
         (Q(expires_at__gt=now) | Q(expires_at__isnull=True))
     )
+    
     return Email.objects.filter(query) \
                 .select_related('template') \
-                .order_by(*get_sending_order()).prefetch_related('attachments')[:get_batch_size()]
+                .order_by(*get_sending_order()).prefetch_related('attachments')[:int(get_batch_size())]
+     
 
 
 def send_queued(processes=1, log_level=None):
@@ -269,6 +271,7 @@ def _send_bulk(emails, uses_multiprocessing=True, log_level=None):
             email.prepare_email_message()
         except Exception as e:
             failed_emails.append((email, e))
+        
 
     number_of_threads = min(get_threads_per_process(), email_count)
     pool = ThreadPool(number_of_threads)
@@ -305,27 +308,38 @@ def _send_bulk(emails, uses_multiprocessing=True, log_level=None):
 
     # If log level is 0, log nothing, 1 logs only sending failures
     # and 2 means log both successes and failures
-    if log_level >= 1:
-
+    log_level = 2
+    if log_level and log_level >= 1:
         logs = []
         for (email, exception) in failed_emails:
             logs.append(
-                Log(email=email, status=STATUS.failed,
-                    message=str(exception),
-                    exception_type=type(exception).__name__)
+                MessageLog(
+                    subject=email.template.subject, 
+                    date=timezone.now(), 
+                    status=STATUS.failed,
+                    error=str(exception),
+                    exception_type=type(exception).__name__,
+                    recipient=email.to
+                )
             )
-
         if logs:
-            Log.objects.bulk_create(logs)
+            MessageLog.objects.bulk_create(logs)
 
     if log_level == 2:
 
         logs = []
         for email in sent_emails:
-            logs.append(Log(email=email, status=STATUS.sent))
+            logs.append(
+                MessageLog(
+                    subject=email.template.subject, 
+                    date=timezone.now(),
+                    recipient=email.to, 
+                    status=STATUS.sent
+                )
+            )
 
         if logs:
-            Log.objects.bulk_create(logs)
+            MessageLog.objects.bulk_create(logs)
 
     logger.info(
         'Process finished, %s attempted, %s sent, %s failed, %s requeued',

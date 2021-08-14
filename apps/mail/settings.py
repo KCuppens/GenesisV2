@@ -5,6 +5,7 @@ from django.core.cache import caches
 from django.core.cache.backends.base import InvalidCacheBackendError
 from django.core.mail.utils import DNS_NAME
 from django.template import engines as template_engines
+from apps.conf.utils import get_config
 
 from django.utils.module_loading import import_string
 
@@ -61,23 +62,23 @@ def get_cache_backend():
     return None
 
 def get_batch_size():
-    return get_config('BATCH_SIZE')
+    return str(get_config('BATCH_SIZE'))
 
 
 def get_threads_per_process():
-    return settings.THREADS_PER_PROCESS
+    return 5
 
 
 def get_default_priority():
-    return settings.DEFAULT_PRIORITY
+    return 'medium'
 
 
 def get_log_level():
-    return settings.LOG_LEVEL
+    return '2'
 
 
 def get_sending_order():
-    return settings.SENDING_ORDER
+    return ['-priority']
 
 
 def get_template_engine():
@@ -85,11 +86,11 @@ def get_template_engine():
     return template_engines[using]
 
 def get_max_retries():
-    return get_config('MAX_RETRIES')
+    return 0
 
 
 def get_retry_timedelta():
-    return get_config('RETRY_INTERVAL')
+    return datetime.timedelta(minutes=15)
 
 CONTEXT_FIELD_CLASS = 'jsonfield.JSONField'
 context_field_class = import_string(CONTEXT_FIELD_CLASS)

@@ -8,6 +8,10 @@
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                         <h4>{% trans 'Logs overview' %}</h4>
+                        <span class="badge outline-badge-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>({{amount_billable}})</span>
+                        <span class="badge outline-badge-success"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>{{amount_billed}}</span>
+                        <p>{% trans 'Openstaand bedrag' %}: {{billable_amount|floatformat:"2"}}</p>
+                        <p>{% trans 'Mail credits kosten' %}: € {{mailcredits_cost|floatformat:"2"}} {% trans 'per 1000' %}</p>
                     </div>
                 </div>
             </div>
@@ -20,7 +24,9 @@
                                 <th>{% trans 'Ontvanger' %}</th>
                                 <th>{% trans 'Onderwerp' %}</th>
                                 <th>{% trans 'Type' %}</th>
-                                <th class="text-center">{% trans 'Action' %}</th>
+                                <th>{% trans 'Status' %}</th>
+                                <th>{% trans 'Error' %}</th>
+                                <th class="text-center">{% trans 'Details' %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,8 +35,17 @@
                                     <td>{{log.date}}</td>
                                     <td>{{log.recipient}}</td>
                                     <td>{{log.subject}}</td>
-                                    <td class="text-center">
-                                        {% include 'logs/__partials/actions.html' with item=log %}
+                                    <td>{{log.get_type_display}}</td>
+                                    <td>{{log.get_status_display}}</td>
+                                    <td>
+                                        {{log.exception_type|default_if_none:""}}
+                                        <br>
+                                        {{log.error|default_if_none:""}}
+                                    </td>
+                                    <td>
+                                        {% if log.status == 0 %}
+                                        <span class="badge outline-badge-{% if item.invoiced %}success{% else %}danger{% endif %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}  

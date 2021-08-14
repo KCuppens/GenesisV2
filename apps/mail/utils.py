@@ -3,18 +3,22 @@ from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.utils.encoding import force_text
 from collections import namedtuple
+from apps.mail.models import Email
 PRIORITY = namedtuple('PRIORITY', 'low medium high now')._make(range(4))
 STATUS = namedtuple('STATUS', 'sent failed queued requeued')._make(range(4))
 from apps.mail import cache
+from apps.mail.models import MailTemplate
 from .settings import get_default_priority
 from .validators import validate_email_with_name
 
-def send_mail(subject, message, from_email, recipient_list, html_message='',
+def send_mail(subject, message, from_email, recipient_list, template, html_message='',
               scheduled_time=None, headers=None, priority=PRIORITY.medium):
     """
     Add a new message to the mail queue. This is a replacement for Django's
     ``send_mail`` core email method.
     """
+    if template is None:
+        raise ValueError('A template can\'t be missing')
 
     subject = force_text(subject)
     status = None if priority == PRIORITY.now else STATUS.queued
@@ -22,7 +26,7 @@ def send_mail(subject, message, from_email, recipient_list, html_message='',
         Email.objects.create(
             from_email=from_email, to=address, subject=subject,
             message=message, html_message=html_message, status=status,
-            headers=headers, priority=priority, scheduled_time=scheduled_time
+            headers=headers, priority=priority, scheduled_time=scheduled_time, template=template
         ) for address in recipient_list
     ]
     if priority == PRIORITY.now:
@@ -31,7 +35,7 @@ def send_mail(subject, message, from_email, recipient_list, html_message='',
     return emails
 
 
-def get_email_template(name):
+def get_email_template(name, language='nl'):
     """
     Function that returns an email template instance, from cache or DB.
     """
@@ -39,13 +43,13 @@ def get_email_template(name):
     if use_cache:
         use_cache = getattr(settings, 'EMAIL_BACKEND_TEMPLATE_CACHE', True)
     if not use_cache:
-        return MailTemplate.objects.get(key_name=name)
+        return MailTemplate.objects.filter(key_name=name).first()
     else:
         composite_name = '%s:%s' % (name, language)
         email_template = cache.get(composite_name)
 
         if email_template is None:
-            email_template = MailTemplate.objects.get(key_name=name)
+            email_template = MailTemplate.objects.filter(key_name=name).first()
             cache.set(composite_name, email_template)
 
         return email_template

@@ -83,7 +83,7 @@ class PasswordField(forms.CharField):
 
 
 class HoneyPotField(forms.BooleanField):
-    widget = CheckboxInput
+    widget = CheckboxInput 
 
     def __init__(self, *args, **kwargs):
         super(HoneyPotField, self).__init__(*args, **kwargs)

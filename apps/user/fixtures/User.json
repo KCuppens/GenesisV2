@@ -26,7 +26,7 @@
                 "delivery_address":null,
                 "invoice_address":null,
                 "date_created":"2021-04-18T08:03:19.652Z",
-                "date_deleted":"",
+                "date_deleted": null,
                 "groups":[],
                 "user_permissions":[
                 

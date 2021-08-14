@@ -8,6 +8,5 @@ class MailConfig(AppConfig):
     def ready(self):
         from apps.mail.signals import (
         	email_queued,
-        	post_mailtemplaterevision_commit,
-        	post_mailconfigrevision_commit
+        	post_mailtemplaterevision_commit
         )

@@ -1,0 +1,21 @@
+{% load static get_setting i18n %}
+<footer class="footer">
+    <div class="social">
+        <a href="{% get_setting request 'account_linkedin' %}">
+            <img src="{% static 'front/images/linkedin.svg' %}" alt="linkedin">
+        </a>
+
+        <a href="{% get_setting request 'account_facebook' %}">
+            <img src="{% static 'front/images/fb.svg' %}" alt="fb">
+        </a>
+    </div>
+
+    <p>{% trans 'Alle rechten voorbehouden' %} Copyright © 2021 DW Construct.</p>
+
+    <div class="quick-links">
+        <a href="">{% trans 'Privacybeleid' %}</a> |
+        <a href="">{% trans 'Algemene voorwaarden' %}</a> |
+        <a href="">{% trans 'Cookiebeleid' %}</a> |
+    </div>
+</footer>
+</div>
