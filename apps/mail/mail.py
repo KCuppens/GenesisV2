@@ -312,16 +312,29 @@ def _send_bulk(emails, uses_multiprocessing=True, log_level=None):
     if log_level and log_level >= 1:
         logs = []
         for (email, exception) in failed_emails:
-            logs.append(
-                MessageLog(
-                    subject=email.template.subject, 
-                    date=timezone.now(), 
-                    status=STATUS.failed,
-                    error=str(exception),
-                    exception_type=type(exception).__name__,
-                    recipient=email.to
+            if email.template:
+                logs.append(
+                    MessageLog(
+                        subject=email.template.subject, 
+                        date=timezone.now(), 
+                        status=STATUS.failed,
+                        error=str(exception),
+                        exception_type=type(exception).__name__,
+                        recipient=email.to
+                    )
                 )
-            )
+            else:
+                logs.append(
+                    MessageLog(
+                        subject=email.subject, 
+                        date=timezone.now(), 
+                        status=STATUS.failed,
+                        error=str(exception),
+                        exception_type=type(exception).__name__,
+                        recipient=email.to
+                    )
+                )
+
         if logs:
             MessageLog.objects.bulk_create(logs)
 
@@ -329,14 +342,24 @@ def _send_bulk(emails, uses_multiprocessing=True, log_level=None):
 
         logs = []
         for email in sent_emails:
-            logs.append(
-                MessageLog(
-                    subject=email.template.subject, 
-                    date=timezone.now(),
-                    recipient=email.to, 
-                    status=STATUS.sent
+            if email.template:
+                logs.append(
+                    MessageLog(
+                        subject=email.template.subject, 
+                        date=timezone.now(),
+                        recipient=email.to, 
+                        status=STATUS.sent
+                    )
                 )
-            )
+            else:
+                logs.append(
+                    MessageLog(
+                        subject=email.subject, 
+                        date=timezone.now(),
+                        recipient=email.to, 
+                        status=STATUS.sent
+                    )
+                )
 
         if logs:
             MessageLog.objects.bulk_create(logs)

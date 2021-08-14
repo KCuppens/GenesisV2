@@ -213,21 +213,39 @@ class Email(models.Model):
             self.save(update_fields=['status'])
 
             if status == STATUS.failed:
-                MessageLog.objects.create(
-                    subject=self.template.subject, 
-                    date=timezone.now(), 
-                    status=STATUS.failed,
-                    error=str(message),
-                    exception_type=exception_type,
-                    recipient=self.to
-                )
+                if self.template:
+                    MessageLog.objects.create(
+                        subject=self.template.subject, 
+                        date=timezone.now(), 
+                        status=STATUS.failed,
+                        error=str(message),
+                        exception_type=exception_type,
+                        recipient=self.to
+                    )
+                else:
+                    MessageLog.objects.create(
+                        subject=self.subject, 
+                        date=timezone.now(), 
+                        status=STATUS.failed,
+                        error=str(message),
+                        exception_type=exception_type,
+                        recipient=self.to
+                    )
             else:
-                MessageLog.objects.create(
-                    subject=self.template.subject, 
-                    date=timezone.now(),
-                    recipient=self.to, 
-                    status=STATUS.sent
-                )
+                if self.template:
+                    MessageLog.objects.create(
+                        subject=self.template.subject, 
+                        date=timezone.now(),
+                        recipient=self.to, 
+                        status=STATUS.sent
+                    )
+                else:
+                    MessageLog.objects.create(
+                        subject=self.subject, 
+                        date=timezone.now(),
+                        recipient=self.to, 
+                        status=STATUS.sent
+                    )
 
         return status
 

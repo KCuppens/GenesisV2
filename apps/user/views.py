@@ -368,6 +368,9 @@ def export_users(request):
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
 
+from collections import namedtuple
+PRIORITY = namedtuple('PRIORITY', 'low medium high now')._make(range(4))
+
 def send_mail_password_set(user):
     subject = "Password Set Requested"
     email_template_name = "users/password_set_email.html"
@@ -382,7 +385,7 @@ def send_mail_password_set(user):
     }
     email = render_to_string(email_template_name, context)
     try:
-        send_mail(subject, email, str(get_config('client_email')) , [user.email], fail_silently=False)
+        send_mail(subject, email, str(get_config('client_email')) , [user.email], None, email, None, None, PRIORITY.high)
     except BadHeaderError:
         return HttpResponse('Invalid header found.')
 

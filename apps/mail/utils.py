@@ -17,8 +17,6 @@ def send_mail(subject, message, from_email, recipient_list, template, html_messa
     Add a new message to the mail queue. This is a replacement for Django's
     ``send_mail`` core email method.
     """
-    if template is None:
-        raise ValueError('A template can\'t be missing')
 
     subject = force_text(subject)
     status = None if priority == PRIORITY.now else STATUS.queued
