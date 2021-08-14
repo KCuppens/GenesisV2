@@ -11,4 +11,5 @@ from django.urls import reverse
 def redirect_page(id):
     if id:
         page = Page.objects.filter(id=id).first()
-        return reverse('index', kwargs={'slug': page.full_slug})
+        if page:
+            return reverse('index', kwargs={'slug': page.full_slug})

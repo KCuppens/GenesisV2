@@ -373,7 +373,7 @@ def send_mail_password_set(user):
     email_template_name = "users/password_set_email.html"
     context = {
         "email": user.email,
-        'domain':'127.0.0.1:8000',
+        'domain': str(get_config('web_url')),
         'site_name': 'Website',
         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
         "user": user,
@@ -382,7 +382,7 @@ def send_mail_password_set(user):
     }
     email = render_to_string(email_template_name, context)
     try:
-        send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
+        send_mail(subject, email, str(get_config('client_email')) , [user.email], fail_silently=False)
     except BadHeaderError:
         return HttpResponse('Invalid header found.')
 
