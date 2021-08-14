@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n return_language_redirect %}
 <!--  BEGIN NAVBAR  -->
 <div class="header-container">
     <header class="header navbar navbar-expand-sm">
@@ -33,7 +33,7 @@
                         {% for language in languages %}
                             {% if language.code == LANGUAGE_CODE %}
                             {% else %}
-                                <a class="dropdown-item" href="/{{ language.code }}{{ request.get_full_path|slice:'3:' }}">{{language.name_local}}</a>
+                                <a class="dropdown-item" href="{% return_language_redirect language.code request.get_full_path %}">{{language.name_local}}</a>
                             {% endif %}
                         {% endfor %}
                     </div>
