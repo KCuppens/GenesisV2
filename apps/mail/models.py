@@ -241,7 +241,7 @@ class Email(models.Model):
 
 class MailTemplateRevision(BaseRevision):
     current_instance = models.OneToOneField(MailTemplate, on_delete=models.CASCADE)
-    content_type = models.CharField(max_length=10, default="mail_template")
+    content_type = models.CharField(max_length=10, default="mail_temp")
 
 
 class MailTemplateVersion(BaseVersion):
@@ -259,7 +259,7 @@ class MailTemplateVersion(BaseVersion):
 
 class MailConfigRevision(BaseRevision):
     current_instance = models.OneToOneField(MailConfig, on_delete=models.CASCADE)
-    content_type = models.CharField(max_length=10, default="mail_config")
+    content_type = models.CharField(max_length=10, default="mail_conf")
 
 
 class MailConfigVersion(BaseVersion):
