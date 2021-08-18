@@ -271,19 +271,19 @@ class MailTemplateVersion(BaseVersion):
                 is_current=True).update(is_current=False)
             return super(self._meta.model, self).save(*args, **kwargs)
 
-class MailConfigRevision(BaseRevision):
-    current_instance = models.OneToOneField(MailConfig, on_delete=models.CASCADE)
-    content_type = models.CharField(max_length=10, default="mail_conf")
+# class MailConfigRevision(BaseRevision):
+#     current_instance = models.OneToOneField(MailConfig, on_delete=models.CASCADE)
+#     content_type = models.CharField(max_length=10, default="mail_conf")
 
 
-class MailConfigVersion(BaseVersion):
-    revision = models.ForeignKey(MailConfigRevision, on_delete=models.CASCADE, related_name="versions")
+# class MailConfigVersion(BaseVersion):
+#     revision = models.ForeignKey(MailConfigRevision, on_delete=models.CASCADE, related_name="versions")
 
-    def save(self, *args, **kwargs):
-        # import pdb; pdb.set_trace()
-        if not self.is_current:
-            return super(self._meta.model, self).save(*args, **kwargs)
-        with transaction.atomic():
-            self.revision.versions.filter(
-                is_current=True).update(is_current=False)
-            return super(self._meta.model, self).save(*args, **kwargs)
+#     def save(self, *args, **kwargs):
+#         # import pdb; pdb.set_trace()
+#         if not self.is_current:
+#             return super(self._meta.model, self).save(*args, **kwargs)
+#         with transaction.atomic():
+#             self.revision.versions.filter(
+#                 is_current=True).update(is_current=False)
+#             return super(self._meta.model, self).save(*args, **kwargs)
