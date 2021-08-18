@@ -1,3 +1,5 @@
+from apps.logs.models import MessageLog
+from django.conf import settings
 from django.db import models
 from apps.base.models import (
     BaseModel, 
@@ -12,6 +14,11 @@ from apps.mail.validators import validate_template_syntax, validate_email_with_n
 from apps.mail.fields import CommaSeparatedEmailField
 from apps.mail.settings import context_field_class, get_log_level, get_template_engine
 from jsonfield import JSONField
+from email.mime.nonmultipart import MIMENonMultipart
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.utils.encoding import smart_str
+from .connections import connections
+from django.utils import timezone
 
 # Create your models here.
 class MailTemplateManager(models.Manager):
@@ -51,16 +58,6 @@ class MailTemplate(BaseModel, AdminModel):
         return self.title
 
 
-
-
-class MailConfig(BaseModel, AdminModel):
-    title = models.CharField(max_length=255, null=True, blank=True)
-    key_name = models.CharField(max_length=255, null=True, blank=True)
-    mailtemplate = models.ForeignKey(MailTemplate, on_delete=models.CASCADE, null=True, blank=True)
-
-    def __str__(self):
-        return self.title
-
 PRIORITY = namedtuple('PRIORITY', 'low medium high now')._make(range(4))
 STATUS = namedtuple('STATUS', 'sent failed queued requeued')._make(range(4))
 
@@ -82,6 +79,7 @@ class Email(models.Model):
     subject = models.CharField(_("Subject"), max_length=989, blank=True)
     message = models.TextField(_("Message"), blank=True)
     html_message = models.TextField(_("HTML Message"), blank=True)
+    attachments = models.ManyToManyField('attachment', blank=True)
     """
     Emails with 'queued' status will get processed by ``send_queued`` command.
     Status field will then be set to ``failed`` or ``sent`` depending on
@@ -124,9 +122,6 @@ class Email(models.Model):
         """
         Returns Django EmailMessage object for sending.
         """
-        if self._cached_email_message:
-            return self._cached_email_message
-
         return self.prepare_email_message()
 
     def prepare_email_message(self):
@@ -147,12 +142,11 @@ class Email(models.Model):
             multipart_template = None
             html_message = self.html_message
 
-        connection = connections[self.backend_alias or 'default']
-        if isinstance(self.headers, dict) or self.expires_at or self.message_id:
+        connection = connections[settings.EMAIL_BACKEND]
+        if isinstance(self.headers, dict) or self.expires_at:
             headers = dict(self.headers or {})
         else:
             headers = None
-
         if html_message:
             if plaintext_message:
                 msg = EmailMultiAlternatives(
@@ -174,7 +168,6 @@ class Email(models.Model):
                 subject=subject, body=plaintext_message, from_email=self.from_email,
                 to=self.to, bcc=self.bcc, cc=self.cc,
                 headers=headers, connection=connection)
-
         for attachment in self.attachments.all():
             if attachment.headers:
                 mime_part = MIMENonMultipart(*attachment.mimetype.split('/'))
@@ -219,18 +212,40 @@ class Email(models.Model):
             self.status = status
             self.save(update_fields=['status'])
 
-            if log_level is None:
-                log_level = get_log_level()
-
-            # If log level is 0, log nothing, 1 logs only sending failures
-            # and 2 means log both successes and failures
-            if log_level == 1:
-                if status == STATUS.failed:
-                    self.logs.create(status=status, message=message,
-                                     exception_type=exception_type)
-            elif log_level == 2:
-                self.logs.create(status=status, message=message,
-                                 exception_type=exception_type)
+            if status == STATUS.failed:
+                if self.template:
+                    MessageLog.objects.create(
+                        subject=self.template.subject, 
+                        date=timezone.now(), 
+                        status=STATUS.failed,
+                        error=str(message),
+                        exception_type=exception_type,
+                        recipient=self.to
+                    )
+                else:
+                    MessageLog.objects.create(
+                        subject=self.subject, 
+                        date=timezone.now(), 
+                        status=STATUS.failed,
+                        error=str(message),
+                        exception_type=exception_type,
+                        recipient=self.to
+                    )
+            else:
+                if self.template:
+                    MessageLog.objects.create(
+                        subject=self.template.subject, 
+                        date=timezone.now(),
+                        recipient=self.to, 
+                        status=STATUS.sent
+                    )
+                else:
+                    MessageLog.objects.create(
+                        subject=self.subject, 
+                        date=timezone.now(),
+                        recipient=self.to, 
+                        status=STATUS.sent
+                    )
 
         return status
 
@@ -241,7 +256,7 @@ class Email(models.Model):
 
 class MailTemplateRevision(BaseRevision):
     current_instance = models.OneToOneField(MailTemplate, on_delete=models.CASCADE)
-    content_type = models.CharField(max_length=10, default="mail_temp")
+    content_type = models.CharField(max_length=50, default="mail_template")
 
 
 class MailTemplateVersion(BaseVersion):
@@ -255,7 +270,6 @@ class MailTemplateVersion(BaseVersion):
             self.revision.versions.filter(
                 is_current=True).update(is_current=False)
             return super(self._meta.model, self).save(*args, **kwargs)
-
 
 class MailConfigRevision(BaseRevision):
     current_instance = models.OneToOneField(MailConfig, on_delete=models.CASCADE)

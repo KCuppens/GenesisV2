@@ -25,4 +25,5 @@ class MessageLog(models.Model):
     subject = models.CharField(max_length=255, null=True) 
     type = models.CharField(max_length=255, null=True, choices=GET_TYPES, default=TYPE_EMAIL)
     status = models.PositiveSmallIntegerField(_('Status'), choices=STATUS_CHOICES)
-
+    error = models.TextField(blank=True, null=True)
+    exception_type = models.CharField(_('Exception type'), max_length=255, blank=True)

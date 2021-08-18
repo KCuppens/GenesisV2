@@ -24,10 +24,12 @@ jobs:
     - name: ssh into server and run bash script
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.STAGE_HOST }}
-        username: ${{ secrets.STAGE_USERNAME }}
-        password: ${{ secrets.STAGE_PASSWORD }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        passphrase: ${{ secrets.PASSPHRASE }}
         script: |
-          /bin/bash /root/install.sh -p /root/GenesisV2
-          
-    
+          /bin/bash -c "$(curl -sL https://raw.nt.com/KCuppens/installation-script/master/install.sh)"
+          cd ${{ secrets.REPO_PATH }} && git pull origin ${{ secrets.BRANCH_NAME }}
+

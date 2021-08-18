@@ -1,3 +1,261 @@
-{% include 'mail/__partials/header.html' %}
-{{content_html}}
-{% include 'mail/__partials/footer.html' %}
+
+{% load static get_setting %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #fafafa;
+        }
+
+        .banner-content:before {
+            content: "";
+            position: absolute;
+            background-image: url(../images/frame.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            top: 5px;
+            left: 0;
+            width: 210px;
+            height: 380px;
+        }
+
+        .email-containter {
+            width: 640px;
+            background: #fff;
+            margin: auto;
+        }
+
+        .logo-wrapper img {
+            width: 100%;
+            max-width: 230px;
+            margin: auto;
+            display: block;
+        }
+
+        .logo-wrapper {
+            padding: 15px 0px;
+        }
+
+        * {
+            font-family: Arial;
+        }
+
+        .email-banner {
+            background: #202B55;
+            padding: 40px;
+            margin-bottom: 180px;
+        }
+
+        .banner-content h3 {
+            font-weight: bold;
+            font-size: 48px;
+            line-height: 56px;
+            /* or 117% */
+            color: #FFFFFF;
+            font-family: Arial;
+        }
+
+        .email-banner p {
+            font-size: 18px;
+            line-height: 28px;
+            /* or 156% */
+            color: #FFFFFF;
+        }
+
+        .banner-img img {
+            width: 100%;
+            margin-bottom: -180px;
+        }
+
+        .banner-content {
+            padding-left: 50px;
+            margin-bottom: 100px;
+            padding-top: 60px;
+            position: relative;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background: #03AEEF;
+            border-radius: 30px;
+            text-decoration: none;
+            height: 45px;
+            width: 255px;
+            font-size: 16px;
+            text-transform: uppercase;
+            display: flex;
+            font-weight: bold;
+            line-height: 18px;
+            text-align: center;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .email-action {
+            display: flex;
+            justify-content: center;
+        }
+
+        .banner-innerwrapper {
+            padding: 0 40px;
+        }
+
+        .latest-real {
+            margin: 35px 0px;
+        }
+
+        .latest-real>h3 {
+            font-weight: bold;
+            font-size: 26px;
+            line-height: 50px;
+            /* identical to box height, or 192% */
+            text-align: center;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        .real-box {
+            position: relative;
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        a.btn-anchor {
+            position: absolute;
+            background: #03AEEF;
+            right: 0;
+            bottom: 0;
+            height: 40px;
+            width: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .real-content {
+            box-shadow: 0px 4px 40px rgba(17, 29, 74, 0.03);
+            padding: 20px 50px 20px 20px;
+        }
+
+        .real-content p {
+            font-size: 16px;
+            line-height: 20px;
+            /* or 125% */
+            color: #2C2A4A;
+            margin: 20px 0 0;
+        }
+
+        .iso-wrapper {
+            background: linear-gradient(0deg, #B8FFB5, #B8FFB5), #FFFFFF;
+            padding: 0 30px 30px;
+        }
+
+        .iso-main-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 85px;
+        }
+
+        .iso-img {
+            margin-top: -50px;
+            margin-left: 35px;
+        }
+
+        .iso-img img {
+            width: 100%;
+        }
+
+        .iso-content {
+            width: 200px;
+        }
+
+        .iso-content>h3 {
+            font-weight: bold;
+            font-size: 30px;
+            line-height: 40px;
+            /* or 133% */
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .iso-content .btn {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        p.para {
+            padding: 40px;
+            font-size: 16px;
+            line-height: 24px;
+            /* or 150% */
+            color: #333333;
+        }
+
+        footer.footer {
+            background: linear-gradient(0deg, #111D4A, #111D4A), #FFFFFF;
+            text-align: center;
+            padding: 40px 40px 50px;
+        }
+
+        footer.footer>p {
+            font-size: 12px;
+            line-height: 18px;
+            /* identical to box height, or 150% */
+            text-align: center;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        .quick-links a {
+            font-size: 12px;
+            line-height: 18px;
+            /* identical to box height, or 150% */
+            text-align: center;
+            color: #03AEEF;
+        }
+
+        .quick-links {
+            color: #ffffff3b;
+        }
+
+        .social {
+            margin-bottom: 20px;
+        }
+
+        footer.footer>p a {
+            color: #B8FFB5;
+        }
+
+    </style>
+</head>
+
+<body>
+    {% include 'mail/__partials/header.html' %}   
+    <div class="email-banner">
+        <div class="banner-content">
+            <h3>{% get_setting request 'client_name' %}</h3>
+        </div>
+        <div class="banner-img">
+            <img src="{% static 'front/images/email-banner.png' %}" alt="">
+        </div>
+    </div> 
+    <div class="banner-innerwrapper">
+        {{content_html}}
+    </div>
+    {% include 'mail/__partials/footer.html' %}
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+{% extends 'dashboard/base.html' %}
+{% load static i18n svg %}
+{% block content %}
+<div class="row layout-top-spacing layout-spacing">
+    <div class="col-lg-12">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                        <h4>{% trans 'Te versturen emails' %}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area">
+                <div class="table-responsive mb-4">
+                    <table id="style-3" class="table style-3  table-hover">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Van' %}</th>
+                                <th>{% trans 'Naar' %}</th>
+                                <th>{% trans 'Onderwerp' %}</th>
+                                <th>{% trans 'Status' %}</th>
+                                <th>{% trans 'Prioriteit' %}</th>
+                                <th>{% trans 'Verstuurtijd' %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for email in emails %}
+                                <tr>
+                                    <td>{{email.from_email|default_if_none:""}}</td>
+                                    <td>{{email.to|default_if_none:""}}</td>
+                                    <td>{{email.subject|default_if_none:""}}</td>
+                                    <td>{{email.get_status_display|default_if_none:""}}</td>
+                                    <td>{{email.get_priority_display|default_if_none:""}}</td>
+                                    <td>{{email.scheduled_time|default_if_none:""}}</td>
+                                </tr>
+                            {% endfor %}  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

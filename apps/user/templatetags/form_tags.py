@@ -18,6 +18,6 @@ def input_class(field):
     return field.field.widget.__class__.__name__.lower()
 
 
-@register.filter
+@register.filter 
 def is_honeypot(field):
     return isinstance(field.field, HoneyPotField)

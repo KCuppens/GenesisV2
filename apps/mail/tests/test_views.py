@@ -706,7 +706,7 @@ class DeleteVersionAjaxModalTestCase(BaseViewTestCase):
 		with self.subTest():
 			self.assertEqual(resp.status_code, 200)
 		with self.subTest():
-			text = _('Are you sure you want to delete this version?')
+			text = _('Ben je zeker dat je dit wilt verwijderen this version?')
 			self.assertContains(resp, text)
 
 	@pytest.mark.django_db
@@ -726,7 +726,7 @@ class DeleteVersionAjaxModalTestCase(BaseViewTestCase):
 		with self.subTest():
 			self.assertEqual(resp.status_code, 200)
 		with self.subTest():
-			text = _('Are you sure you want to delete this version?')
+			text = _('Ben je zeker dat je dit wilt verwijderen this version?')
 			self.assertContains(resp, text)
 
 

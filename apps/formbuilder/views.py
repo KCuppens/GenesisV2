@@ -698,14 +698,14 @@ def send_visitor_email(request, form):
             'content_html': form.mail_visitor.content_html
         }
         html_message = render_to_string('mail/default.html', context=context, request=request)
-        send_mail(form.mail_visitor.subject, html_message, form.mail_visitor_sender_email, [request.session['visitor_email']], html_message, None, None, PRIORITY.now)
+        send_mail(form.mail_visitor.subject, html_message, form.mail_visitor_sender_email, [request.session['visitor_email']], form.mail_visitor, html_message, None, None, PRIORITY.high)
 
 def send_admin_email(request, form): 
     context = {
         'content_html': form.mail_admin.content_html
     }
     html_message = render_to_string('mail/default.html', context=context, request=request)
-    send_mail(form.mail_admin.subject, html_message, form.mail_sender_email, [form.mail_recipient_email], html_message, None, None, PRIORITY.now)
+    send_mail(form.mail_admin.subject, html_message, form.mail_sender_email, [form.mail_recipient_email], form.mail_admin, html_message, None, None, PRIORITY.high)
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_reversion(request):

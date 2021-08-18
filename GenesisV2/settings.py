@@ -233,6 +233,7 @@ EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
 MAILJET_API_KEY = 'a8ed2ad7a17b71d57b440c4ddc0022ce'
 MAILJET_API_SECRET = '6868b478558189199dcfdde021236066'
 BACKENDS = ''
+MAIL_CREDITS_COST = 7.5
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_USER ='Your email name'
 # EMAIL_USE_TLS = True
