@@ -52,3 +52,6 @@ urlpatterns = i18n_patterns(
     prefix_default_language=False
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
         
+handler404 = 'apps.front.views.handler404'
+
+handler500 = 'apps.front.views.handler500'
