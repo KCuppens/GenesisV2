@@ -10,60 +10,44 @@ from apps.filemanager.utils import get_filename_without_extension, get_extension
 from apps.filebase.file import upload_file
 import requests 
 from io import BytesIO
+from django.db import models
+
+
+def get_filename_str(filepath):
+    path = filepath.split('/')
+    filename = path[-1]
+    return filename
+
 
 @register.simple_tag
 def show_thumbnail(instance, size, format):
-    if instance.image:
-        filename = get_filename_without_extension(get_filename(instance.image))
+    # if instance.image:
+    #     filename = get_filename_without_extension(get_filename(instance.image))
+    #     cloudfront = settings.AWS_CLOUDFRONT_DOMAIN
+    #     basepath = cloudfront + settings.AWS_MAIN_DIR 
+    #     thumbnail = basepath + '/media/image/' + str(format) + '/' + size + '/' + filename + '.' + str(format)
+    #     create_thumbnails(thumbnail, size, instance, format)
+    #     return thumbnail
+
+    if isinstance(instance, Media):
+        media_instance = Media.objects.filter(file__contains=settings.AWS_MAIN_DIR + instance.image).first()
+    elif isinstance(instance, str):
+        filename = get_filename_str(instance)
+        media = Media.objects.filter(filename=filename).first()
+    elif isinstance(instance, models.fields.files.ImageFieldFile):
+        filename = get_filename_str(str(instance))
+        media = Media.objects.filter(filename=filename).first()
+        if not media:
+            return str(instance)
+    else:
+        filename = get_filename(instance)
+        media = Media.objects.filter(filename=filename).first()
+    
+    if media.file:
+        filename = get_filename_without_extension(get_filename(media.file))
         cloudfront = settings.AWS_CLOUDFRONT_DOMAIN
         basepath = cloudfront + settings.AWS_MAIN_DIR 
         thumbnail = basepath + '/media/image/' + str(format) + '/' + size + '/' + filename + '.' + str(format)
-        create_thumbnails(thumbnail, size, instance, format)
+        create_thumbnails.delay(thumbnail, size, media.id, format)
         return thumbnail
-
-                    
-def create_thumbnails(thumbnail, size, instance, format):
-    if not requests.head(thumbnail):
-        new_img = None
-        media_url = str(settings.MEDIA_URL)
-        filename = get_filename_without_extension(get_filename(instance.image))
-        cloudfront = settings.AWS_CLOUDFRONT_DOMAIN
-        basepath = cloudfront + settings.AWS_MAIN_DIR 
-        origpath = '/media/image/orig/'
-        orig = get_filename(instance.image)
-        image_path = '/media/image/' + str(format) + '/' + size + '/' + filename + '.' + str(format)
-        if media_url.startswith('/'):
-            media_url = media_url[1:]
-        if not size == 'orig':
-            image = requests.head(basepath + origpath + orig)
-            if image.status_code == 200:
-                img = Image.open(BytesIO(image.content)) 
-                size_split = size.split('x')
-                size_width = size_split[0]
-                size_height = size_split[1]
-                if size_height and size_width:
-                    new_img = img.resize((int(size_width), int(size_height)), resample=1)
-                    if not os.path.exists(media_url + 'image/' + str(format) +'/' + size + '/'):
-                        os.mkdir(media_url + 'image/' + str(format) +'/' + size + '/')
-                    new_img.save(media_url + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format) , str(format), optimize=True, quality=75)
-                    upload_file(settings.AWS_IMAGE_BUCKET, media_url + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format))
-                    if os.path.exists(media_url + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format)):
-                        os.remove(media_url + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format))
-                    
-                    media_instance = Media.objects.filter(file__contains=basepath + origpath + orig).first()
-                    if media_instance:
-                        thumbnail = Thumbnail.objects.create(format=str(format), size=size, path=basepath +  image_path)
-                        media_instance.thumbnails.add(thumbnail)
-                        media_instance.save()
-                    return basepath + image_path
-                else:
-                    return _('Size not valid format eg. "400x400"')
-            else:
-                return ''
-        else:
-            return basepath + origpath + orig
-            
-        
-
-
     
