@@ -1,0 +1,4 @@
+Require following packages
+1) celery==5.1.2
+2) redis==3.5.3
+3) celery-once==3.0.1
