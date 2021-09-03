@@ -13,8 +13,8 @@ from io import BytesIO
 from celery.decorators import task
 from celery_once import QueueOnce
 
-@task(name="create_thumbnails", base=QueueOnce, once={'keys': ['instance_id'], 'graceful': True})
-def create_thumbnails(thumbnail, size, instance, format):
+@task(name="create_thumbnails", base=QueueOnce, once={'keys': ['size', 'instance_id', 'format'], 'graceful': True})
+def create_thumbnails(thumbnail, size, instance_id, format):
     instance = Media.objects.filter(id=instance_id).first()
     if not requests.head(thumbnail):
         new_img = None
