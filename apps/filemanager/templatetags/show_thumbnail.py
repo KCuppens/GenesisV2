@@ -11,6 +11,7 @@ from apps.filebase.file import upload_file
 import requests 
 from io import BytesIO
 from django.db import models
+from apps.filemanager.tasks import create_thumbnails
 
 
 def get_filename_str(filepath):
