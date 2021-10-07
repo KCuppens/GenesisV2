@@ -20,7 +20,7 @@ var f4 = flatpickr($('.timeFlatpickr'), {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
-    defaultDate: "13:45"
+    time_24hr: true
 });
 $("#clear-date").click(function() {
     $('.expiredDateTimeFlatpickr.expired').flatpickr().clear();

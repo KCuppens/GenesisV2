@@ -32,11 +32,29 @@
     {% endif %}   
 </div>
 <div class="form-group mb-4">
-    {{ form.username|add_label_class:'' }}
-    {{form.username|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
-    {% if form.username.errors %}
+    {{ form.user_type|add_label_class:'' }}
+    {{form.user_type|append_attr:"class:form-control basic"|add_error_attr:"class:is-invalid"}}
+    {% if form.user_type.errors %}
         <div class="invalid-feedback">
-            {{form.username.errors}}
+            {{form.user_type.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.company_name|add_label_class:'' }}
+    {{form.company_name|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+    {% if form.company_name.errors %}
+        <div class="invalid-feedback">
+            {{form.company_name.errors}}
+        </div>
+    {% endif %}   
+</div>
+<div class="form-group mb-4">
+    {{ form.company_vat|add_label_class:'' }}
+    {{form.company_vat|append_attr:"class:form-control"|add_error_attr:"class:is-invalid"}}
+    {% if form.company_vat.errors %}
+        <div class="invalid-feedback">
+            {{form.company_vat.errors}}
         </div>
     {% endif %}   
 </div>

@@ -60,7 +60,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username','first_name', 'last_name','email',
-        'groups','is_active','is_staff')
+        'groups','is_active','is_staff', 'user_type','company_name', 'company_vat')
         labels = {
             'username': _('Username'),
             'first_name': _('Firstname'),

@@ -11,7 +11,7 @@ from .views import (
 	delete_version,
 	add_version_comment,
     overview_reversion,
-    revert_article
+    revert_article,
 )
 from django.utils.translation import ugettext as _
 
@@ -30,4 +30,5 @@ urlpatterns = [
     url(_('^version/(?P<pk>[0-9a-f-]+)$').strip(),select_version,name="selectversion"),
     url(_('^version/delete/(?P<pk>[0-9a-f-]+)$').strip(),delete_version,name="deleteversion"),
     url(_('^version/comment/(?P<pk>[0-9a-f-]+)$').strip(),add_version_comment,name="addversioncomment"),
+
 ]

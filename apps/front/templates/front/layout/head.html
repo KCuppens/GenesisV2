@@ -16,12 +16,12 @@
     <meta property="og:title" content="{{meta_title}}"/>
     <meta name="twitter:title" content="{{meta_title}}"/>
     {% autoescape on %}
-    <meta name="description" content="{{meta_description}}">
-    <meta property="og:description" content="{{meta_description}}"/>
-    <meta name="twitter:description" content="{{meta_description}}"/>
+    <meta name="description" content="{{meta_description|striptags|safe}}">
+    <meta property="og:description" content="{{meta_description|striptags|safe}}"/>
+    <meta name="twitter:description" content="{{meta_description|striptags|safe}}"/>
     {% if head_image %}
         <meta property="og:image" content="{{head_image}}"/>
-        <meta name="twitter:card" content="{{meta_description}}">
+        <meta name="twitter:card" content="{{meta_description|striptags|safe}}">
         <meta name="twitter:image" content="{{head_image}}"/>
     {% endif %}
     {% endautoescape %}

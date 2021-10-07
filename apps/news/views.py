@@ -22,6 +22,10 @@ from django.db import transaction
 import json
 from datetime import datetime
 from apps.pages.models import DetailPage
+from django.core.cache import cache
+import redis  
+r = redis.Redis(host='localhost', port=6379, db=0)
+from clearcache.utils import clear_cache
 
 
 @staff_member_required(login_url=reverse_lazy('login'))
@@ -50,6 +54,7 @@ def add_article(request):
             instance = form.save(commit=False)
             instance.save()
             form.save_m2m()
+            clear_cache('default')
             messages.add_message(request, messages.SUCCESS, _('The article has been succesfully added!'))
 
             return redirect('overviewarticle')
@@ -71,6 +76,7 @@ def edit_article(request, pk):
             instance = form.save(commit=False)
             instance.save()
             form.save_m2m()
+            clear_cache('default')
             messages.add_message(request, messages.SUCCESS, _('The article has been succesfully changed!'))
 
             return redirect('overviewarticle')
@@ -116,7 +122,6 @@ def revert_article(request, pk):
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_version_ajax_article_modal(request):
     data = {}
-    # import pdb;pdb.set_trace();
     id = request.POST.get('id', False)
     reversion = NewsRevision.objects.get(current_instance=Article.objects.get(id=id))
     article_version = NewsVersion.objects.filter(revision=reversion).order_by("date_created")
@@ -149,7 +154,6 @@ def get_delete_version_ajax_article_modal(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def select_version(request, pk):
-    # import pdb;pdb.set_trace();
     article_version = NewsVersion.objects.get(id=pk)
     # article_version.is_current = True
     # article_version.save()
@@ -165,7 +169,6 @@ def select_version(request, pk):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def delete_version(request, pk):
-    # import pdb;pdb.set_trace();
     article_version = NewsVersion.objects.get(id=pk)
     if article_version.is_current:
         # redirect if is_current=True
@@ -177,7 +180,6 @@ def delete_version(request, pk):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def add_version_comment(request, pk):
-    # import pdb;pdb.set_trace();
     article_version = NewsVersion.objects.get(id=pk)
     comment = request.POST.get('comment')
     if comment and comment != article_version.comment:
@@ -195,7 +197,7 @@ def toggle_article_activation_view(request, pk):
     item.active = not item.active
     messages.add_message(request, messages.SUCCESS, _('De status van de article is succesvol aangepast!'))
     item.save()
-    
+    clear_cache('default')
     return redirect('overviewarticle')
 
 @transaction.atomic
@@ -208,6 +210,7 @@ def delete_article(request,pk):
     detailpage = DetailPage.objects.filter(model='Article', object_id=instance.id, default=False).first()
     if detailpage:
         detailpage.delete()
+    clear_cache('default')
     messages.add_message(request, messages.SUCCESS, _('The article has been succesfully deleted!'))
     return redirect('overviewarticle')
 
@@ -215,9 +218,23 @@ def get_articles(request):
     page = request.POST.get('page', 1)
     sort_method = request.POST.get('sort_method', False)
     sort_order = request.POST.get('sort_order', False)
-    pagination = request.POST.get('pagination', 6)
-    articles_list = Article.objects.get_actives(sort_method, sort_order)
-    results_per_page = int(pagination)
+    
+    cache_key = 'get_articles'
+    lock_key = 'Lock:{}'.format(cache_key)
+    cache_value = cache.get(cache_key)
+    if cache_value is not None:
+        articles_list = cache_value
+    else:
+        try:
+            with r.lock(lock_key, timeout=60, blocking_timeout=0):
+                articles_list = Article.objects.get_actives(sort_method, sort_order)
+        
+        except redis.exceptions.LockError:  
+            raise Exception('ColdCacheException')   
+            
+        cache.set(cache_key, articles_list, int(24 * 60 * 60))  # cache for 24 hours
+
+    results_per_page = int(6)
     paginator = Paginator(articles_list, results_per_page)
     try:
         articles = paginator.page(page)
@@ -237,10 +254,28 @@ def get_articles(request):
 def get_article_detail(request):
     article = request.POST.get('article')
 
-    article_obj = Article.objects.filter(id=article).first()
+    cache_key_article = 'get_current_article_{}'.format(article)
+    cache_key_related = 'get_current_related_{}'.format(article)
+    lock_key = 'Lock:{}'.format(cache_key_article)
 
+    cache_value_article = cache.get(cache_key_article)
+    cache_value_related = cache.get(cache_key_related)
+    if cache_value_article is not None:
+        article_obj = cache_value_article
+        related_items = cache_value_related
+    else:
+        try:
+            with r.lock(lock_key, timeout=60, blocking_timeout=0):
+                article_obj = Article.objects.filter(id=article).first()
+                related_items = Article.objects.filter(Q(date_expired__gte=now) | Q(date_expired__isnull=True), active=True, date_deleted=None, date_published__lte=now).exclude(id=article)
+        except redis.exceptions.LockError:  
+            raise Exception('ColdCacheException')   
+            
+        cache.set(cache_key_article, article_obj, int(24 * 60 * 60))  # cache for 24 hours
+        cache.set(cache_key_related, related_items, int(24 * 60 * 60))  # cache for 24 hours
     context = {
         'item': article_obj,
+        'latest_items': related_items,
     }
     data = {
         'template': render_to_string('news/__partials/detail.html', context=context, request=request), 

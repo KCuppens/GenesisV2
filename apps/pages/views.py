@@ -32,6 +32,8 @@ from django.forms.models import modelformset_factory
 from django.db import transaction
 import datetime, json
 now = datetime.datetime.now()
+from clearcache.utils import clear_cache
+
 @staff_member_required(login_url=reverse_lazy('login'))
 def overview_page(request):
     has_perms(request, ["pages.view_page"], None, 'dashboard')
@@ -70,7 +72,6 @@ def overview_children_page(request, pk):
 @staff_member_required(login_url=reverse_lazy('login'))
 @transaction.atomic
 def add_page(request):
-    # import pdb; pdb.set_trace()
     page_signal = Signal()
     has_perms(request, ["pages.add_page"], None, 'overviewpage')
     if request.method == 'POST':
@@ -83,6 +84,7 @@ def add_page(request):
                 instance.full_slug = generate_full_slug(instance)
             instance.save()
             form.save_m2m()
+            clear_cache('default')
             post_save.send(sender=Page, instance=instance, created=False, final_save=True)
             messages.add_message(request, messages.SUCCESS, _('The page has been succesfully added!'))
             if instance.parent:
@@ -98,7 +100,6 @@ def add_page(request):
 @staff_member_required(login_url=reverse_lazy('login'))
 @transaction.atomic
 def add_children_page(request, pk):
-    # import pdb; pdb.set_trace()
     has_perms(request, ["pages.add_page"], None, 'overviewpage')
     if request.method == 'POST':
         form = PageForm(request.POST)
@@ -110,6 +111,7 @@ def add_children_page(request, pk):
             if not instance.url_type == Page.URL_TYPE_LINK_THROUGH:
                 instance.full_slug = generate_full_slug(instance)
             instance.save()
+            clear_cache('default')
             post_save.send(sender=Page, instance=instance, created=False, final_save=True)
             messages.add_message(request, messages.SUCCESS, _('The page has been succesfully added!'))
 
@@ -128,7 +130,6 @@ def add_children_page(request, pk):
 @staff_member_required(login_url=reverse_lazy('login'))
 @transaction.atomic
 def edit_page(request, pk):
-    # import pdb; pdb.set_trace()
     has_perms(request, ["pages.change_page"], None, 'overviewpage')
     instance = get_object_or_404(Page, pk=pk)
     if request.method == 'POST':
@@ -138,6 +139,7 @@ def edit_page(request, pk):
             generate_slug(instance)
             generate_full_slug(instance)
             instance.save()
+            clear_cache('default')
             post_save.send(sender=Page, instance=instance, created=False, final_save=True)
             messages.add_message(request, messages.SUCCESS, _('The page has been succesfully changed!'))
             if instance.parent:
@@ -159,7 +161,7 @@ def toggle_mainmenu_activation_view(request, pk):
     item.in_main_menu = not item.in_main_menu
     messages.add_message(request, messages.SUCCESS, _('De hoofdmenu status van de pagina is succesvol aangepast!'))
     item.save()
-    
+    clear_cache('default')
     return redirect('overviewpage')
 
 @staff_member_required(login_url=reverse_lazy('login'))
@@ -170,7 +172,7 @@ def toggle_activation_view(request, pk):
     item.active = not item.active
     messages.add_message(request, messages.SUCCESS, _('De status van de pagina is succesvol aangepast!'))
     item.save()
-    
+    clear_cache('default')
     return redirect('overviewpage')
 
 @staff_member_required(login_url=reverse_lazy('login'))
@@ -200,6 +202,7 @@ def delete_page(request,pk):
         instance.date_deleted = timezone.now()
         instance.save()
         messages.add_message(request, messages.SUCCESS, _('The page has been succesfully deleted!'))
+    clear_cache('default')
     if instance.parent:
         return redirect(reverse('overviewchildrenpage', kwargs={'pk': instance.parent.pk}))
     return redirect('overviewpage')
@@ -219,7 +222,7 @@ def page_reorder(request):
         item.position = position
         item.save()
     
-
+    clear_cache('default')
     return JsonResponse({}, status=200)
 
 
@@ -345,7 +348,7 @@ def canvas_row_reorder(request):
         position += 1
         item.position = position
         item.save()
-    
+    clear_cache('default')
 
     return JsonResponse({}, status=200)
 
@@ -360,6 +363,7 @@ def pageblockelement_reorder(request):
         position += 1
         item.position = position 
         item.save()
+    clear_cache('default')
     data = {
 
     }
@@ -381,15 +385,19 @@ def content_block_view(request):
         content = request.POST.get('content', '')
         subtitle = request.POST.get('subtitle', '')
         second_image = request.POST.get('second_image', '')
+        url = request.POST.get('url')
+        url_text = request.POST.get('url_text')
         block_elem = request.POST.get('block_elem')
         if block_elem:
             block_elem_obj = PageBlockElement.objects.filter(id=block_elem).first()
             if block_elem_obj:
-                block_elem_obj.title = title 
-                block_elem_obj.image = image 
-                block_elem_obj.content = content 
-                block_elem_obj.subtitle = subtitle
-                block_elem_obj.image_second = second_image
+                block_elem_obj.block_element_title = title 
+                block_elem_obj.block_element_image = image 
+                block_elem_obj.block_element_content = content 
+                block_elem_obj.block_element_subtitle = subtitle
+                block_elem_obj.block_element_image_second = second_image
+                block_elem_obj.block_element_url = url
+                block_elem_obj.block_element_url_text = url_text
                 block_elem_obj.save()
     if action == 'deleteelement':
         block_elem = request.POST.get('block_elem')
@@ -444,7 +452,7 @@ def content_block_view(request):
                 'template': render_to_string('canvas/__partials/__content_form.html', context=context, request=request),
                 'success': False
             }
-    print(context) 
+    clear_cache('default') 
     return JsonResponse(data)
 
 def open_preview(request, canvas):
@@ -514,7 +522,6 @@ def restore_page(request, pk):
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_version_ajax_modal(request):
     data = {}
-    # import pdb;pdb.set_trace();
     id = request.POST.get('id', False)
     reversion = ModelRevision.objects.get(current_instance=Page.objects.get(id=id))
     versions = ModelVersion.objects.filter(revision=reversion).order_by("date_created")
@@ -530,7 +537,6 @@ def get_version_ajax_modal(request):
 @staff_member_required(login_url=reverse_lazy('login'))
 def get_delete_version_ajax_modal(request):
     data = {}
-    # import pdb;pdb.set_trace();
     id = request.POST.get('id', False)
     try:
         version = ModelVersion.objects.get(id=id)
@@ -547,7 +553,6 @@ def get_delete_version_ajax_modal(request):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def select_version(request, pk):
-    # import pdb;pdb.set_trace();
     version = ModelVersion.objects.get(id=pk)
     # article_version.is_current = True
     # article_version.save()
@@ -567,7 +572,6 @@ def select_version(request, pk):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def delete_version(request, pk):
-    # import pdb;pdb.set_trace();
     version = ModelVersion.objects.get(id=pk)
     if version.is_current:
         # redirect if is_current=True
@@ -579,7 +583,6 @@ def delete_version(request, pk):
 
 @staff_member_required(login_url=reverse_lazy('login'))
 def add_version_comment(request, pk):
-    # import pdb;pdb.set_trace();
     version = ModelVersion.objects.get(id=pk)
     comment = request.POST.get('comment')
     if comment and comment != version.comment:

@@ -16,19 +16,18 @@ from celery_once import QueueOnce
 @task(name="create_thumbnails", base=QueueOnce, once={'keys': ['size', 'instance_id', 'format'], 'graceful': True})
 def create_thumbnails(thumbnail, size, instance_id, format):
     instance = Media.objects.filter(id=instance_id).first()
-    if not requests.head(thumbnail):
+    if not requests.get(thumbnail):
         new_img = None
         media_url = str(settings.MEDIA_URL)
-        filename = get_filename_without_extension(get_filename(instance.image))
+        media_root = str(settings.MEDIA_ROOT)
+        filename = get_filename_without_extension(instance.filename)
         cloudfront = settings.AWS_CLOUDFRONT_DOMAIN
-        basepath = cloudfront + settings.AWS_MAIN_DIR 
         origpath = '/media/image/orig/'
-        orig = get_filename(instance.image)
         image_path = '/media/image/' + str(format) + '/' + size + '/' + filename + '.' + str(format)
         if media_url.startswith('/'):
             media_url = media_url[1:]
         if not size == 'orig':
-            image = requests.head(basepath + origpath + orig)
+            image = requests.get(cloudfront + origpath + str(instance.filename))
             if image.status_code == 200:
                 img = Image.open(BytesIO(image.content)) 
                 size_split = size.split('x')
@@ -36,23 +35,23 @@ def create_thumbnails(thumbnail, size, instance_id, format):
                 size_height = size_split[1]
                 if size_height and size_width:
                     new_img = img.resize((int(size_width), int(size_height)), resample=1)
-                    if not os.path.exists(media_url + 'image/' + str(format) +'/' + size + '/'):
-                        os.mkdir(media_url + 'image/' + str(format) +'/' + size + '/')
-                    new_img.save(media_url + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format) , str(format), optimize=True, quality=75)
-                    upload_file(settings.AWS_IMAGE_BUCKET, media_url + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format))
-                    if os.path.exists(media_url + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format)):
-                        os.remove(media_url + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format))
+                    if not os.path.exists(media_root + 'image/' + str(format) +'/' + size + '/'):
+                        os.makedirs(media_root + 'image/' + str(format) +'/' + size + '/')
+                    new_img.save(media_root + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format) , str(format), optimize=True, quality=75)
+                    response = upload_file(settings.AWS_IMAGE_BUCKET, media_url + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format))
+                    if os.path.exists(media_root + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format)):
+                        os.remove(media_root + 'image/' + str(format) +'/' + size + '/' + filename + '.' + str(format))
                     
-                    media_instance = Media.objects.filter(file__contains=basepath + origpath + orig).first()
-                    if media_instance:
-                        thumbnail = Thumbnail.objects.create(format=str(format), size=size, path=basepath +  image_path)
-                        media_instance.thumbnails.add(thumbnail)
-                        media_instance.save()
-                    return basepath + image_path
+                    if instance:
+                        thumbnail = Thumbnail.objects.create(format=str(format), size=size, path=cloudfront +  image_path)
+                        instance.thumbnails.add(thumbnail)
+                        instance.save()
+                    return 'created'
                 else:
                     return _('Size not valid format eg. "400x400"')
             else:
                 return ''
         else:
-            return basepath + origpath + orig
-            
+            return cloudfront + origpath + filename
+    else:
+        return 'exists'

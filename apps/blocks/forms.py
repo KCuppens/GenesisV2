@@ -7,7 +7,7 @@ class BlockForm(forms.ModelForm):
     image = forms.CharField(widget=MediaImageWidget)
     class Meta:
         model = Block
-        fields = ('name', 'template', 'image', 'category','module',  'active', 'date_published', 'date_expired', 'has_title', 'has_subtitle', 'has_form', 'has_content', 'detailpage_only', 'has_image', 'has_image_second', 'has_url', 'has_url_text', 'has_video', 'has_embed', 'has_sort_method', 'has_limit', 'has_sort_order', 'has_pagination', 'has_detailpage', 'has_block_elements', 'has_block_element_title', 'has_block_element_image', 'has_block_element_content', 'has_block_element_subtitle', 'has_block_element_image_second', 'is_deletable')
+        fields = ('name', 'template', 'image', 'category','module',  'active', 'date_published', 'date_expired', 'has_title', 'has_subtitle', 'has_form', 'has_content', 'detailpage_only', 'has_image', 'has_image_second', 'has_url', 'has_url_text', 'has_video', 'has_embed', 'has_sort_method', 'has_limit', 'has_sort_order', 'has_pagination', 'has_detailpage', 'has_block_elements', 'has_block_element_title', 'has_block_element_image', 'has_block_element_content', 'has_block_element_subtitle', 'has_block_element_image_second', 'has_block_element_url', 'has_block_element_url_text', 'is_deletable')
         labels = {
             'name': _('Name'),
             'image': _('Block image'),
@@ -39,6 +39,8 @@ class BlockForm(forms.ModelForm):
             'has_block_element_content': _('Bevat blok element inhoud'),
             'has_block_element_subtitle': _('Bevat blok element subtitel'),
             'has_block_element_image_second': _('Bevat blok element tweede afbeelding'),
+            'has_block_element_url': _('Bevat blok element url'),
+            'has_block_element_url_text': _('Bevat block element url tekst'),
             'is_deletable': _('Is het verwijderbaar'),
         }
 

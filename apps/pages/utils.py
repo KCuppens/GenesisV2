@@ -23,6 +23,8 @@ def generate_full_slug(current_page):
         page = current_page
         while page.parent:
             page = page.parent
+            if page.url_type == Page.URL_TYPE_LINK_THROUGH:
+                break
             full_slug += page.slug + '/'
         full_slug += slug
         

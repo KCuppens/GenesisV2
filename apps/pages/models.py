@@ -21,7 +21,7 @@ class Page(BaseModel, AdminModel, SeoModel, SortableModel):
     in_topnav_menu = models.BooleanField(default=False, db_index=True, verbose_name=_('In Top menu'))
     in_quicklinks_menu = models.BooleanField(default=False, db_index=True, verbose_name=_('In Quicklink menu'))
     in_marked_menu = models.BooleanField(default=False, db_index=True, verbose_name=_('In gemarkeerd menu'))
-
+    
     page_title = models.CharField(max_length=55, db_index=True, blank=True, verbose_name=_('Page title'))
     menu_title = models.CharField(max_length=55, blank=True, null=True, verbose_name=_('Menu title'))
 
@@ -62,6 +62,11 @@ class Page(BaseModel, AdminModel, SeoModel, SortableModel):
 
     def fetch_seo_keywords(self):
         return self.meta_keywords
+
+    def fetch_seo_image(self):
+        if self.image:
+            return settings.AWS_CLOUDFRONT_DOMAIN + self.image
+        return ''
     
     def has_children(self):
         return self.children.exists()
@@ -130,11 +135,13 @@ class PageBlock(SeoModel, SortableModel, AdminModel, BaseModel):
         verbose_name = _('Page block')
 
 class PageBlockElement(BaseModel, SeoModel, SortableModel):
-    title = models.CharField(max_length=255, null=True, blank=True)
-    image = models.CharField(max_length=255, null=True, blank=True)
-    content = models.TextField(null=True, blank=True)
-    subtitle = models.CharField(max_length=255, null=True, blank=True)
-    image_second = models.CharField(max_length=255, null=True, blank=True)
+    block_element_title = models.CharField(max_length=255, null=True, blank=True)
+    block_element_image = models.CharField(max_length=255, null=True, blank=True)
+    block_element_content = models.TextField(null=True, blank=True)
+    block_element_subtitle = models.CharField(max_length=255, null=True, blank=True)
+    block_element_image_second = models.CharField(max_length=255, null=True, blank=True)
+    block_element_url = models.CharField(max_length=255, null=True, blank=True)
+    block_element_url_text = models.CharField(max_length=255, null=True, blank=True)
 
     def get_actives(self):
         return self.filter(date_deleted=None)

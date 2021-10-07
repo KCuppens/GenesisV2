@@ -86,15 +86,17 @@ class BlockForm(forms.ModelForm):
         }
     
 class BlockElementForm(forms.ModelForm):
-    image = forms.CharField(label=_('Blok afbeelding'), required=False, widget=MediaImageWidget)
-    image_second = forms.CharField(label=_('Blok tweede afbeelding'), required=False, widget=MediaImageWidget)
+    block_element_image = forms.CharField(label=_('Blok afbeelding'), required=False, widget=MediaImageWidget)
+    block_element_image_second = forms.CharField(label=_('Blok tweede afbeelding'), required=False, widget=MediaImageWidget)
     class Meta:
         model = PageBlockElement
-        fields = {'title', 'image', 'content', 'subtitle', 'image_second'}
+        fields = {'block_element_title', 'block_element_image', 'block_element_content', 'block_element_subtitle', 'block_element_image_second', 'block_element_url', 'block_element_url_text'}
         labels = {
-            'title': _('Blok titel'),
-            'image': _('Blok afbeelding'),
-            'content': _('Blok inhoud'),
-            'subtitle': _('Blok subtitel'),
-            'image_second': _('Blok tweede afbeelding'),
+            'block_element_title': _('Blok titel'),
+            'block_element_image': _('Blok afbeelding'),
+            'block_element_content': _('Blok inhoud'),
+            'block_element_subtitle': _('Blok subtitel'),
+            'block_element_image_second': _('Blok tweede afbeelding'),
+            'block_element_url': _('Blok url'),
+            'block_element_url_text': _('Blok url text')
         }

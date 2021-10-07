@@ -67,8 +67,10 @@
                                 },
                                 success: function (data) {
                                     if(data.action == 'message'){
-                                        $('.formbuilder-overview').append(
-                                            data.value
+                                        $('.formbuilder-overview').html(
+                                            `<div class="alert alert-success" role="alert">
+                                              ${data.value}!
+                                            </div>`
                                         );
                                     } else {
                                         if(data.action == 'redirect'){

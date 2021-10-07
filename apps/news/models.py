@@ -11,6 +11,7 @@ from django_extensions.db.fields import AutoSlugField
 from django.db.models import Q
 import datetime
 from django.db import transaction
+from django.conf import settings
 now = datetime.datetime.now()
 
 # Create your models here.
@@ -44,6 +45,26 @@ class Article(BaseModel, SeoModel, AdminModel):
 
     def __str__(self):
         return self.title
+
+    def fetch_seo_title(self):
+        if self.meta_title:
+            return self.meta_title
+        else:
+            return self.title
+
+    def fetch_seo_description(self):
+        if self.meta_description:
+            return mark_safe(self.meta_description)
+        else:
+            return mark_safe(self.content)
+
+    def fetch_seo_keywords(self):
+        return self.meta_keywords
+
+    def fetch_seo_image(self):
+        if self.image:
+            return settings.AWS_CLOUDFRONT_DOMAIN + self.image
+        return ''
 
     @transaction.atomic()
     def save(self, *args, **kwargs):

@@ -1,11 +1,11 @@
-{% load i18n %}
+{% load i18n show_image %}
 {% if canvas.rows.exists %}
     {% for row in canvas.rows.all reversed %}
         <div data-row="{{ row.id }}" 
              class="row-canvas layout-top-spacing col-md-12 {% if not row.cols.exists %}d-flex justify-content-center align-items-center{% endif %}{% if not row.colblock %} empty{% endif %}"
              id="{{row.id}}" data-canvas="{{ canvas.id }}">
             {% if row.block %}
-                <img class="block-image" src="{{row.block.block.image}}"
+                <img class="block-image" src="{% show_image row.block.block %}"
                         alt="{{ row.block.block.name }}">
                 <span data-block="{{ row.block.id }}" data-row="{{row.id}}"
                         class="col-canvas-edit badge badge-info"><svg

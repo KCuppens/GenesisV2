@@ -39,6 +39,8 @@ class Block(BaseModel, AdminModel):
     has_block_element_content = models.BooleanField(default=False)
     has_block_element_subtitle = models.BooleanField(default=False)
     has_block_element_image_second = models.BooleanField(default=False)
+    has_block_element_url = models.BooleanField(default=False) 
+    has_block_element_url_text = models.BooleanField(default=False)  
 
     has_sort_method = models.BooleanField(default=False)
     has_limit = models.BooleanField(default=False)

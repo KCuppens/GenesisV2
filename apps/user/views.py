@@ -46,6 +46,7 @@ try:
 except ImportError:  # pragma: no cover
     from django.contrib.sites.models import get_current_site
 User = get_user_model()
+from clearcache.utils import clear_cache
 
 class LoginView(View):
     def get(self,request):
@@ -121,6 +122,7 @@ def add_user(request):
                 instance.groups.add(int(id_))
             messages.add_message(request, messages.SUCCESS, _('The user has been succesfully added!'))
 
+            clear_cache('default')
             return redirect('overviewuser')
     else:
         form = UserForm()
@@ -171,6 +173,7 @@ def edit_user(request, pk):
 
             messages.add_message(request, messages.SUCCESS, _('The user has been succesfully changed!'))
 
+            clear_cache('default')
             return redirect('overviewuser')
     else:
         form = UserForm(instance=instance)
@@ -204,6 +207,7 @@ def delete_user(request,pk):
     instance.edited_by = request.user
     instance.date_deleted = timezone.now()
     instance.save()
+    clear_cache('default')
     messages.add_message(request, messages.SUCCESS, _('The user has been succesfully deleted!'))
     return redirect('overviewuser')
 
@@ -215,6 +219,7 @@ def toggle_activation_view(request, pk):
     item.is_active = not item.is_active
     messages.add_message(request, messages.SUCCESS, _('De status van de gebruiker is succesvol aangepast!'))
     item.save()
+    clear_cache('default')
     
     return redirect('overviewuser')
 
@@ -251,6 +256,7 @@ def add_group_view(request):
             for id_ in list(permissions.values_list('id', flat=True)):
                 instance.permissions.add(int(id_))
             instance.save()
+            clear_cache('default')
             messages.add_message(request, messages.SUCCESS, _('The group has been succesfully added!'))
             return redirect('overviewgroup')
 
@@ -284,7 +290,7 @@ def edit_group_view(request, pk):
             for id_ in list(permissions.values_list('id', flat=True)):
                 instance.permissions.add(int(id_))
             instance.save()
-
+            clear_cache('default')
             messages.add_message(request, messages.SUCCESS, _('The group has been succesfully edited!'))
             return redirect('overviewgroup')
     else:
@@ -303,7 +309,7 @@ def delete_group_view(request, pk):
     item.date_deleted = timezone.now()
     item.edited_by = request.user
     item.save()
-
+    clear_cache('default')
     messages.add_message(request, messages.SUCCESS, _('The group has been succesfully deleted!'))
     return redirect('overviewgroup')
 
