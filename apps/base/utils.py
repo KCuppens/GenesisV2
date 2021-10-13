@@ -16,7 +16,7 @@ def check_tables(table_name):
 
 def has_perms(request, permissions, template, redirect_url = None, raise_exception=False):
     current_url = request.resolver_match.url_name
-    print('current_url: ', current_url)
+
     if isinstance(permissions, str):
         perms = (permissions,)
     else:
@@ -27,8 +27,6 @@ def has_perms(request, permissions, template, redirect_url = None, raise_excepti
         return True
 
     # First check if the user has the permission (even anon users)
-    print(request.user.user_permissions.all())
-    print(request.user.groups.all())
     if request.user.has_perms(perms):
         return True
     # In case the 403 handler should be called raise the exception
