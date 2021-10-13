@@ -25,6 +25,7 @@ cssselect2==0.4.1
 defusedxml==0.7.1
 Django==3.1.5
 django-appconf==1.0.4
+django-clearcache==1.2.1
 django-colorfield==0.4.1
 django-compressor==2.4.1
 django-countries==7.0
@@ -79,7 +80,6 @@ oauthlib==3.1.1
 packaging==20.9
 pandas==1.1.5
 Pillow==8.1.0
-pkg-resources==0.0.0
 pluggy==0.13.1
 polib==1.1.0
 promise==2.3
