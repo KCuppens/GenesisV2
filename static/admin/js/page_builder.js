@@ -17,9 +17,10 @@ $(document).ready(function () {
     }
 
     $('.canvas-builder').on('click', '.row-canvas-delete', function (e) {
+        console.log('Deleting block...')
         e.stopPropagation();
         var canvas = $('.canvas-builder').data('id');
-        var row = $('.row-canvas-delete').data('id');
+        var row = $(this).data('id');
         var csrf = $('.canvas-builder').data('csrf');
         $.ajax({
             type: 'POST',
