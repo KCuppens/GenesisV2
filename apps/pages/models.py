@@ -29,7 +29,7 @@ class Page(BaseModel, AdminModel, SeoModel, SortableModel):
     #forms
     canvas = models.ForeignKey('canvas', on_delete=models.CASCADE, null=True, blank=True)
     url_type = models.CharField(default=URL_TYPE_GENERATED, choices=URL_TYPES, max_length=55, verbose_name=_('URL Type'))
-    slug = models.SlugField(null=True, blank=True)
+    slug = AutoSlugField(populate_from='page_title', null=True)
     linkthrough = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Linkthrough'))
     full_slug = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Full route'))
     parent = models.ForeignKey("self", blank=True, on_delete=models.CASCADE, related_name="children", null=True, verbose_name=_('Bovenstaande pagina'))

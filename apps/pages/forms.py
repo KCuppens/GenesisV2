@@ -14,14 +14,14 @@ class PageForm(forms.ModelForm):
     # date_expired = forms.DateTimeField(input_formats=DATE_INPUT_FORMATS)
     class Meta:
         model = Page
-        fields = ('in_main_menu', 'image', 'is_homepage', 'page_title', 'menu_title','url_type','slug','linkthrough','parent','meta_title','meta_keywords','meta_description','date_published','date_expired','active', 'is_deletable')
+        fields = ('in_main_menu', 'image', 'is_homepage', 'page_title', 'menu_title','url_type','linkthrough','parent','meta_title','meta_keywords','meta_description','date_published','date_expired','active', 'is_deletable')
         labels = {
             'is_homepage': _('Is it the homepage?'),
             'in_main_menu': _('Show in main menu'),
             'page_title': _('Page title*'),
             'menu_title': _('Menu title*'),
             'url_type': _('Type of route/slug*'),
-            'slug': _('Route/slug*'),
+            # 'slug': _('Route/slug*'),
             'linkthrough': _('Doorlink*'),
             'parent': _('Parent page'),
             'meta_title': _('Meta title'),
