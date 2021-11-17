@@ -342,12 +342,6 @@
                                         height: 3px;"></td>
                                 </tr>
                             </tr>
-                            <!-- {% if instance.block.has_block_element_title %}
-                                <tr>
-                                    <td>{% trans 'Titel' %}</td>
-                                    <td><input type="text" class="form-control" value="{{block.block_element_title|default_if_none:""}}" name="block_elem_title" id="block_elem_title_{{block.id}}"></td>
-                                </tr>
-                            {% endif %} -->
                             <!-- {% if instance.block.has_block_element_image %}
                                 <tr>
                                     <td>{% trans 'Afbeelding' %}</td>
@@ -569,19 +563,8 @@
         $.ajax({
             type: 'POST',
             url: '{% url 'canvascontent' %}',
-            data: {
-                'csrfmiddlewaretoken': csrf,
-                'block': block,
-                'block_elem': block_elem,
-                'action': 'saveelement',
-                'title': title,
-                'content': content,
-                'subtitle': subtitle,
-                'image': image,
-                'second_image': second_image,
-                'url': url,
-                'url_text': url_text
-            },
+            data: serializedData + '&block=' + block + '&action=saveelement&block_elem=' + block_elem + '&title=' + title + '&content=' + content + '&image=' + image + '&subtitle=' + subtitle + '&second_image=' + second_image 
+                + '&url=' + url + '&url_text=' + url_text + '&ajax=' + 1,
             success: function(data){
                 if(data.success) {
                     //location.reload();
