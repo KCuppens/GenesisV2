@@ -27,8 +27,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1','46.101.244.242']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 # AUTH_USER_MODEL = "user.User"
-AWS_SECRET_KEY = 'hMpAxmec0JfbnN4f/2iJFHqQzUXxUxVmHYGomfBm' 
-AWS_ACCESS_KEY = 'AKIAS2WYD7DB4HIRFX6T'
+AWS_SECRET_KEY = '' 
+AWS_ACCESS_KEY = ''
 AWS_REGION = 'eu-central-1'
 AWS_ACTIVE = True
 AWS_IMAGE_BUCKET = 'BUCKET_NAME' 
@@ -230,8 +230,8 @@ STATICFILES_STORAGE = 'GenesisV2.storage.WhiteNoiseStaticFilesStorage'
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
 
 EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
-MAILJET_API_KEY = 'a8ed2ad7a17b71d57b440c4ddc0022ce'
-MAILJET_API_SECRET = '6868b478558189199dcfdde021236066'
+MAILJET_API_KEY = ''
+MAILJET_API_SECRET = ''
 BACKENDS = ''
 MAIL_CREDITS_COST = 7.5
 # EMAIL_HOST = 'smtp.gmail.com'
